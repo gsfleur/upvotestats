@@ -2,14 +2,14 @@ export default function Results(props) {
   function numToString(num) {
     // Nine Zeroes for Billions
     return Math.abs(num) >= 1.0e9
-      ? Math.abs(num) / 1.0e9 + " B"
+      ? (Math.abs(num) / 1.0e9).toFixed(3) + " B"
       : // Six Zeroes for Millions
       Math.abs(num) >= 1.0e6
-      ? Math.abs(num) / 1.0e6 + " M"
+      ? (Math.abs(num) / 1.0e6).toFixed(3) + " M"
       : // Three Zeroes for Thousands
       Math.abs(num) >= 1.0e3
-      ? Math.abs(num) / 1.0e3 + " K"
-      : Math.abs(num);
+      ? (Math.abs(num) / 1.0e3).toFixed(3) + " K"
+      : Math.abs(num).toFixed(2);
   }
 
   return (

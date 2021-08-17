@@ -1,6 +1,7 @@
+import axios from "axios";
 import React from "react";
 import Results from "./results";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { topReddits } from "./topReddits";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -22,18 +23,112 @@ export default function Search() {
   // Component State
   const [state, setState] = useState({
     loaded: false,
+    error: false,
     name: query,
     value: "",
     stats: {
-      upvotes: 1892365,
-      downvotes: 23752,
-      posts: { upvotes: 283592, downvotes: 183529 },
-      comments: { upvotes: 214812, downvotes: 324762 },
-      awards: 2352,
-      coins: 23852,
-      earnings: 237427832,
+      upvotes: 0,
+      downvotes: 0,
+      posts: { upvotes: 0, downvotes: 0 },
+      comments: { upvotes: 0, downvotes: 0 },
+      awards: 0,
+      coins: 0,
+      earnings: 0,
     },
   });
+
+  useEffect(() => {
+    let componentMounted = true;
+    // Loading all titled player names for search
+    if (state.loaded === false && query.includes("r/")) {
+      (async () => {
+        // Getting amount of active monthly users
+        let topData = [];
+        await axios
+          .get("https://www.reddit.com/" + query + "/top.json?t=month&limit=1")
+          .then((res) => {
+            topData = res.data.data.children;
+
+            calculate(topData, "posts");
+          })
+          .catch((err) => {
+            console.log(err);
+            state.error = true;
+          });
+
+        for (let i = 0; i < topData.length; i++) {
+          let obj = topData[i].data;
+          await axios
+            .get("https://www.reddit.com" + obj.permalink + ".json")
+            .then((res2) => {
+              let commentData = res2.data[1].data.children;
+              console.log(commentData);
+              calculate(commentData, "comments");
+            })
+            .catch((err) => {
+              console.log(err);
+              state.error = true;
+            });
+        }
+
+        state.stats.earnings = Math.floor(state.stats.coins / 500) * 1.99;
+
+        // Update state
+        if (componentMounted) {
+          setState({
+            ...state,
+            loaded: true,
+          });
+        }
+      })();
+    }
+    return () => {
+      componentMounted = false;
+    };
+  });
+
+  function calculate(arr, kind) {
+    for (let i = 0; i < arr.length; i++) {
+      let obj = arr[i].data;
+
+      if (
+        obj.ups === undefined ||
+        obj.all_awardings === undefined ||
+        obj.total_awards_received === undefined
+      )
+        continue;
+
+      let downvotes =
+        obj.ups - Math.floor((100 * obj.ups) / (100 * obj.upvote_ratio));
+
+      if (obj.upvote_ratio === undefined) downvotes = 0;
+
+      state.stats.upvotes += obj.ups;
+      state.stats.downvotes += downvotes;
+      if (kind === "posts") {
+        state.stats.posts.upvotes += obj.ups;
+        state.stats.posts.downvotes += downvotes;
+      }
+      if (kind === "comments") {
+        if (arr[i].kind === "t1") {
+          state.stats.comments.upvotes += obj.ups;
+
+          if (obj.replies.data !== undefined)
+            calculate(obj.replies.data.children, "comments");
+        }
+        if (arr[i].kind === "more") {
+          state.stats.comments.upvotes += obj.count;
+        }
+      }
+
+      state.stats.awards += obj.total_awards_received;
+
+      for (let j = 0; j < obj.all_awardings.length; j++) {
+        state.stats.coins +=
+          obj.all_awardings[j].count * obj.all_awardings[j].coin_price;
+      }
+    }
+  }
 
   /**
    * Callback fired when the value changes
@@ -107,7 +202,9 @@ export default function Search() {
           />
         </div>
       </div>
-      {query.includes("r/") && <Results stats={state.stats} />}
+      {state.loaded === true && query.includes("r/") && (
+        <Results stats={state.stats} />
+      )}
     </div>
   );
 }
