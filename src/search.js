@@ -1,4 +1,5 @@
 import React from "react";
+import Results from "./results";
 import { useState } from "react";
 import { topReddits } from "./topReddits";
 import TextField from "@material-ui/core/TextField";
@@ -8,14 +9,31 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 const communities = topReddits;
 
 export default function Search() {
+  window.document.title = "Upvote Stats - Search";
+
   // Getting id from URL search param
   const urlParams = new URLSearchParams(window.location.search);
   const q = urlParams.get("q");
   // Setting and checking that ID param exists
   const query = q !== null && q.length > 0 ? "r/" + q : "Upvote Stats";
 
+  if (query.includes("r/")) window.document.title = "Upvote Stats - " + query;
+
   // Component State
-  const [state, setState] = useState({ loaded: false, name: query, value: "" });
+  const [state, setState] = useState({
+    loaded: false,
+    name: query,
+    value: "",
+    stats: {
+      upvotes: 1892365,
+      downvotes: 23752,
+      posts: { upvotes: 283592, downvotes: 183529 },
+      comments: { upvotes: 214812, downvotes: 324762 },
+      awards: 2352,
+      coins: 23852,
+      earnings: 237427832,
+    },
+  });
 
   /**
    * Callback fired when the value changes
@@ -65,7 +83,7 @@ export default function Search() {
             borderRadius: "10px",
             marginBottom: "40px",
             width: "60%",
-            minWidth: "310px",
+            minWidth: "300px",
           }}
         >
           <Autocomplete
@@ -89,6 +107,7 @@ export default function Search() {
           />
         </div>
       </div>
+      {query.includes("r/") && <Results stats={state.stats} />}
     </div>
   );
 }

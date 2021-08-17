@@ -1,10 +1,10 @@
 import "./App.css";
 import "./results.css";
 import "./search.css";
+import "./mobile.css";
 import React from "react";
 import Home from "./home";
 import Search from "./search";
-import Results from "./results";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -60,9 +60,7 @@ export default function App() {
           <div className="content">
             <Search />
             <Switch>
-              <Route path="/search">
-                <Results />
-              </Route>
+              <Route path="/search"></Route>
               <Route path="/">
                 <Home />
               </Route>

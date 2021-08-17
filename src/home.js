@@ -1,3 +1,4 @@
 export default function Home() {
-  return <span>Hello World</span>;
+  window.document.title = "Upvote Stats - Home";
+  return <span></span>;
 }
