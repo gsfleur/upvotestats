@@ -1,7 +1,8 @@
-import "./App.css";
-import "./results.css";
-import "./search.css";
-import "./mobile.css";
+import "./css/App.css";
+import "./css/home.css";
+import "./css/search.css";
+import "./css/results.css";
+import "./css/mobile.css";
 import React from "react";
 import Home from "./home";
 import Search from "./search";
@@ -12,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+// Material UI Styling
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

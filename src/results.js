@@ -1,4 +1,9 @@
 export default function Results(props) {
+  /**
+   * Converts number to string with abbreviation
+   * @param {*} num - Number to convert
+   * @returns Number with abbreviation
+   */
   function numToString(num) {
     // Nine Zeroes for Billions
     return Math.abs(num) >= 1.0e9
@@ -39,10 +44,10 @@ export default function Results(props) {
             {numToString(props.stats.comments.upvotes)}
           </div>
           <div className="itemContext">UPVOTES</div>
-          <div className="size30 downsHeader">
-            {numToString(props.stats.comments.downvotes)}
+          <div className="size30 commentAwardsHeader">
+            {numToString(props.stats.comments.awards)}
           </div>
-          <div className="itemContext">DOWNVOTES</div>
+          <div className="itemContext">AWARDS</div>
         </div>
       </div>
       <div className="header">

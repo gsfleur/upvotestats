@@ -26,11 +26,12 @@ export default function Search() {
     error: false,
     name: query,
     value: "",
+    limit: 100,
     stats: {
       upvotes: 0,
       downvotes: 0,
       posts: { upvotes: 0, downvotes: 0 },
-      comments: { upvotes: 0, downvotes: 0 },
+      comments: { upvotes: 0, awards: 0 },
       awards: 0,
       coins: 0,
       earnings: 0,
@@ -39,16 +40,21 @@ export default function Search() {
 
   useEffect(() => {
     let componentMounted = true;
-    // Loading all titled player names for search
     if (state.loaded === false && query.includes("r/")) {
       (async () => {
-        // Getting amount of active monthly users
+        // Getting all top posts of the month
         let topData = [];
         await axios
-          .get("https://www.reddit.com/" + query + "/top.json?t=month&limit=1")
+          .get(
+            "https://www.reddit.com/" +
+              query +
+              "/top.json?t=month&limit=" +
+              state.limit
+          )
           .then((res) => {
             topData = res.data.data.children;
 
+            // Calculating stats for all posts
             calculate(topData, "posts");
           })
           .catch((err) => {
@@ -56,13 +62,15 @@ export default function Search() {
             state.error = true;
           });
 
+        // Looping through top posts data
         for (let i = 0; i < topData.length; i++) {
           let obj = topData[i].data;
           await axios
             .get("https://www.reddit.com" + obj.permalink + ".json")
             .then((res2) => {
               let commentData = res2.data[1].data.children;
-              console.log(commentData);
+
+              // Calculating stats for all comments
               calculate(commentData, "comments");
             })
             .catch((err) => {
@@ -71,6 +79,7 @@ export default function Search() {
             });
         }
 
+        // Finally, calculating the earnings
         state.stats.earnings = Math.floor(state.stats.coins / 500) * 1.99;
 
         // Update state
@@ -87,10 +96,17 @@ export default function Search() {
     };
   });
 
+  /**
+   * Calculates the data and adds results to the state
+   * @param {*} arr - array with data to calculate
+   * @param {*} kind - either 'post' or 'comment'
+   */
   function calculate(arr, kind) {
+    // Loop through the data
     for (let i = 0; i < arr.length; i++) {
       let obj = arr[i].data;
 
+      // Skip if missing important keys
       if (
         obj.ups === undefined ||
         obj.all_awardings === undefined ||
@@ -98,31 +114,40 @@ export default function Search() {
       )
         continue;
 
+      // Calculate the amount of downvotes
       let downvotes =
         obj.ups - Math.floor((100 * obj.ups) / (100 * obj.upvote_ratio));
 
       if (obj.upvote_ratio === undefined) downvotes = 0;
 
+      // Adding general stats
       state.stats.upvotes += obj.ups;
       state.stats.downvotes += downvotes;
+
+      // Adding stats for posts
       if (kind === "posts") {
         state.stats.posts.upvotes += obj.ups;
         state.stats.posts.downvotes += downvotes;
       }
+      // Adding stats for comments
       if (kind === "comments") {
         if (arr[i].kind === "t1") {
           state.stats.comments.upvotes += obj.ups;
+          state.stats.comments.awards += obj.total_awards_received;
 
+          // Recursion to access each reply for each comment
           if (obj.replies.data !== undefined)
             calculate(obj.replies.data.children, "comments");
         }
+        // Adding 'excess' comments
         if (arr[i].kind === "more") {
           state.stats.comments.upvotes += obj.count;
         }
       }
 
+      // Adding amount of awards
       state.stats.awards += obj.total_awards_received;
-
+      // Adding amount of coins
       for (let j = 0; j < obj.all_awardings.length; j++) {
         state.stats.coins +=
           obj.all_awardings[j].count * obj.all_awardings[j].coin_price;
@@ -202,8 +227,24 @@ export default function Search() {
           />
         </div>
       </div>
+      {state.loaded === false && query.includes("r/") && (
+        <div className="header" style={{ padding: "60px" }}>
+          <div>
+            Loading all of the data can take up to 2-3 minutes to process as
+            this program will analyze the top post, comments, and replies of the
+            subreddit in the last 30 days.
+          </div>
+        </div>
+      )}
       {state.loaded === true && query.includes("r/") && (
-        <Results stats={state.stats} />
+        <div>
+          <span style={{ color: "gray" }}>
+            Showing results from the past 30 days...
+            <br />
+            <br />
+          </span>
+          <Results stats={state.stats} />
+        </div>
       )}
     </div>
   );
