@@ -1,0 +1,64 @@
+.upsHeader {
+  color: red;
+  font-size: 80px;
+  text-align: center;
+  font-weight: bold;
+}
+.downsHeader {
+  color: royalblue;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+.coinsHeader {
+  color: gold;
+  font-size: 65px;
+  text-align: center;
+  font-weight: bold;
+}
+.awardsHeader {
+  color: goldenrod;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+}
+.profitHeader {
+  color: lightgreen;
+  font-size: 65px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.header {
+  background-color: #161616;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: 1%;
+  margin-right: 1%;
+  font-size: 22px;
+}
+
+.twoColumn {
+  width: 48%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.itemContext {
+  text-align: center;
+  color: lightgray;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.title {
+  padding: 10px;
+}
+
+.size30 {
+  font-size: 30px;
+}

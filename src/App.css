@@ -1,0 +1,17 @@
+.centering {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  flex: 0 1 900px;
+  background-color: #1c1c1c;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.menuButton {
+  text-decoration: none;
+  color: white;
+}
