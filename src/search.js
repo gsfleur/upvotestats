@@ -239,8 +239,8 @@ export default function Search() {
         <div className="header" style={{ padding: "60px" }}>
           <div>
             Loading all of the data can take up to 2-3 minutes to process as
-            this program will analyze the top post, comments, and replies of the
-            subreddit in the last 30 days.
+            this program will analyze all of the top posts, comments, and
+            replies of the subreddit in the last 30 days.
           </div>
         </div>
       )}
