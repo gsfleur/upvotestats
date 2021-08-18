@@ -15,3 +15,21 @@
   text-decoration: none;
   color: white;
 }
+
+.footer {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  word-wrap: break-word;
+}
+
+.searchLink:link,
+.searchLink:visited {
+  text-decoration: none;
+  color: gray;
+}
+
+.searchLink:hover,
+.searchLink:active {
+  color: goldenrod;
+}

@@ -69,6 +69,42 @@ export default function App() {
             </Switch>
           </div>
         </div>
+        <div className="centering">
+          <div className="footer">
+            <span>
+              <a
+                className="searchLink"
+                href="https://twitter.com/upvotestats"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <b>Twitter</b>
+              </a>
+            </span>
+            <span style={{ color: "gray" }}>&nbsp;&nbsp;</span>
+            <span>
+              <a
+                className="searchLink"
+                href="https://www.patreon.com/upvotestats"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <b>Donate</b>
+              </a>
+            </span>
+            <span style={{ color: "gray" }}>&nbsp;&nbsp;</span>
+            <span>
+              <a
+                className="searchLink"
+                href="https://github.com/gsfleur"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <b>Source</b>
+              </a>
+            </span>
+          </div>
+        </div>
       </div>
     </Router>
   );

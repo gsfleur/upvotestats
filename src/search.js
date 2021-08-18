@@ -17,8 +17,9 @@ export default function Search() {
   const q = urlParams.get("q");
   // Setting and checking that ID param exists
   const query = q !== null && q.length > 0 ? "r/" + q : "Upvote Stats";
+  const searching = query.includes("r/");
 
-  if (query.includes("r/")) window.document.title = "Upvote Stats - " + query;
+  if (searching) window.document.title = "Upvote Stats - " + query;
 
   // Component State
   const [state, setState] = useState({
@@ -40,7 +41,7 @@ export default function Search() {
 
   useEffect(() => {
     let componentMounted = true;
-    if (state.loaded === false && query.includes("r/")) {
+    if (state.loaded === false && searching) {
       (async () => {
         // Getting all top posts of the month
         let topData = [];
@@ -227,7 +228,14 @@ export default function Search() {
           />
         </div>
       </div>
-      {state.loaded === false && query.includes("r/") && (
+      {state.error === true && (
+        <div className="header" style={{ padding: "60px" }}>
+          <div>
+            An error occured when trying to analyze the subreddit {query}
+          </div>
+        </div>
+      )}
+      {state.loaded === false && searching && (
         <div className="header" style={{ padding: "60px" }}>
           <div>
             Loading all of the data can take up to 2-3 minutes to process as
@@ -236,7 +244,7 @@ export default function Search() {
           </div>
         </div>
       )}
-      {state.loaded === true && query.includes("r/") && (
+      {state.loaded === true && searching && state.error === false && (
         <div>
           <span style={{ color: "gray" }}>
             Showing results from the past 30 days...
