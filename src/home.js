@@ -19,6 +19,7 @@ export default function Home() {
   for (let i = 0; i < examples.length && i < 5; i++) {
     cardsDOM.push(
       <button
+        key={"card-" + i}
         className="homeCards"
         style={{ border: "none" }}
         onClick={() =>

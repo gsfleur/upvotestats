@@ -2,3 +2,16 @@ h1 {
   font-size: 80px;
   margin-bottom: 0px;
 }
+
+.moreButton {
+  background-color: transparent;
+  color: gray;
+  border: 1px solid gray;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px;
+  margin: 0px;
+}
+.moreButton:hover {
+  color: gainsboro;
+}

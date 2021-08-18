@@ -28,11 +28,12 @@ export default function Search() {
     name: query,
     value: "",
     limit: 100,
+    after: "",
     stats: {
       upvotes: 0,
       downvotes: 0,
-      posts: { upvotes: 0, downvotes: 0 },
-      comments: { upvotes: 0, awards: 0 },
+      posts: { upvotes: 0, downvotes: 0, count: 0 },
+      comments: { upvotes: 0, awards: 0, count: 0 },
       awards: 0,
       coins: 0,
       earnings: 0,
@@ -50,10 +51,13 @@ export default function Search() {
             "https://www.reddit.com/" +
               query +
               "/top.json?t=month&limit=" +
-              state.limit
+              state.limit +
+              "&after=" +
+              state.after
           )
           .then((res) => {
             topData = res.data.data.children;
+            state.after = res.data.data.after;
 
             // Calculating stats for all posts
             calculate(topData, "posts");
@@ -127,11 +131,13 @@ export default function Search() {
 
       // Adding stats for posts
       if (kind === "posts") {
+        state.stats.posts.count++;
         state.stats.posts.upvotes += obj.ups;
         state.stats.posts.downvotes += downvotes;
       }
       // Adding stats for comments
       if (kind === "comments") {
+        state.stats.comments.count++;
         if (arr[i].kind === "t1") {
           state.stats.comments.upvotes += obj.ups;
           state.stats.comments.awards += obj.total_awards_received;
@@ -231,7 +237,10 @@ export default function Search() {
       {state.error === true && (
         <div className="header" style={{ padding: "60px" }}>
           <div>
-            An error occured when trying to analyze the subreddit {query}
+            An error occured when trying to analyze the subreddit {query} <br />
+            <br /> Ad blockers may cause errors by preventing the program from
+            fulfilling requests, espcially comments made by a user on reddit,
+            that may contain words such as 'advertisement'.
           </div>
         </div>
       )}
@@ -246,11 +255,35 @@ export default function Search() {
       )}
       {state.loaded === true && searching && state.error === false && (
         <div>
-          <span style={{ color: "gray" }}>
-            Showing results from the past 30 days...
+          {state.after !== undefined &&
+            state.after !== null &&
+            state.after.length > 0 && (
+              <div className="centering">
+                <button
+                  className="moreButton"
+                  onClick={() => setState({ ...state, loaded: false })}
+                >
+                  Load more posts and comments
+                </button>
+              </div>
+            )}
+          <div
+            className="centering"
+            style={{ color: "gray", width: "100%", textAlign: "center" }}
+          >
+            <br />
+            Showing results for the top{" "}
+            {state.stats.posts.count
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+            posts and top{" "}
+            {state.stats.comments.count
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+            comments from the past 30 days
             <br />
             <br />
-          </span>
+          </div>
           <Results stats={state.stats} />
         </div>
       )}
