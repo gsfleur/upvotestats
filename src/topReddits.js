@@ -1,9 +1,5 @@
 export const topReddits = [
   {
-    subscribers: 27468441,
-    subreddit: "announcements",
-  },
-  {
     subscribers: 20091892,
     subreddit: "funny",
   },

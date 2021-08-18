@@ -1,10 +1,12 @@
 import "./css/App.css";
 import "./css/home.css";
+import "./css/about.css";
 import "./css/search.css";
 import "./css/results.css";
 import "./css/mobile.css";
 import React from "react";
 import Home from "./home";
+import About from "./about";
 import Search from "./search";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -52,6 +54,9 @@ export default function App() {
               <a href="/" className="menuButton">
                 Home
               </a>
+              <a href="/about" className="menuButton">
+                About
+              </a>
             </Typography>
           </Toolbar>
         </AppBar>
@@ -63,6 +68,9 @@ export default function App() {
             <Search />
             <Switch>
               <Route path="/search"></Route>
+              <Route path="/about">
+                <About />
+              </Route>
               <Route path="/">
                 <Home />
               </Route>
@@ -96,13 +104,20 @@ export default function App() {
             <span>
               <a
                 className="searchLink"
-                href="https://github.com/gsfleur"
+                href="https://github.com/gsfleur/upvotestats"
                 target="_blank"
                 rel="noreferrer"
               >
                 <b>Source</b>
               </a>
             </span>
+            <br />
+            <br />
+            <div
+              style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}
+            >
+              &copy; {new Date().getFullYear()} Upvote Stats
+            </div>
           </div>
         </div>
       </div>

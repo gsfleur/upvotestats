@@ -1,6 +1,10 @@
 h1 {
   font-size: 80px;
   margin-bottom: 0px;
+  color: white;
+}
+h3 {
+  color: white;
 }
 
 .moreButton {

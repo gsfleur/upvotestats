@@ -245,7 +245,7 @@ export default function Search() {
         </div>
       )}
       {state.loaded === false && searching && (
-        <div className="header" style={{ padding: "60px" }}>
+        <div className="header" style={{ padding: "60px", color: "gainsboro" }}>
           <div>
             Loading all of the data can take up to 2-3 minutes to process as
             this program will analyze all of the top posts, comments, and
