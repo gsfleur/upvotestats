@@ -33,6 +33,7 @@ export default function Search() {
     limit: 100,
     after: "",
     resource: "Data for " + query + " in the past 30 days",
+    percent: { value: 0 },
     stats: {
       upvotes: 0,
       downvotes: 0,
@@ -73,6 +74,7 @@ export default function Search() {
 
         // Looping through top posts data
         for (let i = 0; i < topData.length; i++) {
+          state.percent.value = Math.floor(100 * (i / topData.length));
           let obj = topData[i].data;
           await axios
             .get("https://www.reddit.com" + obj.permalink + ".json")
@@ -117,10 +119,23 @@ export default function Search() {
 
       // Skip if missing important keys
       if (arr[i].kind === "t1") if (obj.ups === undefined) continue;
+      if (arr[i].kind === "more") if (obj.children === undefined) continue;
 
       state.resource += "\n--------------------\n";
       if (obj.permalink !== undefined)
         state.resource += "LINK: " + obj.permalink + "\n";
+
+      // Calculate amount of upvotes
+      let upvotes = obj.ups;
+      if (arr[i].kind === "more") upvotes = obj.count;
+
+      /* 
+        Top Post will typcally have a positive amount of upvotes, 
+        however some comments may be negative, and there is no upvote ratio 
+        for comments so there is no way to get an accurate amount of downvotes, but since 
+        its a negative value we can leave it as 0
+      */
+      if (upvotes < 0) upvotes = 0;
 
       // Calculate the amount of downvotes
       let downvotes =
@@ -128,37 +143,34 @@ export default function Search() {
 
       if (obj.upvote_ratio === undefined) downvotes = 0;
 
-      // Adding general stats
-
-      if (arr[i].kind !== "more") {
-        state.stats.upvotes += obj.ups;
-        state.stats.downvotes += downvotes;
-      }
-
       // Adding stats for posts
       if (kind === "posts") {
-        state.resource += "POST | ";
         state.stats.posts.count++;
-        state.stats.posts.upvotes += obj.ups;
+        state.stats.upvotes += upvotes;
+        state.stats.downvotes += downvotes;
+        state.stats.posts.upvotes += upvotes;
         state.stats.posts.downvotes += downvotes;
-        state.resource += "upvotes: " + obj.ups + " ";
+        state.resource += "POST | ";
+        state.resource += "upvotes: " + upvotes + " ";
         state.resource += "downvotes: " + downvotes + " ";
       }
       // Adding stats for comments
       if (kind === "comments") {
-        state.resource += "COMMENTS | ";
         state.stats.comments.count++;
+        state.resource += "COMMENTS | ";
         if (arr[i].kind === "t1") {
-          state.stats.comments.upvotes += obj.ups;
+          state.stats.upvotes += upvotes;
+          state.stats.comments.upvotes += upvotes;
           state.stats.comments.awards += obj.total_awards_received;
-          state.resource += "upvotes: " + obj.ups + " ";
+          state.resource += "upvotes: " + upvotes + " ";
         }
         // Adding 'excess' comments
         if (arr[i].kind === "more") {
-          state.stats.comments.upvotes += obj.count;
+          state.stats.upvotes += upvotes;
+          state.stats.comments.upvotes += upvotes;
           state.resource +=
             "total upvotes: " +
-            obj.count +
+            upvotes +
             " from sub-level comment ids: " +
             obj.children.toString() +
             " ";
@@ -292,6 +304,8 @@ export default function Search() {
             replies of the subreddit in the last 30 days.
           </div>
           <br />
+          <Percentage percent={state.percent} />
+          <br />
           <br />
           <CircularProgress
             style={{
@@ -310,7 +324,9 @@ export default function Search() {
               <div className="centering">
                 <button
                   className="moreButton"
-                  onClick={() => setState({ ...state, loaded: false })}
+                  onClick={() =>
+                    setState({ ...state, loaded: false, percent: { value: 0 } })
+                  }
                 >
                   Load more posts and comments
                 </button>
@@ -353,4 +369,22 @@ export default function Search() {
       )}
     </div>
   );
+}
+
+/**
+ * Displays the completion percentage when loading
+ * @param {*} props - for passing percentage
+ * @returns percent progress
+ */
+function Percentage(props) {
+  const [state, setState] = useState({});
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setState({ ...state });
+    }, 1000);
+    return () => clearInterval(interval);
+  });
+
+  return <span>{props.percent.value} % complete</span>;
 }
