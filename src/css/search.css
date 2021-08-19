@@ -19,3 +19,16 @@ h3 {
 .moreButton:hover {
   color: gainsboro;
 }
+
+.resourceButton {
+  background-color: transparent;
+  color: rgb(6, 115, 204);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 10px;
+  margin: 0px 0px 0px 0px;
+}
+.resourceButton:hover {
+  color: rgb(12, 133, 233);
+}

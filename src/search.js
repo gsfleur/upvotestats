@@ -1,8 +1,10 @@
 import axios from "axios";
 import React from "react";
+import JSZip from "jszip";
 import Results from "./results";
-import { useState, useEffect } from "react";
+import { saveAs } from "file-saver";
 import { topReddits } from "./topReddits";
+import { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -30,6 +32,7 @@ export default function Search() {
     value: "",
     limit: 100,
     after: "",
+    resource: "Data for " + query + " in the past 30 days",
     stats: {
       upvotes: 0,
       downvotes: 0,
@@ -113,12 +116,11 @@ export default function Search() {
       let obj = arr[i].data;
 
       // Skip if missing important keys
-      if (
-        obj.ups === undefined ||
-        obj.all_awardings === undefined ||
-        obj.total_awards_received === undefined
-      )
-        continue;
+      if (arr[i].kind === "t1") if (obj.ups === undefined) continue;
+
+      state.resource += "\n--------------------\n";
+      if (obj.permalink !== undefined)
+        state.resource += "LINK: " + obj.permalink + "\n";
 
       // Calculate the amount of downvotes
       let downvotes =
@@ -127,38 +129,65 @@ export default function Search() {
       if (obj.upvote_ratio === undefined) downvotes = 0;
 
       // Adding general stats
-      state.stats.upvotes += obj.ups;
-      state.stats.downvotes += downvotes;
+
+      if (arr[i].kind !== "more") {
+        state.stats.upvotes += obj.ups;
+        state.stats.downvotes += downvotes;
+      }
 
       // Adding stats for posts
       if (kind === "posts") {
+        state.resource += "POST | ";
         state.stats.posts.count++;
         state.stats.posts.upvotes += obj.ups;
         state.stats.posts.downvotes += downvotes;
+        state.resource += "upvotes: " + obj.ups + " ";
+        state.resource += "downvotes: " + downvotes + " ";
       }
       // Adding stats for comments
       if (kind === "comments") {
+        state.resource += "COMMENTS | ";
         state.stats.comments.count++;
         if (arr[i].kind === "t1") {
           state.stats.comments.upvotes += obj.ups;
           state.stats.comments.awards += obj.total_awards_received;
-
-          // Recursion to access each reply for each comment
-          if (obj.replies.data !== undefined)
-            calculate(obj.replies.data.children, "comments");
+          state.resource += "upvotes: " + obj.ups + " ";
         }
         // Adding 'excess' comments
         if (arr[i].kind === "more") {
           state.stats.comments.upvotes += obj.count;
+          state.resource +=
+            "total upvotes: " +
+            obj.count +
+            " from sub-level comment ids: " +
+            obj.children.toString() +
+            " ";
         }
       }
 
-      // Adding amount of awards
-      state.stats.awards += obj.total_awards_received;
-      // Adding amount of coins
-      for (let j = 0; j < obj.all_awardings.length; j++) {
-        state.stats.coins +=
-          obj.all_awardings[j].count * obj.all_awardings[j].coin_price;
+      if (
+        obj.all_awardings !== undefined &&
+        obj.total_awards_received !== undefined
+      ) {
+        state.resource += "\nAWARDS | ";
+        // Adding amount of awards
+        state.stats.awards += obj.total_awards_received;
+        state.resource += "received: " + obj.total_awards_received + " ";
+        let coins = 0;
+        // Adding amount of coins
+        for (let j = 0; j < obj.all_awardings.length; j++) {
+          coins += obj.all_awardings[j].count * obj.all_awardings[j].coin_price;
+        }
+        state.stats.coins += coins;
+        state.resource += "coins: " + coins + " ";
+      }
+
+      // Recursion to access each reply for each comment
+      if (kind === "comments") {
+        if (arr[i].kind === "t1") {
+          if (obj.replies.data !== undefined)
+            calculate(obj.replies.data.children, "comments");
+        }
       }
     }
   }
@@ -295,6 +324,21 @@ export default function Search() {
             <br />
           </div>
           <Results stats={state.stats} />
+          <div className="centering">
+            <button
+              className="resourceButton"
+              onClick={() => {
+                let zip = new JSZip();
+                zip.file(q + "-upvotestats.txt", state.resource);
+
+                zip.generateAsync({ type: "blob" }).then(function (content) {
+                  saveAs.saveAs(content, q + "-upvotestats.zip");
+                });
+              }}
+            >
+              Download Resource Text File
+            </button>
+          </div>
         </div>
       )}
     </div>
