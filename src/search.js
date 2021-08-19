@@ -30,7 +30,7 @@ export default function Search() {
     error: false,
     name: query,
     value: "",
-    limit: 1,
+    limit: 100,
     after: "",
     resource: "Data for " + query + " in the past 30 days",
     stats: {
