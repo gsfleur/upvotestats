@@ -17,8 +17,8 @@ export default function Home() {
     cardsDOM: [],
   });
 
-  // Getting top 30 communities
-  let examples = communities.slice(0, 30);
+  // Getting top 200 communities
+  let examples = communities.slice(0, 100);
 
   // Randomizing profile cards with Schwartzian transformation
   examples = examples
@@ -31,7 +31,10 @@ export default function Home() {
     if (state.loaded === false) {
       (async () => {
         // Creating cards for communities
-        for (let i = 0; i < examples.length && i < 5; i++) {
+        for (let i = 0; i < examples.length && state.cardsDOM.length < 5; i++) {
+          // Prevent home cards with potentially misleading nsfw
+          // title that may confuse others upon first notice
+          if (examples[i].subreddit.toLowerCase().includes("porn")) continue;
           await axios
             .get(
               "https://www.reddit.com/r/" +
