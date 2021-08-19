@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { topReddits } from "./topReddits";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Top Reddit Communities
 const communities = topReddits;
@@ -27,7 +28,7 @@ export default function Search() {
     error: false,
     name: query,
     value: "",
-    limit: 100,
+    limit: 5,
     after: "",
     stats: {
       upvotes: 0,
@@ -251,6 +252,15 @@ export default function Search() {
             this program will analyze all of the top posts, comments, and
             replies of the subreddit in the last 30 days.
           </div>
+          <br />
+          <br />
+          <CircularProgress
+            style={{
+              width: "25px",
+              height: "25px",
+              color: "rgb(142, 200, 246)",
+            }}
+          />
         </div>
       )}
       {state.loaded === true && searching && state.error === false && (

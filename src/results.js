@@ -1,19 +1,4 @@
 export default function Results(props) {
-  /**
-   * Converts number to string with abbreviation
-   * @param {*} num - Number to convert
-   * @returns Number with abbreviation
-   */
-  function numToString(num) {
-    return Math.abs(num) >= 1.0e9
-      ? (Math.abs(num) / 1.0e9).toFixed(3) + " B"
-      : Math.abs(num) >= 1.0e6
-      ? (Math.abs(num) / 1.0e6).toFixed(3) + " M"
-      : Math.abs(num) >= 1.0e3
-      ? (Math.abs(num) / 1.0e3).toFixed(3) + " K"
-      : Math.abs(num).toFixed(2);
-  }
-
   return (
     <div>
       <div className="header">
@@ -63,4 +48,19 @@ export default function Results(props) {
       </div>
     </div>
   );
+}
+
+/**
+ * Converts number to string with abbreviation
+ * @param {*} num - Number to convert
+ * @returns Number with abbreviation
+ */
+export function numToString(num) {
+  return Math.abs(num) >= 1.0e9
+    ? (Math.abs(num) / 1.0e9).toFixed(3) + " B"
+    : Math.abs(num) >= 1.0e6
+    ? (Math.abs(num) / 1.0e6).toFixed(3) + " M"
+    : Math.abs(num) >= 1.0e3
+    ? (Math.abs(num) / 1.0e3).toFixed(3) + " K"
+    : Math.abs(num).toFixed(2);
 }
