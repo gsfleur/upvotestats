@@ -30,7 +30,7 @@ export default function Search() {
     error: false,
     name: query,
     value: "",
-    limit: 100,
+    limit: 1,
     after: "",
     resource: "Data for " + query + " in the past 30 days",
     stats: {
@@ -227,7 +227,17 @@ export default function Search() {
   return (
     <div>
       <div className="centering">
-        <h1>{state.name}</h1>
+        {searching === false && <h1>{state.name}</h1>}
+        {searching === true && (
+          <a
+            href={"https://www.reddit.com/" + query}
+            rel="noreferrer"
+            target="_blank"
+            style={{ textDecoration: "none" }}
+          >
+            <h1>{state.name}</h1>
+          </a>
+        )}
       </div>
       <div className="centering">
         <h3>upvotestats.com</h3>

@@ -48,10 +48,6 @@ export const topReddits = [
     subreddit: "Music",
   },
   {
-    subscribers: 16551253,
-    subreddit: "blog",
-  },
-  {
     subscribers: 16425944,
     subreddit: "gifs",
   },
