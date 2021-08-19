@@ -28,7 +28,7 @@ export default function Search() {
     error: false,
     name: query,
     value: "",
-    limit: 5,
+    limit: 100,
     after: "",
     stats: {
       upvotes: 0,
