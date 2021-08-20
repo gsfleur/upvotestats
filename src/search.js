@@ -7,7 +7,6 @@ import { topReddits } from "./topReddits";
 import { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Top Reddit Communities
 const communities = topReddits;
@@ -34,6 +33,7 @@ export default function Search() {
     after: "",
     resource: "Data for " + query + " in the past 30 days",
     percent: { value: 0 },
+    dates: {},
     stats: {
       upvotes: 0,
       downvotes: 0,
@@ -42,6 +42,7 @@ export default function Search() {
       awards: 0,
       coins: 0,
       earnings: 0,
+      dates: [],
     },
   });
 
@@ -92,6 +93,17 @@ export default function Search() {
 
         // Finally, calculating the earnings
         state.stats.earnings = Math.floor(state.stats.coins / 500) * 1.99;
+
+        // Converting data objects with dates to array
+        state.stats.dates = Object.keys(state.dates).map((key) => [
+          Number(key),
+          state.dates[key],
+        ]);
+
+        // Sorting the array
+        state.stats.dates = state.stats.dates.sort(function (a, b) {
+          return a[0] - b[0];
+        });
 
         // Update state
         if (componentMounted) {
@@ -156,9 +168,9 @@ export default function Search() {
       }
       // Adding stats for comments
       if (kind === "comments") {
-        state.stats.comments.count++;
         state.resource += "COMMENTS | ";
         if (arr[i].kind === "t1") {
+          state.stats.comments.count++;
           state.stats.upvotes += upvotes;
           state.stats.comments.upvotes += upvotes;
           state.stats.comments.awards += obj.total_awards_received;
@@ -166,6 +178,7 @@ export default function Search() {
         }
         // Adding 'excess' comments
         if (arr[i].kind === "more") {
+          state.stats.comments.count += obj.children.length;
           state.stats.upvotes += upvotes;
           state.stats.comments.upvotes += upvotes;
           state.resource +=
@@ -192,6 +205,20 @@ export default function Search() {
         }
         state.stats.coins += coins;
         state.resource += "coins: " + coins + " ";
+
+        // Getting date of creation
+        let d = new Date(obj.created_utc * 1000);
+        // Setting date to common 00:00:00
+        d.setHours(0, 0, 0, 0);
+        let dateCreated = d.getTime();
+        if (coins > 0) {
+          // Store amount of coins given out on each day
+          if (state.dates[dateCreated] === undefined) {
+            state.dates[dateCreated] = coins;
+          } else {
+            state.dates[dateCreated] += coins;
+          }
+        }
       }
 
       // Recursion to access each reply for each comment
@@ -298,22 +325,15 @@ export default function Search() {
       )}
       {state.loaded === false && searching && (
         <div className="header" style={{ padding: "60px", color: "gainsboro" }}>
+          <Percentage percent={state.percent} />
+          <br />
+          <br />
           <div>
             Loading all of the data can take up to 2-3 minutes to process as
             this program will analyze all of the top posts, comments, and
             replies of the subreddit in the last 30 days.
           </div>
           <br />
-          <Percentage percent={state.percent} />
-          <br />
-          <br />
-          <CircularProgress
-            style={{
-              width: "25px",
-              height: "25px",
-              color: "rgb(142, 200, 246)",
-            }}
-          />
         </div>
       )}
       {state.loaded === true && searching && state.error === false && (
