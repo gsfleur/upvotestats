@@ -20,7 +20,7 @@ export default function Results(props) {
       backgroundColor: "transparent",
     },
     title: {
-      text: "Award coins given per day",
+      text: "Coins awarded per day",
       style: { color: "gainsboro" },
     },
     subtitle: {
