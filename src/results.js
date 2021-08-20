@@ -10,7 +10,7 @@ HighchartsAccessibility(Highcharts);
 HighchartsMore(Highcharts);
 
 export default function Results(props) {
-  // Awards data
+  // Awarded coins data
   const data = props.stats.dates;
 
   // Chart configuration

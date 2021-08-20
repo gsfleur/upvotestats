@@ -42,6 +42,7 @@ export default function Home() {
                 "/top.json?t=month&limit=1"
             )
             .then((res) => {
+              // Getting subscriber amount
               let subs = res.data.data.children[0].data.subreddit_subscribers;
 
               state.cardsDOM.push(

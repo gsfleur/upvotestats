@@ -399,6 +399,7 @@ export default function Search() {
 function Percentage(props) {
   const [state, setState] = useState({});
 
+  // Update state every second to re-render percent amount
   useEffect(() => {
     const interval = setInterval(() => {
       setState({ ...state });
