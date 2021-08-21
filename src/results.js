@@ -83,9 +83,11 @@ export default function Results(props) {
 
   return (
     <div>
-      <div style={{ marginBottom: "10px" }}>
-        <HighchartsReact highcharts={Highcharts} options={options} />
-      </div>
+      {data.length > 0 && (
+        <div style={{ marginBottom: "10px" }}>
+          <HighchartsReact highcharts={Highcharts} options={options} />
+        </div>
+      )}
       <div className="header">
         <div className="title">GENERAL STATS</div>
         <div className="upsHeader">{numToString(props.stats.upvotes)}</div>
