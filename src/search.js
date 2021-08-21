@@ -119,6 +119,13 @@ export default function Search() {
     };
   });
 
+  // Link to post/comment
+  const link = (() => {
+    let value = "";
+
+    return { getValue: () => value, setValue: (n) => (value = n) };
+  })();
+
   /**
    * Calculates the data and adds results to the state
    * @param {*} arr - array with data to calculate
@@ -134,8 +141,17 @@ export default function Search() {
       if (arr[i].kind === "more") if (obj.children === undefined) continue;
 
       state.resource += "\n--------------------\n";
-      if (obj.permalink !== undefined)
+      if (obj.permalink !== undefined) {
         state.resource += "LINK: " + obj.permalink + "\n";
+        link.setValue(
+          obj.permalink.substring(
+            0,
+            obj.permalink.lastIndexOf("/", obj.permalink.lastIndexOf("/") - 1)
+          )
+        );
+      } else {
+        state.resource += "LINK: " + link.getValue() + "\n";
+      }
 
       // Calculate amount of upvotes
       let upvotes = obj.ups;
@@ -182,7 +198,7 @@ export default function Search() {
           state.stats.upvotes += upvotes;
           state.stats.comments.upvotes += upvotes;
           state.resource +=
-            "total upvotes: " +
+            "minimum total amount of combined upvotes: " +
             upvotes +
             " from sub-level comment ids: " +
             obj.children.toString() +
