@@ -50,6 +50,7 @@ export default function Search() {
     let componentMounted = true;
     if (state.loaded === false && searching) {
       (async () => {
+        state.percent.value = 1;
         // Getting all top posts of the month
         let topData = [];
         await axios
@@ -75,7 +76,7 @@ export default function Search() {
 
         // Looping through top posts data
         for (let i = 0; i < topData.length; i++) {
-          state.percent.value = Math.floor(100 * (i / topData.length));
+          state.percent.value = Math.floor(100 * (i / topData.length)) + 1;
           let obj = topData[i].data;
           await axios
             .get("https://www.reddit.com" + obj.permalink + ".json")
@@ -346,8 +347,8 @@ export default function Search() {
           <br />
           <div>
             Loading all of the data can take up to 2-3 minutes to process as
-            this program will analyze all of the top posts, comments, and
-            replies of the subreddit in the last 30 days.
+            this program will analyze the top posts, comments, and replies of
+            the subreddit in the last 30 days.
           </div>
           <br />
         </div>
