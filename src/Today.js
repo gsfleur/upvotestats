@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function Today() {
-  window.document.title = "Upvote Stats - Today";
+  window.document.title =
+    "Upvote Stats - Todays Most Downvoted Posts on Reddit";
 
   // Component State
   const [state, setState] = useState({
     loaded: false,
-    data: {},
+    data: undefined,
   });
 
   useEffect(() => {
@@ -69,9 +70,26 @@ export default function Today() {
           {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
           {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>} on r/
           {state.data.posts[i][1].subreddit} for a total of{" "}
-          {state.data.posts[i][1].ups} upvotes and{" "}
-          {Math.abs(state.data.posts[i][1].downvotes)} downvotes for a ratio of{" "}
-          {Math.floor(state.data.posts[i][0] * 100)} percent.
+          {state.data.posts[i][1].upvotes
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+          upvotes and{" "}
+          {Math.abs(state.data.posts[i][1].downvotes)
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+          downvotes for a ratio of {Math.floor(state.data.posts[i][0] * 100)}{" "}
+          percent.{" "}
+          {state.data.posts[i][1].coins > 0 && (
+            <span>
+              <br />
+              <br />
+              {state.data.posts[i][1].coins
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              reddit coins awarded, EST. $
+              {((state.data.posts[i][1].coins / 500) * 1.99).toFixed(3)} USD
+            </span>
+          )}
         </span>
       );
 
@@ -107,18 +125,28 @@ export default function Today() {
             </div>
             {loadableImg && (
               <div
+                className="imgBody"
                 style={{
                   display: "inline-block",
                   width: "100%",
                   marginTop: "10px",
                 }}
               >
-                <div style={{ overflow: "auto" }}>
+                <div
+                  style={{
+                    overflow: "auto",
+                    border: "1.5px solid #292929",
+                    borderRadius: "10px",
+                    padding: "10px",
+                  }}
+                >
                   <img
                     src={state.data.posts[i][1].urlToImage}
                     className="postImgStandard"
                     alt="news"
-                    style={{ float: "left", marginLeft: "10px" }}
+                    style={{
+                      float: "left",
+                    }}
                   />
                   <div
                     className="postDate"
@@ -186,15 +214,57 @@ export default function Today() {
     <div className="centering">
       <div className="today">
         {state.loaded === false && (
-          <CircularProgress
-            style={{
-              width: "25px",
-              height: "25px",
-              color: "rgb(142, 200, 246)",
-            }}
-          />
+          <div className="centering">
+            <CircularProgress
+              style={{
+                width: "25px",
+                height: "25px",
+                color: "rgb(142, 200, 246)",
+              }}
+            />
+          </div>
         )}
-        {state.loaded === true && <div>{newsListDOM}</div>}
+        {state.loaded === true && newsListDOM.length > 0 && (
+          <div>
+            <div
+              className="searchLink"
+              style={{ fontSize: "18px", textAlign: "center" }}
+            >
+              <b>Today's Most Downvoted Posts</b>
+            </div>
+            <div
+              className="searchLink"
+              style={{ fontSize: "12px", color: "silver", textAlign: "center" }}
+            >
+              <b>
+                {numToString(state.data.stats.upvotes)} total upvotes,{" "}
+                {numToString(state.data.stats.downvotes)} total downvotes
+              </b>
+              <br />
+              <b>
+                {numToString(state.data.stats.posts.count)} post,{" "}
+                {numToString(state.data.stats.comments.count)} comments
+              </b>
+              <br />
+              <b>
+                {numToString(state.data.stats.awards)} awards,{" "}
+                {numToString(state.data.stats.coins)} coins
+              </b>
+              <br />
+              <b>
+                ${numToString(state.data.stats.earnings)} estimated cash spent
+              </b>
+              <br />
+            </div>
+            {newsListDOM}
+          </div>
+        )}
+        {newsListDOM.length === 0 && (
+          <div style={{ textAlign: "center" }}>
+            This page is currently unavailable. Please check back soon for
+            updates.
+          </div>
+        )}
       </div>
     </div>
   );

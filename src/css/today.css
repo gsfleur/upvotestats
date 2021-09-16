@@ -9,7 +9,7 @@
   font-size: 16px;
   width: 70%;
   max-width: 800px;
-  min-width: 250px;
+  min-width: 300px;
 }
 
 .postLink {
@@ -30,11 +30,20 @@
   float: right;
 }
 
+.imgBody {
+  display: inline-block;
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.imgBody:hover {
+  background-color: #292929e7;
+}
+
 .postDate {
   color: gainsboro;
   width: 100%;
   display: inline-block;
-  margin-top: 10px;
   font-size: 13px;
   font-weight: bold;
 }

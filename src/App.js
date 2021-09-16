@@ -73,7 +73,6 @@ export default function App() {
             <Switch>
               <Route path="/search"></Route>
               <Route path="/about">
-                <Search />
                 <About />
               </Route>
               <Route path="/today">
