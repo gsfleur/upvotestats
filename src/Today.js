@@ -16,6 +16,7 @@ export default function Today() {
     let componentMounted = true;
     if (state.loaded === false) {
       (async () => {
+        // Loading data from backend
         await axios
           .get(process.env.REACT_APP_BACKEND + "posts")
           .then((res) => {
@@ -43,7 +44,7 @@ export default function Today() {
   let newsListDOM = [];
   if (state.loaded === true) {
     // Creating DOM for posts
-    for (let i = 0; i < state.data.posts.length && i < 100; i++) {
+    for (let i = 0; i < state.data.posts.length && i < 50; i++) {
       const timeInDay = 24 * 60 * 60 * 1000;
       const firstDate = new Date(state.data.posts[i][1].publishedAt);
       const secondDate = new Date();
@@ -52,6 +53,7 @@ export default function Today() {
         Math.abs((firstDate - secondDate) / timeInDay)
       );
 
+      // Determine whether to show image
       let loadableImg =
         state.data.posts[i][1].urlToImage !== null &&
         state.data.posts[i][1].urlToImage !== "" &&
@@ -60,6 +62,7 @@ export default function Today() {
         state.data.posts[i][1].urlToImage !== "nsfw" &&
         state.data.posts[i][1].urlToImage !== "spoiler";
 
+      // Description of posts
       let author = (
         <span>
           Posted by {state.data.posts[i][1].author}{" "}
@@ -93,6 +96,7 @@ export default function Today() {
         </span>
       );
 
+      // DOM of post in list
       newsListDOM.push(
         <div className="centering" key={"today-" + i}>
           <a
@@ -237,7 +241,8 @@ export default function Today() {
               style={{ fontSize: "12px", color: "silver", textAlign: "center" }}
             >
               <b>
-                {numToString(state.data.stats.upvotes)} total upvotes,{" "}
+                {numToString(state.data.stats.upvotes)} total upvotes
+                <br />
                 {numToString(state.data.stats.downvotes)} total downvotes
               </b>
               <br />
@@ -259,7 +264,7 @@ export default function Today() {
             {newsListDOM}
           </div>
         )}
-        {newsListDOM.length === 0 && (
+        {state.loaded === true && newsListDOM.length === 0 && (
           <div style={{ textAlign: "center" }}>
             This page is currently unavailable. Please check back soon for
             updates.
