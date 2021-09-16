@@ -1,0 +1,40 @@
+.today {
+  background-color: #161616;
+  color: gainsboro;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-left: 1%;
+  margin-right: 1%;
+  font-size: 16px;
+  width: 70%;
+  max-width: 800px;
+  min-width: 250px;
+}
+
+.postLink {
+  width: 85%;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 0px;
+  text-decoration: none;
+  color: gainsboro;
+}
+
+.postImgStandard {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  float: right;
+}
+
+.postDate {
+  color: gainsboro;
+  width: 100%;
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: bold;
+}

@@ -23,4 +23,8 @@
   .size30 {
     font-size: 20px;
   }
+
+  .postDate {
+    margin-top: 0px;
+  }
 }

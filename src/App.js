@@ -3,11 +3,13 @@ import "./css/home.css";
 import "./css/about.css";
 import "./css/search.css";
 import "./css/results.css";
+import "./css/today.css";
 import "./css/mobile.css";
 import React from "react";
 import Home from "./home";
 import About from "./about";
 import Search from "./search";
+import Today from "./Today";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -54,6 +56,9 @@ export default function App() {
               <a href="/" className="menuButton">
                 Home
               </a>
+              <a href="/today" className="menuButton">
+                Today
+              </a>
               <a href="/about" className="menuButton">
                 About
               </a>
@@ -65,13 +70,17 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <div className="centering">
           <div className="content">
-            <Search />
             <Switch>
               <Route path="/search"></Route>
               <Route path="/about">
+                <Search />
                 <About />
               </Route>
+              <Route path="/today">
+                <Today />
+              </Route>
               <Route path="/">
+                <Search />
                 <Home />
               </Route>
             </Switch>
