@@ -62,12 +62,15 @@ export default function Today() {
         state.data.posts[i][1].urlToImage !== "nsfw" &&
         state.data.posts[i][1].urlToImage !== "spoiler";
 
+      // hours since post
+      let hours = Math.abs(firstDate - secondDate);
+      hours /= 60 * 60 * 1000;
+
       // Description of posts
       let author = (
         <span>
           {state.data.posts[i][1].author} posted this{" "}
-          {diffDays === 0 && <span>today</span>}
-          {diffDays === 1 && <span>one day ago</span>}
+          {diffDays <= 1 && <span>{Math.floor(hours)} hours ago</span>}
           {diffDays > 1 && diffDays < 7 && <span>{diffDays} days ago</span>}
           {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
           {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
