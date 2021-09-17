@@ -65,7 +65,7 @@ export default function Today() {
       // Description of posts
       let author = (
         <span>
-          Posted by {state.data.posts[i][1].author}{" "}
+          {state.data.posts[i][1].author} posted this{" "}
           {diffDays === 0 && <span>today</span>}
           {diffDays === 1 && <span>one day ago</span>}
           {diffDays > 1 && diffDays < 7 && <span>{diffDays} days ago</span>}
@@ -76,11 +76,11 @@ export default function Today() {
           {state.data.posts[i][1].upvotes
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-          upvotes and{" "}
+          upvotes,{" "}
           {Math.abs(state.data.posts[i][1].downvotes)
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-          downvotes for a ratio of {Math.floor(state.data.posts[i][0] * 100)}{" "}
+          downvotes and a ratio of {Math.floor(state.data.posts[i][0] * 100)}{" "}
           percent.{" "}
           {state.data.posts[i][1].coins > 0 && (
             <span>
