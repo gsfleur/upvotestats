@@ -74,28 +74,10 @@ export default function Today() {
           {diffDays > 1 && diffDays < 7 && <span>{diffDays} days ago</span>}
           {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
           {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
-          {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>} on r/
-          {state.data.posts[i][1].subreddit} for a total of{" "}
-          {state.data.posts[i][1].upvotes
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-          upvotes,{" "}
-          {Math.abs(state.data.posts[i][1].downvotes)
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-          downvotes and a ratio of {Math.floor(state.data.posts[i][0] * 100)}{" "}
-          percent.{" "}
-          {state.data.posts[i][1].coins > 0 && (
-            <span>
-              <br />
-              <br />
-              {state.data.posts[i][1].coins
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              reddit coins awarded, EST. $
-              {((state.data.posts[i][1].coins / 500) * 1.99).toFixed(3)} USD
-            </span>
-          )}
+          {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>} for a
+          total of {numToString(state.data.posts[i][1].upvotes)} upvotes,{" "}
+          {numToString(Math.abs(state.data.posts[i][1].downvotes))} downvotes
+          and a ratio of {Math.floor(state.data.posts[i][0] * 100)} percent.{" "}
         </span>
       );
 
@@ -188,10 +170,12 @@ export default function Today() {
                 color: "silver",
               }}
             >
-              {state.data.posts[i][1].comments
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-              people are talking about this
+              {numToString(state.data.posts[i][1].comments)} comments
+              {state.data.posts[i][1].coins > 0 && (
+                <span>
+                  , {numToString(state.data.posts[i][1].coins)} reddit coins
+                </span>
+              )}
             </span>
           </a>
         </div>
@@ -206,12 +190,12 @@ export default function Today() {
    */
   function numToString(num) {
     return Math.abs(num) >= 1.0e9
-      ? (Math.abs(num) / 1.0e9).toFixed(3) + " B"
+      ? (Math.abs(num) / 1.0e9).toFixed(1) + "B"
       : Math.abs(num) >= 1.0e6
-      ? (Math.abs(num) / 1.0e6).toFixed(3) + " M"
+      ? (Math.abs(num) / 1.0e6).toFixed(1) + "M"
       : Math.abs(num) >= 1.0e3
-      ? (Math.abs(num) / 1.0e3).toFixed(3) + " K"
-      : Math.abs(num).toFixed(2);
+      ? (Math.abs(num) / 1.0e3).toFixed(1) + "K"
+      : Math.abs(num);
   }
 
   return (
@@ -246,21 +230,22 @@ export default function Today() {
               </div>
             </div>
             {newsListDOM}
-            <div style={{ padding: "20px" }}>
+            <div
+              style={{ padding: "20px", textAlign: "center", fontSize: "14px" }}
+            >
               <b>
                 {state.data.stats.posts.count
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                 posts and {numToString(state.data.stats.comments.count)}{" "}
-                comments on r/All today
+                comments
               </b>
               <br />
               <span style={{ fontSize: "14px", color: "silver" }}>
                 {numToString(state.data.stats.upvotes)} upvotes &bull;{" "}
                 {numToString(state.data.stats.downvotes)} downvotes &bull;{" "}
                 {numToString(state.data.stats.awards)} awards &bull;{" "}
-                {numToString(state.data.stats.coins)} coins &bull; $
-                {numToString(state.data.stats.earnings)} coin value
+                {numToString(state.data.stats.coins)} coins
               </span>
             </div>
           </div>
