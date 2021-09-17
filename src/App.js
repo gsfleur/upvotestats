@@ -9,7 +9,7 @@ import React from "react";
 import Home from "./home";
 import About from "./about";
 import Search from "./search";
-import Today from "./Today";
+import Today from "./today";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";

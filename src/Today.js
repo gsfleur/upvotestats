@@ -243,6 +243,23 @@ export default function Today() {
               </div>
             </div>
             {newsListDOM}
+            <div style={{ padding: "20px" }}>
+              <b>
+                {state.data.stats.posts.count
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                posts and {numToString(state.data.stats.comments.count)}{" "}
+                comments on r/All today
+              </b>
+              <br />
+              <span style={{ fontSize: "14px", color: "silver" }}>
+                {numToString(state.data.stats.upvotes)} upvotes &bull;{" "}
+                {numToString(state.data.stats.downvotes)} downvotes &bull;{" "}
+                {numToString(state.data.stats.awards)} awards &bull;{" "}
+                {numToString(state.data.stats.coins)} coins &bull; $
+                {numToString(state.data.stats.earnings)} coin value
+              </span>
+            </div>
           </div>
         )}
         {state.loaded === true && newsListDOM.length === 0 && (
