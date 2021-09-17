@@ -71,7 +71,9 @@ export default function App() {
         <div className="centering">
           <div className="content">
             <Switch>
-              <Route path="/search"></Route>
+              <Route path="/search">
+                <Search />
+              </Route>
               <Route path="/about">
                 <About />
               </Route>
