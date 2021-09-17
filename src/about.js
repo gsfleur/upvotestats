@@ -5,6 +5,7 @@ export default function About() {
     <div className="centering">
       <div className="about">
         <div>
+          <h3>General Information</h3>
           Upvote Stats is a free and open-source website that grants users the
           ability to determine the amount of upvotes, downvotes, awards, and
           estimated earnings each subreddit accumulated in the past 30 days.
@@ -26,6 +27,13 @@ export default function About() {
           ratio like there is for upvotes.
           <br />
           <br />
+          <h3>The Today Page</h3>
+          The Today Page features posts on r/All and are sorted by highest
+          downvote ratio. The data for this page will update at most once per
+          hour. More stats about r/All can be found at the bottom of this page.
+          <br />
+          <br />
+          <h3>Searching subreddits</h3>
           By default, only the most recent one hundred top posts from this past
           month are analyzed for the convenience of processing time. However,
           you can click the 'Load more data' button at the top of each page to
