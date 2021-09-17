@@ -67,7 +67,7 @@ export default function Today() {
         <span>
           Posted by {state.data.posts[i][1].author}{" "}
           {diffDays === 0 && <span>today</span>}
-          {diffDays === 1 && <span>{diffDays} day ago</span>}
+          {diffDays === 1 && <span>one day ago</span>}
           {diffDays > 1 && diffDays < 7 && <span>{diffDays} days ago</span>}
           {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
           {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
@@ -112,18 +112,16 @@ export default function Today() {
               <div
                 className="searchLink"
                 style={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   marginBottom: "10px",
                   color: "silver",
                 }}
               >
-                <b>
-                  {i + 1} &bull; {"r/" + state.data.posts[i][1].subreddit}{" "}
-                  &bull; {numToString(state.data.posts[i][1].subscribers)}
-                </b>
+                {i + 1} &bull; {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
+                {numToString(state.data.posts[i][1].subscribers)}
               </div>
 
-              <div className="searchLink" style={{ fontSize: "18px" }}>
+              <div className="searchLink" style={{ fontSize: "16px" }}>
                 <b>{state.data.posts[i][1].title}</b>
               </div>
             </div>
@@ -155,7 +153,7 @@ export default function Today() {
                   <div
                     className="postDate"
                     style={{
-                      fontSize: "12px",
+                      fontSize: "13px",
                       marginBottom: "10px",
                       color: "silver",
                       float: "left",
@@ -172,7 +170,7 @@ export default function Today() {
               <div
                 className="postDate"
                 style={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   marginBottom: "10px",
                   color: "silver",
                 }}
@@ -182,10 +180,9 @@ export default function Today() {
             )}
             <span
               style={{
-                fontSize: "12px",
+                fontSize: "13px",
                 marginBottom: "10px",
                 color: "silver",
-                fontWeight: "bold",
               }}
             >
               {state.data.posts[i][1].comments
@@ -230,36 +227,20 @@ export default function Today() {
         )}
         {state.loaded === true && newsListDOM.length > 0 && (
           <div>
-            <div
-              className="searchLink"
-              style={{ fontSize: "18px", textAlign: "center" }}
-            >
-              <b>Today's Most Downvoted Posts</b>
-            </div>
-            <div
-              className="searchLink"
-              style={{ fontSize: "12px", color: "silver", textAlign: "center" }}
-            >
-              <b>
-                {numToString(state.data.stats.upvotes)} total upvotes
+            <div>
+              <div
+                style={{
+                  fontSize: "18px",
+                  textAlign: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <b>Today's Most Downvoted Posts</b>
                 <br />
-                {numToString(state.data.stats.downvotes)} total downvotes
-              </b>
-              <br />
-              <b>
-                {numToString(state.data.stats.posts.count)} post,{" "}
-                {numToString(state.data.stats.comments.count)} comments
-              </b>
-              <br />
-              <b>
-                {numToString(state.data.stats.awards)} awards,{" "}
-                {numToString(state.data.stats.coins)} coins
-              </b>
-              <br />
-              <b>
-                ${numToString(state.data.stats.earnings)} estimated cash spent
-              </b>
-              <br />
+                <span style={{ fontSize: "18px" }}>
+                  <b>on reddits front page</b>
+                </span>
+              </div>
             </div>
             {newsListDOM}
           </div>
