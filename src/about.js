@@ -29,8 +29,8 @@ export default function About() {
           <br />
           <h3>The Today Page</h3>
           The Today Page features posts on r/All and are sorted by highest
-          downvote ratio. The data for this page will update at most once per
-          hour. More stats about r/All can be found at the bottom of this page.
+          downvote ratio. The data for this page will update every hour. More
+          stats about r/All can be found at the bottom of this page.
           <br />
           <br />
           <h3>Searching subreddits</h3>
