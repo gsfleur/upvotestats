@@ -59,6 +59,9 @@ export default function Trends() {
   if (state.loaded === true) {
     // Creating DOM for posts
     for (let i = 0; i < state.data.posts.length && i < 50; i++) {
+      // Skip deleted posts
+      if (state.data.posts[i][1].text === "[deleted]") continue;
+
       const timeInDay = 24 * 60 * 60 * 1000;
       const firstDate = new Date(state.data.posts[i][1].publishedAt);
       const secondDate = new Date();
@@ -96,6 +99,24 @@ export default function Trends() {
         </span>
       );
 
+      let text = state.data.posts[i][1].text;
+
+      let textParts = text.split("\n");
+      let newText = "";
+
+      // Removing links from text
+      let removeText = ["www", "https", "http"];
+      if (text !== undefined) {
+        for (let t = 0; t < textParts.length; t++) {
+          let allow = true;
+          for (let r = 0; r < removeText.length; r++) {
+            if (textParts[t].includes(removeText[r])) allow = false;
+          }
+
+          if (allow === true) newText += textParts[t] + " ";
+        }
+      }
+
       // DOM of post in list
       newsListDOM.push(
         <div className="centering" key={"today-" + i}>
@@ -117,13 +138,28 @@ export default function Trends() {
                   color: "silver",
                 }}
               >
-                {i + 1} &bull; {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
+                {newsListDOM.length + 1} &bull;{" "}
+                {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
                 {numToString(state.data.posts[i][1].subscribers)}
               </div>
 
               <div className="searchLink" style={{ fontSize: "16px" }}>
                 <b>{state.data.posts[i][1].title}</b>
               </div>
+              {newText.length > 0 && (
+                <div
+                  className="searchLink"
+                  style={{
+                    fontSize: "13px",
+                    marginBottom: "5px",
+                    marginTop: "5px",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  {newText.substring(0, 180)}
+                  {newText.length > 180 && <span>...</span>}
+                </div>
+              )}
             </div>
             {loadableImg && (
               <div
