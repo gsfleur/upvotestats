@@ -154,6 +154,7 @@ export default function Trends() {
                     marginBottom: "5px",
                     marginTop: "5px",
                     wordWrap: "break-word",
+                    color: "silver",
                   }}
                 >
                   {newText.substring(0, 180)}
