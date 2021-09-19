@@ -27,10 +27,11 @@ export default function About() {
           ratio like there is for upvotes.
           <br />
           <br />
-          <h3>The Today Page</h3>
-          The Today Page features posts on r/All and are sorted by highest
-          downvote ratio. The data for this page will update every hour. More
-          stats about r/All can be found at the bottom of this page.
+          <h3>Trending Page</h3>
+          The Trends Page features posts on r/All and are sorted by highest
+          downvote ratio. You may select posts from just today or from the past
+          week to show up on your feed. The data for this page will update every
+          hour. More stats about r/All can be found at the bottom of this page.
           <br />
           <br />
           <h3>Searching subreddits</h3>
