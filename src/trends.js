@@ -2,14 +2,17 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-export default function Today() {
+export default function Trends() {
   window.document.title =
     "Upvote Stats - Todays Most Downvoted Posts on Reddit";
 
   // Component State
   const [state, setState] = useState({
     loaded: false,
+    sort: "today",
     data: undefined,
+    todayData: undefined,
+    weekData: undefined,
   });
 
   useEffect(() => {
@@ -18,9 +21,19 @@ export default function Today() {
       (async () => {
         // Loading data from backend
         await axios
-          .get(process.env.REACT_APP_BACKEND + "posts")
+          .get(process.env.REACT_APP_BACKEND + "today")
           .then((res) => {
-            state.data = res.data;
+            state.todayData = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            state.error = true;
+          });
+
+        await axios
+          .get(process.env.REACT_APP_BACKEND + "week")
+          .then((res) => {
+            state.weekData = res.data;
           })
           .catch((err) => {
             console.log(err);
@@ -32,6 +45,7 @@ export default function Today() {
           setState({
             ...state,
             loaded: true,
+            data: state.todayData,
           });
         }
       })();
@@ -215,19 +229,69 @@ export default function Today() {
         )}
         {state.loaded === true && newsListDOM.length > 0 && (
           <div>
-            <div>
-              <div
-                style={{
-                  fontSize: "18px",
-                  textAlign: "center",
-                  marginBottom: "10px",
-                }}
-              >
-                <b>Today's Most Downvoted Posts</b>
-                <br />
-                <span style={{ fontSize: "18px" }}>
-                  <b>on reddits front page</b>
-                </span>
+            <div className="centering">
+              <div style={{ width: "85%" }}>
+                <div
+                  style={{
+                    fontSize: "20px",
+                    textAlign: "center",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <b>Front Page Trends</b>
+                  <br />
+                  <span style={{ fontSize: "14px", color: "silver" }}>
+                    <b>Sorted by Downvote Ratio</b>
+                  </span>
+                  <br />
+                  <br />
+                </div>
+                {state.sort === "today" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid goldenrod" }}
+                  >
+                    Today
+                  </button>
+                )}
+                {state.sort !== "today" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid gray" }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        sort: "today",
+                        data: state.todayData,
+                      })
+                    }
+                  >
+                    Today
+                  </button>
+                )}
+                {state.sort === "week" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid goldenrod" }}
+                  >
+                    Week
+                  </button>
+                )}
+                {state.sort !== "week" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid gray" }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        sort: "week",
+                        data: state.weekData,
+                      })
+                    }
+                  >
+                    Week
+                  </button>
+                )}
               </div>
             </div>
             {newsListDOM}

@@ -45,3 +45,20 @@
   display: inline-block;
   font-size: 13px;
 }
+
+.timeButton {
+  border: none;
+  background: none;
+  padding: 10px 0px 10px 0px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 20px;
+  color: gainsboro;
+  border-radius: 0px;
+  min-width: 80px;
+  margin-bottom: 10px;
+}
+.timeButton:hover {
+  color: goldenrod;
+}

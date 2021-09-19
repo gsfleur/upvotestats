@@ -3,12 +3,12 @@ import "./css/home.css";
 import "./css/about.css";
 import "./css/search.css";
 import "./css/results.css";
-import "./css/today.css";
+import "./css/trends.css";
 import "./css/mobile.css";
 import React from "react";
 import Home from "./home";
 import About from "./about";
-import Today from "./today";
+import Trends from "./trends";
 import Search from "./search";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -56,8 +56,8 @@ export default function App() {
               <a href="/" className="menuButton">
                 Home
               </a>
-              <a href="/today" className="menuButton">
-                Today
+              <a href="/trends" className="menuButton">
+                Trends
               </a>
               <a href="/about" className="menuButton">
                 About
@@ -77,8 +77,8 @@ export default function App() {
               <Route path="/about">
                 <About />
               </Route>
-              <Route path="/today">
-                <Today />
+              <Route path="/trends">
+                <Trends />
               </Route>
               <Route path="/">
                 <Search />
