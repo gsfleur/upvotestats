@@ -23,4 +23,8 @@
   .size30 {
     font-size: 20px;
   }
+  .timeButton {
+    font-size: 14px;
+    min-width: calc((100% / 3) - 25px);
+  }
 }
