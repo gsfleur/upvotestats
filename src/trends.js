@@ -108,7 +108,8 @@ export default function Trends() {
             {hours > 48 && diffDays < 7 && <span>{diffDays} days ago</span>}
             {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
             {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
-            {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>} for a
+            {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>}
+            {diffDays >= 28 && diffDays < 35 && <span>1 month ago</span>} for a
             total of {numToString(state.data.posts[i][1].upvotes)} upvotes,{" "}
             {numToString(Math.abs(state.data.posts[i][1].downvotes))} downvotes
             and a ratio of {Math.floor(state.data.posts[i][0] * 100)} percent.{" "}
