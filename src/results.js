@@ -265,5 +265,5 @@ export function numToString(num) {
     ? (Math.abs(num) / 1.0e6).toFixed(3) + "M"
     : Math.abs(num) >= 1.0e3
     ? (Math.abs(num) / 1.0e3).toFixed(3) + "K"
-    : Math.abs(num).toFixed(2);
+    : Math.abs(num);
 }
