@@ -34,6 +34,7 @@ export default function Search() {
     resource: "Data for " + query + " in the past 30 days",
     percent: { value: 0 },
     dates: {},
+    mostDownvotes: [],
     stats: {
       upvotes: 0,
       downvotes: 0,
@@ -105,6 +106,12 @@ export default function Search() {
         state.stats.dates = state.stats.dates.sort(function (a, b) {
           return a[0] - b[0];
         });
+
+        state.mostDownvotes = state.mostDownvotes.sort(function (a, b) {
+          return a[0] - b[0];
+        });
+
+        state.mostDownvotes = state.mostDownvotes.slice(0, 10);
 
         // Update state
         if (componentMounted) {
@@ -236,6 +243,32 @@ export default function Search() {
             state.dates[dateCreated] += coins;
           }
         }
+
+        // Storing posts by upvote ratio
+        if (kind === "posts") {
+          if (downvotes < 0) {
+            state.mostDownvotes.push([
+              obj.upvote_ratio,
+              {
+                subreddit: obj.subreddit,
+                subscribers: obj.subreddit_subscribers,
+                title: decodeHTMLEntities(obj.title),
+                author: obj.author,
+                upvotes: obj.ups,
+                downvotes: downvotes,
+                coins: coins,
+                comments: obj.num_comments,
+                urlToImage: obj.thumbnail,
+                text: obj.selftext,
+                nsfw: obj.over_18,
+                publishedAt:
+                  new Date(obj.created_utc * 1000).toISOString().slice(0, -5) +
+                  "Z",
+                url: "https://www.reddit.com" + obj.permalink,
+              },
+            ]);
+          }
+        }
       }
 
       // Recursion to access each reply for each comment
@@ -247,6 +280,30 @@ export default function Search() {
       }
     }
   }
+
+  /**
+   * Decodes html entities in text
+   * @param {*} text string to decode
+   * @returns decoded string
+   */
+  function decodeHTMLEntities(text) {
+    return text.replace(/&([^;]+);/gm, function (match, entity) {
+      return entities[entity] || match;
+    });
+  }
+
+  const entities = {
+    amp: "&",
+    apos: "'",
+    "#x27": "'",
+    "#x2F": "/",
+    "#39": "'",
+    "#47": "/",
+    lt: "<",
+    gt: ">",
+    nbsp: " ",
+    quot: '"',
+  };
 
   /**
    * Callback fired when the value changes
@@ -386,7 +443,7 @@ export default function Search() {
             <br />
             <br />
           </div>
-          <Results stats={state.stats} />
+          <Results stats={state.stats} mostDownvoted={state.mostDownvotes} />
           <div className="centering">
             <button
               className="resourceButton"
