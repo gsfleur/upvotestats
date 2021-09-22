@@ -67,6 +67,7 @@ export default function Trends() {
   });
 
   let newsListDOM = [];
+  let postLinks = [];
   if (state.loaded === true) {
     // Creating DOM for posts
     if (state.data.posts !== undefined) {
@@ -77,6 +78,9 @@ export default function Trends() {
       ) {
         // Skip deleted posts
         if (state.data.posts[i][1].text === "[deleted]") continue;
+
+        // Skip potential duplicates
+        if (postLinks.includes(state.data.posts[i][1].url)) continue;
 
         const timeInDay = 24 * 60 * 60 * 1000;
         const firstDate = new Date(state.data.posts[i][1].publishedAt);
@@ -134,9 +138,10 @@ export default function Trends() {
           }
         }
 
+        postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         newsListDOM.push(
-          <div className="centering" key={"today-" + i}>
+          <div className="centering" key={"trends-" + i}>
             <a
               href={state.data.posts[i][1].url}
               className="postLink"
