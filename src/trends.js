@@ -96,6 +96,7 @@ export default function Trends() {
           state.data.posts[i][1].urlToImage !== "" &&
           state.data.posts[i][1].urlToImage !== "default" &&
           state.data.posts[i][1].urlToImage !== "self" &&
+          state.data.posts[i][1].urlToImage !== "image" &&
           state.data.posts[i][1].urlToImage !== "nsfw" &&
           state.data.posts[i][1].urlToImage !== "spoiler";
 
@@ -207,7 +208,7 @@ export default function Trends() {
                     <img
                       src={state.data.posts[i][1].urlToImage}
                       className="postImgStandard"
-                      alt="news"
+                      alt="Post Image"
                       style={{
                         float: "left",
                       }}
