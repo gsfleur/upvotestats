@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function Trends() {
-  window.document.title =
-    "Upvote Stats - Todays Most Downvoted Posts on Reddit";
+  window.document.title = "Upvote Stats - Most Downvoted Posts on Reddit";
 
   // Component State
   const [state, setState] = useState({
@@ -22,7 +21,7 @@ export default function Trends() {
       (async () => {
         // Loading data from backend
         await axios
-          .get(process.env.REACT_APP_BACKEND + "today")
+          .get(process.env.REACT_APP_BACKEND + "posts/today")
           .then((res) => {
             state.todayData = res.data;
           })
@@ -32,7 +31,7 @@ export default function Trends() {
           });
 
         await axios
-          .get(process.env.REACT_APP_BACKEND + "week")
+          .get(process.env.REACT_APP_BACKEND + "posts/week")
           .then((res) => {
             state.weekData = res.data;
           })
@@ -42,7 +41,7 @@ export default function Trends() {
           });
 
         await axios
-          .get(process.env.REACT_APP_BACKEND + "month")
+          .get(process.env.REACT_APP_BACKEND + "posts/month")
           .then((res) => {
             state.monthData = res.data;
           })
@@ -66,14 +65,14 @@ export default function Trends() {
     };
   });
 
-  let newsListDOM = [];
+  let postListDOM = [];
   let postLinks = [];
   if (state.loaded === true) {
     // Creating DOM for posts
     if (state.data.posts !== undefined) {
       for (
         let i = 0;
-        i < state.data.posts.length && newsListDOM.length < 50;
+        i < state.data.posts.length && postListDOM.length < 50;
         i++
       ) {
         // Skip deleted posts
@@ -141,7 +140,7 @@ export default function Trends() {
 
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
-        newsListDOM.push(
+        postListDOM.push(
           <div className="centering" key={"trends-" + i}>
             <a
               href={state.data.posts[i][1].url}
@@ -161,7 +160,7 @@ export default function Trends() {
                     color: "silver",
                   }}
                 >
-                  {newsListDOM.length + 1} &bull;{" "}
+                  {postListDOM.length + 1} &bull;{" "}
                   {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
                   {numToString(state.data.posts[i][1].subscribers)}
                   {state.data.posts[i][1].nsfw === true && (
@@ -208,7 +207,7 @@ export default function Trends() {
                     <img
                       src={state.data.posts[i][1].urlToImage}
                       className="postImgStandard"
-                      alt="Post Image"
+                      alt="Reddit Post Thumbnail"
                       style={{
                         float: "left",
                       }}
@@ -291,7 +290,7 @@ export default function Trends() {
             />
           </div>
         )}
-        {state.loaded === true && newsListDOM.length > 0 && (
+        {state.loaded === true && postListDOM.length > 0 && (
           <div>
             <div className="centering">
               <div style={{ width: "85%" }}>
@@ -381,7 +380,7 @@ export default function Trends() {
                 )}
               </div>
             </div>
-            {newsListDOM}
+            {postListDOM}
             <div
               style={{ padding: "20px", textAlign: "center", fontSize: "14px" }}
             >
@@ -402,7 +401,7 @@ export default function Trends() {
             </div>
           </div>
         )}
-        {state.loaded === true && newsListDOM.length === 0 && (
+        {state.loaded === true && postListDOM.length === 0 && (
           <div style={{ textAlign: "center" }}>
             This page is currently unavailable. Please check back soon for
             updates.

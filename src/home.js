@@ -17,7 +17,7 @@ export default function Home() {
     cardsDOM: [],
   });
 
-  // Getting top 200 communities
+  // Getting top 100 communities
   let examples = communities.slice(0, 100);
 
   // Randomizing profile cards with Schwartzian transformation

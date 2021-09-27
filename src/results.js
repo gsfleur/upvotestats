@@ -81,17 +81,17 @@ export default function Results(props) {
     ],
   };
 
-  let newsListDOM = [];
+  let downvoteListDOM = [];
   for (
     let i = 0;
-    i < props.mostDownvoted.length && newsListDOM.length < 50;
+    i < props.mostDownvoted.length && downvoteListDOM.length < 50;
     i++
   ) {
     // Skip deleted posts
     if (props.mostDownvoted[i][1].text === "[deleted]") continue;
 
     // DOM of post in list
-    newsListDOM.push(
+    downvoteListDOM.push(
       <div className="centering" key={"today-" + i}>
         <a
           href={props.mostDownvoted[i][1].url}
@@ -122,7 +122,7 @@ export default function Results(props) {
                 color: "silver",
               }}
             >
-              {newsListDOM.length + 1} &bull;{" "}
+              {downvoteListDOM.length + 1} &bull;{" "}
               {"r/" + props.mostDownvoted[i][1].subreddit} &bull;{" "}
               {numToString(props.mostDownvoted[i][1].upvotes)} upvotes &bull;{" "}
               {numToString(Math.abs(props.mostDownvoted[i][1].downvotes))}{" "}
@@ -142,6 +142,7 @@ export default function Results(props) {
                 textAlign: "right",
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
+                border: "1px solid #0d0d0d",
               }}
             >
               {Math.floor(props.mostDownvoted[i][0] * 100)}%
@@ -158,9 +159,14 @@ export default function Results(props) {
                 float: "left",
                 borderTopRightRadius: "10px",
                 borderBottomRightRadius: "10px",
+                border: "1px solid #0d0d0d",
               }}
             >
-              {Math.floor(100 - props.mostDownvoted[i][0] * 100)}%
+              {Math.floor(100 - props.mostDownvoted[i][0] * 100) > 10 && (
+                <span>
+                  {Math.floor(100 - props.mostDownvoted[i][0] * 100)}%
+                </span>
+              )}
             </div>
           </div>
           <div
@@ -247,7 +253,7 @@ export default function Results(props) {
       </div>
       <div className="header">
         <div className="title">LOWEST UPVOTE RATIO</div>
-        <div style={{ textAlign: "left" }}>{newsListDOM}</div>
+        <div style={{ textAlign: "left" }}>{downvoteListDOM}</div>
       </div>
     </div>
   );

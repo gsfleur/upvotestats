@@ -287,23 +287,23 @@ export default function Search() {
    * @returns decoded string
    */
   function decodeHTMLEntities(text) {
+    const entities = {
+      amp: "&",
+      apos: "'",
+      "#x27": "'",
+      "#x2F": "/",
+      "#39": "'",
+      "#47": "/",
+      lt: "<",
+      gt: ">",
+      nbsp: " ",
+      quot: '"',
+    };
+
     return text.replace(/&([^;]+);/gm, function (match, entity) {
       return entities[entity] || match;
     });
   }
-
-  const entities = {
-    amp: "&",
-    apos: "'",
-    "#x27": "'",
-    "#x2F": "/",
-    "#39": "'",
-    "#47": "/",
-    lt: "<",
-    gt: ">",
-    nbsp: " ",
-    quot: '"',
-  };
 
   /**
    * Callback fired when the value changes
