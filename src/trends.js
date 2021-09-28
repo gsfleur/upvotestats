@@ -123,7 +123,7 @@ export default function Trends() {
                 (state.data.posts[i][1].upvotes +
                   Math.abs(state.data.posts[i][1].downvotes)))
             ).toFixed(0)}{" "}
-            percent. {numToString(state.data.posts[i][1].comments)} comments
+            percent.
           </span>
         );
 
@@ -254,10 +254,15 @@ export default function Trends() {
                   color: "silver",
                 }}
               >
-                {numToString(state.data.posts[i][1].awards)} awards
-                {state.data.posts[i][1].coins > 0 && (
+                {state.data.posts[i][1].awards > 0 && (
                   <span>
-                    , {numToString(state.data.posts[i][1].coins)} reddit coins
+                    {numToString(state.data.posts[i][1].awards)} awards,{" "}
+                    {numToString(state.data.posts[i][1].coins)} coins,{" "}
+                  </span>
+                )}
+                {state.data.posts[i][1].comments > 0 && (
+                  <span>
+                    {numToString(state.data.posts[i][1].comments)} comments
                   </span>
                 )}
               </span>
