@@ -256,8 +256,8 @@ export default function Trends() {
               >
                 {state.data.posts[i][1].awards > 0 && (
                   <span>
-                    {numToString(state.data.posts[i][1].awards)} awards,{" "}
                     {numToString(state.data.posts[i][1].coins)} coins,{" "}
+                    {numToString(state.data.posts[i][1].awards)} awards,{" "}
                   </span>
                 )}
                 <span>
