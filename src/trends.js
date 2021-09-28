@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function Trends() {
-  window.document.title = "Upvote Stats - Most Downvoted Posts on Reddit";
+  window.document.title = "Upvote Stats - Most Awarded Posts on Reddit";
 
   // Component State
   const [state, setState] = useState({
@@ -116,7 +116,14 @@ export default function Trends() {
             {diffDays >= 28 && diffDays < 35 && <span>1 month ago</span>} for a
             total of {numToString(state.data.posts[i][1].upvotes)} upvotes,{" "}
             {numToString(Math.abs(state.data.posts[i][1].downvotes))} downvotes
-            and a ratio of {Math.floor(state.data.posts[i][0] * 100)} percent.{" "}
+            and a ratio of{" "}
+            {(
+              100 *
+              (state.data.posts[i][1].upvotes /
+                (state.data.posts[i][1].upvotes +
+                  Math.abs(state.data.posts[i][1].downvotes)))
+            ).toFixed(0)}{" "}
+            percent. {numToString(state.data.posts[i][1].comments)} comments
           </span>
         );
 
@@ -247,7 +254,7 @@ export default function Trends() {
                   color: "silver",
                 }}
               >
-                {numToString(state.data.posts[i][1].comments)} comments
+                {numToString(state.data.posts[i][1].awards)} awards
                 {state.data.posts[i][1].coins > 0 && (
                   <span>
                     , {numToString(state.data.posts[i][1].coins)} reddit coins
@@ -304,7 +311,7 @@ export default function Trends() {
                   <b>Front Page Trends</b>
                   <br />
                   <span style={{ fontSize: "14px", color: "silver" }}>
-                    <b>Sorted by Downvote Ratio</b>
+                    <b>Most Awarded Posts</b>
                   </span>
                   <br />
                   <br />
