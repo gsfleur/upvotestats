@@ -260,11 +260,9 @@ export default function Trends() {
                     {numToString(state.data.posts[i][1].coins)} coins,{" "}
                   </span>
                 )}
-                {state.data.posts[i][1].comments > 0 && (
-                  <span>
-                    {numToString(state.data.posts[i][1].comments)} comments
-                  </span>
-                )}
+                <span>
+                  {numToString(state.data.posts[i][1].comments)} comments
+                </span>
               </span>
             </a>
           </div>
