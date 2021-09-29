@@ -398,10 +398,11 @@ export default function Trends() {
                   marginTop: "10px",
                 }}
               >
+                Top{" "}
                 {state.data.stats.posts.count
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                top posts and {numToString(state.data.stats.comments.count)}{" "}
+                posts and {numToString(state.data.stats.comments.count)}{" "}
                 comments
               </div>
             </div>
