@@ -314,7 +314,7 @@ export default function Trends() {
                   <b>Front Page Trends</b>
                   <br />
                   <span style={{ fontSize: "14px", color: "silver" }}>
-                    <b>Most Awarded Posts</b>
+                    <b>Most Awarded Top Posts</b>
                   </span>
                   <br />
                   <br />
@@ -390,18 +390,25 @@ export default function Trends() {
                 )}
               </div>
             </div>
+            <div className="centering">
+              <div
+                style={{
+                  width: "85%",
+                  fontSize: "14px",
+                  marginTop: "10px",
+                }}
+              >
+                {state.data.stats.posts.count
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                top posts and {numToString(state.data.stats.comments.count)}{" "}
+                comments
+              </div>
+            </div>
             {postListDOM}
             <div
               style={{ padding: "20px", textAlign: "center", fontSize: "14px" }}
             >
-              <b>
-                {state.data.stats.posts.count
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                posts and {numToString(state.data.stats.comments.count)}{" "}
-                comments
-              </b>
-              <br />
               <span style={{ fontSize: "14px", color: "silver" }}>
                 {numToString(state.data.stats.upvotes)} upvotes &bull;{" "}
                 {numToString(state.data.stats.downvotes)} downvotes &bull;{" "}
