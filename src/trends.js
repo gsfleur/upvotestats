@@ -307,22 +307,67 @@ export default function Trends() {
                 <div
                   style={{
                     fontSize: "20px",
-                    textAlign: "center",
                     marginBottom: "10px",
                   }}
                 >
                   <b>Front Page Trends</b>
                   <br />
-                  <span style={{ fontSize: "14px", color: "silver" }}>
-                    <b>Most Awarded Top Posts</b>
-                  </span>
-                  <br />
-                  <br />
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      color: "silver",
+                      marginTop: "10px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <b>The Worlds Most Awarded Posts</b>
+                    <br />
+                    <div style={{ marginTop: "5px" }}>
+                      Out of the top{" "}
+                      {state.data.stats.posts.count
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                      posts and {numToString(state.data.stats.comments.count)}{" "}
+                      comments that made r/All
+                    </div>
+                    <div
+                      style={{
+                        marginTop: "10px",
+                        width: "100%",
+                        display: "inline-block",
+                      }}
+                    >
+                      <div
+                        className="statsInfo"
+                        style={{ borderBottom: "3px dotted red" }}
+                      >
+                        {numToString(state.data.stats.upvotes)} upvotes
+                      </div>
+                      <div
+                        className="statsInfo"
+                        style={{ borderBottom: "3px dotted royalblue" }}
+                      >
+                        {numToString(state.data.stats.downvotes)} downvotes
+                      </div>
+                      <div
+                        className="statsInfo"
+                        style={{ borderBottom: "3px dotted goldenrod" }}
+                      >
+                        {numToString(state.data.stats.awards)} awards
+                      </div>
+                      <div
+                        className="statsInfo"
+                        style={{ borderBottom: "3px dotted gold" }}
+                      >
+                        {numToString(state.data.stats.coins)} coins
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 {state.sort === "today" && (
                   <button
                     className="timeButton"
-                    style={{ borderBottom: "3px solid goldenrod" }}
+                    style={{ borderBottom: "3px solid rgb(29,161,242)" }}
                   >
                     Today
                   </button>
@@ -345,7 +390,7 @@ export default function Trends() {
                 {state.sort === "week" && (
                   <button
                     className="timeButton"
-                    style={{ borderBottom: "3px solid goldenrod" }}
+                    style={{ borderBottom: "3px solid rgb(29,161,242)" }}
                   >
                     Week
                   </button>
@@ -368,7 +413,7 @@ export default function Trends() {
                 {state.sort === "month" && (
                   <button
                     className="timeButton"
-                    style={{ borderBottom: "3px solid goldenrod" }}
+                    style={{ borderBottom: "3px solid rgb(29,161,242)" }}
                   >
                     Month
                   </button>
@@ -390,33 +435,7 @@ export default function Trends() {
                 )}
               </div>
             </div>
-            <div className="centering">
-              <div
-                style={{
-                  width: "85%",
-                  fontSize: "14px",
-                  marginTop: "10px",
-                }}
-              >
-                Top{" "}
-                {state.data.stats.posts.count
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                posts and {numToString(state.data.stats.comments.count)}{" "}
-                comments
-              </div>
-            </div>
             {postListDOM}
-            <div
-              style={{ padding: "20px", textAlign: "center", fontSize: "14px" }}
-            >
-              <span style={{ fontSize: "14px", color: "silver" }}>
-                {numToString(state.data.stats.upvotes)} upvotes &bull;{" "}
-                {numToString(state.data.stats.downvotes)} downvotes &bull;{" "}
-                {numToString(state.data.stats.awards)} awards &bull;{" "}
-                {numToString(state.data.stats.coins)} coins
-              </span>
-            </div>
           </div>
         )}
         {state.loaded === true && postListDOM.length === 0 && (
