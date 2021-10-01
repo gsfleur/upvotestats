@@ -145,18 +145,6 @@ export default function Trends() {
           }
         }
 
-        let titleText = "";
-        let count = 0;
-        let trends = state.data.posts[i][1].trends;
-        for (let j = 0; j < trends.length && count < 3; j++) {
-          if (trends[j][0].length > 3) {
-            if (trends[j][0] !== "https" && trends[j][0] !== "fuck") {
-              titleText += trends[j][0] + " ";
-              count++;
-            }
-          }
-        }
-
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
@@ -189,12 +177,12 @@ export default function Trends() {
                   )}
                 </div>
 
-                {titleText.replace(/[^a-zA-Z ]/g, "").length > 5 && (
+                {state.data.posts[i][1].trends.length > 0 && (
                   <div className="searchLink" style={{ fontSize: "16px" }}>
-                    <b>{titleText}</b>
+                    <b>{state.data.posts[i][1].trends[0]}</b>
                   </div>
                 )}
-                {titleText.replace(/[^a-zA-Z ]/g, "").length <= 5 && (
+                {state.data.posts[i][1].trends.length === 0 && (
                   <div className="searchLink" style={{ fontSize: "16px" }}>
                     <b>{state.data.posts[i][1].subreddit}</b>
                   </div>
