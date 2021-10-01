@@ -145,6 +145,8 @@ export default function Trends() {
           }
         }
 
+        let subName = "" + state.data.posts[i][1].subreddit;
+
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
@@ -184,7 +186,7 @@ export default function Trends() {
                 )}
                 {state.data.posts[i][1].trends.length === 0 && (
                   <div className="searchLink" style={{ fontSize: "16px" }}>
-                    <b>{state.data.posts[i][1].subreddit}</b>
+                    <b>{subName.toLowerCase()}</b>
                   </div>
                 )}
 
