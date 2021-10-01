@@ -145,6 +145,18 @@ export default function Trends() {
           }
         }
 
+        let titleText = "";
+        let count = 0;
+        let trends = state.data.posts[i][1].trends;
+        for (let j = 0; j < trends.length && count < 3; j++) {
+          if (trends[j][0].length > 3) {
+            if (trends[j][0] !== "https" && trends[j][0] !== "fuck") {
+              titleText += trends[j][0] + " ";
+              count++;
+            }
+          }
+        }
+
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
@@ -169,15 +181,34 @@ export default function Trends() {
                 >
                   {postListDOM.length + 1} &bull;{" "}
                   {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
-                  {numToString(state.data.posts[i][1].subscribers)}
+                  {numToString(state.data.posts[i][1].upvotes)} &uarr; &bull;{" "}
+                  {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
+                  &darr;
                   {state.data.posts[i][1].nsfw === true && (
                     <span> &bull; NSFW</span>
                   )}
                 </div>
 
-                <div className="searchLink" style={{ fontSize: "16px" }}>
-                  <b>{state.data.posts[i][1].title}</b>
-                </div>
+                {titleText.replace(/[^a-zA-Z ]/g, "").length > 5 && (
+                  <div className="searchLink" style={{ fontSize: "16px" }}>
+                    <b>{titleText}</b>
+                  </div>
+                )}
+                {titleText.replace(/[^a-zA-Z ]/g, "").length <= 5 && (
+                  <div className="searchLink" style={{ fontSize: "16px" }}>
+                    <b>{state.data.posts[i][1].subreddit}</b>
+                  </div>
+                )}
+
+                {!loadableImg && (
+                  <div
+                    className="searchLink"
+                    style={{ fontSize: "16px", marginTop: "5px" }}
+                  >
+                    {state.data.posts[i][1].title}
+                  </div>
+                )}
+
                 {newText.length > 0 && (
                   <div
                     className="searchLink"
@@ -208,9 +239,49 @@ export default function Trends() {
                       overflow: "auto",
                       border: "1.5px solid #292929",
                       borderRadius: "10px",
-                      padding: "10px",
+                      padding: "5px 10px 10px 10px",
                     }}
                   >
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "inline-block",
+                        marginBottom: "7px",
+                        fontSize: "14px",
+                        color: "silver",
+                      }}
+                    >
+                      {state.data.posts[i][1].icon === "" && (
+                        <img
+                          className="iconImg"
+                          src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                          alt={state.data.posts[i][1].author + " icon"}
+                        />
+                      )}
+                      {state.data.posts[i][1].icon !== "" && (
+                        <img
+                          className="iconImg"
+                          src={state.data.posts[i][1].icon}
+                          alt={state.data.posts[i][1].author + " icon"}
+                        />
+                      )}
+                      <div
+                        style={{
+                          float: "left",
+                          marginTop: "5px",
+                          marginLeft: "5px",
+                        }}
+                      >
+                        {state.data.posts[i][1].author} &bull;{" "}
+                        {hours <= 24 && <span>{Math.floor(hours)}h</span>}
+                        {hours > 24 && hours <= 48 && <span>1d</span>}
+                        {hours > 48 && diffDays < 7 && <span>{diffDays}d</span>}
+                        {diffDays >= 7 && diffDays < 14 && <span>1w</span>}
+                        {diffDays >= 14 && diffDays < 21 && <span>2w</span>}
+                        {diffDays >= 21 && diffDays < 28 && <span>3w</span>}
+                        {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
+                      </div>
+                    </div>
                     <img
                       src={state.data.posts[i][1].urlToImage}
                       className="postImgStandard"
@@ -222,15 +293,15 @@ export default function Trends() {
                     <div
                       className="postDate"
                       style={{
-                        fontSize: "13px",
+                        fontSize: "16px",
                         marginBottom: "10px",
-                        color: "silver",
+                        color: "gainsboro",
                         float: "left",
                         width: "calc(100% - 120px)",
                         marginLeft: "10px",
                       }}
                     >
-                      {author}
+                      {state.data.posts[i][1].title}
                     </div>
                   </div>
                 </div>

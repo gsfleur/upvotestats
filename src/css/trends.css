@@ -11,6 +11,13 @@
   max-width: 700px;
 }
 
+.iconImg {
+  float: left;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
 .statsInfo {
   float: left;
   padding: 5px;
