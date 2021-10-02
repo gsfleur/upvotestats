@@ -128,7 +128,6 @@ export default function Trends() {
         );
 
         let text = state.data.posts[i][1].text;
-
         let textParts = text.split("\n");
         let newText = "";
 
@@ -137,9 +136,8 @@ export default function Trends() {
         if (text !== undefined) {
           for (let t = 0; t < textParts.length; t++) {
             let allow = true;
-            for (let r = 0; r < removeText.length; r++) {
+            for (let r = 0; r < removeText.length; r++)
               if (textParts[t].includes(removeText[r])) allow = false;
-            }
 
             if (allow === true) newText += textParts[t] + " ";
           }
@@ -308,10 +306,10 @@ export default function Trends() {
                   {author}
                 </div>
               )}
-              <span
+              <div
                 style={{
                   fontSize: "13px",
-                  marginBottom: "10px",
+                  marginTop: "5px",
                   color: "silver",
                 }}
               >
@@ -324,7 +322,7 @@ export default function Trends() {
                 <span>
                   {numToString(state.data.posts[i][1].comments)} comments
                 </span>
-              </span>
+              </div>
             </a>
           </div>
         );
