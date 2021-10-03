@@ -244,6 +244,10 @@ export default function Trends() {
                           className="iconImg"
                           src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
                           alt={state.data.posts[i][1].author + " icon"}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "missing.png";
+                          }}
                         />
                       )}
                       {state.data.posts[i][1].icon !== "" && (
@@ -251,6 +255,10 @@ export default function Trends() {
                           className="iconImg"
                           src={state.data.posts[i][1].icon}
                           alt={state.data.posts[i][1].author + " icon"}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "missing.png";
+                          }}
                         />
                       )}
                       <div
@@ -276,6 +284,10 @@ export default function Trends() {
                       alt="Reddit Post Thumbnail"
                       style={{
                         float: "left",
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "missing.png";
                       }}
                     />
                     <div
