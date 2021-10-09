@@ -8,6 +8,7 @@ export default function Trends() {
   // Component State
   const [state, setState] = useState({
     loaded: false,
+    error: false,
     sort: "today",
     data: undefined,
     todayData: undefined,
@@ -67,7 +68,7 @@ export default function Trends() {
 
   let postListDOM = [];
   let postLinks = [];
-  if (state.loaded === true) {
+  if (state.loaded === true && state.error === false) {
     // Creating DOM for posts
     if (state.data.posts !== undefined) {
       for (
@@ -126,6 +127,12 @@ export default function Trends() {
             percent.
           </span>
         );
+
+        let trendingWith = "";
+        let trends = state.data.posts[i][1].trends;
+        for (let t = 1; t < trends.length && t < 4; t++)
+          trendingWith += trends[t] + ", ";
+        trendingWith = trendingWith.substring(0, trendingWith.length - 2);
 
         let text = state.data.posts[i][1].text;
         let textParts = text.split("\n");
@@ -335,6 +342,18 @@ export default function Trends() {
                   {numToString(state.data.posts[i][1].comments)} comments
                 </span>
               </div>
+              <div
+                style={{
+                  fontSize: "13px",
+                  marginTop: "5px",
+                  color: "silver",
+                }}
+              >
+                <span>
+                  Trending with:{" "}
+                  <span style={{ color: "gainsboro" }}>{trendingWith}</span>
+                </span>
+              </div>
             </a>
           </div>
         );
@@ -371,162 +390,164 @@ export default function Trends() {
             />
           </div>
         )}
-        {state.loaded === true && postListDOM.length > 0 && (
-          <div>
-            <div className="centering">
-              <div style={{ width: "85%" }}>
-                <div
-                  style={{
-                    fontSize: "20px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <b>Front Page Trends</b>
-                  <br />
+        {state.loaded === true &&
+          state.error === false &&
+          postListDOM.length > 0 && (
+            <div>
+              <div className="centering">
+                <div style={{ width: "85%" }}>
                   <div
                     style={{
-                      fontSize: "14px",
-                      color: "silver",
-                      marginTop: "10px",
+                      fontSize: "20px",
                       marginBottom: "10px",
                     }}
                   >
-                    <b>The Worlds Most Awarded Posts</b>
+                    <b>Front Page Trends</b>
                     <br />
-                    <div style={{ marginTop: "5px" }}>
-                      Out of the top{" "}
-                      {state.data.stats.posts.count
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                      posts and {numToString(state.data.stats.comments.count)}{" "}
-                      comments that made r/All
-                    </div>
                     <div
                       style={{
+                        fontSize: "14px",
+                        color: "silver",
                         marginTop: "10px",
-                        width: "100%",
-                        display: "inline-block",
+                        marginBottom: "10px",
                       }}
                     >
-                      <div
-                        className="statsInfo"
-                        style={{ borderBottom: "3px dotted red" }}
-                      >
-                        {numToString(state.data.stats.upvotes)} upvotes
+                      <b>The Worlds Most Awarded Posts</b>
+                      <br />
+                      <div style={{ marginTop: "5px" }}>
+                        Out of the top{" "}
+                        {state.data.stats.posts.count
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                        posts and {numToString(state.data.stats.comments.count)}{" "}
+                        comments that made r/All
                       </div>
                       <div
-                        className="statsInfo"
-                        style={{ borderBottom: "3px dotted royalblue" }}
+                        style={{
+                          marginTop: "10px",
+                          width: "100%",
+                          display: "inline-block",
+                        }}
                       >
-                        {numToString(state.data.stats.downvotes)} downvotes
-                      </div>
-                      <div
-                        className="statsInfo"
-                        style={{ borderBottom: "3px dotted goldenrod" }}
-                      >
-                        {numToString(state.data.stats.awards)} awards
-                      </div>
-                      <div
-                        className="statsInfo"
-                        style={{ borderBottom: "3px dotted gold" }}
-                      >
-                        {numToString(state.data.stats.coins)} coins
+                        <div
+                          className="statsInfo"
+                          style={{ borderBottom: "3px dotted red" }}
+                        >
+                          {numToString(state.data.stats.upvotes)} upvotes
+                        </div>
+                        <div
+                          className="statsInfo"
+                          style={{ borderBottom: "3px dotted royalblue" }}
+                        >
+                          {numToString(state.data.stats.downvotes)} downvotes
+                        </div>
+                        <div
+                          className="statsInfo"
+                          style={{ borderBottom: "3px dotted goldenrod" }}
+                        >
+                          {numToString(state.data.stats.awards)} awards
+                        </div>
+                        <div
+                          className="statsInfo"
+                          style={{ borderBottom: "3px dotted gold" }}
+                        >
+                          {numToString(state.data.stats.coins)} coins
+                        </div>
                       </div>
                     </div>
                   </div>
+                  {state.sort === "today" && (
+                    <button
+                      className="timeButton"
+                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                    >
+                      Today
+                    </button>
+                  )}
+                  {state.sort !== "today" && (
+                    <button
+                      className="timeButton"
+                      style={{ color: "silver" }}
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          sort: "today",
+                          data: state.todayData,
+                        })
+                      }
+                    >
+                      Today
+                    </button>
+                  )}
+                  {state.sort === "week" && (
+                    <button
+                      className="timeButton"
+                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                    >
+                      Week
+                    </button>
+                  )}
+                  {state.sort !== "week" && (
+                    <button
+                      className="timeButton"
+                      style={{ color: "silver" }}
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          sort: "week",
+                          data: state.weekData,
+                        })
+                      }
+                    >
+                      Week
+                    </button>
+                  )}
+                  {state.sort === "month" && (
+                    <button
+                      className="timeButton"
+                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                    >
+                      Month
+                    </button>
+                  )}
+                  {state.sort !== "month" && (
+                    <button
+                      className="timeButton"
+                      style={{ color: "silver" }}
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          sort: "month",
+                          data: state.monthData,
+                        })
+                      }
+                    >
+                      Month
+                    </button>
+                  )}
                 </div>
-                {state.sort === "today" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid rgb(29,161,242)" }}
-                  >
-                    Today
-                  </button>
-                )}
-                {state.sort !== "today" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "today",
-                        data: state.todayData,
-                      })
-                    }
-                  >
-                    Today
-                  </button>
-                )}
-                {state.sort === "week" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid rgb(29,161,242)" }}
-                  >
-                    Week
-                  </button>
-                )}
-                {state.sort !== "week" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "week",
-                        data: state.weekData,
-                      })
-                    }
-                  >
-                    Week
-                  </button>
-                )}
-                {state.sort === "month" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid rgb(29,161,242)" }}
-                  >
-                    Month
-                  </button>
-                )}
-                {state.sort !== "month" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "month",
-                        data: state.monthData,
-                      })
-                    }
-                  >
-                    Month
-                  </button>
-                )}
               </div>
+              {postListDOM}
             </div>
-            {postListDOM}
-          </div>
-        )}
+          )}
         {state.loaded === true && postListDOM.length === 0 && (
           <div style={{ textAlign: "center" }}>
             This page is currently unavailable. Please check back soon for
