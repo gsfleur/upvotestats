@@ -446,7 +446,13 @@ export default function Trends() {
                 {state.sort !== "today" && (
                   <button
                     className="timeButton"
-                    style={{ borderBottom: "3px solid gray" }}
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
                     onClick={() =>
                       setState({
                         ...state,
@@ -469,7 +475,13 @@ export default function Trends() {
                 {state.sort !== "week" && (
                   <button
                     className="timeButton"
-                    style={{ borderBottom: "3px solid gray" }}
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
                     onClick={() =>
                       setState({
                         ...state,
@@ -492,7 +504,13 @@ export default function Trends() {
                 {state.sort !== "month" && (
                   <button
                     className="timeButton"
-                    style={{ borderBottom: "3px solid gray" }}
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
                     onClick={() =>
                       setState({
                         ...state,
