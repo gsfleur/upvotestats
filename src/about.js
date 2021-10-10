@@ -28,12 +28,12 @@ export default function About() {
           <br />
           <br />
           <h3>Trending Page</h3>
-          The Trends Page features posts on r/All and are sorted by highest
-          downvote ratio. You may select posts from just today or from the past
-          week to show up on your feed. The data is selected from the top ~1000
-          posts within the selected time frame. The data for this page will
-          update every hour. More stats about r/All can be found at the bottom
-          of this page.
+          The Trends Page features posts on r/All and is sorted by total reddit
+          coins in descending order. You may select posts from the past day,
+          week or month to show up on your feed. The data is selected from the
+          top ~1000 posts within the selected time frame. The data for this page
+          will update every hour. More stats about this data can be found at the
+          top of the trends page.
           <br />
           <br />
           <h3>Searching subreddits</h3>
