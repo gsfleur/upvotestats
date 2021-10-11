@@ -128,11 +128,18 @@ export default function Trends() {
           </span>
         );
 
-        let trendingWith = "";
+        let trendingWith = [];
         let trends = state.data.posts[i][1].trends;
-        for (let t = 1; t < trends.length && t < 4; t++)
-          trendingWith += trends[t] + ", ";
-        trendingWith = trendingWith.substring(0, trendingWith.length - 2);
+        for (let t = 1; t < trends.length && t < 3; t++) {
+          trendingWith.push(
+            <span style={{ color: "goldenrod" }}>
+              {trends[t]}
+              {trends.length > 2 && t < 2 && (
+                <span style={{ color: "gainsboro" }}>,</span>
+              )}{" "}
+            </span>
+          );
+        }
 
         let text = state.data.posts[i][1].text;
         let textParts = text.split("\n");
@@ -171,7 +178,7 @@ export default function Trends() {
                   style={{
                     fontSize: "13px",
                     marginBottom: "10px",
-                    color: "silver",
+                    color: "gray",
                   }}
                 >
                   {postListDOM.length + 1} &bull;{" "}
@@ -233,8 +240,8 @@ export default function Trends() {
                     style={{
                       overflow: "auto",
                       border: "1.5px solid #292929",
-                      borderRadius: "10px",
-                      padding: "5px 10px 10px 10px",
+                      borderRadius: "20px",
+                      padding: "10px 10px 10px 10px",
                     }}
                   >
                     <div
@@ -329,7 +336,7 @@ export default function Trends() {
                 style={{
                   fontSize: "13px",
                   marginTop: "5px",
-                  color: "silver",
+                  color: "gray",
                 }}
               >
                 {state.data.posts[i][1].awards > 0 && (
@@ -346,13 +353,10 @@ export default function Trends() {
                 style={{
                   fontSize: "13px",
                   marginTop: "5px",
-                  color: "silver",
+                  color: "gray",
                 }}
               >
-                <span>
-                  Trending with:{" "}
-                  <span style={{ color: "gainsboro" }}>{trendingWith}</span>
-                </span>
+                <span>Trending with: {trendingWith}</span>
               </div>
             </a>
           </div>
