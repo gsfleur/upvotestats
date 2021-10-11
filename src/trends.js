@@ -349,15 +349,17 @@ export default function Trends() {
                   {numToString(state.data.posts[i][1].comments)} comments
                 </span>
               </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  marginTop: "5px",
-                  color: "gray",
-                }}
-              >
-                <span>Trending with: {trendingWith}</span>
-              </div>
+              {state.data.posts[i][1].trends.length > 0 && (
+                <div
+                  style={{
+                    fontSize: "13px",
+                    marginTop: "5px",
+                    color: "gray",
+                  }}
+                >
+                  <span>Trending with: {trendingWith}</span>
+                </div>
+              )}
             </a>
           </div>
         );
