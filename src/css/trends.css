@@ -34,6 +34,8 @@
   margin-bottom: 0px;
   text-decoration: none;
   color: gainsboro;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .postImgStandard {

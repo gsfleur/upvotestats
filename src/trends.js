@@ -132,7 +132,10 @@ export default function Trends() {
         let trends = state.data.posts[i][1].trends;
         for (let t = 1; t < trends.length && t < 3; t++) {
           trendingWith.push(
-            <span style={{ color: "goldenrod" }}>
+            <span
+              style={{ color: "goldenrod" }}
+              key={"trendWith-" + i + "-" + t}
+            >
               {trends[t]}
               {trends.length > 2 && t < 2 && (
                 <span style={{ color: "gainsboro" }}>,</span>
@@ -156,6 +159,29 @@ export default function Trends() {
             if (allow === true) newText += textParts[t] + " ";
           }
         }
+
+        // Determine if title has a really long word
+        let containsLongWord = false;
+        let titleParts = state.data.posts[i][1].title.trim().split(/\s+/);
+        for (let t = 0; t < titleParts.length; t++) {
+          if (titleParts[t].length > 20) {
+            containsLongWord = true;
+            break;
+          }
+        }
+
+        // Default title css
+        let titleCSS = {
+          fontSize: "16px",
+          marginBottom: "10px",
+          color: "gainsboro",
+          float: "left",
+          width: "calc(100% - 120px)",
+          marginLeft: "10px",
+        };
+
+        // Break by letter if word is long (long links)
+        if (containsLongWord) titleCSS["wordBreak"] = "break-all";
 
         let subName = "" + state.data.posts[i][1].subreddit;
 
@@ -218,7 +244,6 @@ export default function Trends() {
                       fontSize: "13px",
                       marginBottom: "5px",
                       marginTop: "5px",
-                      wordWrap: "break-word",
                       color: "silver",
                     }}
                   >
@@ -304,17 +329,7 @@ export default function Trends() {
                         e.target.src = "missing.png";
                       }}
                     />
-                    <div
-                      className="postDate"
-                      style={{
-                        fontSize: "16px",
-                        marginBottom: "10px",
-                        color: "gainsboro",
-                        float: "left",
-                        width: "calc(100% - 120px)",
-                        marginLeft: "10px",
-                      }}
-                    >
+                    <div className="postDate" style={titleCSS}>
                       {state.data.posts[i][1].title}
                     </div>
                   </div>
