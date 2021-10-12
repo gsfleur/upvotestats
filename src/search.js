@@ -3,6 +3,7 @@ import React from "react";
 import JSZip from "jszip";
 import Results from "./results";
 import { saveAs } from "file-saver";
+import { decode } from "html-entities";
 import { topReddits } from "./topReddits";
 import { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
@@ -252,7 +253,7 @@ export default function Search() {
               {
                 subreddit: obj.subreddit,
                 subscribers: obj.subreddit_subscribers,
-                title: decodeHTMLEntities(obj.title),
+                title: decode(obj.title),
                 author: obj.author,
                 upvotes: obj.ups,
                 downvotes: downvotes,
@@ -279,30 +280,6 @@ export default function Search() {
         }
       }
     }
-  }
-
-  /**
-   * Decodes html entities in text
-   * @param {*} text string to decode
-   * @returns decoded string
-   */
-  function decodeHTMLEntities(text) {
-    const entities = {
-      amp: "&",
-      apos: "'",
-      "#x27": "'",
-      "#x2F": "/",
-      "#39": "'",
-      "#47": "/",
-      lt: "<",
-      gt: ">",
-      nbsp: " ",
-      quot: '"',
-    };
-
-    return text.replace(/&([^;]+);/gm, function (match, entity) {
-      return entities[entity] || match;
-    });
   }
 
   /**

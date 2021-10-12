@@ -66,8 +66,8 @@ export default function Trends() {
     };
   });
 
-  let postListDOM = [];
-  let postLinks = [];
+  let postListDOM = []; // DOM for posts
+  let postLinks = []; // ids of all posts
   if (state.loaded === true && state.error === false) {
     // Creating DOM for posts
     if (state.data.posts !== undefined) {
@@ -82,13 +82,17 @@ export default function Trends() {
         // Skip potential duplicates
         if (postLinks.includes(state.data.posts[i][1].url)) continue;
 
+        // Date since post published
         const timeInDay = 24 * 60 * 60 * 1000;
         const firstDate = new Date(state.data.posts[i][1].publishedAt);
         const secondDate = new Date();
-        // Date since article published
         const diffDays = Math.round(
           Math.abs((firstDate - secondDate) / timeInDay)
         );
+
+        // hours since post
+        let hours = Math.abs(firstDate - secondDate);
+        hours /= 60 * 60 * 1000;
 
         // Determine whether to show image
         let loadableImg =
@@ -99,10 +103,6 @@ export default function Trends() {
           state.data.posts[i][1].urlToImage !== "image" &&
           state.data.posts[i][1].urlToImage !== "nsfw" &&
           state.data.posts[i][1].urlToImage !== "spoiler";
-
-        // hours since post
-        let hours = Math.abs(firstDate - secondDate);
-        hours /= 60 * 60 * 1000;
 
         // Description of posts
         let author = (
@@ -128,6 +128,7 @@ export default function Trends() {
           </span>
         );
 
+        // DOM for "trending with" section
         let trendingWith = [];
         let trends = state.data.posts[i][1].trends;
         for (let t = 1; t < trends.length && t < 3; t++) {
@@ -144,6 +145,7 @@ export default function Trends() {
           );
         }
 
+        // Text of the post
         let text = state.data.posts[i][1].text;
         let textParts = text.split("\n");
         let newText = "";
@@ -160,7 +162,7 @@ export default function Trends() {
           }
         }
 
-        // Determine if title has a really long word
+        // Determine if title/text has a really long word
         let containsLongWord = false;
         let titleParts = state.data.posts[i][1].title.trim().split(/\s+/);
         for (let t = 0; t < titleParts.length; t++) {
@@ -169,19 +171,25 @@ export default function Trends() {
             break;
           }
         }
+        let newTextParts = newText.trim().split(/\s+/);
+        if (!containsLongWord) {
+          for (let t = 0; t < newTextParts.length; t++) {
+            if (newTextParts[t].length > 20) {
+              containsLongWord = true;
+              break;
+            }
+          }
+        }
 
-        // Default title css
-        let titleCSS = {
-          fontSize: "16px",
-          marginBottom: "10px",
-          color: "gainsboro",
-          float: "left",
-          width: "calc(100% - 120px)",
-          marginLeft: "10px",
+        // Default post/img body css
+        let imgBodyCSS = {
+          display: "inline-block",
+          width: "100%",
+          marginTop: "10px",
         };
 
-        // Break by letter if word is long (long links)
-        if (containsLongWord) titleCSS["wordBreak"] = "break-all";
+        // Break by letter if word is long (long links or words)
+        if (containsLongWord) imgBodyCSS["wordBreak"] = "break-all";
 
         let subName = "" + state.data.posts[i][1].subreddit;
 
@@ -253,14 +261,7 @@ export default function Trends() {
                 )}
               </div>
               {loadableImg && (
-                <div
-                  className="imgBody"
-                  style={{
-                    display: "inline-block",
-                    width: "100%",
-                    marginTop: "10px",
-                  }}
-                >
+                <div className="imgBody" style={imgBodyCSS}>
                   <div
                     style={{
                       overflow: "auto",
@@ -329,7 +330,17 @@ export default function Trends() {
                         e.target.src = "missing.png";
                       }}
                     />
-                    <div className="postDate" style={titleCSS}>
+                    <div
+                      className="postDate"
+                      style={{
+                        fontSize: "16px",
+                        marginBottom: "10px",
+                        color: "gainsboro",
+                        float: "left",
+                        width: "calc(100% - 120px)",
+                        marginLeft: "10px",
+                      }}
+                    >
                       {state.data.posts[i][1].title}
                     </div>
                   </div>

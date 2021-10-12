@@ -81,6 +81,7 @@ export default function Results(props) {
     ],
   };
 
+  // DOM for lowest upvote ratio posts
   let downvoteListDOM = [];
   for (
     let i = 0;
