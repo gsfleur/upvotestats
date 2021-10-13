@@ -164,7 +164,9 @@ export default function Trends() {
             let allow = true;
             for (let r = 0; r < removeText.length; r++) {
               if (textParts[t].includes(removeText[r])) allow = false;
-              if (textParts[t].includes(";")) allow = false;
+              // Removing stray html encodings
+              if (textParts[t].startsWith("&") && textParts[t].endsWith(";"))
+                allow = false;
             }
 
             if (allow === true) newText += textParts[t] + " ";
