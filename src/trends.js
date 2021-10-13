@@ -162,8 +162,10 @@ export default function Trends() {
         if (text !== undefined) {
           for (let t = 0; t < textParts.length; t++) {
             let allow = true;
-            for (let r = 0; r < removeText.length; r++)
+            for (let r = 0; r < removeText.length; r++) {
               if (textParts[t].includes(removeText[r])) allow = false;
+              if (textParts[t].includes(";")) allow = false;
+            }
 
             if (allow === true) newText += textParts[t] + " ";
           }
