@@ -6,7 +6,7 @@
 .content {
   flex: 0 1 900px;
   background-color: #161616;
-  padding: 10px;
+  padding-top: 10px;
   border-radius: 10px;
   margin: 10px;
 }
