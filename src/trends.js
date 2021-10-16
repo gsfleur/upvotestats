@@ -94,13 +94,6 @@ export default function Trends() {
         let hours = Math.abs(firstDate - secondDate);
         hours /= 60 * 60 * 1000;
 
-        let timeLimit = 24;
-        if (state.sort === "week") timeLimit = 7 * 24;
-        if (state.sort === "month") timeLimit = 31 * 24;
-
-        // Skip post if time limit has passed
-        if (hours > timeLimit) continue;
-
         // Determine whether to show image
         let loadableImg =
           state.data.posts[i][1].urlToImage !== null &&
