@@ -33,7 +33,7 @@ export default function About() {
           week or month to show up on your feed. The data is selected from the
           top ~1000 posts within the selected time frame. The data for this page
           will update every hour. More stats about this data can be found at the
-          top of the trends page.
+          bottom of the trends page.
           <br />
           <br />
           <h3>Searching subreddits</h3>
