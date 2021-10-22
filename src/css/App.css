@@ -25,6 +25,15 @@
   text-align: center;
 }
 
+.backToTopButton {
+  right: 0;
+  position: fixed;
+  bottom: 0;
+  padding: 30px;
+  display: none;
+  z-index: 9999;
+}
+
 .searchLink:link,
 .searchLink:visited {
   text-decoration: none;

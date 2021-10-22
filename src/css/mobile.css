@@ -30,4 +30,10 @@
   .today {
     padding: 20px 0px 20px 0px;
   }
+  .statsInfo {
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
 }

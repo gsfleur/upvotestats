@@ -532,7 +532,7 @@ export default function Trends() {
                     width: "85%",
                   }}
                 >
-                  Front Page Trends of posts with the most coins
+                  Trends of front page posts on reddit.com
                   <br />
                 </div>
               </div>
@@ -542,7 +542,7 @@ export default function Trends() {
                 <div
                   style={{
                     fontSize: "14px",
-                    color: "silver",
+                    color: "gray",
                     marginTop: "10px",
                     marginBottom: "10px",
                     textAlign: "center",
@@ -564,28 +564,16 @@ export default function Trends() {
                       display: "inline-block",
                     }}
                   >
-                    <div
-                      className="statsInfo"
-                      style={{ borderBottom: "3px dotted red" }}
-                    >
+                    <div className="statsInfo">
                       {numToString(state.data.stats.upvotes)} upvotes
                     </div>
-                    <div
-                      className="statsInfo"
-                      style={{ borderBottom: "3px dotted royalblue" }}
-                    >
+                    <div className="statsInfo">
                       {numToString(state.data.stats.downvotes)} downvotes
                     </div>
-                    <div
-                      className="statsInfo"
-                      style={{ borderBottom: "3px dotted goldenrod" }}
-                    >
+                    <div className="statsInfo">
                       {numToString(state.data.stats.awards)} awards
                     </div>
-                    <div
-                      className="statsInfo"
-                      style={{ borderBottom: "3px dotted gold" }}
-                    >
+                    <div className="statsInfo">
                       {numToString(state.data.stats.coins)} coins
                     </div>
                   </div>

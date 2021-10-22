@@ -9,12 +9,15 @@ import React from "react";
 import Home from "./home";
 import About from "./about";
 import Trends from "./trends";
+import Scroll from "./scroll";
 import Search from "./search";
+import Fab from "@material-ui/core/Fab";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Material UI Styling
@@ -86,6 +89,17 @@ export default function App() {
               </Route>
             </Switch>
           </div>
+        </div>
+        <Scroll />
+        <div id="backToTop" className="backToTopButton">
+          <Fab
+            color="default"
+            size="small"
+            aria-label="scroll back to top"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <KeyboardArrowUpIcon />
+          </Fab>
         </div>
         <div className="centering">
           <div className="footer">
