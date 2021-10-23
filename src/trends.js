@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function Trends() {
   window.document.title = "Upvote Stats - Most Awarded Posts on Reddit";
@@ -53,11 +52,13 @@ export default function Trends() {
 
         // Update state
         if (componentMounted) {
-          setState({
-            ...state,
-            loaded: true,
-            data: state.todayData,
-          });
+          setTimeout(() => {
+            setState({
+              ...state,
+              loaded: true,
+              data: state.todayData,
+            });
+          }, 800);
         }
       })();
     }
@@ -412,18 +413,85 @@ export default function Trends() {
       : Math.abs(num);
   }
 
+  let loadingDOM = (
+    <div>
+      <div
+        className="loading"
+        style={{
+          margin: "25px 0px 25px 0px",
+          width: "200px",
+          height: "20px",
+          border: "1.5px solid #292929",
+          borderRadius: "20px",
+        }}
+      ></div>
+      <div
+        className="loading"
+        style={{
+          overflow: "auto",
+          display: "inline-block",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            border: "1.5px solid #292929",
+            borderRadius: "20px",
+            height: "140px",
+          }}
+        ></div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="centering">
       <div className="today">
         {state.loaded === false && (
-          <div className="centering">
-            <CircularProgress
-              style={{
-                width: "25px",
-                height: "25px",
-                color: "rgb(142, 200, 246)",
-              }}
-            />
+          <div>
+            <div className="centering">
+              <div style={{ width: "85%" }}>
+                <button className="timeButton" style={{ color: "silver" }}>
+                  Today
+                </button>
+                <button className="timeButton" style={{ color: "silver" }}>
+                  Week
+                </button>
+                <button className="timeButton" style={{ color: "silver" }}>
+                  Month
+                </button>
+              </div>
+            </div>
+            <div className="centering">
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "gray",
+                  width: "85%",
+                }}
+              >
+                Trends of front page posts on reddit.com
+                <br />
+              </div>
+            </div>
+            <div className="centering">
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "gray",
+                  marginTop: "0px",
+                  marginBottom: "5px",
+                  width: "85%",
+                }}
+              >
+                {loadingDOM}
+                {loadingDOM}
+                {loadingDOM}
+                {loadingDOM}
+                {loadingDOM}
+                {loadingDOM}
+              </div>
+            </div>
           </div>
         )}
         {state.loaded === true &&

@@ -1,5 +1,5 @@
 .today {
-  background-color: #0000005f;
+  background-color: #000000b3;
   color: gainsboro;
   padding: 20px;
   border-radius: 10px;
@@ -76,4 +76,23 @@
   max-width: 120px;
   margin-bottom: 10px;
   border-bottom: 3px solid #222222;
+}
+
+.loading {
+  background: linear-gradient(
+      90deg,
+      #0000 33%,
+      rgba(255, 255, 255, 0.3) 50%,
+      #0000 66%
+    )
+    transparent;
+  background-size: 300% 100%;
+  animation: shine 2s infinite;
+  border-radius: 20px;
+}
+
+@keyframes shine {
+  0% {
+    background-position: right;
+  }
 }
