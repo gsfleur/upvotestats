@@ -176,10 +176,10 @@ export default function Trends() {
             break;
           }
         }
-        let newTextParts = newText.trim().split(/\s+/);
+        let newTextParts = newText.substring(0, 180).trim().split(/\s+/);
         if (!containsLongWord) {
           for (let t = 0; t < newTextParts.length; t++) {
-            if (newTextParts[t].length > 20) {
+            if (newTextParts[t].length > 21) {
               containsLongWord = true;
               break;
             }
