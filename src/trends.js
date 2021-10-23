@@ -171,7 +171,7 @@ export default function Trends() {
         let containsLongWord = false;
         let titleParts = state.data.posts[i][1].title.trim().split(/\s+/);
         for (let t = 0; t < titleParts.length; t++) {
-          if (titleParts[t].length > 20) {
+          if (titleParts[t].length > 21) {
             containsLongWord = true;
             break;
           }
