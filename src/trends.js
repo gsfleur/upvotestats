@@ -419,7 +419,7 @@ export default function Trends() {
         className="loading"
         style={{
           margin: "25px 0px 25px 0px",
-          width: "200px",
+          width: "230px",
           height: "20px",
           border: "1.5px solid #292929",
           borderRadius: "20px",
@@ -450,31 +450,6 @@ export default function Trends() {
         {state.loaded === false && (
           <div>
             <div className="centering">
-              <div style={{ width: "85%" }}>
-                <button className="timeButton" style={{ color: "silver" }}>
-                  Today
-                </button>
-                <button className="timeButton" style={{ color: "silver" }}>
-                  Week
-                </button>
-                <button className="timeButton" style={{ color: "silver" }}>
-                  Month
-                </button>
-              </div>
-            </div>
-            <div className="centering">
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "gray",
-                  width: "85%",
-                }}
-              >
-                Trends of front page posts on reddit.com
-                <br />
-              </div>
-            </div>
-            <div className="centering">
               <div
                 style={{
                   fontSize: "13px",
@@ -484,6 +459,16 @@ export default function Trends() {
                   width: "85%",
                 }}
               >
+                <div
+                  className="loading"
+                  style={{
+                    margin: "0px",
+                    width: "100%",
+                    height: "60px",
+                    border: "1.5px solid #292929",
+                    borderRadius: "20px",
+                  }}
+                ></div>
                 {loadingDOM}
                 {loadingDOM}
                 {loadingDOM}
