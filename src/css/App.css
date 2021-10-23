@@ -44,3 +44,22 @@
 .searchLink:active {
   color: goldenrod;
 }
+
+.loading {
+  background: linear-gradient(
+      90deg,
+      #0000 33%,
+      rgba(255, 255, 255, 0.3) 50%,
+      #0000 66%
+    )
+    transparent;
+  background-size: 300% 100%;
+  animation: shine 1s infinite;
+  border-radius: 20px;
+}
+
+@keyframes shine {
+  0% {
+    background-position: right;
+  }
+}

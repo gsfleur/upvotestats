@@ -58,7 +58,7 @@ export default function Trends() {
               loaded: true,
               data: state.todayData,
             });
-          }, 800);
+          }, 500);
         }
       })();
     }

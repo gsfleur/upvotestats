@@ -2,7 +2,6 @@ import axios from "axios";
 import { numToString } from "./results";
 import { topReddits } from "./topReddits";
 import { useState, useEffect } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Top Reddit Communities
 const communities = topReddits;
@@ -83,16 +82,29 @@ export default function Home() {
     };
   });
 
+  let loadingDOM = (
+    <div
+      className="homeCards loading"
+      style={{
+        border: "none",
+        height: "50px",
+        width: "100%",
+        color: "transparent",
+        marginBottom: "16px",
+      }}
+    ></div>
+  );
+
   return (
     <div className="centering">
       {state.loaded === false && (
-        <CircularProgress
-          style={{
-            width: "25px",
-            height: "25px",
-            color: "rgb(142, 200, 246)",
-          }}
-        />
+        <div className="cardsLoc">
+          {loadingDOM}
+          {loadingDOM}
+          {loadingDOM}
+          {loadingDOM}
+          {loadingDOM}
+        </div>
       )}
       {state.loaded === true && state.error === false && (
         <div className="cardsLoc">{state.cardsDOM}</div>
