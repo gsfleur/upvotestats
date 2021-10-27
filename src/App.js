@@ -4,9 +4,11 @@ import "./css/about.css";
 import "./css/search.css";
 import "./css/results.css";
 import "./css/trends.css";
+import "./css/stats.css";
 import "./css/mobile.css";
 import React from "react";
 import Home from "./home";
+import Stats from "./stats";
 import About from "./about";
 import Trends from "./trends";
 import Scroll from "./scroll";
@@ -82,6 +84,9 @@ export default function App() {
               </Route>
               <Route path="/trends">
                 <Trends />
+              </Route>
+              <Route path="/stats">
+                <Stats />
               </Route>
               <Route path="/">
                 <Search />
