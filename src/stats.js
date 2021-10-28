@@ -145,19 +145,18 @@ export default function Stats() {
                       {numToString(state.data.posts[i][1].upvotes)} &uarr;
                       &bull;{" "}
                       {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
-                      &darr;
+                      &darr; &bull; {numToString(state.data.posts[i][1].awards)}{" "}
+                      Awards
                       {state.data.posts[i][1].nsfw === true && (
                         <span> &bull; NSFW</span>
                       )}
                     </span>
-
                     <br />
                     <b>{state.data.posts[i][1].title.substring(0, 45)}</b>
                     {state.data.posts[i][1].title.length > 45 && (
                       <span>...</span>
                     )}
                     <br />
-
                     <div
                       style={{
                         height: "15px",
@@ -286,7 +285,7 @@ export default function Stats() {
               </div>
               <div className="centering">
                 <span style={{ fontSize: "13px" }}>
-                  Out of the Top (most upvoted) 1000 posts thate made r/All this
+                  Out of the Top (most upvoted) 1000 posts that made r/All this
                   past month
                 </span>
                 <br />
