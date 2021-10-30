@@ -171,6 +171,14 @@ export default function Trends() {
               // Removing stray html encodings
               if (textParts[t].startsWith("&") && textParts[t].endsWith(";"))
                 allow = false;
+
+              // Remove words that don't have a letter or number
+              if (
+                textParts[t].match(".*[a-zA-Z].*") === null &&
+                textParts[t].match(".*[0-9].*") === null
+              ) {
+                allow = false;
+              }
             }
 
             if (allow === true) newText += textParts[t] + " ";
