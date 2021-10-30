@@ -474,7 +474,7 @@ export default function Trends() {
                   style={{
                     margin: "0px",
                     width: "100%",
-                    height: "60px",
+                    height: "81px",
                     border: "1.5px solid #292929",
                     borderRadius: "20px",
                   }}
