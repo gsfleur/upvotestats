@@ -9,6 +9,7 @@ export default function Trends() {
     loaded: false,
     error: false,
     sort: "today",
+    sortBy: "coins",
     data: undefined,
     todayData: undefined,
     weekData: undefined,
@@ -21,7 +22,9 @@ export default function Trends() {
       (async () => {
         // Loading data from backend
         await axios
-          .get(process.env.REACT_APP_BACKEND + "posts/today")
+          .get(
+            process.env.REACT_APP_BACKEND + "posts/today?sort=" + state.sortBy
+          )
           .then((res) => {
             state.todayData = res.data;
           })
@@ -31,7 +34,9 @@ export default function Trends() {
           });
 
         await axios
-          .get(process.env.REACT_APP_BACKEND + "posts/week")
+          .get(
+            process.env.REACT_APP_BACKEND + "posts/week?sort=" + state.sortBy
+          )
           .then((res) => {
             state.weekData = res.data;
           })
@@ -41,7 +46,9 @@ export default function Trends() {
           });
 
         await axios
-          .get(process.env.REACT_APP_BACKEND + "posts/month")
+          .get(
+            process.env.REACT_APP_BACKEND + "posts/month?sort=" + state.sortBy
+          )
           .then((res) => {
             state.monthData = res.data;
           })
@@ -53,10 +60,13 @@ export default function Trends() {
         // Update state
         if (componentMounted) {
           setTimeout(() => {
+            let data = state.todayData;
+            if (state.sort === "week") data = state.weekData;
+            if (state.sort === "month") data = state.monthData;
             setState({
               ...state,
               loaded: true,
-              data: state.todayData,
+              data: data,
             });
           }, 500);
         }
@@ -586,6 +596,106 @@ export default function Trends() {
                   }}
                 >
                   Trends of front page posts on reddit.com
+                  <br />
+                  <button
+                    className="sortButton"
+                    style={{ borderBottom: "none", color: "gray" }}
+                  >
+                    Sorted by
+                  </button>
+                  {state.sortBy === "coins" && (
+                    <button
+                      className="sortButton"
+                      style={{
+                        color: "rgb(29,161,242)",
+                        borderBottom: "1px dashed rgb(29,161,242)",
+                      }}
+                    >
+                      Coins
+                    </button>
+                  )}
+                  {state.sortBy === "awards" && (
+                    <button
+                      className="sortButton"
+                      style={{
+                        color: "rgb(29,161,242)",
+                        borderBottom: "1px dashed rgb(29,161,242)",
+                      }}
+                    >
+                      Awards
+                    </button>
+                  )}
+                  {state.sortBy === "downvotes" && (
+                    <button
+                      className="sortButton"
+                      style={{
+                        color: "rgb(29,161,242)",
+                        borderBottom: "1px dashed rgb(29,161,242)",
+                      }}
+                    >
+                      Downvote Ratio
+                    </button>
+                  )}
+                  {state.sortBy !== "coins" && (
+                    <button
+                      className="sortButton"
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          loaded: false,
+                          sortBy: "coins",
+                        })
+                      }
+                    >
+                      Coins
+                    </button>
+                  )}
+                  {state.sortBy !== "awards" && (
+                    <button
+                      className="sortButton"
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          loaded: false,
+                          sortBy: "awards",
+                        })
+                      }
+                    >
+                      Awards
+                    </button>
+                  )}
+                  {state.sortBy !== "downvotes" && (
+                    <button
+                      className="sortButton"
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          loaded: false,
+                          sortBy: "downvotes",
+                        })
+                      }
+                    >
+                      Downvote Ratio
+                    </button>
+                  )}
                   <br />
                 </div>
               </div>
