@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Trends() {
-  window.document.title = "Upvote Stats - Most Awarded Posts on Reddit";
+  window.document.title = "Upvote Stats - Trends on Reddit";
 
   // Component State
   const [state, setState] = useState({
