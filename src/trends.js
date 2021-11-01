@@ -482,7 +482,7 @@ export default function Trends() {
                   style={{
                     margin: "0px",
                     width: "100%",
-                    height: "81px",
+                    height: "78px",
                     border: "1.5px solid #292929",
                     borderRadius: "20px",
                   }}
@@ -603,45 +603,14 @@ export default function Trends() {
                     width: "85%",
                   }}
                 >
-                  Trends of front page posts on reddit.com
-                  <br />
-                  <button
-                    className="sortButton"
-                    style={{ borderBottom: "none", color: "gray" }}
-                  >
-                    Sorted by
-                  </button>
                   {state.sortBy === "coins" && (
                     <button
                       className="sortButton"
                       style={{
-                        color: "rgb(29,161,242)",
-                        borderBottom: "1px dashed rgb(29,161,242)",
+                        border: "1px solid rgb(29,161,242)",
                       }}
                     >
                       Coins
-                    </button>
-                  )}
-                  {state.sortBy === "awards" && (
-                    <button
-                      className="sortButton"
-                      style={{
-                        color: "rgb(29,161,242)",
-                        borderBottom: "1px dashed rgb(29,161,242)",
-                      }}
-                    >
-                      Awards
-                    </button>
-                  )}
-                  {state.sortBy === "downvotes" && (
-                    <button
-                      className="sortButton"
-                      style={{
-                        color: "rgb(29,161,242)",
-                        borderBottom: "1px dashed rgb(29,161,242)",
-                      }}
-                    >
-                      Downvote Ratio
                     </button>
                   )}
                   {state.sortBy !== "coins" && (
@@ -664,6 +633,16 @@ export default function Trends() {
                       Coins
                     </button>
                   )}
+                  {state.sortBy === "awards" && (
+                    <button
+                      className="sortButton"
+                      style={{
+                        border: "1px solid rgb(29,161,242)",
+                      }}
+                    >
+                      Awards
+                    </button>
+                  )}
                   {state.sortBy !== "awards" && (
                     <button
                       className="sortButton"
@@ -682,6 +661,16 @@ export default function Trends() {
                       }
                     >
                       Awards
+                    </button>
+                  )}
+                  {state.sortBy === "downvotes" && (
+                    <button
+                      className="sortButton"
+                      style={{
+                        border: "1px solid rgb(29,161,242)",
+                      }}
+                    >
+                      Downvote Ratio
                     </button>
                   )}
                   {state.sortBy !== "downvotes" && (

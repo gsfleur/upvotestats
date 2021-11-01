@@ -81,11 +81,11 @@
 .sortButton {
   border: none;
   background: none;
-  padding: 0px;
-  margin: 0px 5px 0px 0px;
+  padding: 5px 10px 5px 10px;
+  margin: 5px 5px 0px 0px;
   text-decoration: none;
   font-size: 13px;
   color: silver;
-  border-radius: 0px;
-  border-bottom: 1px dashed silver;
+  border-radius: 10px;
+  border: 1px solid #222222;
 }
