@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 const communities = topReddits;
 
 export default function Home() {
-  window.document.title = "Upvote Stats - Home";
+  window.document.title = "Home - Upvote Stats";
 
   // Component State
   const [state, setState] = useState({

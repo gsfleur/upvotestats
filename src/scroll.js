@@ -28,7 +28,8 @@ export default function Scroll() {
           window.document.body.scrollHeight;
         if (
           scrolledPercent >= 0.6 &&
-          window.document.body.scrollHeight > 2000
+          window.document.body.scrollHeight > 2000 &&
+          window.innerWidth >= 800
         ) {
           document.getElementById("backToTop").style.display = "inline";
         } else {

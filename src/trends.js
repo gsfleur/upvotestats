@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function Trends() {
-  window.document.title = "Upvote Stats - Trends on Reddit";
+  window.document.title = "Trends on Reddit - Upvote Stats";
 
   // Component State
   const [state, setState] = useState({
@@ -233,8 +233,8 @@ export default function Trends() {
                 <div
                   className="searchLink"
                   style={{
-                    fontSize: "13px",
-                    marginBottom: "10px",
+                    fontSize: "12px",
+                    marginBottom: "5px",
                     color: "gray",
                   }}
                 >
@@ -272,8 +272,7 @@ export default function Trends() {
                   <div
                     className="searchLink"
                     style={{
-                      fontSize: "13px",
-                      marginBottom: "5px",
+                      fontSize: "12px",
                       marginTop: "5px",
                       color: "silver",
                     }}
@@ -298,7 +297,7 @@ export default function Trends() {
                         width: "100%",
                         display: "inline-block",
                         marginBottom: "7px",
-                        fontSize: "14px",
+                        fontSize: "12px",
                         color: "silver",
                       }}
                     >
@@ -328,6 +327,7 @@ export default function Trends() {
                         style={{
                           float: "left",
                           marginTop: "5px",
+                          marginBottom: "5px",
                           marginLeft: "5px",
                         }}
                       >
@@ -373,42 +373,46 @@ export default function Trends() {
                 <div
                   className="postDate"
                   style={{
-                    fontSize: "13px",
-                    marginBottom: "10px",
+                    fontSize: "12px",
+                    marginTop: "5px",
+                    marginBottom: "5px",
                     color: "silver",
                   }}
                 >
                   {author}
                 </div>
               )}
-              <div
-                style={{
-                  fontSize: "13px",
-                  marginTop: "5px",
-                  color: "gray",
-                }}
-              >
-                {state.data.posts[i][1].awards > 0 && (
-                  <span>
-                    {numToString(state.data.posts[i][1].coins)} coins,{" "}
-                    {numToString(state.data.posts[i][1].awards)} awards,{" "}
-                  </span>
-                )}
-                <span>
-                  {numToString(state.data.posts[i][1].comments)} comments
-                </span>
-              </div>
-              {state.data.posts[i][1].trends.length > 0 && (
+              {Math.floor(hours) % 2 === 1 && (
                 <div
                   style={{
-                    fontSize: "13px",
+                    fontSize: "12px",
                     marginTop: "5px",
                     color: "gray",
                   }}
                 >
-                  <span>Trending with: {trendingWith}</span>
+                  {state.data.posts[i][1].awards > 0 && (
+                    <span>
+                      {numToString(state.data.posts[i][1].coins)} coins,{" "}
+                      {numToString(state.data.posts[i][1].awards)} awards,{" "}
+                    </span>
+                  )}
+                  <span>
+                    {numToString(state.data.posts[i][1].comments)} comments
+                  </span>
                 </div>
               )}
+              {state.data.posts[i][1].trends.length > 0 &&
+                Math.floor(hours) % 2 === 0 && (
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      marginTop: "5px",
+                      color: "gray",
+                    }}
+                  >
+                    <span>Trending with: {trendingWith}</span>
+                  </div>
+                )}
             </a>
           </div>
         );
@@ -436,7 +440,7 @@ export default function Trends() {
       <div
         className="loading"
         style={{
-          margin: "25px 0px 25px 0px",
+          margin: "15px 0px 15px 0px",
           width: "230px",
           height: "20px",
           border: "1.5px solid #292929",
@@ -470,7 +474,7 @@ export default function Trends() {
             <div className="centering">
               <div
                 style={{
-                  fontSize: "13px",
+                  fontSize: "12px",
                   color: "gray",
                   marginTop: "0px",
                   marginBottom: "5px",
@@ -482,7 +486,7 @@ export default function Trends() {
                   style={{
                     margin: "0px",
                     width: "100%",
-                    height: "78px",
+                    height: "85px",
                     border: "1.5px solid #292929",
                     borderRadius: "20px",
                   }}
@@ -596,7 +600,7 @@ export default function Trends() {
               <div className="centering">
                 <div
                   style={{
-                    fontSize: "13px",
+                    fontSize: "12px",
                     color: "gray",
                     marginTop: "0px",
                     marginBottom: "5px",
@@ -701,7 +705,7 @@ export default function Trends() {
               <div className="centering">
                 <div
                   style={{
-                    fontSize: "14px",
+                    fontSize: "13px",
                     color: "gray",
                     marginTop: "10px",
                     marginBottom: "10px",

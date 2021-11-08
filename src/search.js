@@ -13,7 +13,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 const communities = topReddits;
 
 export default function Search() {
-  window.document.title = "Upvote Stats - Search";
+  window.document.title = "Search - Upvote Stats";
 
   // Getting id from URL search param
   const urlParams = new URLSearchParams(window.location.search);
@@ -22,7 +22,7 @@ export default function Search() {
   const query = q !== null && q.length > 0 ? "r/" + q : "Upvote Stats";
   const searching = query.includes("r/");
 
-  if (searching) window.document.title = "Upvote Stats - " + query;
+  if (searching) window.document.title = query + " - Upvote Stats";
 
   // Component State
   const [state, setState] = useState({

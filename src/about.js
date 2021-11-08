@@ -1,5 +1,5 @@
 export default function About() {
-  window.document.title = "Upvote Stats - About";
+  window.document.title = "About - Upvote Stats";
 
   return (
     <div className="centering">
