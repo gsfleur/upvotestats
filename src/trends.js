@@ -440,7 +440,7 @@ export default function Trends() {
       <div
         className="loading"
         style={{
-          margin: "15px 0px 15px 0px",
+          margin: "14px 0px 15px 0px",
           width: "230px",
           height: "20px",
           border: "1.5px solid #292929",
@@ -477,7 +477,7 @@ export default function Trends() {
                   fontSize: "12px",
                   color: "gray",
                   marginTop: "0px",
-                  marginBottom: "5px",
+                  marginBottom: "6px",
                   width: "85%",
                 }}
               >
@@ -506,7 +506,13 @@ export default function Trends() {
           postListDOM.length > 0 && (
             <div>
               <div className="centering">
-                <div style={{ width: "85%" }}>
+                <div
+                  style={{
+                    width: "85%",
+                    borderBottom: "2px solid #222222",
+                    marginBottom: "10px",
+                  }}
+                >
                   {state.sort === "today" && (
                     <button
                       className="timeButton"
@@ -714,12 +720,12 @@ export default function Trends() {
                   }}
                 >
                   <div style={{ marginTop: "5px" }}>
-                    Out of the top{" "}
+                    Searched{" "}
                     {state.data.stats.posts.count
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
                     posts and {numToString(state.data.stats.comments.count)}{" "}
-                    comments that made r/All
+                    comments
                   </div>
                   <div
                     style={{
