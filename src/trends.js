@@ -478,7 +478,7 @@ export default function Trends() {
                   color: "gray",
                   marginTop: "0px",
                   marginBottom: "6px",
-                  width: "85%",
+                  width: "90%",
                 }}
               >
                 <div
@@ -508,8 +508,8 @@ export default function Trends() {
               <div className="centering">
                 <div
                   style={{
-                    width: "85%",
-                    borderBottom: "2px solid #222222",
+                    width: "90%",
+                    borderBottom: "1px solid #222222",
                     marginBottom: "10px",
                   }}
                 >
@@ -610,7 +610,7 @@ export default function Trends() {
                     color: "gray",
                     marginTop: "0px",
                     marginBottom: "5px",
-                    width: "85%",
+                    width: "90%",
                   }}
                 >
                   {state.sortBy === "coins" && (

@@ -41,7 +41,8 @@ export default function App() {
         <AppBar
           position="static"
           style={{
-            background: "#292929",
+            background: "#000000",
+            borderBottom: "1px solid #222222",
           }}
         >
           <Toolbar>
