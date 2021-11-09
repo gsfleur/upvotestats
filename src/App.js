@@ -41,7 +41,7 @@ export default function App() {
         <AppBar
           position="static"
           style={{
-            background: "#000000",
+            background: "#0a0a0a",
             borderBottom: "1px solid #222222",
           }}
         >

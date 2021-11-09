@@ -1,5 +1,5 @@
 .today {
-  background-color: #00000000;
+  background-color: #0a0a0a;
   color: gainsboro;
   padding: 20px 0px 20px 0px;
   margin-bottom: 20px;
@@ -41,7 +41,7 @@
   overflow-wrap: break-word;
 }
 .postLink:hover {
-  background-color: #29292939;
+  background-color: #29292916;
 }
 
 .postImgStandard {
