@@ -218,6 +218,7 @@ export default function Trends() {
         if (containsLongWord) imgBodyCSS["wordBreak"] = "break-all";
 
         let subName = "" + state.data.posts[i][1].subreddit;
+        let rdm = Math.random();
 
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -385,7 +386,7 @@ export default function Trends() {
                   {author}
                 </div>
               )}
-              {Math.floor(hours) % 2 === 1 && (
+              {rdm >= 0.5 && (
                 <div
                   style={{
                     fontSize: "12px",
@@ -404,18 +405,17 @@ export default function Trends() {
                   </span>
                 </div>
               )}
-              {state.data.posts[i][1].trends.length > 0 &&
-                Math.floor(hours) % 2 === 0 && (
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      marginTop: "5px",
-                      color: "gray",
-                    }}
-                  >
-                    <span>Trending with: {trendingWith}</span>
-                  </div>
-                )}
+              {state.data.posts[i][1].trends.length > 0 && rdm < 0.5 && (
+                <div
+                  style={{
+                    fontSize: "12px",
+                    marginTop: "5px",
+                    color: "gray",
+                  }}
+                >
+                  <span>Trending with: {trendingWith}</span>
+                </div>
+              )}
             </a>
           </div>
         );
