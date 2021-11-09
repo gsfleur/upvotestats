@@ -59,7 +59,7 @@
   border-radius: 20px;
 }
 .imgBody:hover {
-  background-image: linear-gradient(#29292921, #29292921, #292929e7);
+  background-color: #29292939;
   border-radius: 20px;
 }
 
