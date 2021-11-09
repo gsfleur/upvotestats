@@ -20,6 +20,7 @@ export default function Trends() {
     let componentMounted = true;
     if (state.loaded === false) {
       (async () => {
+        let beforeDate = new Date();
         // Loading data from backend
         await axios
           .get(
@@ -56,9 +57,11 @@ export default function Trends() {
             console.log(err);
             state.error = true;
           });
+        let afterDate = new Date();
 
         // Update state
         if (componentMounted) {
+          // Delay so load keyshine can complete one full pass (looks smoother/cleaner)
           setTimeout(() => {
             let data = state.todayData;
             if (state.sort === "week") data = state.weekData;
@@ -68,7 +71,7 @@ export default function Trends() {
               loaded: true,
               data: data,
             });
-          }, 500);
+          }, Math.min(500, Math.max(0, 500 - (afterDate - beforeDate))));
         }
       })();
     }
