@@ -31,15 +31,17 @@
 }
 
 .postLink {
-  width: 90%;
+  width: 100%;
   border: none;
-  border-radius: 5px;
-  padding: 15px 0px 5px 0px;
+  padding: 10px 5% 10px 5%;
   margin-bottom: 0px;
   text-decoration: none;
   color: gainsboro;
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+.postLink:hover {
+  background-color: #29292939;
 }
 
 .postImgStandard {

@@ -719,11 +719,11 @@ export default function Trends() {
                     marginTop: "10px",
                     marginBottom: "10px",
                     textAlign: "center",
-                    maxWidth: "75%",
+                    maxWidth: "90%",
                   }}
                 >
                   <div style={{ marginTop: "5px" }}>
-                    Searched{" "}
+                    Out of the top{" "}
                     {state.data.stats.posts.count
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
