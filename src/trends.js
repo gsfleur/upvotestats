@@ -386,9 +386,14 @@ export default function Trends() {
                         >
                           {state.data.posts[i][1].title}
                         </div>
-                        <div className="centering">
-                          <span>
-                            {!state.data.posts[i][1].isVideo && (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        >
+                          {!state.data.posts[i][1].isVideo && (
+                            <div className="centering">
                               <img
                                 src={imgSource}
                                 className="postImgStandard"
@@ -396,37 +401,32 @@ export default function Trends() {
                                 style={{
                                   width: "100%",
                                   height: "100%",
-                                  maxHeight: "60vh",
-                                  minWidth: "250px",
+                                  minWidth: "275px",
                                 }}
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src = "missing.png";
                                 }}
                               />
-                            )}
-                            {state.data.posts[i][1].isVideo && (
-                              <span>
-                                <video
-                                  id={"video" + i}
-                                  width="100%"
-                                  height="100%"
-                                  style={{
-                                    borderRadius: "10px",
-                                    maxHeight: "60vh",
-                                  }}
-                                  preload="auto"
-                                  muted
-                                  controls
-                                >
-                                  <source
-                                    src={state.data.posts[i][1].media}
-                                    type="video/mp4"
-                                  />
-                                </video>
-                              </span>
-                            )}
-                          </span>
+                            </div>
+                          )}
+                          {state.data.posts[i][1].isVideo && (
+                            <div className="centering">
+                              <video
+                                id={"video" + i}
+                                height="100%"
+                                poster={state.data.posts[i][1].urlToImage}
+                                preload="auto"
+                                muted
+                                controls
+                              >
+                                <source
+                                  src={state.data.posts[i][1].media}
+                                  type="video/mp4"
+                                />
+                              </video>
+                            </div>
+                          )}
                         </div>
                       </span>
                     )}
