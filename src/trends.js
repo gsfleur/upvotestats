@@ -302,7 +302,9 @@ export default function Trends() {
                         {newText.length > 180 && <span>...</span>}
                       </span>
                     )}
-                    {state.openPosts.includes(i) && <span>{newText}</span>}
+                    {state.openPosts.includes(i) && (
+                      <span style={{ fontSize: "14px" }}>{newText}</span>
+                    )}
                   </div>
                 )}
               </div>
@@ -370,7 +372,7 @@ export default function Trends() {
                         <div
                           className="postDate"
                           style={{
-                            fontSize: "18px",
+                            fontSize: "17px",
                             marginBottom: "10px",
                             color: "gainsboro",
                             width: "90%",
@@ -468,7 +470,7 @@ export default function Trends() {
                   {author}
                 </div>
               )}
-              {Math.floor(hours) % 2 === 1 && (
+              {(Math.floor(hours) % 2 === 1 || state.openPosts.includes(i)) && (
                 <div
                   style={{
                     fontSize: "12px",
@@ -488,7 +490,8 @@ export default function Trends() {
                 </div>
               )}
               {state.data.posts[i][1].trends.length > 0 &&
-                Math.floor(hours) % 2 === 0 && (
+                (Math.floor(hours) % 2 === 0 ||
+                  state.openPosts.includes(i)) && (
                   <div
                     style={{
                       fontSize: "12px",
