@@ -14,7 +14,8 @@ export default function Trends() {
     todayData: undefined,
     weekData: undefined,
     monthData: undefined,
-    openPosts: [],
+    initalExpand: false,
+    expandedPosts: [],
   });
 
   useEffect(() => {
@@ -89,7 +90,7 @@ export default function Trends() {
     if (state.data.posts !== undefined) {
       for (
         let i = 0;
-        i < state.data.posts.length && postListDOM.length < 50;
+        i < state.data.posts.length && postListDOM.length < 30;
         i++
       ) {
         // Skip deleted posts
@@ -222,6 +223,9 @@ export default function Trends() {
         // Subreddit Name
         let subName = "" + state.data.posts[i][1].subreddit;
 
+        if (newText.length < 180 && !state.initalExpand)
+          state.expandedPosts.push(i);
+
         // Image Source
         let imgSource = state.data.posts[i][1].redditMediaDomain
           ? state.data.posts[i][1].urlDest
@@ -296,13 +300,13 @@ export default function Trends() {
                       color: "silver",
                     }}
                   >
-                    {!state.openPosts.includes(i) && (
+                    {!state.expandedPosts.includes(i) && (
                       <span>
                         {newText.substring(0, 180)}
                         {newText.length > 180 && <span>...</span>}
                       </span>
                     )}
-                    {state.openPosts.includes(i) && (
+                    {state.expandedPosts.includes(i) && (
                       <span style={{ fontSize: "14px" }}>{newText}</span>
                     )}
                   </div>
@@ -367,12 +371,12 @@ export default function Trends() {
                         {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
                       </div>
                     </div>
-                    {state.openPosts.includes(i) && (
+                    {state.expandedPosts.includes(i) && (
                       <span>
                         <div
                           className="postDate"
                           style={{
-                            fontSize: "17px",
+                            fontSize: "16px",
                             marginBottom: "10px",
                             color: "gainsboro",
                             width: "90%",
@@ -390,7 +394,7 @@ export default function Trends() {
                                 style={{
                                   width: "100%",
                                   height: "100%",
-                                  maxWidth: "400px",
+                                  maxHeight: "60vh",
                                   minWidth: "250px",
                                 }}
                                 onError={(e) => {
@@ -406,11 +410,10 @@ export default function Trends() {
                                   width="100%"
                                   height="100%"
                                   style={{
-                                    maxWidth: "400px",
                                     borderRadius: "10px",
+                                    maxHeight: "60vh",
                                   }}
                                   preload="auto"
-                                  autoPlay
                                   muted
                                   controls
                                 >
@@ -425,7 +428,7 @@ export default function Trends() {
                         </div>
                       </span>
                     )}
-                    {!state.openPosts.includes(i) && (
+                    {!state.expandedPosts.includes(i) && (
                       <span>
                         <img
                           src={state.data.posts[i][1].urlToImage}
@@ -470,7 +473,24 @@ export default function Trends() {
                   {author}
                 </div>
               )}
-              {(Math.floor(hours) % 2 === 1 || state.openPosts.includes(i)) && (
+              <div
+                style={{
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  color: "gray",
+                }}
+              >
+                {state.data.posts[i][1].awards > 0 && (
+                  <span>
+                    {numToString(state.data.posts[i][1].coins)} coins,{" "}
+                    {numToString(state.data.posts[i][1].awards)} awards,{" "}
+                  </span>
+                )}
+                <span>
+                  {numToString(state.data.posts[i][1].comments)} comments
+                </span>
+              </div>
+              {state.data.posts[i][1].trends.length > 0 && (
                 <div
                   style={{
                     fontSize: "12px",
@@ -478,49 +498,27 @@ export default function Trends() {
                     color: "gray",
                   }}
                 >
-                  {state.data.posts[i][1].awards > 0 && (
-                    <span>
-                      {numToString(state.data.posts[i][1].coins)} coins,{" "}
-                      {numToString(state.data.posts[i][1].awards)} awards,{" "}
-                    </span>
-                  )}
-                  <span>
-                    {numToString(state.data.posts[i][1].comments)} comments
-                  </span>
+                  <span>Trending with: {trendingWith}</span>
                 </div>
               )}
-              {state.data.posts[i][1].trends.length > 0 &&
-                (Math.floor(hours) % 2 === 0 ||
-                  state.openPosts.includes(i)) && (
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      marginTop: "5px",
-                      color: "gray",
-                    }}
-                  >
-                    <span>Trending with: {trendingWith}</span>
-                  </div>
-                )}
 
-              {state.openPosts.includes(i) && (
-                <a
-                  href={state.data.posts[i][1].url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="searchLink"
-                  style={{
-                    fontSize: "13px",
-                    marginTop: "5px",
-                  }}
-                >
-                  <b>View full thread on reddit</b>
-                </a>
-              )}
+              <a
+                href={state.data.posts[i][1].url}
+                target="_blank"
+                rel="noreferrer"
+                className="searchLink"
+                style={{
+                  fontSize: "13px",
+                  marginTop: "5px",
+                }}
+              >
+                <b>View full thread on reddit</b>
+              </a>
             </div>
           </div>
         );
       }
+      state.initalExpand = true;
     }
   }
 
@@ -529,8 +527,8 @@ export default function Trends() {
    * @param {*} i - id of post to open
    */
   function openPost(i) {
-    if (!state.openPosts.includes(i)) state.openPosts.push(i);
-    else state.openPosts = state.openPosts.filter((e) => e !== i);
+    if (!state.expandedPosts.includes(i)) state.expandedPosts.push(i);
+    else state.expandedPosts = state.expandedPosts.filter((e) => e !== i);
 
     setState({ ...state });
   }
@@ -574,7 +572,7 @@ export default function Trends() {
           style={{
             border: "1.5px solid #292929",
             borderRadius: "20px",
-            height: "140px",
+            height: "180px",
           }}
         ></div>
       </div>
@@ -651,7 +649,8 @@ export default function Trends() {
                           ...state,
                           sort: "today",
                           data: state.todayData,
-                          openPosts: [],
+                          expandedPosts: [],
+                          initalExpand: false,
                         })
                       }
                     >
@@ -681,7 +680,8 @@ export default function Trends() {
                           ...state,
                           sort: "week",
                           data: state.weekData,
-                          openPosts: [],
+                          expandedPosts: [],
+                          initalExpand: false,
                         })
                       }
                     >
@@ -711,7 +711,8 @@ export default function Trends() {
                           ...state,
                           sort: "month",
                           data: state.monthData,
-                          openPosts: [],
+                          expandedPosts: [],
+                          initalExpand: false,
                         })
                       }
                     >
@@ -755,6 +756,8 @@ export default function Trends() {
                           ...state,
                           loaded: false,
                           sortBy: "coins",
+                          expandedPosts: [],
+                          initalExpand: false,
                         })
                       }
                     >
@@ -785,6 +788,8 @@ export default function Trends() {
                           ...state,
                           loaded: false,
                           sortBy: "awards",
+                          expandedPosts: [],
+                          initalExpand: false,
                         })
                       }
                     >
@@ -815,13 +820,14 @@ export default function Trends() {
                           ...state,
                           loaded: false,
                           sortBy: "downvotes",
+                          expandedPosts: [],
+                          initalExpand: false,
                         })
                       }
                     >
                       Downvote Ratio
                     </button>
                   )}
-                  <br />
                 </div>
               </div>
               {postListDOM}
