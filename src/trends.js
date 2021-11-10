@@ -407,6 +407,7 @@ export default function Trends() {
                                     maxWidth: "400px",
                                     borderRadius: "10px",
                                   }}
+                                  preload="auto"
                                   autoPlay
                                   muted
                                   controls
@@ -647,6 +648,7 @@ export default function Trends() {
                           ...state,
                           sort: "today",
                           data: state.todayData,
+                          openPosts: [],
                         })
                       }
                     >
@@ -676,6 +678,7 @@ export default function Trends() {
                           ...state,
                           sort: "week",
                           data: state.weekData,
+                          openPosts: [],
                         })
                       }
                     >
@@ -705,6 +708,7 @@ export default function Trends() {
                           ...state,
                           sort: "month",
                           data: state.monthData,
+                          openPosts: [],
                         })
                       }
                     >
