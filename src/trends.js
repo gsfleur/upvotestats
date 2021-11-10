@@ -247,7 +247,8 @@ export default function Trends() {
             className="centering"
             key={"trends-" + i}
             onClick={() => {
-              if (!state.data.posts[i][1].isVideo) openPost(i);
+              if (!state.data.posts[i][1].isVideo && newText.length > 0)
+                openPost(i);
             }}
           >
             <div className="postLink">
