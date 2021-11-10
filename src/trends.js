@@ -14,6 +14,7 @@ export default function Trends() {
     todayData: undefined,
     weekData: undefined,
     monthData: undefined,
+    openPosts: [],
   });
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export default function Trends() {
         }
       })();
     }
+
     return () => {
       componentMounted = false;
     };
@@ -217,19 +219,32 @@ export default function Trends() {
         // Break by letter if word is long (long links or words)
         if (containsLongWord) imgBodyCSS["wordBreak"] = "break-all";
 
+        // Subreddit Name
         let subName = "" + state.data.posts[i][1].subreddit;
-        let rdm = Math.random();
+
+        // Image Source
+        let imgSource = state.data.posts[i][1].redditMediaDomain
+          ? state.data.posts[i][1].urlDest
+          : state.data.posts[i][1].urlToImage;
+
+        let index = undefined;
+        let audioSource = undefined;
+        // Getting Audio Source
+        if (state.data.posts[i][1].media !== undefined) {
+          index = state.data.posts[i][1].media.indexOf("DASH");
+          audioSource =
+            state.data.posts[i][1].media.substring(0, index) + "DASH_audio.mp4";
+        }
 
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
-          <div className="centering" key={"trends-" + i}>
-            <a
-              href={state.data.posts[i][1].url}
-              className="postLink"
-              target="_blank"
-              rel="noreferrer"
-            >
+          <div
+            className="centering"
+            key={"trends-" + i}
+            onClick={() => openPost(i)}
+          >
+            <div className="postLink">
               <div
                 className="newsText"
                 style={{ float: "left", overflow: "hidden" }}
@@ -281,8 +296,13 @@ export default function Trends() {
                       color: "silver",
                     }}
                   >
-                    {newText.substring(0, 180)}
-                    {newText.length > 180 && <span>...</span>}
+                    {!state.openPosts.includes(i) && (
+                      <span>
+                        {newText.substring(0, 180)}
+                        {newText.length > 180 && <span>...</span>}
+                      </span>
+                    )}
+                    {state.openPosts.includes(i) && <span>{newText}</span>}
                   </div>
                 )}
               </div>
@@ -345,31 +365,95 @@ export default function Trends() {
                         {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
                       </div>
                     </div>
-                    <img
-                      src={state.data.posts[i][1].urlToImage}
-                      className="postImgStandard"
-                      alt="Reddit Post Thumbnail"
-                      style={{
-                        float: "left",
-                      }}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "missing.png";
-                      }}
-                    />
-                    <div
-                      className="postDate"
-                      style={{
-                        fontSize: "16px",
-                        marginBottom: "10px",
-                        color: "gainsboro",
-                        float: "left",
-                        width: "calc(100% - 120px)",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      {state.data.posts[i][1].title}
-                    </div>
+                    {state.openPosts.includes(i) && (
+                      <span>
+                        <div
+                          className="postDate"
+                          style={{
+                            fontSize: "18px",
+                            marginBottom: "10px",
+                            color: "gainsboro",
+                            width: "90%",
+                          }}
+                        >
+                          {state.data.posts[i][1].title}
+                        </div>
+                        <div className="centering">
+                          <span>
+                            {!state.data.posts[i][1].isVideo && (
+                              <img
+                                src={imgSource}
+                                className="postImgStandard"
+                                alt="Reddit Post Thumbnail"
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  maxWidth: "400px",
+                                  minWidth: "250px",
+                                }}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = "missing.png";
+                                }}
+                              />
+                            )}
+                            {state.data.posts[i][1].isVideo && (
+                              <span>
+                                <video
+                                  id={"video" + i}
+                                  width="100%"
+                                  height="100%"
+                                  style={{
+                                    maxWidth: "400px",
+                                    borderRadius: "10px",
+                                  }}
+                                  autoPlay
+                                  muted
+                                  controls
+                                >
+                                  <source
+                                    src={mergeVideo(
+                                      state.data.posts[i][1].media,
+                                      audioSource
+                                    )}
+                                    type="video/mp4"
+                                  />
+                                </video>
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                      </span>
+                    )}
+                    {!state.openPosts.includes(i) && (
+                      <span>
+                        <img
+                          src={state.data.posts[i][1].urlToImage}
+                          className="postImgStandard"
+                          alt="Reddit Post Thumbnail"
+                          style={{
+                            float: "left",
+                          }}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "missing.png";
+                          }}
+                        />
+                        <div
+                          className="postDate"
+                          style={{
+                            fontSize: "16px",
+                            marginBottom: "10px",
+                            color: "gainsboro",
+                            float: "left",
+                            width: "calc(100% - 120px)",
+                            marginLeft: "10px",
+                          }}
+                        >
+                          {state.data.posts[i][1].title}
+                        </div>
+                      </span>
+                    )}
                   </div>
                 </div>
               )}
@@ -386,7 +470,7 @@ export default function Trends() {
                   {author}
                 </div>
               )}
-              {rdm >= 0.5 && (
+              {Math.floor(hours) % 2 === 1 && (
                 <div
                   style={{
                     fontSize: "12px",
@@ -405,22 +489,74 @@ export default function Trends() {
                   </span>
                 </div>
               )}
-              {state.data.posts[i][1].trends.length > 0 && rdm < 0.5 && (
-                <div
+              {state.data.posts[i][1].trends.length > 0 &&
+                Math.floor(hours) % 2 === 0 && (
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      marginTop: "5px",
+                      color: "gray",
+                    }}
+                  >
+                    <span>Trending with: {trendingWith}</span>
+                  </div>
+                )}
+
+              {state.openPosts.includes(i) && (
+                <a
+                  href={state.data.posts[i][1].url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="searchLink"
                   style={{
-                    fontSize: "12px",
+                    fontSize: "13px",
                     marginTop: "5px",
-                    color: "gray",
                   }}
                 >
-                  <span>Trending with: {trendingWith}</span>
-                </div>
+                  <b>See full thread on reddit</b>
+                </a>
               )}
-            </a>
+            </div>
           </div>
         );
       }
     }
+  }
+
+  /**
+   * Expands post to show full image/video
+   * @param {*} i - id of post to open
+   */
+  function openPost(i) {
+    if (!state.openPosts.includes(i)) state.openPosts.push(i);
+    else state.openPosts = state.openPosts.filter((e) => e !== i);
+
+    setState({ ...state });
+  }
+
+  /**
+   * Merges video and audio files together into one
+   * @param {*} video - link of video
+   * @param {*} audio - link of audio
+   * @returns returns merged video
+   */
+  async function mergeVideo(video, audio) {
+    let { createFFmpeg, fetchFile } = window.FFmpeg;
+    let ffmpeg = createFFmpeg();
+    await ffmpeg.load();
+    ffmpeg.FS("writeFile", "video.mp4", await fetchFile(video));
+    ffmpeg.FS("writeFile", "audio.mp4", await fetchFile(audio));
+    await ffmpeg.run(
+      "-i",
+      "video.mp4",
+      "-i",
+      "audio.mp4",
+      "-c",
+      "copy",
+      "output.mp4"
+    );
+    let data = await ffmpeg.FS("readFile", "output.mp4");
+    return new Uint8Array(data.buffer);
   }
 
   /*
