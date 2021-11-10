@@ -227,14 +227,14 @@ export default function Trends() {
           ? state.data.posts[i][1].urlDest
           : state.data.posts[i][1].urlToImage;
 
-        let index = undefined;
+        /*let index = undefined;
         let audioSource = undefined;
         // Getting Audio Source
         if (state.data.posts[i][1].media !== undefined) {
           index = state.data.posts[i][1].media.indexOf("DASH");
           audioSource =
             state.data.posts[i][1].media.substring(0, index) + "DASH_audio.mp4";
-        }
+        }*/
 
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -412,10 +412,7 @@ export default function Trends() {
                                   controls
                                 >
                                   <source
-                                    src={mergeVideo(
-                                      state.data.posts[i][1].media,
-                                      audioSource
-                                    )}
+                                    src={state.data.posts[i][1].media}
                                     type="video/mp4"
                                   />
                                 </video>
@@ -513,7 +510,7 @@ export default function Trends() {
                     marginTop: "5px",
                   }}
                 >
-                  <b>See full thread on reddit</b>
+                  <b>View full thread on reddit</b>
                 </a>
               )}
             </div>
@@ -532,31 +529,6 @@ export default function Trends() {
     else state.openPosts = state.openPosts.filter((e) => e !== i);
 
     setState({ ...state });
-  }
-
-  /**
-   * Merges video and audio files together into one
-   * @param {*} video - link of video
-   * @param {*} audio - link of audio
-   * @returns returns merged video
-   */
-  async function mergeVideo(video, audio) {
-    let { createFFmpeg, fetchFile } = window.FFmpeg;
-    let ffmpeg = createFFmpeg();
-    await ffmpeg.load();
-    ffmpeg.FS("writeFile", "video.mp4", await fetchFile(video));
-    ffmpeg.FS("writeFile", "audio.mp4", await fetchFile(audio));
-    await ffmpeg.run(
-      "-i",
-      "video.mp4",
-      "-i",
-      "audio.mp4",
-      "-c",
-      "copy",
-      "output.mp4"
-    );
-    let data = await ffmpeg.FS("readFile", "output.mp4");
-    return new Uint8Array(data.buffer);
   }
 
   /*
