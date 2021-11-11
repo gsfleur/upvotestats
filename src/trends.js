@@ -14,7 +14,6 @@ export default function Trends() {
     todayData: undefined,
     weekData: undefined,
     monthData: undefined,
-    initalExpand: false,
     expandedPosts: [],
   });
 
@@ -223,22 +222,10 @@ export default function Trends() {
         // Subreddit Name
         let subName = "" + state.data.posts[i][1].subreddit;
 
-        if (newText.length < 180 && !state.initalExpand)
-          state.expandedPosts.push(i);
-
         // Image Source
         let imgSource = state.data.posts[i][1].redditMediaDomain
           ? state.data.posts[i][1].urlDest
           : state.data.posts[i][1].urlToImage;
-
-        /*let index = undefined;
-        let audioSource = undefined;
-        // Getting Audio Source
-        if (state.data.posts[i][1].media !== undefined) {
-          index = state.data.posts[i][1].media.indexOf("DASH");
-          audioSource =
-            state.data.posts[i][1].media.substring(0, index) + "DASH_audio.mp4";
-        }*/
 
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -246,8 +233,11 @@ export default function Trends() {
           <div
             className="centering"
             key={"trends-" + i}
-            onClick={() => {
-              if (!state.data.posts[i][1].isVideo && newText.length > 0)
+            onClick={(e) => {
+              if (
+                e.target.className !== "postImgStandard" &&
+                e.target.className !== "postVideoStandard"
+              )
                 openPost(i);
             }}
           >
@@ -415,6 +405,7 @@ export default function Trends() {
                             <div className="centering">
                               <video
                                 id={"video" + i}
+                                className="postVideoStandard"
                                 height="100%"
                                 poster={state.data.posts[i][1].urlToImage}
                                 preload="auto"
@@ -521,7 +512,6 @@ export default function Trends() {
           </div>
         );
       }
-      state.initalExpand = true;
     }
   }
 
@@ -653,7 +643,6 @@ export default function Trends() {
                           sort: "today",
                           data: state.todayData,
                           expandedPosts: [],
-                          initalExpand: false,
                         })
                       }
                     >
@@ -684,7 +673,6 @@ export default function Trends() {
                           sort: "week",
                           data: state.weekData,
                           expandedPosts: [],
-                          initalExpand: false,
                         })
                       }
                     >
@@ -715,7 +703,6 @@ export default function Trends() {
                           sort: "month",
                           data: state.monthData,
                           expandedPosts: [],
-                          initalExpand: false,
                         })
                       }
                     >
@@ -760,7 +747,6 @@ export default function Trends() {
                           loaded: false,
                           sortBy: "coins",
                           expandedPosts: [],
-                          initalExpand: false,
                         })
                       }
                     >
@@ -792,7 +778,6 @@ export default function Trends() {
                           loaded: false,
                           sortBy: "awards",
                           expandedPosts: [],
-                          initalExpand: false,
                         })
                       }
                     >
@@ -824,7 +809,6 @@ export default function Trends() {
                           loaded: false,
                           sortBy: "downvotes",
                           expandedPosts: [],
-                          initalExpand: false,
                         })
                       }
                     >
