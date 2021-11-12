@@ -175,7 +175,7 @@ export default function Trends() {
           );
         }
         // No trends available
-        if (state.data.posts[i][1].trends.length === 0) {
+        if (trends.length === 0) {
           trendingWith.push(
             <div
               style={{
@@ -186,9 +186,9 @@ export default function Trends() {
                 float: "left",
                 marginRight: "5px",
               }}
-              key={"trendWith-" + i + "-" + t}
+              key={"trendWith-" + i + "-0"}
             >
-              {subName.toLowerCase()}
+              {state.data.posts[i][1].subreddit.toLowerCase()}
             </div>
           );
         }
@@ -251,9 +251,6 @@ export default function Trends() {
         // Break by letter if word is long (long links or words)
         if (containsLongWord) imgBodyCSS["wordBreak"] = "break-all";
 
-        // Subreddit Name
-        let subName = "" + state.data.posts[i][1].subreddit;
-
         // Image Source
         let imgSource = state.data.posts[i][1].redditMediaDomain
           ? state.data.posts[i][1].urlDest
@@ -304,7 +301,7 @@ export default function Trends() {
                 )}
                 {state.data.posts[i][1].trends.length === 0 && (
                   <div className="searchLink" style={{ fontSize: "16px" }}>
-                    <b>{subName.toLowerCase()}</b>
+                    <b>{state.data.posts[i][1].subreddit.toLowerCase()}</b>
                   </div>
                 )}
 
@@ -523,17 +520,15 @@ export default function Trends() {
                   display: "inline-block",
                 }}
               >
-                {state.data.posts[i][1].trends.length > 0 && (
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      marginTop: "5px",
-                      color: "gray",
-                    }}
-                  >
-                    <span>{trendingWith}</span>
-                  </div>
-                )}
+                <div
+                  style={{
+                    fontSize: "12px",
+                    marginTop: "5px",
+                    color: "gray",
+                  }}
+                >
+                  <span>{trendingWith}</span>
+                </div>
               </div>
               <div
                 style={{
