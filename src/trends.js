@@ -21,6 +21,7 @@ export default function Trends() {
     let componentMounted = true;
     if (state.loaded === false) {
       (async () => {
+        // Date when starting request
         let beforeDate = new Date();
         // Loading data from backend
         await axios
@@ -58,6 +59,7 @@ export default function Trends() {
             console.log(err);
             state.error = true;
           });
+        // Date after request is finished
         let afterDate = new Date();
 
         // Update state
@@ -147,17 +149,29 @@ export default function Trends() {
         // DOM for "trending with" section
         let trendingWith = [];
         let trends = state.data.posts[i][1].trends;
-        for (let t = 1; t < trends.length && t < 3; t++) {
+        let lengthLimit = 0;
+
+        // Load trends until width would be too large to fit all in one line
+        for (
+          let t = 1;
+          t < trends.length && lengthLimit < Math.min(650, window.innerWidth);
+          t++
+        ) {
+          lengthLimit += trends[t].length * 13;
           trendingWith.push(
-            <span
-              style={{ color: "goldenrod" }}
+            <div
+              style={{
+                color: "goldenrod",
+                borderRadius: "10px",
+                border: "1px solid #222222",
+                padding: "5px",
+                float: "left",
+                marginRight: "5px",
+              }}
               key={"trendWith-" + i + "-" + t}
             >
               {trends[t]}
-              {trends.length > 2 && t < 2 && (
-                <span style={{ color: "gainsboro" }}>,</span>
-              )}{" "}
-            </span>
+            </div>
           );
         }
 
@@ -227,6 +241,7 @@ export default function Trends() {
           ? state.data.posts[i][1].urlDest
           : state.data.posts[i][1].urlToImage;
 
+        // List of post links
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
@@ -319,7 +334,7 @@ export default function Trends() {
                       style={{
                         width: "100%",
                         display: "inline-block",
-                        marginBottom: "7px",
+                        marginBottom: "5px",
                         fontSize: "12px",
                         color: "silver",
                       }}
@@ -455,47 +470,68 @@ export default function Trends() {
                 </div>
               )}
               {!loadableImg && (
-                <div
-                  className="postDate"
-                  style={{
-                    fontSize: "12px",
-                    marginTop: "5px",
-                    marginBottom: "5px",
-                    color: "silver",
-                  }}
-                >
-                  {author}
+                <div>
+                  {!state.expandedPosts.includes(i) && (
+                    <div
+                      className="postDate"
+                      style={{
+                        fontSize: "12px",
+                        marginTop: "5px",
+                        marginBottom: "5px",
+                        color: "silver",
+                      }}
+                    >
+                      {author}
+                    </div>
+                  )}
+                  {state.expandedPosts.includes(i) && (
+                    <div
+                      className="postDate"
+                      style={{
+                        fontSize: "14px",
+                        marginTop: "5px",
+                        marginBottom: "5px",
+                        color: "silver",
+                      }}
+                    >
+                      {author}
+                    </div>
+                  )}
                 </div>
               )}
               <div
                 style={{
+                  width: "100%",
+                  display: "inline-block",
+                }}
+              >
+                {state.data.posts[i][1].trends.length > 0 && (
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      marginTop: "5px",
+                      color: "gray",
+                    }}
+                  >
+                    <span>{trendingWith}</span>
+                  </div>
+                )}
+              </div>
+              <div
+                style={{
                   fontSize: "12px",
-                  marginTop: "5px",
                   color: "gray",
+                  marginTop: "5px",
                 }}
               >
                 {state.data.posts[i][1].awards > 0 && (
                   <span>
-                    {numToString(state.data.posts[i][1].coins)} coins,{" "}
-                    {numToString(state.data.posts[i][1].awards)} awards,{" "}
+                    {numToString(state.data.posts[i][1].coins)} coins &bull;{" "}
+                    {state.data.posts[i][1].awards} awards &bull;{" "}
                   </span>
                 )}
-                <span>
-                  {numToString(state.data.posts[i][1].comments)} comments
-                </span>
+                <span>{state.data.posts[i][1].comments} comments</span>
               </div>
-              {state.data.posts[i][1].trends.length > 0 && (
-                <div
-                  style={{
-                    fontSize: "12px",
-                    marginTop: "5px",
-                    color: "gray",
-                  }}
-                >
-                  <span>Trending with: {trendingWith}</span>
-                </div>
-              )}
-
               <a
                 href={state.data.posts[i][1].url}
                 target="_blank"
@@ -503,7 +539,6 @@ export default function Trends() {
                 className="searchLink"
                 style={{
                   fontSize: "13px",
-                  marginTop: "5px",
                 }}
               >
                 <b>View full thread on reddit</b>

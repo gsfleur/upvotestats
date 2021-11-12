@@ -31,9 +31,6 @@ export default function Home() {
       (async () => {
         // Creating cards for communities
         for (let i = 0; i < examples.length && state.cardsDOM.length < 5; i++) {
-          // Prevent home cards with potentially misleading nsfw
-          // title that may confuse others upon first notice
-          if (examples[i].subreddit.toLowerCase().includes("porn")) continue;
           await axios
             .get(
               "https://www.reddit.com/r/" +
@@ -82,6 +79,7 @@ export default function Home() {
     };
   });
 
+  // Loading objects
   let loadingDOM = (
     <div
       className="homeCards loading"
