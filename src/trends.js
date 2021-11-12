@@ -174,6 +174,24 @@ export default function Trends() {
             </div>
           );
         }
+        // No trends available
+        if (state.data.posts[i][1].trends.length === 0) {
+          trendingWith.push(
+            <div
+              style={{
+                color: "goldenrod",
+                borderRadius: "10px",
+                border: "1px solid #222222",
+                padding: "5px",
+                float: "left",
+                marginRight: "5px",
+              }}
+              key={"trendWith-" + i + "-" + t}
+            >
+              {subName.toLowerCase()}
+            </div>
+          );
+        }
 
         // Text of the post
         let text = state.data.posts[i][1].text;
