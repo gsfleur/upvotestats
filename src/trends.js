@@ -188,6 +188,8 @@ export default function Trends() {
                 padding: "5px",
                 float: "left",
                 marginRight: "5px",
+                backgroundImage:
+                  "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
               }}
               key={"trendWith-" + i + "-" + t}
             >
@@ -220,7 +222,7 @@ export default function Trends() {
         let newText = "";
 
         // Removing links from text
-        let removeText = ["www", "https", "http"];
+        let removeText = ["www", "https", "http", "*"];
         if (text !== undefined) {
           for (let t = 0; t < textParts.length; t++) {
             let allow = true;
