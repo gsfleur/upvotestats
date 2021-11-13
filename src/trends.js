@@ -14,6 +14,7 @@ export default function Trends() {
     allData: undefined,
     newsData: undefined,
     funnyData: undefined,
+    sportData: undefined,
     expandedPosts: [],
   });
 
@@ -45,13 +46,23 @@ export default function Trends() {
             console.log(err);
             state.error = true;
           });
-
         await axios
           .get(
             process.env.REACT_APP_BACKEND + "posts/funny?sort=" + state.sortBy
           )
           .then((res) => {
             state.funnyData = res.data;
+          })
+          .catch((err) => {
+            console.log(err);
+            state.error = true;
+          });
+        await axios
+          .get(
+            process.env.REACT_APP_BACKEND + "posts/sports?sort=" + state.sortBy
+          )
+          .then((res) => {
+            state.sportData = res.data;
           })
           .catch((err) => {
             console.log(err);
@@ -67,6 +78,7 @@ export default function Trends() {
             let data = state.allData;
             if (state.sort === "news") data = state.newsData;
             if (state.sort === "funny") data = state.funnyData;
+            if (state.sort === "sports") data = state.sportData;
             setState({
               ...state,
               loaded: true,
@@ -823,6 +835,36 @@ export default function Trends() {
                       }
                     >
                       Funny
+                    </button>
+                  )}
+                  {state.sort === "sports" && (
+                    <button
+                      className="timeButton"
+                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                    >
+                      Sports
+                    </button>
+                  )}
+                  {state.sort !== "sports" && (
+                    <button
+                      className="timeButton"
+                      style={{ color: "silver" }}
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          sort: "sports",
+                          data: state.sportData,
+                          expandedPosts: [],
+                        })
+                      }
+                    >
+                      Sports
                     </button>
                   )}
                 </div>

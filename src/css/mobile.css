@@ -25,7 +25,6 @@
   }
   .timeButton {
     font-size: 14px;
-    min-width: calc((100% / 3) - 25px);
   }
   .today {
     padding: 20px 0px 20px 0px;
