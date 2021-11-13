@@ -339,7 +339,8 @@ export default function Trends() {
               if (
                 e.target.className !== "postImgStandard" &&
                 e.target.className !== "postVideoStandard" &&
-                e.target.className !== "searchLink"
+                e.target.className !== "searchLink" &&
+                e.target.id !== "threadLink"
               )
                 openPost(i);
             }}
@@ -639,7 +640,7 @@ export default function Trends() {
                   fontSize: "13px",
                 }}
               >
-                <b>View full thread on reddit</b>
+                <b id="threadLink">View full thread on reddit</b>
               </a>
             </div>
           </div>
