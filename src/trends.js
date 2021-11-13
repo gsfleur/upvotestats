@@ -338,7 +338,8 @@ export default function Trends() {
             onClick={(e) => {
               if (
                 e.target.className !== "postImgStandard" &&
-                e.target.className !== "postVideoStandard"
+                e.target.className !== "postVideoStandard" &&
+                e.target.className !== "searchLink"
               )
                 openPost(i);
             }}
@@ -993,7 +994,7 @@ export default function Trends() {
                   }}
                 >
                   <div style={{ marginTop: "5px" }}>
-                    Out of the top{" "}
+                    Trends from today's top{" "}
                     {state.data.stats.posts.count
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
