@@ -162,7 +162,8 @@ export default function Trends() {
         // Load trends until width would be too large to fit all in one line
         for (
           let t = 1;
-          t < trends.length && lengthLimit < Math.min(650, window.innerWidth);
+          t < trends.length &&
+          lengthLimit < Math.min(650, window.innerWidth) - 20;
           t++
         ) {
           lengthLimit += trends[t].length * 13;
