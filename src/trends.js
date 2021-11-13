@@ -11,9 +11,9 @@ export default function Trends() {
     sort: "today",
     sortBy: "coins",
     data: undefined,
-    todayData: undefined,
-    weekData: undefined,
-    monthData: undefined,
+    allData: undefined,
+    newsData: undefined,
+    funnyData: undefined,
     expandedPosts: [],
   });
 
@@ -25,11 +25,9 @@ export default function Trends() {
         let beforeDate = new Date();
         // Loading data from backend
         await axios
-          .get(
-            process.env.REACT_APP_BACKEND + "posts/today?sort=" + state.sortBy
-          )
+          .get(process.env.REACT_APP_BACKEND + "posts/all?sort=" + state.sortBy)
           .then((res) => {
-            state.todayData = res.data;
+            state.allData = res.data;
           })
           .catch((err) => {
             console.log(err);
@@ -38,10 +36,10 @@ export default function Trends() {
 
         await axios
           .get(
-            process.env.REACT_APP_BACKEND + "posts/week?sort=" + state.sortBy
+            process.env.REACT_APP_BACKEND + "posts/news?sort=" + state.sortBy
           )
           .then((res) => {
-            state.weekData = res.data;
+            state.newsData = res.data;
           })
           .catch((err) => {
             console.log(err);
@@ -50,10 +48,10 @@ export default function Trends() {
 
         await axios
           .get(
-            process.env.REACT_APP_BACKEND + "posts/month?sort=" + state.sortBy
+            process.env.REACT_APP_BACKEND + "posts/funny?sort=" + state.sortBy
           )
           .then((res) => {
-            state.monthData = res.data;
+            state.funnyData = res.data;
           })
           .catch((err) => {
             console.log(err);
@@ -66,9 +64,9 @@ export default function Trends() {
         if (componentMounted) {
           // Delay so load keyshine can complete one full pass (looks smoother/cleaner)
           setTimeout(() => {
-            let data = state.todayData;
-            if (state.sort === "week") data = state.weekData;
-            if (state.sort === "month") data = state.monthData;
+            let data = state.allData;
+            if (state.sort === "news") data = state.newsData;
+            if (state.sort === "funny") data = state.funnyData;
             setState({
               ...state,
               loaded: true,
@@ -161,7 +159,7 @@ export default function Trends() {
           trendingWith.push(
             <div
               style={{
-                color: "goldenrod",
+                color: "silver",
                 borderRadius: "10px",
                 border: "1px solid #222222",
                 padding: "5px",
@@ -179,7 +177,7 @@ export default function Trends() {
           trendingWith.push(
             <div
               style={{
-                color: "goldenrod",
+                color: "silver",
                 borderRadius: "10px",
                 border: "1px solid #222222",
                 padding: "5px",
@@ -255,6 +253,53 @@ export default function Trends() {
         let imgSource = state.data.posts[i][1].redditMediaDomain
           ? state.data.posts[i][1].urlDest
           : state.data.posts[i][1].urlToImage;
+
+        let destLink = state.data.posts[i][1].urlDest;
+        if (destLink !== undefined) {
+          destLink = destLink.replace("https://", "");
+          destLink = destLink.replace("http://", "");
+          destLink = destLink.replace("www.", "");
+          destLink = destLink.substring(0, 20) + "...";
+        }
+
+        let outLinkDOM = (
+          <div style={{ display: "inline-block", width: "100%" }}>
+            <a
+              href={state.data.posts[i][1].urlDest}
+              target="_blank"
+              rel="noreferrer"
+              className="searchLink"
+              style={{
+                fontSize: "13px",
+                color: "rgb(29,161,242)",
+                float: "left",
+              }}
+              onMouseOver={(e) => {
+                e.target.style.color = "rgb(0,132,213)";
+              }}
+              onMouseOut={(e) => {
+                e.target.style.color = "rgb(29,161,242)";
+              }}
+            >
+              {destLink}
+            </a>
+            <img
+              src="outbound.png"
+              alt={"outbound icon"}
+              width="13px"
+              height="13px"
+              style={{
+                marginLeft: "3px",
+                float: "left",
+                marginTop: "3px",
+              }}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "missing.png";
+              }}
+            />
+          </div>
+        );
 
         // List of post links
         postLinks.push(state.data.posts[i][1].url);
@@ -406,6 +451,10 @@ export default function Trends() {
                           }}
                         >
                           {state.data.posts[i][1].title}
+                          {!state.data.posts[i][1].redditMediaDomain &&
+                            state.data.posts[i][1].urlDest !== undefined && (
+                              <span> {outLinkDOM}</span>
+                            )}
                         </div>
                         <div
                           style={{
@@ -478,6 +527,10 @@ export default function Trends() {
                           }}
                         >
                           {state.data.posts[i][1].title}
+                          {!state.data.posts[i][1].redditMediaDomain &&
+                            state.data.posts[i][1].urlDest !== undefined && (
+                              <span> {outLinkDOM}</span>
+                            )}
                         </div>
                       </span>
                     )}
@@ -514,6 +567,10 @@ export default function Trends() {
                   )}
                 </div>
               )}
+
+              {!state.data.posts[i][1].redditMediaDomain &&
+                state.data.posts[i][1].urlDest !== undefined &&
+                !loadableImg && <span> {outLinkDOM}</span>}
               <div
                 style={{
                   width: "100%",
@@ -667,15 +724,15 @@ export default function Trends() {
                     marginBottom: "10px",
                   }}
                 >
-                  {state.sort === "today" && (
+                  {state.sort === "all" && (
                     <button
                       className="timeButton"
                       style={{ borderBottom: "3px solid rgb(29,161,242)" }}
                     >
-                      Today
+                      All
                     </button>
                   )}
-                  {state.sort !== "today" && (
+                  {state.sort !== "all" && (
                     <button
                       className="timeButton"
                       style={{ color: "silver" }}
@@ -688,24 +745,24 @@ export default function Trends() {
                       onClick={() =>
                         setState({
                           ...state,
-                          sort: "today",
-                          data: state.todayData,
+                          sort: "all",
+                          data: state.allData,
                           expandedPosts: [],
                         })
                       }
                     >
-                      Today
+                      All
                     </button>
                   )}
-                  {state.sort === "week" && (
+                  {state.sort === "news" && (
                     <button
                       className="timeButton"
                       style={{ borderBottom: "3px solid rgb(29,161,242)" }}
                     >
-                      Week
+                      News
                     </button>
                   )}
-                  {state.sort !== "week" && (
+                  {state.sort !== "news" && (
                     <button
                       className="timeButton"
                       style={{ color: "silver" }}
@@ -718,24 +775,24 @@ export default function Trends() {
                       onClick={() =>
                         setState({
                           ...state,
-                          sort: "week",
-                          data: state.weekData,
+                          sort: "news",
+                          data: state.newsData,
                           expandedPosts: [],
                         })
                       }
                     >
-                      Week
+                      News
                     </button>
                   )}
-                  {state.sort === "month" && (
+                  {state.sort === "funny" && (
                     <button
                       className="timeButton"
                       style={{ borderBottom: "3px solid rgb(29,161,242)" }}
                     >
-                      Month
+                      Funny
                     </button>
                   )}
-                  {state.sort !== "month" && (
+                  {state.sort !== "funny" && (
                     <button
                       className="timeButton"
                       style={{ color: "silver" }}
@@ -748,13 +805,13 @@ export default function Trends() {
                       onClick={() =>
                         setState({
                           ...state,
-                          sort: "month",
-                          data: state.monthData,
+                          sort: "funny",
+                          data: state.funnyData,
                           expandedPosts: [],
                         })
                       }
                     >
-                      Month
+                      Funny
                     </button>
                   )}
                 </div>
@@ -801,17 +858,17 @@ export default function Trends() {
                       Coins
                     </button>
                   )}
-                  {state.sortBy === "awards" && (
+                  {state.sortBy === "comments" && (
                     <button
                       className="sortButton"
                       style={{
                         border: "1px solid rgb(29,161,242)",
                       }}
                     >
-                      Awards
+                      Comments
                     </button>
                   )}
-                  {state.sortBy !== "awards" && (
+                  {state.sortBy !== "comments" && (
                     <button
                       className="sortButton"
                       onMouseOver={(e) => {
@@ -824,12 +881,12 @@ export default function Trends() {
                         setState({
                           ...state,
                           loaded: false,
-                          sortBy: "awards",
+                          sortBy: "comments",
                           expandedPosts: [],
                         })
                       }
                     >
-                      Awards
+                      Comments
                     </button>
                   )}
                   {state.sortBy === "downvotes" && (
