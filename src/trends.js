@@ -114,7 +114,7 @@ export default function Trends() {
         if (state.data.posts[i][1].urlToImage === "default") {
           if (state.data.posts[i][1].urlDest !== undefined) {
             state.data.posts[i][1].urlToImage =
-              "https://www.google.com/s2/favicons?sz=256&domain_url=" +
+              "https://www.google.com/s2/favicons?sz=128&domain_url=" +
               state.data.posts[i][1].urlDest;
           }
         }
