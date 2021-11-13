@@ -175,7 +175,7 @@ export default function Trends() {
         for (
           let t = 1;
           t < trends.length &&
-          lengthLimit < Math.min(650, window.innerWidth) - 20;
+          lengthLimit < Math.min(650, window.innerWidth) - 120;
           t++
         ) {
           lengthLimit += trends[t].length * 13;
@@ -208,6 +208,8 @@ export default function Trends() {
                 padding: "5px",
                 float: "left",
                 marginRight: "5px",
+                backgroundImage:
+                  "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
               }}
               key={"trendWith-" + i + "-0"}
             >
