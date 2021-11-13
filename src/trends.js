@@ -110,6 +110,15 @@ export default function Trends() {
         let hours = Math.abs(firstDate - secondDate);
         hours /= 60 * 60 * 1000;
 
+        // Set image to website favicon if possible
+        if (state.data.posts[i][1].urlToImage === "default") {
+          if (state.data.posts[i][1].urlDest !== undefined) {
+            state.data.posts[i][1].urlToImage =
+              "https://www.google.com/s2/favicons?sz=256&domain_url=" +
+              state.data.posts[i][1].urlDest;
+          }
+        }
+
         // Determine whether to show image
         let loadableImg =
           state.data.posts[i][1].urlToImage !== null &&
@@ -282,22 +291,22 @@ export default function Trends() {
               }}
             >
               {destLink}
+              <img
+                src="outbound.png"
+                alt={"outbound icon"}
+                width="13px"
+                height="13px"
+                style={{
+                  marginLeft: "3px",
+                  float: "right",
+                  marginTop: "3px",
+                }}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "missing.png";
+                }}
+              />
             </a>
-            <img
-              src="outbound.png"
-              alt={"outbound icon"}
-              width="13px"
-              height="13px"
-              style={{
-                marginLeft: "3px",
-                float: "left",
-                marginTop: "3px",
-              }}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "missing.png";
-              }}
-            />
           </div>
         );
 
