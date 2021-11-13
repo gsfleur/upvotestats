@@ -380,10 +380,7 @@ export default function Trends() {
                 )}
 
                 {!loadableImg && (
-                  <div
-                    className="searchLink"
-                    style={{ fontSize: "16px", marginTop: "5px" }}
-                  >
+                  <div style={{ fontSize: "16px", marginTop: "5px" }}>
                     {state.data.posts[i][1].title}
                   </div>
                 )}
