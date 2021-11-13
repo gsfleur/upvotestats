@@ -8,7 +8,7 @@ export default function Trends() {
   const [state, setState] = useState({
     loaded: false,
     error: false,
-    sort: "today",
+    sort: "all",
     sortBy: "coins",
     data: undefined,
     allData: undefined,
