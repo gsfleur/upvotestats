@@ -328,6 +328,24 @@ export default function Trends() {
           </div>
         );
 
+        let threadLinkDOM = (
+          <a
+            href={state.data.posts[i][1].url}
+            target="_blank"
+            rel="noreferrer"
+            className="searchLink"
+          >
+            <span
+              id="threadLink"
+              style={{
+                fontSize: "15px",
+              }}
+            >
+              Show full thread
+            </span>
+          </a>
+        );
+
         // List of post links
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -411,7 +429,7 @@ export default function Trends() {
                   <div
                     style={{
                       overflow: "auto",
-                      border: "1.5px solid #292929",
+                      border: "1px solid #292929",
                       borderRadius: "20px",
                       padding: "10px 10px 10px 10px",
                     }}
@@ -481,6 +499,8 @@ export default function Trends() {
                             state.data.posts[i][1].urlDest !== undefined && (
                               <span> {outLinkDOM}</span>
                             )}
+                          <br />
+                          {threadLinkDOM}
                         </div>
                         <div
                           style={{
@@ -557,6 +577,8 @@ export default function Trends() {
                             state.data.posts[i][1].urlDest !== undefined && (
                               <span> {outLinkDOM}</span>
                             )}
+                          <br />
+                          {threadLinkDOM}
                         </div>
                       </span>
                     )}
@@ -571,7 +593,6 @@ export default function Trends() {
                       style={{
                         fontSize: "12px",
                         marginTop: "5px",
-                        marginBottom: "5px",
                         color: "silver",
                       }}
                     >
@@ -584,13 +605,14 @@ export default function Trends() {
                       style={{
                         fontSize: "14px",
                         marginTop: "5px",
-                        marginBottom: "5px",
                         color: "silver",
                       }}
                     >
                       {author}
                     </div>
                   )}
+                  <br />
+                  {threadLinkDOM}
                 </div>
               )}
 
@@ -628,17 +650,6 @@ export default function Trends() {
                 )}
                 <span>{state.data.posts[i][1].comments} comments</span>
               </div>
-              <a
-                href={state.data.posts[i][1].url}
-                target="_blank"
-                rel="noreferrer"
-                className="searchLink"
-                style={{
-                  fontSize: "13px",
-                }}
-              >
-                <b id="threadLink">View full thread on reddit</b>
-              </a>
             </div>
           </div>
         );
