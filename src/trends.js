@@ -585,6 +585,11 @@ export default function Trends() {
                   </div>
                 </div>
               )}
+
+              {!state.data.posts[i][1].redditMediaDomain &&
+                state.data.posts[i][1].urlDest !== undefined &&
+                !loadableImg && <span> {outLinkDOM}</span>}
+
               {!loadableImg && (
                 <div>
                   {!state.expandedPosts.includes(i) && (
@@ -613,12 +618,10 @@ export default function Trends() {
                   )}
                   <br />
                   {threadLinkDOM}
+                  <span style={{ color: "gray" }}>...</span>
                 </div>
               )}
 
-              {!state.data.posts[i][1].redditMediaDomain &&
-                state.data.posts[i][1].urlDest !== undefined &&
-                !loadableImg && <span> {outLinkDOM}</span>}
               <div
                 style={{
                   width: "100%",
