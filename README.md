@@ -19,15 +19,13 @@ ratio like there is for upvotes.
 ## Trending Page
 
 The Trends Page features posts on r/All along with the phrases that
-are trending in their comment sections. The posts are sorted by total
-reddit coins in descending order by default, however, there are other
-sorting options available such as by awards or by downvote ratio. You
-may select to view posts from the past day, week or month to show up
-on your feed. The post data is selected from the top ~1000 posts
-within the selected time frame. The trends are curated through
-algorithmic use of natural language processing techniques on the
-comments. The data for this page will update every hour. More stats
-about this data can be found at the bottom of the trends page.
+are trending in their comment sections. The posts are sorted by
+relevance by default, however, there are other sorting options
+available such as by coins, awards or downvote ratio. The trends are
+curated through algorithmic use of natural language processing
+techniques on the comments. The data for this page will update every
+hour. More stats about this data can be found at the bottom of the
+trends page.
 
 ## Searching subreddits
 

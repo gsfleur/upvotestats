@@ -9,7 +9,7 @@ export default function Trends() {
     loaded: false,
     error: false,
     sort: "all",
-    sortBy: "coins",
+    sortBy: "hot",
     data: undefined,
     allData: undefined,
     newsData: undefined,
@@ -897,6 +897,37 @@ export default function Trends() {
                     width: "90%",
                   }}
                 >
+                  {state.sortBy === "hot" && (
+                    <button
+                      className="sortButton"
+                      style={{
+                        border: "1px solid rgb(29,161,242)",
+                      }}
+                    >
+                      Hot
+                    </button>
+                  )}
+                  {state.sortBy !== "hot" && (
+                    <button
+                      className="sortButton"
+                      onMouseOver={(e) => {
+                        e.target.style.color = "white";
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.color = "silver";
+                      }}
+                      onClick={() =>
+                        setState({
+                          ...state,
+                          loaded: false,
+                          sortBy: "hot",
+                          expandedPosts: [],
+                        })
+                      }
+                    >
+                      Hot
+                    </button>
+                  )}
                   {state.sortBy === "coins" && (
                     <button
                       className="sortButton"
@@ -966,7 +997,7 @@ export default function Trends() {
                         border: "1px solid rgb(29,161,242)",
                       }}
                     >
-                      Downvote Ratio
+                      Downvotes
                     </button>
                   )}
                   {state.sortBy !== "downvotes" && (
@@ -987,7 +1018,7 @@ export default function Trends() {
                         })
                       }
                     >
-                      Downvote Ratio
+                      Downvotes
                     </button>
                   )}
                 </div>
