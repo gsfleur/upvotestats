@@ -649,16 +649,13 @@ export default function Trends() {
                   marginTop: "5px",
                 }}
               >
-                <span>
-                  {numToString(state.data.posts[i][1].comments)} comments
-                </span>
                 {state.data.posts[i][1].awards > 0 && (
                   <span>
-                    {" "}
-                    &bull; {numToString(state.data.posts[i][1].coins)} coins
-                    &bull; {numToString(state.data.posts[i][1].awards)} awards
+                    {numToString(state.data.posts[i][1].coins)} coins &bull;{" "}
+                    {state.data.posts[i][1].awards} awards &bull;{" "}
                   </span>
                 )}
+                <span>{state.data.posts[i][1].comments} comments</span>
               </div>
             </div>
           </div>
