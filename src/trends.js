@@ -142,30 +142,6 @@ export default function Trends() {
           state.data.posts[i][1].urlToImage !== "nsfw" &&
           state.data.posts[i][1].urlToImage !== "spoiler";
 
-        // Description of posts
-        let author = (
-          <span>
-            {state.data.posts[i][1].author} posted this{" "}
-            {hours <= 24 && <span>{Math.floor(hours)} hours ago</span>}
-            {hours > 24 && hours <= 48 && <span>1 day ago</span>}
-            {hours > 48 && diffDays < 7 && <span>{diffDays} days ago</span>}
-            {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
-            {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
-            {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>}
-            {diffDays >= 28 && diffDays < 35 && <span>1 month ago</span>} for a
-            total of {numToString(state.data.posts[i][1].upvotes)} upvotes,{" "}
-            {numToString(Math.abs(state.data.posts[i][1].downvotes))} downvotes
-            and a ratio of{" "}
-            {(
-              100 *
-              (state.data.posts[i][1].upvotes /
-                (state.data.posts[i][1].upvotes +
-                  Math.abs(state.data.posts[i][1].downvotes)))
-            ).toFixed(0)}{" "}
-            percent.
-          </span>
-        );
-
         // DOM for "trending with" section
         let trendingWith = [];
         let trends = state.data.posts[i][1].trends;
@@ -310,6 +286,7 @@ export default function Trends() {
             >
               {destLink}
               <img
+                id="threadLink"
                 src="outbound.png"
                 alt={"outbound icon"}
                 width="13px"
@@ -338,12 +315,42 @@ export default function Trends() {
             <span
               id="threadLink"
               style={{
-                fontSize: "15px",
+                fontSize: "14px",
               }}
             >
               Show full thread
             </span>
           </a>
+        );
+
+        // Description of posts
+        let author = (
+          <span>
+            {!loadableImg && (
+              <div>
+                {threadLinkDOM}
+                <span style={{ color: "gray" }}>...</span>
+              </div>
+            )}
+            {state.data.posts[i][1].author} posted this{" "}
+            {hours <= 24 && <span>{Math.floor(hours)} hours ago</span>}
+            {hours > 24 && hours <= 48 && <span>1 day ago</span>}
+            {hours > 48 && diffDays < 7 && <span>{diffDays} days ago</span>}
+            {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
+            {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
+            {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>}
+            {diffDays >= 28 && diffDays < 35 && <span>1 month ago</span>} for a
+            total of {numToString(state.data.posts[i][1].upvotes)} upvotes,{" "}
+            {numToString(Math.abs(state.data.posts[i][1].downvotes))} downvotes
+            and a ratio of{" "}
+            {(
+              100 *
+              (state.data.posts[i][1].upvotes /
+                (state.data.posts[i][1].upvotes +
+                  Math.abs(state.data.posts[i][1].downvotes)))
+            ).toFixed(0)}{" "}
+            percent.
+          </span>
         );
 
         // List of post links
@@ -387,18 +394,18 @@ export default function Trends() {
                 </div>
 
                 {state.data.posts[i][1].trends.length > 0 && (
-                  <div className="searchLink" style={{ fontSize: "16px" }}>
+                  <div className="searchLink" style={{ fontSize: "14px" }}>
                     <b>{state.data.posts[i][1].trends[0]}</b>
                   </div>
                 )}
                 {state.data.posts[i][1].trends.length === 0 && (
-                  <div className="searchLink" style={{ fontSize: "16px" }}>
+                  <div className="searchLink" style={{ fontSize: "14px" }}>
                     <b>{state.data.posts[i][1].subreddit.toLowerCase()}</b>
                   </div>
                 )}
 
                 {!loadableImg && (
-                  <div style={{ fontSize: "16px", marginTop: "5px" }}>
+                  <div style={{ fontSize: "14px", marginTop: "5px" }}>
                     {state.data.posts[i][1].title}
                   </div>
                 )}
@@ -488,7 +495,7 @@ export default function Trends() {
                         <div
                           className="postDate"
                           style={{
-                            fontSize: "16px",
+                            fontSize: "14px",
                             marginBottom: "10px",
                             color: "gainsboro",
                             width: "90%",
@@ -564,7 +571,7 @@ export default function Trends() {
                         <div
                           className="postDate"
                           style={{
-                            fontSize: "16px",
+                            fontSize: "14px",
                             marginBottom: "10px",
                             color: "gainsboro",
                             float: "left",
@@ -616,9 +623,6 @@ export default function Trends() {
                       {author}
                     </div>
                   )}
-                  <br />
-                  {threadLinkDOM}
-                  <span style={{ color: "gray" }}>...</span>
                 </div>
               )}
 
@@ -645,13 +649,16 @@ export default function Trends() {
                   marginTop: "5px",
                 }}
               >
+                <span>
+                  {numToString(state.data.posts[i][1].comments)} comments
+                </span>
                 {state.data.posts[i][1].awards > 0 && (
                   <span>
-                    {numToString(state.data.posts[i][1].coins)} coins &bull;{" "}
-                    {state.data.posts[i][1].awards} awards &bull;{" "}
+                    {" "}
+                    &bull; {numToString(state.data.posts[i][1].coins)} coins
+                    &bull; {numToString(state.data.posts[i][1].awards)} awards
                   </span>
                 )}
-                <span>{state.data.posts[i][1].comments} comments</span>
               </div>
             </div>
           </div>
@@ -1028,7 +1035,7 @@ export default function Trends() {
               <div className="centering">
                 <div
                   style={{
-                    fontSize: "13px",
+                    fontSize: "12px",
                     color: "gray",
                     marginTop: "10px",
                     marginBottom: "10px",
