@@ -652,10 +652,12 @@ export default function Trends() {
                 {state.data.posts[i][1].awards > 0 && (
                   <span>
                     {numToString(state.data.posts[i][1].coins)} coins &bull;{" "}
-                    {state.data.posts[i][1].awards} awards &bull;{" "}
+                    {numToString(state.data.posts[i][1].awards)} awards &bull;{" "}
                   </span>
                 )}
-                <span>{state.data.posts[i][1].comments} comments</span>
+                <span>
+                  {numToString(state.data.posts[i][1].comments)} comments
+                </span>
               </div>
             </div>
           </div>
@@ -675,7 +677,7 @@ export default function Trends() {
     setState({ ...state });
   }
 
-  /*
+  /**
    * Converts number to string with abbreviation
    * @param {*} num - Number to convert
    * @returns Number with abbreviation
