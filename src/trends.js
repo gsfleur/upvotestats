@@ -262,7 +262,7 @@ export default function Trends() {
           destLink = destLink.replace("https://", "");
           destLink = destLink.replace("http://", "");
           destLink = destLink.replace("www.", "");
-          destLink = destLink.substring(0, 20) + "...";
+          destLink = destLink.substring(0, 15) + "...";
         }
 
         let outLinkDOM = (
@@ -276,6 +276,7 @@ export default function Trends() {
                 fontSize: "13px",
                 color: "rgb(29,161,242)",
                 float: "left",
+                marginTop: "5px",
               }}
               onMouseOver={(e) => {
                 e.target.style.color = "rgb(0,132,213)";
@@ -315,10 +316,10 @@ export default function Trends() {
             <span
               id="threadLink"
               style={{
-                fontSize: "14px",
+                fontSize: "13px",
               }}
             >
-              Show full thread
+              View full thread
             </span>
           </a>
         );
@@ -326,13 +327,7 @@ export default function Trends() {
         // Description of posts
         let author = (
           <span>
-            {!loadableImg && (
-              <div>
-                {threadLinkDOM}
-                <span style={{ color: "gray" }}>...</span>
-              </div>
-            )}
-            {state.data.posts[i][1].author} posted this{" "}
+            {state.data.posts[i][1].author} posted [{threadLinkDOM}]{" "}
             {hours <= 24 && <span>{Math.floor(hours)} hours ago</span>}
             {hours > 24 && hours <= 48 && <span>1 day ago</span>}
             {hours > 48 && diffDays < 7 && <span>{diffDays} days ago</span>}
@@ -414,19 +409,33 @@ export default function Trends() {
                   <div
                     className="searchLink"
                     style={{
-                      fontSize: "12px",
+                      fontSize: "13px",
                       marginTop: "5px",
                       color: "silver",
                     }}
                   >
                     {!state.expandedPosts.includes(i) && (
                       <span>
-                        {newText.substring(0, 180)}
-                        {newText.length > 180 && <span>...</span>}
+                        {newText.substring(0, 160)}
+                        {newText.length > 160 && (
+                          <span>... [click text to read more]</span>
+                        )}
                       </span>
                     )}
-                    {state.expandedPosts.includes(i) && (
-                      <span style={{ fontSize: "14px" }}>{newText}</span>
+                    {state.expandedPosts.includes(i) && <span>{newText}</span>}
+                  </div>
+                )}
+                {newText.length === 0 && (
+                  <div
+                    className="searchLink"
+                    style={{
+                      fontSize: "13px",
+                      marginTop: "5px",
+                      color: "silver",
+                    }}
+                  >
+                    {state.expandedPosts.includes(i) && !loadableImg && (
+                      <span>OP only provided a title for this post</span>
                     )}
                   </div>
                 )}
@@ -435,160 +444,180 @@ export default function Trends() {
                 <div className="imgBody" style={imgBodyCSS}>
                   <div
                     style={{
-                      overflow: "auto",
-                      border: "1px solid #292929",
-                      borderRadius: "20px",
-                      padding: "10px 10px 10px 10px",
+                      position: "relative",
+                      height: "100%",
                     }}
                   >
                     <div
                       style={{
-                        width: "100%",
-                        display: "inline-block",
-                        marginBottom: "5px",
-                        fontSize: "12px",
-                        color: "silver",
+                        overflow: "auto",
+                        border: "1px solid #292929",
+                        borderRadius: "20px",
+                        padding: "10px 10px 10px 10px",
                       }}
                     >
-                      {state.data.posts[i][1].icon === "" && (
-                        <img
-                          className="iconImg"
-                          src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
-                          alt={state.data.posts[i][1].author + " icon"}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "missing.png";
-                          }}
-                        />
-                      )}
-                      {state.data.posts[i][1].icon !== "" && (
-                        <img
-                          className="iconImg"
-                          src={state.data.posts[i][1].icon}
-                          alt={state.data.posts[i][1].author + " icon"}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "missing.png";
-                          }}
-                        />
-                      )}
                       <div
                         style={{
-                          float: "left",
-                          marginTop: "5px",
+                          width: "100%",
+                          display: "inline-block",
                           marginBottom: "5px",
-                          marginLeft: "5px",
+                          fontSize: "12px",
+                          color: "silver",
                         }}
                       >
-                        {state.data.posts[i][1].author} &bull;{" "}
-                        {hours <= 24 && <span>{Math.floor(hours)}h</span>}
-                        {hours > 24 && hours <= 48 && <span>1d</span>}
-                        {hours > 48 && diffDays < 7 && <span>{diffDays}d</span>}
-                        {diffDays >= 7 && diffDays < 14 && <span>1w</span>}
-                        {diffDays >= 14 && diffDays < 21 && <span>2w</span>}
-                        {diffDays >= 21 && diffDays < 28 && <span>3w</span>}
-                        {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
+                        {state.data.posts[i][1].icon === "" && (
+                          <img
+                            className="iconImg"
+                            src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                            alt={state.data.posts[i][1].author + " icon"}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "missing.png";
+                            }}
+                          />
+                        )}
+                        {state.data.posts[i][1].icon !== "" && (
+                          <img
+                            className="iconImg"
+                            src={state.data.posts[i][1].icon}
+                            alt={state.data.posts[i][1].author + " icon"}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "missing.png";
+                            }}
+                          />
+                        )}
+                        <div
+                          style={{
+                            float: "left",
+                            marginTop: "5px",
+                            marginBottom: "5px",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          {state.data.posts[i][1].author} &bull;{" "}
+                          {hours <= 24 && <span>{Math.floor(hours)}h</span>}
+                          {hours > 24 && hours <= 48 && <span>1d</span>}
+                          {hours > 48 && diffDays < 7 && (
+                            <span>{diffDays}d</span>
+                          )}
+                          {diffDays >= 7 && diffDays < 14 && <span>1w</span>}
+                          {diffDays >= 14 && diffDays < 21 && <span>2w</span>}
+                          {diffDays >= 21 && diffDays < 28 && <span>3w</span>}
+                          {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
+                        </div>
                       </div>
-                    </div>
-                    {state.expandedPosts.includes(i) && (
-                      <span>
-                        <div
-                          className="postDate"
-                          style={{
-                            fontSize: "14px",
-                            marginBottom: "10px",
-                            color: "gainsboro",
-                            width: "90%",
-                          }}
-                        >
-                          {state.data.posts[i][1].title}
-                          {!state.data.posts[i][1].redditMediaDomain &&
-                            state.data.posts[i][1].urlDest !== undefined && (
-                              <span> {outLinkDOM}</span>
-                            )}
-                          <br />
-                          {threadLinkDOM}
-                        </div>
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                          }}
-                        >
-                          {!state.data.posts[i][1].isVideo && (
-                            <div className="centering">
-                              <img
-                                src={imgSource}
-                                className="postImgStandard"
-                                alt="Reddit Post Thumbnail"
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  minWidth: "275px",
-                                }}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = "missing.png";
-                                }}
-                              />
+                      {state.expandedPosts.includes(i) && (
+                        <span>
+                          <div
+                            className="postDate"
+                            style={{
+                              fontSize: "14px",
+                              marginBottom: "10px",
+                              color: "gainsboro",
+                              width: "100%",
+                            }}
+                          >
+                            {state.data.posts[i][1].title}
+                            {!state.data.posts[i][1].redditMediaDomain &&
+                              state.data.posts[i][1].urlDest !== undefined && (
+                                <span> {outLinkDOM}</span>
+                              )}
+                            <br />
+                            <div style={{ float: "right" }}>
+                              {threadLinkDOM}
                             </div>
-                          )}
-                          {state.data.posts[i][1].isVideo && (
-                            <div className="centering">
-                              <video
-                                id={"video" + i}
-                                className="postVideoStandard"
-                                height="100%"
-                                poster={state.data.posts[i][1].urlToImage}
-                                preload="auto"
-                                muted
-                                controls
-                              >
-                                <source
-                                  src={state.data.posts[i][1].media}
-                                  type="video/mp4"
+                          </div>
+                          <div
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                            }}
+                          >
+                            {!state.data.posts[i][1].isVideo && (
+                              <div className="centering">
+                                <img
+                                  src={imgSource}
+                                  className="postImgStandard"
+                                  alt="Reddit Post Thumbnail"
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    minWidth: "275px",
+                                  }}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "missing.png";
+                                  }}
                                 />
-                              </video>
-                            </div>
-                          )}
-                        </div>
-                      </span>
-                    )}
-                    {!state.expandedPosts.includes(i) && (
-                      <span>
-                        <img
-                          src={state.data.posts[i][1].urlToImage}
-                          className="postImgStandard"
-                          alt="Reddit Post Thumbnail"
-                          style={{
-                            float: "left",
-                          }}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "missing.png";
-                          }}
-                        />
+                              </div>
+                            )}
+                            {state.data.posts[i][1].isVideo && (
+                              <div className="centering">
+                                <video
+                                  id={"video" + i}
+                                  className="postVideoStandard"
+                                  height="100%"
+                                  poster={state.data.posts[i][1].urlToImage}
+                                  preload="auto"
+                                  muted
+                                  controls
+                                >
+                                  <source
+                                    src={state.data.posts[i][1].media}
+                                    type="video/mp4"
+                                  />
+                                </video>
+                              </div>
+                            )}
+                          </div>
+                        </span>
+                      )}
+                      {!state.expandedPosts.includes(i) && (
+                        <span>
+                          <img
+                            src={state.data.posts[i][1].urlToImage}
+                            className="postImgStandard"
+                            alt="Reddit Post Thumbnail"
+                            style={{
+                              float: "left",
+                            }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "missing.png";
+                            }}
+                          />
+                          <div
+                            className="postDate"
+                            style={{
+                              fontSize: "14px",
+                              marginBottom: "20px",
+                              color: "gainsboro",
+                              float: "left",
+                              width: "calc(100% - 120px)",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            {state.data.posts[i][1].title}
+                            {!state.data.posts[i][1].redditMediaDomain &&
+                              state.data.posts[i][1].urlDest !== undefined && (
+                                <span> {outLinkDOM}</span>
+                              )}
+                          </div>
+                        </span>
+                      )}
+                      {!state.expandedPosts.includes(i) && (
                         <div
-                          className="postDate"
                           style={{
-                            fontSize: "14px",
-                            marginBottom: "10px",
-                            color: "gainsboro",
-                            float: "left",
-                            width: "calc(100% - 120px)",
-                            marginLeft: "10px",
+                            position: "absolute",
+                            bottom: "10px",
+                            marginLeft: "110px",
                           }}
                         >
-                          {state.data.posts[i][1].title}
-                          {!state.data.posts[i][1].redditMediaDomain &&
-                            state.data.posts[i][1].urlDest !== undefined && (
-                              <span> {outLinkDOM}</span>
-                            )}
-                          <br />
                           {threadLinkDOM}
                         </div>
-                      </span>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -603,7 +632,7 @@ export default function Trends() {
                     <div
                       className="postDate"
                       style={{
-                        fontSize: "12px",
+                        fontSize: "13px",
                         marginTop: "5px",
                         color: "silver",
                       }}
@@ -615,7 +644,7 @@ export default function Trends() {
                     <div
                       className="postDate"
                       style={{
-                        fontSize: "14px",
+                        fontSize: "13px",
                         marginTop: "5px",
                         color: "silver",
                       }}
