@@ -246,7 +246,7 @@ export default function Trends() {
         let imgBodyCSS = {
           display: "inline-block",
           width: "100%",
-          marginTop: "10px",
+          marginTop: "5px",
         };
 
         // Break by letter if word is long (long links or words)
