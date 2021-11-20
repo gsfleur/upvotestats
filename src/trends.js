@@ -275,15 +275,15 @@ export default function Trends() {
               className="searchLink"
               style={{
                 fontSize: "13px",
-                color: "rgb(29,161,242)",
+                color: "DodgerBlue",
                 float: "left",
                 marginTop: "5px",
               }}
               onMouseOver={(e) => {
-                e.target.style.color = "rgb(0,132,213)";
+                e.target.style.color = "#4BA6FF";
               }}
               onMouseOut={(e) => {
-                e.target.style.color = "rgb(29,161,242)";
+                e.target.style.color = "DodgerBlue";
               }}
             >
               {destLink}
@@ -796,7 +796,7 @@ export default function Trends() {
                   {state.sort === "all" && (
                     <button
                       className="timeButton"
-                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                      style={{ borderBottom: "3px solid DodgerBlue" }}
                     >
                       All
                     </button>
@@ -826,7 +826,7 @@ export default function Trends() {
                   {state.sort === "news" && (
                     <button
                       className="timeButton"
-                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                      style={{ borderBottom: "3px solid DodgerBlue" }}
                     >
                       News
                     </button>
@@ -856,7 +856,7 @@ export default function Trends() {
                   {state.sort === "funny" && (
                     <button
                       className="timeButton"
-                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                      style={{ borderBottom: "3px solid DodgerBlue" }}
                     >
                       Funny
                     </button>
@@ -886,7 +886,7 @@ export default function Trends() {
                   {state.sort === "sports" && (
                     <button
                       className="timeButton"
-                      style={{ borderBottom: "3px solid rgb(29,161,242)" }}
+                      style={{ borderBottom: "3px solid DodgerBlue" }}
                     >
                       Sports
                     </button>
@@ -930,7 +930,7 @@ export default function Trends() {
                     <button
                       className="sortButton"
                       style={{
-                        border: "1px solid rgb(29,161,242)",
+                        border: "1px solid DodgerBlue",
                       }}
                     >
                       Hot
@@ -961,7 +961,7 @@ export default function Trends() {
                     <button
                       className="sortButton"
                       style={{
-                        border: "1px solid rgb(29,161,242)",
+                        border: "1px solid DodgerBlue",
                       }}
                     >
                       Coins
@@ -992,7 +992,7 @@ export default function Trends() {
                     <button
                       className="sortButton"
                       style={{
-                        border: "1px solid rgb(29,161,242)",
+                        border: "1px solid DodgerBlue",
                       }}
                     >
                       Comments
@@ -1023,7 +1023,7 @@ export default function Trends() {
                     <button
                       className="sortButton"
                       style={{
-                        border: "1px solid rgb(29,161,242)",
+                        border: "1px solid DodgerBlue",
                       }}
                     >
                       Downvotes
