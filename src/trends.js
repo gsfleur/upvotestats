@@ -329,14 +329,15 @@ export default function Trends() {
         // Description of posts
         let author = (
           <span>
-            {threadLinkDOM} by {state.data.posts[i][1].author}{" "}
+            {state.data.posts[i][1].author} posted{" "}
             {hours <= 24 && <span>{Math.floor(hours)} hours ago</span>}
             {hours > 24 && hours <= 48 && <span>1 day ago</span>}
             {hours > 48 && diffDays < 7 && <span>{diffDays} days ago</span>}
             {diffDays >= 7 && diffDays < 14 && <span>1 week ago</span>}
             {diffDays >= 14 && diffDays < 21 && <span>2 weeks ago</span>}
             {diffDays >= 21 && diffDays < 28 && <span>3 weeks ago</span>}
-            {diffDays >= 28 && diffDays < 35 && <span>1 month ago</span>}
+            {diffDays >= 28 && diffDays < 35 && <span>1 month ago</span>}{" "}
+            {threadLinkDOM}
           </span>
         );
 
