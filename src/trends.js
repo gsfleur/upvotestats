@@ -172,26 +172,6 @@ export default function Trends() {
             </div>
           );
         }
-        // No trends available
-        if (trends.length === 0) {
-          trendingWith.push(
-            <div
-              style={{
-                color: "silver",
-                borderRadius: "10px",
-                border: "1px solid #222222",
-                padding: "5px",
-                float: "left",
-                marginRight: "5px",
-                backgroundImage:
-                  "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
-              }}
-              key={"trendWith-" + i + "-0"}
-            >
-              {state.data.posts[i][1].subreddit.toLowerCase()}
-            </div>
-          );
-        }
 
         // Text of the post
         let text = state.data.posts[i][1].text;
@@ -321,7 +301,7 @@ export default function Trends() {
                 fontSize: "13px",
               }}
             >
-              View full thread
+              View thread
             </span>
           </a>
         );
@@ -384,11 +364,6 @@ export default function Trends() {
                 {state.data.posts[i][1].trends.length > 0 && (
                   <div className="searchLink" style={{ fontSize: "14px" }}>
                     <b>{state.data.posts[i][1].trends[0]}</b>
-                  </div>
-                )}
-                {state.data.posts[i][1].trends.length === 0 && (
-                  <div className="searchLink" style={{ fontSize: "14px" }}>
-                    <b>{state.data.posts[i][1].subreddit.toLowerCase()}</b>
                   </div>
                 )}
 
@@ -648,22 +623,24 @@ export default function Trends() {
                 </div>
               )}
 
-              <div
-                style={{
-                  width: "100%",
-                  display: "inline-block",
-                }}
-              >
+              {trends.length > 0 && (
                 <div
                   style={{
-                    fontSize: "12px",
-                    marginTop: "5px",
-                    color: "gray",
+                    width: "100%",
+                    display: "inline-block",
                   }}
                 >
-                  <span>{trendingWith}</span>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      marginTop: "5px",
+                      color: "gray",
+                    }}
+                  >
+                    <span>{trendingWith}</span>
+                  </div>
                 </div>
-              </div>
+              )}
               <div
                 style={{
                   fontSize: "12px",
