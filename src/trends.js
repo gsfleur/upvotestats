@@ -34,7 +34,6 @@ export default function Trends() {
             console.log(err);
             state.error = true;
           });
-
         await axios
           .get(
             process.env.REACT_APP_BACKEND + "posts/news?sort=" + state.sortBy
@@ -257,6 +256,7 @@ export default function Trends() {
           ? state.data.posts[i][1].urlDest
           : state.data.posts[i][1].urlToImage;
 
+        // Link Destination String
         let destLink = state.data.posts[i][1].urlDest;
         if (destLink !== undefined) {
           destLink = destLink.replace("https://", "");
@@ -265,6 +265,7 @@ export default function Trends() {
           destLink = destLink.substring(0, 15) + "...";
         }
 
+        // Destination Link DOM
         let outLinkDOM = (
           <div style={{ display: "inline-block", width: "100%" }}>
             <a
@@ -306,6 +307,7 @@ export default function Trends() {
           </div>
         );
 
+        // Reddit Post Link DOM
         let threadLinkDOM = (
           <a
             href={state.data.posts[i][1].url}
@@ -711,6 +713,7 @@ export default function Trends() {
       : Math.abs(num);
   }
 
+  // Loading Objects
   let loadingDOM = (
     <div>
       <div
