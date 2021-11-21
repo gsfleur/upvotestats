@@ -622,7 +622,6 @@ export default function Trends() {
                   )}
                 </div>
               )}
-
               {trends.length > 0 && (
                 <div
                   style={{

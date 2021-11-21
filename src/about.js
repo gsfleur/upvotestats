@@ -10,16 +10,9 @@ export default function About() {
             Upvote Stats is a free and open-source website that grants users the
             ability to determine the amount of upvotes, downvotes, awards, and
             estimated earnings each subreddit accumulated in the past 30 days.
-            Please note that the data, for such active sites, is constantly
-            changing so please don't depend on receiving complete accuracy if
-            using the report for something significant.
-            <br />
-            <br />
-            If you encounter any issues or bugs, please refer to the Twitter
-            link in the footer as a means for contact. Coin value is based under
-            the assumption that 500 coins equals two dollards USD. There is no
-            downvote metric for comments since there is no downvote ratio like
-            there is for upvotes.
+            Coin value is based under the assumption that 500 coins equals two
+            dollards USD. There is no downvote metric for comments since there
+            is no downvote ratio like there is for upvotes.
             <br />
             <br />
             <h3>Trending Page</h3>
