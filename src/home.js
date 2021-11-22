@@ -60,8 +60,11 @@ export default function Home() {
               );
             })
             .catch((err) => {
-              console.log(err);
-              state.error = true;
+              // skip over buttons for subs that are privated
+              if (err.response.data.reason !== "private") {
+                state.error = true;
+                console.log(err);
+              }
             });
         }
 
