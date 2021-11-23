@@ -1012,6 +1012,31 @@ export default function Trends() {
             </div>
             {postListDOM}
 
+            {state.loaded === true && postListDOM.length === 0 && (
+              <div style={{ textAlign: "center" }}>
+                <div
+                  style={{
+                    overflow: "auto",
+                    display: "inline-block",
+                    width: "90%",
+                    marginTop: "10px",
+                  }}
+                >
+                  <div
+                    style={{
+                      border: "1.5px solid #292929",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    <p style={{ margin: "60px 0px 60px 0px" }}>
+                      No results for this query were found. <br />
+                      Please check back soon for updates.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="centering">
               <div
                 style={{
@@ -1053,12 +1078,6 @@ export default function Trends() {
                 </div>
               </div>
             </div>
-          </div>
-        )}
-        {state.loaded === true && postListDOM.length === 0 && (
-          <div style={{ textAlign: "center" }}>
-            This page is currently unavailable. Please check back soon for
-            updates.
           </div>
         )}
       </div>
