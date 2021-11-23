@@ -1,5 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default function Trends() {
   window.document.title = "Trends on Reddit - Upvote Stats";
@@ -10,6 +15,7 @@ export default function Trends() {
     error: false,
     sort: "all",
     sortBy: "hot",
+    sortDate: "today",
     data: undefined,
     allData: undefined,
     newsData: undefined,
@@ -26,7 +32,13 @@ export default function Trends() {
         let beforeDate = new Date();
         // Loading data from backend
         await axios
-          .get(process.env.REACT_APP_BACKEND + "posts/all?sort=" + state.sortBy)
+          .get(
+            process.env.REACT_APP_BACKEND +
+              "posts/all?sort=" +
+              state.sortBy +
+              "&time=" +
+              state.sortDate
+          )
           .then((res) => {
             state.allData = res.data;
           })
@@ -36,7 +48,11 @@ export default function Trends() {
           });
         await axios
           .get(
-            process.env.REACT_APP_BACKEND + "posts/news?sort=" + state.sortBy
+            process.env.REACT_APP_BACKEND +
+              "posts/news?sort=" +
+              state.sortBy +
+              "&time=" +
+              state.sortDate
           )
           .then((res) => {
             state.newsData = res.data;
@@ -47,7 +63,11 @@ export default function Trends() {
           });
         await axios
           .get(
-            process.env.REACT_APP_BACKEND + "posts/funny?sort=" + state.sortBy
+            process.env.REACT_APP_BACKEND +
+              "posts/funny?sort=" +
+              state.sortBy +
+              "&time=" +
+              state.sortDate
           )
           .then((res) => {
             state.funnyData = res.data;
@@ -58,7 +78,11 @@ export default function Trends() {
           });
         await axios
           .get(
-            process.env.REACT_APP_BACKEND + "posts/sports?sort=" + state.sortBy
+            process.env.REACT_APP_BACKEND +
+              "posts/sports?sort=" +
+              state.sortBy +
+              "&time=" +
+              state.sortDate
           )
           .then((res) => {
             state.sportData = res.data;
@@ -92,6 +116,40 @@ export default function Trends() {
       componentMounted = false;
     };
   });
+
+  // Handle Time Change Event
+  const handleTimeChange = (event) => {
+    setState({
+      ...state,
+      loaded: false,
+      expandedPosts: [],
+      sortDate: event.target.value,
+    });
+  };
+
+  // Handle Sort Change Event
+  const handleSortChange = (event) => {
+    setState({
+      ...state,
+      loaded: false,
+      expandedPosts: [],
+      sortBy: event.target.value,
+    });
+  };
+
+  // Dropdown menu styling
+  const useStyles = makeStyles({
+    root: {
+      "& .MuiSelect-select": {
+        color: "silver",
+      },
+      "& .MuiSelect-icon": {
+        color: "silver",
+      },
+    },
+  });
+
+  const classes = useStyles();
 
   let postListDOM = []; // DOM for posts
   let postLinks = []; // ids of all posts
@@ -757,322 +815,232 @@ export default function Trends() {
             </div>
           </div>
         )}
-        {state.loaded === true &&
-          state.error === false &&
-          postListDOM.length > 0 && (
-            <div>
-              <div className="centering">
-                <div
-                  style={{
-                    width: "90%",
-                    borderBottom: "1px solid #222222",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {state.sort === "all" && (
-                    <button
-                      className="timeButton"
-                      style={{ borderBottom: "3px solid DodgerBlue" }}
-                    >
-                      All
-                    </button>
-                  )}
-                  {state.sort !== "all" && (
-                    <button
-                      className="timeButton"
-                      style={{ color: "silver" }}
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          sort: "all",
-                          data: state.allData,
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      All
-                    </button>
-                  )}
-                  {state.sort === "news" && (
-                    <button
-                      className="timeButton"
-                      style={{ borderBottom: "3px solid DodgerBlue" }}
-                    >
-                      News
-                    </button>
-                  )}
-                  {state.sort !== "news" && (
-                    <button
-                      className="timeButton"
-                      style={{ color: "silver" }}
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          sort: "news",
-                          data: state.newsData,
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      News
-                    </button>
-                  )}
-                  {state.sort === "funny" && (
-                    <button
-                      className="timeButton"
-                      style={{ borderBottom: "3px solid DodgerBlue" }}
-                    >
-                      Funny
-                    </button>
-                  )}
-                  {state.sort !== "funny" && (
-                    <button
-                      className="timeButton"
-                      style={{ color: "silver" }}
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          sort: "funny",
-                          data: state.funnyData,
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      Funny
-                    </button>
-                  )}
-                  {state.sort === "sports" && (
-                    <button
-                      className="timeButton"
-                      style={{ borderBottom: "3px solid DodgerBlue" }}
-                    >
-                      Sports
-                    </button>
-                  )}
-                  {state.sort !== "sports" && (
-                    <button
-                      className="timeButton"
-                      style={{ color: "silver" }}
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          sort: "sports",
-                          data: state.sportData,
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      Sports
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              <div className="centering">
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "gray",
-                    marginTop: "0px",
-                    marginBottom: "5px",
-                    width: "90%",
-                  }}
-                >
-                  {state.sortBy === "hot" && (
-                    <button
-                      className="sortButton"
-                      style={{
-                        border: "1px solid DodgerBlue",
-                      }}
-                    >
-                      Hot
-                    </button>
-                  )}
-                  {state.sortBy !== "hot" && (
-                    <button
-                      className="sortButton"
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          loaded: false,
-                          sortBy: "hot",
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      Hot
-                    </button>
-                  )}
-                  {state.sortBy === "coins" && (
-                    <button
-                      className="sortButton"
-                      style={{
-                        border: "1px solid DodgerBlue",
-                      }}
-                    >
-                      Coins
-                    </button>
-                  )}
-                  {state.sortBy !== "coins" && (
-                    <button
-                      className="sortButton"
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          loaded: false,
-                          sortBy: "coins",
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      Coins
-                    </button>
-                  )}
-                  {state.sortBy === "comments" && (
-                    <button
-                      className="sortButton"
-                      style={{
-                        border: "1px solid DodgerBlue",
-                      }}
-                    >
-                      Comments
-                    </button>
-                  )}
-                  {state.sortBy !== "comments" && (
-                    <button
-                      className="sortButton"
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          loaded: false,
-                          sortBy: "comments",
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      Comments
-                    </button>
-                  )}
-                  {state.sortBy === "downvotes" && (
-                    <button
-                      className="sortButton"
-                      style={{
-                        border: "1px solid DodgerBlue",
-                      }}
-                    >
-                      Downvotes
-                    </button>
-                  )}
-                  {state.sortBy !== "downvotes" && (
-                    <button
-                      className="sortButton"
-                      onMouseOver={(e) => {
-                        e.target.style.color = "white";
-                      }}
-                      onMouseOut={(e) => {
-                        e.target.style.color = "silver";
-                      }}
-                      onClick={() =>
-                        setState({
-                          ...state,
-                          loaded: false,
-                          sortBy: "downvotes",
-                          expandedPosts: [],
-                        })
-                      }
-                    >
-                      Downvotes
-                    </button>
-                  )}
-                </div>
-              </div>
-              {postListDOM}
-
-              <div className="centering">
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "gray",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    textAlign: "center",
-                    maxWidth: "90%",
-                  }}
-                >
-                  <div style={{ marginTop: "5px" }}>
-                    Trends from{" "}
-                    {state.data.stats.posts.count
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                    posts and {numToString(state.data.stats.comments.count)}{" "}
-                    comments
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "10px",
-                      width: "100%",
-                      display: "inline-block",
-                    }}
+        {state.loaded === true && state.error === false && (
+          <div>
+            <div className="centering">
+              <div
+                style={{
+                  width: "90%",
+                  borderBottom: "1px solid #222222",
+                  marginBottom: "10px",
+                }}
+              >
+                {state.sort === "all" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid DodgerBlue" }}
                   >
-                    <div className="statsInfo">
-                      {numToString(state.data.stats.upvotes)} upvotes
-                    </div>
-                    <div className="statsInfo">
-                      {numToString(state.data.stats.downvotes)} downvotes
-                    </div>
-                    <div className="statsInfo">
-                      {numToString(state.data.stats.awards)} awards
-                    </div>
-                    <div className="statsInfo">
-                      {numToString(state.data.stats.coins)} coins
-                    </div>
+                    All
+                  </button>
+                )}
+                {state.sort !== "all" && (
+                  <button
+                    className="timeButton"
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        sort: "all",
+                        data: state.allData,
+                        expandedPosts: [],
+                      })
+                    }
+                  >
+                    All
+                  </button>
+                )}
+                {state.sort === "news" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid DodgerBlue" }}
+                  >
+                    News
+                  </button>
+                )}
+                {state.sort !== "news" && (
+                  <button
+                    className="timeButton"
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        sort: "news",
+                        data: state.newsData,
+                        expandedPosts: [],
+                      })
+                    }
+                  >
+                    News
+                  </button>
+                )}
+                {state.sort === "funny" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid DodgerBlue" }}
+                  >
+                    Funny
+                  </button>
+                )}
+                {state.sort !== "funny" && (
+                  <button
+                    className="timeButton"
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        sort: "funny",
+                        data: state.funnyData,
+                        expandedPosts: [],
+                      })
+                    }
+                  >
+                    Funny
+                  </button>
+                )}
+                {state.sort === "sports" && (
+                  <button
+                    className="timeButton"
+                    style={{ borderBottom: "3px solid DodgerBlue" }}
+                  >
+                    Sports
+                  </button>
+                )}
+                {state.sort !== "sports" && (
+                  <button
+                    className="timeButton"
+                    style={{ color: "silver" }}
+                    onMouseOver={(e) => {
+                      e.target.style.color = "white";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.color = "silver";
+                    }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        sort: "sports",
+                        data: state.sportData,
+                        expandedPosts: [],
+                      })
+                    }
+                  >
+                    Sports
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="centering">
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "gray",
+                  marginTop: "0px",
+                  marginBottom: "5px",
+                  width: "90%",
+                }}
+              >
+                <FormControl size="small" focused variant="standard">
+                  <InputLabel id="demo-simple-select-label">Time</InputLabel>
+                  <Select
+                    labelId="timeframeselect"
+                    id="timeframeselect"
+                    value={state.sortDate}
+                    label="Time"
+                    onChange={handleTimeChange}
+                    className={classes.root}
+                  >
+                    <MenuItem value={"today"}>Today</MenuItem>
+                    <MenuItem value={"week"}>Week</MenuItem>
+                    <MenuItem value={"month"}>Month</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl
+                  size="small"
+                  focused
+                  variant="standard"
+                  style={{ marginLeft: "20px" }}
+                >
+                  <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                  <Select
+                    labelId="sortselect"
+                    id="sortselect"
+                    value={state.sortBy}
+                    label="Sort"
+                    onChange={handleSortChange}
+                    className={classes.root}
+                  >
+                    <MenuItem value={"hot"}>Hot</MenuItem>
+                    <MenuItem value={"coins"}>Coins</MenuItem>
+                    <MenuItem value={"comments"}>Comments</MenuItem>
+                    <MenuItem value={"downvotes"}>Downvotes</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            {postListDOM}
+
+            <div className="centering">
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "gray",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  textAlign: "center",
+                  maxWidth: "90%",
+                }}
+              >
+                <div style={{ marginTop: "5px" }}>
+                  Trends from{" "}
+                  {state.data.stats.posts.count
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                  posts and {numToString(state.data.stats.comments.count)}{" "}
+                  comments
+                </div>
+                <div
+                  style={{
+                    marginTop: "10px",
+                    width: "100%",
+                    display: "inline-block",
+                  }}
+                >
+                  <div className="statsInfo">
+                    {numToString(state.data.stats.upvotes)} upvotes
+                  </div>
+                  <div className="statsInfo">
+                    {numToString(state.data.stats.downvotes)} downvotes
+                  </div>
+                  <div className="statsInfo">
+                    {numToString(state.data.stats.awards)} awards
+                  </div>
+                  <div className="statsInfo">
+                    {numToString(state.data.stats.coins)} coins
                   </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
         {state.loaded === true && postListDOM.length === 0 && (
           <div style={{ textAlign: "center" }}>
             This page is currently unavailable. Please check back soon for
