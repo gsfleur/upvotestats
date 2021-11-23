@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { makeStyles } from "@material-ui/core/styles";
+import NativeSelect from "@mui/material/NativeSelect";
 
 export default function Trends() {
   window.document.title = "Trends on Reddit - Upvote Stats";
@@ -140,11 +139,15 @@ export default function Trends() {
   // Dropdown menu styling
   const useStyles = makeStyles({
     root: {
-      "& .MuiSelect-select": {
+      "& .MuiNativeSelect-select": {
+        color: "silver",
+        padding: "5px",
+      },
+      "& .MuiNativeSelect-icon": {
         color: "silver",
       },
-      "& .MuiSelect-icon": {
-        color: "silver",
+      "& .MuiNativeSelect-nativeInput": {
+        backgoundColor: "#222222",
       },
     },
   });
@@ -958,41 +961,52 @@ export default function Trends() {
                   width: "90%",
                 }}
               >
-                <FormControl size="small" focused variant="standard">
-                  <InputLabel id="demo-simple-select-label">Time</InputLabel>
-                  <Select
-                    labelId="timeframeselect"
-                    id="timeframeselect"
-                    value={state.sortDate}
-                    label="Time"
-                    onChange={handleTimeChange}
+                <FormControl focused variant="standard" htmlFor="selectDate">
+                  <InputLabel variant="standard">Date</InputLabel>
+                  <NativeSelect
+                    defaultValue={state.sortDate}
                     className={classes.root}
+                    onChange={handleTimeChange}
+                    id="selectDate"
                   >
-                    <MenuItem value={"today"}>Today</MenuItem>
-                    <MenuItem value={"week"}>Week</MenuItem>
-                    <MenuItem value={"month"}>Month</MenuItem>
-                  </Select>
+                    <option value={"today"} style={{ color: "black" }}>
+                      Today
+                    </option>
+                    <option value={"week"} style={{ color: "black" }}>
+                      Week
+                    </option>
+                    <option value={"month"} style={{ color: "black" }}>
+                      Month
+                    </option>
+                  </NativeSelect>
                 </FormControl>
                 <FormControl
-                  size="small"
                   focused
                   variant="standard"
                   style={{ marginLeft: "20px" }}
                 >
-                  <InputLabel id="demo-simple-select-label">Sort</InputLabel>
-                  <Select
-                    labelId="sortselect"
-                    id="sortselect"
-                    value={state.sortBy}
-                    label="Sort"
-                    onChange={handleSortChange}
+                  <InputLabel variant="standard" htmlFor="selectSort">
+                    Sort
+                  </InputLabel>
+                  <NativeSelect
+                    defaultValue={state.sortBy}
                     className={classes.root}
+                    onChange={handleSortChange}
+                    id="selectSort"
                   >
-                    <MenuItem value={"hot"}>Hot</MenuItem>
-                    <MenuItem value={"coins"}>Coins</MenuItem>
-                    <MenuItem value={"comments"}>Comments</MenuItem>
-                    <MenuItem value={"downvotes"}>Downvotes</MenuItem>
-                  </Select>
+                    <option value={"hot"} style={{ color: "black" }}>
+                      Hot
+                    </option>
+                    <option value={"coins"} style={{ color: "black" }}>
+                      Coins
+                    </option>
+                    <option value={"comments"} style={{ color: "black" }}>
+                      Comments
+                    </option>
+                    <option value={"downvotes"} style={{ color: "black" }}>
+                      Downvote Ratio
+                    </option>
+                  </NativeSelect>
                 </FormControl>
               </div>
             </div>
