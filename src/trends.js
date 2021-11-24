@@ -995,7 +995,7 @@ export default function Trends() {
                     id="selectSort"
                   >
                     <option value={"hot"} style={{ color: "black" }}>
-                      Hot
+                      Trending
                     </option>
                     <option value={"coins"} style={{ color: "black" }}>
                       Coins
@@ -1029,8 +1029,8 @@ export default function Trends() {
                     }}
                   >
                     <p style={{ margin: "60px 0px 60px 0px" }}>
-                      No results for this query were found. <br />
-                      Please check back soon for updates.
+                      No results for this query were found <br />
+                      Please check back soon for updates
                     </p>
                   </div>
                 </div>
