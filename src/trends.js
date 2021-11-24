@@ -142,6 +142,8 @@ export default function Trends() {
       "& .MuiNativeSelect-select": {
         color: "silver",
         padding: "5px",
+        fontSize: "13px",
+        height: "25px",
       },
       "& .MuiNativeSelect-icon": {
         color: "silver",
@@ -803,7 +805,7 @@ export default function Trends() {
                   style={{
                     margin: "0px",
                     width: "100%",
-                    height: "85px",
+                    height: "105px",
                     border: "1.5px solid #292929",
                     borderRadius: "20px",
                   }}
