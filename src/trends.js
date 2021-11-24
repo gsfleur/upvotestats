@@ -995,7 +995,7 @@ export default function Trends() {
                     id="selectSort"
                   >
                     <option value={"hot"} style={{ color: "black" }}>
-                      Trending
+                      Popular
                     </option>
                     <option value={"coins"} style={{ color: "black" }}>
                       Coins
