@@ -184,6 +184,25 @@ export default function Trends() {
         let hours = Math.abs(firstDate - secondDate);
         hours /= 60 * 60 * 1000;
 
+        // Default NSFW warning img
+        if (state.data.posts[i][1].urlToImage === "nsfw")
+          state.data.posts[i][1].urlToImage = "nsfwIcon.png";
+
+        // Default Spoiler warning img
+        if (state.data.posts[i][1].urlToImage === "spoiler")
+          state.data.posts[i][1].urlToImage = "spoilerIcon.png";
+
+        // Default img for tweets without og:img
+        if (state.data.posts[i][1].urlDest !== undefined) {
+          if (state.data.posts[i][1].urlDest.includes("twitter.com")) {
+            if (
+              state.data.posts[i][1].urlToImage === "default" ||
+              state.data.posts[i][1].urlToImage === ""
+            )
+              state.data.posts[i][1].urlToImage = "twitterIcon.png";
+          }
+        }
+
         // Set image to website favicon if possible
         if (state.data.posts[i][1].urlToImage === "default") {
           if (state.data.posts[i][1].urlDest !== undefined) {
