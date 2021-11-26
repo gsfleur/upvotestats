@@ -457,9 +457,6 @@ export default function Trends() {
                   &bull;{" "}
                   {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
                   &darr;
-                  {state.data.posts[i][1].nsfw === true && (
-                    <span> &bull; NSFW</span>
-                  )}
                 </div>
 
                 {state.data.posts[i][1].trends.length > 0 && (
@@ -476,7 +473,6 @@ export default function Trends() {
 
                 {newText.length > 0 && (
                   <div
-                    className="searchLink"
                     style={{
                       fontSize: "13px",
                       marginTop: "5px",
