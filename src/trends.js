@@ -519,6 +519,7 @@ export default function Trends() {
                             "https://www.reddit.com/u/" +
                             state.data.posts[i][1].author
                           }
+                          className="searchLink"
                           rel="noreferrer"
                           target="_blank"
                         >
