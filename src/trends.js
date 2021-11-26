@@ -404,6 +404,7 @@ export default function Trends() {
                 e.target.className !== "postVideoStandard" &&
                 e.target.className !== "searchLink" &&
                 e.target.className !== "searchLink2" &&
+                e.target.className !== "iconImg" &&
                 e.target.id !== "threadLink"
               )
                 openPost(i);
@@ -519,7 +520,6 @@ export default function Trends() {
                             "https://www.reddit.com/u/" +
                             state.data.posts[i][1].author
                           }
-                          className="searchLink"
                           rel="noreferrer"
                           target="_blank"
                         >
