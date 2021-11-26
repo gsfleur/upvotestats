@@ -372,8 +372,15 @@ export default function Trends() {
         // Description of posts
         let author = (
           <span>
-            {state.data.posts[i][1].author} posted{" "}
-            {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
+            <a
+              className="searchLink2"
+              href={"https://www.reddit.com/u/" + state.data.posts[i][1].author}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {state.data.posts[i][1].author}
+            </a>{" "}
+            posted {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
             {hours > 24 && hours <= 48 && <span>1d ago</span>}
             {hours > 48 && diffDays < 7 && <span>{diffDays}d ago</span>}
             {diffDays >= 7 && diffDays < 14 && <span>1w ago</span>}
@@ -396,6 +403,7 @@ export default function Trends() {
                 e.target.className !== "postImgStandard" &&
                 e.target.className !== "postVideoStandard" &&
                 e.target.className !== "searchLink" &&
+                e.target.className !== "searchLink2" &&
                 e.target.id !== "threadLink"
               )
                 openPost(i);
@@ -407,7 +415,6 @@ export default function Trends() {
                 style={{ float: "left", overflow: "hidden" }}
               >
                 <div
-                  className="searchLink"
                   style={{
                     fontSize: "12px",
                     marginBottom: "5px",
@@ -415,8 +422,19 @@ export default function Trends() {
                   }}
                 >
                   {postListDOM.length + 1} &bull;{" "}
-                  {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
-                  {numToString(state.data.posts[i][1].upvotes)} &uarr; &bull;{" "}
+                  <a
+                    className="searchLink"
+                    href={
+                      "https://www.reddit.com/r/" +
+                      state.data.posts[i][1].subreddit
+                    }
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {"r/" + state.data.posts[i][1].subreddit}
+                  </a>{" "}
+                  &bull; {numToString(state.data.posts[i][1].upvotes)} &uarr;
+                  &bull;{" "}
                   {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
                   &darr;
                   {state.data.posts[i][1].nsfw === true && (
@@ -425,7 +443,7 @@ export default function Trends() {
                 </div>
 
                 {state.data.posts[i][1].trends.length > 0 && (
-                  <div className="searchLink" style={{ fontSize: "14px" }}>
+                  <div style={{ fontSize: "14px" }}>
                     <b>{state.data.posts[i][1].trends[0]}</b>
                   </div>
                 )}
@@ -496,37 +514,57 @@ export default function Trends() {
                           color: "silver",
                         }}
                       >
-                        {state.data.posts[i][1].icon === "" && (
-                          <img
-                            className="iconImg"
-                            src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
-                            alt={state.data.posts[i][1].author + " icon"}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "missing.png";
-                            }}
-                          />
-                        )}
-                        {state.data.posts[i][1].icon !== "" && (
-                          <img
-                            className="iconImg"
-                            src={state.data.posts[i][1].icon}
-                            alt={state.data.posts[i][1].author + " icon"}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "missing.png";
-                            }}
-                          />
-                        )}
+                        <a
+                          href={
+                            "https://www.reddit.com/u/" +
+                            state.data.posts[i][1].author
+                          }
+                          rel="noreferrer"
+                          target="_blank"
+                        >
+                          {state.data.posts[i][1].icon === "" && (
+                            <img
+                              className="iconImg"
+                              src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                              alt={state.data.posts[i][1].author + " icon"}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "missing.png";
+                              }}
+                            />
+                          )}
+                          {state.data.posts[i][1].icon !== "" && (
+                            <img
+                              className="iconImg"
+                              src={state.data.posts[i][1].icon}
+                              alt={state.data.posts[i][1].author + " icon"}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "missing.png";
+                              }}
+                            />
+                          )}
+                        </a>
                         <div
                           style={{
                             float: "left",
-                            marginTop: "5px",
-                            marginBottom: "5px",
+                            marginTop: "6.5px",
+                            marginBottom: "6.5px",
                             marginLeft: "5px",
                           }}
                         >
-                          {state.data.posts[i][1].author} &bull;{" "}
+                          <a
+                            className="searchLink2"
+                            href={
+                              "https://www.reddit.com/u/" +
+                              state.data.posts[i][1].author
+                            }
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {state.data.posts[i][1].author}
+                          </a>{" "}
+                          &bull;{" "}
                           {hours <= 24 && <span>{Math.floor(hours)}h</span>}
                           {hours > 24 && hours <= 48 && <span>1d</span>}
                           {hours > 48 && diffDays < 7 && (
