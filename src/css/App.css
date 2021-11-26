@@ -41,7 +41,7 @@
 
 .searchLink:hover,
 .searchLink:active {
-  color: goldenrod;
+  text-decoration: underline;
 }
 
 .searchLink2:link,
@@ -52,7 +52,7 @@
 
 .searchLink2:hover,
 .searchLink2:active {
-  color: goldenrod;
+  text-decoration: underline;
 }
 
 .loading {
