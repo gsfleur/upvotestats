@@ -184,16 +184,16 @@ export default function Trends() {
         let hours = Math.abs(firstDate - secondDate);
         hours /= 60 * 60 * 1000;
 
-        // Default NSFW warning img
-        if (state.data.posts[i][1].urlToImage === "nsfw")
-          state.data.posts[i][1].urlToImage = "nsfwIcon.png";
-
-        // Default Spoiler warning img
-        if (state.data.posts[i][1].urlToImage === "spoiler")
-          state.data.posts[i][1].urlToImage = "spoilerIcon.png";
-
-        // Default img for tweets if og:image not found
         if (state.data.posts[i][1].urlDest !== undefined) {
+          // Default NSFW warning img
+          if (state.data.posts[i][1].urlToImage === "nsfw")
+            state.data.posts[i][1].urlToImage = "nsfwIcon.png";
+
+          // Default Spoiler warning img
+          if (state.data.posts[i][1].urlToImage === "spoiler")
+            state.data.posts[i][1].urlToImage = "spoilerIcon.png";
+
+          // Default img for tweets if og:image not found
           if (
             state.data.posts[i][1].urlToImage === "default" ||
             state.data.posts[i][1].urlToImage === ""
@@ -472,6 +472,9 @@ export default function Trends() {
                 {!loadableImg && (
                   <div style={{ fontSize: "14px", marginTop: "5px" }}>
                     {state.data.posts[i][1].title}
+                    {state.data.posts[i][1].nsfw === true && (
+                      <span style={{ color: "maroon" }}> NSFW</span>
+                    )}
                   </div>
                 )}
 
