@@ -192,14 +192,18 @@ export default function Trends() {
         if (state.data.posts[i][1].urlToImage === "spoiler")
           state.data.posts[i][1].urlToImage = "spoilerIcon.png";
 
-        // Default img for tweets without og:img
+        // Default img for tweets if og:image not found
         if (state.data.posts[i][1].urlDest !== undefined) {
-          if (state.data.posts[i][1].urlDest.includes("twitter.com")) {
-            if (
-              state.data.posts[i][1].urlToImage === "default" ||
-              state.data.posts[i][1].urlToImage === ""
-            )
+          if (
+            state.data.posts[i][1].urlToImage === "default" ||
+            state.data.posts[i][1].urlToImage === ""
+          ) {
+            // Twitter img
+            if (state.data.posts[i][1].urlDest.includes("twitter.com"))
               state.data.posts[i][1].urlToImage = "twitterIcon.png";
+            // Instagram Img
+            if (state.data.posts[i][1].urlDest.includes("instagram.com"))
+              state.data.posts[i][1].urlToImage = "instagramIcon.png";
           }
         }
 
