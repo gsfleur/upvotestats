@@ -461,6 +461,20 @@ export default function Trends() {
                   &bull;{" "}
                   {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
                   &darr;
+                  {state.data.posts[i][1].nsfw === true && (
+                    <span
+                      style={{
+                        color: "indianred",
+                        border: "1px solid indianred",
+                        padding: "0px 5px 0px 5px",
+                        borderRadius: "2px",
+                        fontSize: "11px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      nsfw
+                    </span>
+                  )}
                 </div>
 
                 {state.data.posts[i][1].trends.length > 0 && (
@@ -472,9 +486,6 @@ export default function Trends() {
                 {!loadableImg && (
                   <div style={{ fontSize: "14px", marginTop: "5px" }}>
                     {state.data.posts[i][1].title}
-                    {state.data.posts[i][1].nsfw === true && (
-                      <span style={{ color: "maroon" }}> NSFW</span>
-                    )}
                   </div>
                 )}
 
