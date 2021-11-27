@@ -20,7 +20,9 @@ export default function Stats() {
     if (state.loaded === false) {
       (async () => {
         await axios
-          .get(process.env.REACT_APP_BACKEND + "posts/month")
+          .get(
+            process.env.REACT_APP_BACKEND + "posts/all?sort=coins&time=month"
+          )
           .then((res) => {
             state.monthData = res.data;
           })
@@ -79,7 +81,11 @@ export default function Stats() {
               className="postLink"
               target="_blank"
               rel="noreferrer"
-              style={{ margin: "0px 0px 10px 0px", padding: "0px" }}
+              style={{
+                margin: "0px 0px 10px 0px",
+                padding: "0px",
+                width: "100%",
+              }}
             >
               <div className="imgBody" style={imgBodyCSS}>
                 <div
@@ -136,24 +142,20 @@ export default function Stats() {
                       marginBottom: "10px",
                       color: "black",
                       float: "left",
-                      width: "calc(100% - 200px)",
+                      width: "calc(100% - 150px)",
                       marginLeft: "10px",
                     }}
                   >
                     <span style={{ color: "black" }}>
                       {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
-                      {numToString(state.data.posts[i][1].upvotes)} &uarr;
-                      &bull;{" "}
-                      {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
-                      &darr; &bull; {numToString(state.data.posts[i][1].awards)}{" "}
-                      Awards
+                      {numToString(state.data.posts[i][1].awards)} Awards
                       {state.data.posts[i][1].nsfw === true && (
                         <span> &bull; NSFW</span>
                       )}
                     </span>
                     <br />
-                    <b>{state.data.posts[i][1].title.substring(0, 45)}</b>
-                    {state.data.posts[i][1].title.length > 45 && (
+                    <b>{state.data.posts[i][1].title.substring(0, 65)}</b>
+                    {state.data.posts[i][1].title.length > 65 && (
                       <span>...</span>
                     )}
                     <br />
@@ -167,8 +169,9 @@ export default function Stats() {
                                 state.data.posts[0][1].coins)
                           ) + "%",
                         display: "inline-block",
-                        border: "1px solid orangered",
+                        border: "1px solid black",
                         borderRadius: "10px",
+                        backgroundColor: "gold",
                       }}
                     >
                       <div
@@ -292,6 +295,13 @@ export default function Stats() {
                 <br />
               </div>
               {postListDOM}
+              <div className="centering">
+                <span style={{ fontSize: "16px", fontWeight: "bold" }}>
+                  upvotestats.com/trends
+                </span>
+                <br />
+                <br />
+              </div>
             </div>
           )}
         {state.loaded === true && postListDOM.length === 0 && (
