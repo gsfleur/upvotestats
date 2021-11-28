@@ -469,7 +469,7 @@ export default function Trends() {
                         border: "1px solid indianred",
                         padding: "0px 5px 2px 5px",
                         borderRadius: "3px",
-                        fontSize: "11px",
+                        fontSize: "10.5px",
                         marginLeft: "10px",
                       }}
                     >
@@ -483,7 +483,7 @@ export default function Trends() {
                         border: "1px solid gray",
                         padding: "0px 5px 2px 5px",
                         borderRadius: "3px",
-                        fontSize: "11px",
+                        fontSize: "10.5px",
                         marginLeft: "10px",
                       }}
                     >
