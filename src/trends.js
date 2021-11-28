@@ -467,13 +467,27 @@ export default function Trends() {
                       style={{
                         color: "indianred",
                         border: "1px solid indianred",
-                        padding: "0px 5px 3px 5px",
+                        padding: "0px 5px 2px 5px",
                         borderRadius: "3px",
                         fontSize: "11px",
                         marginLeft: "10px",
                       }}
                     >
                       nsfw
+                    </span>
+                  )}
+                  {state.data.posts[i][1].urlToImage === "spoilerIcon.png" && (
+                    <span
+                      style={{
+                        color: "gray",
+                        border: "1px solid gray",
+                        padding: "0px 5px 2px 5px",
+                        borderRadius: "3px",
+                        fontSize: "11px",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      spoiler
                     </span>
                   )}
                 </div>
