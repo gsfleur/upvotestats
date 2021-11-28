@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import ReactHlsPlayer from "react-hls-player";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
@@ -466,8 +467,8 @@ export default function Trends() {
                       style={{
                         color: "indianred",
                         border: "1px solid indianred",
-                        padding: "0px 5px 0px 5px",
-                        borderRadius: "2px",
+                        padding: "0px 5px 3px 5px",
+                        borderRadius: "3px",
                         fontSize: "11px",
                         marginLeft: "10px",
                       }}
@@ -657,20 +658,18 @@ export default function Trends() {
                             )}
                             {state.data.posts[i][1].isVideo && (
                               <div className="centering">
-                                <video
+                                <ReactHlsPlayer
+                                  src={state.data.posts[i][1].media}
+                                  autoPlay={true}
+                                  muted={true}
+                                  controls={true}
+                                  loop={true}
+                                  width="100%"
                                   id={"video" + i}
                                   className="postVideoStandard"
                                   height="100%"
                                   poster={state.data.posts[i][1].urlToImage}
-                                  preload="auto"
-                                  muted
-                                  controls
-                                >
-                                  <source
-                                    src={state.data.posts[i][1].media}
-                                    type="video/mp4"
-                                  />
-                                </video>
+                                />
                               </div>
                             )}
                           </div>
@@ -788,9 +787,17 @@ export default function Trends() {
                     {numToString(state.data.posts[i][1].awards)} awards &bull;{" "}
                   </span>
                 )}
-                <span>
-                  {numToString(state.data.posts[i][1].comments)} comments
-                </span>
+
+                <a
+                  href={state.data.posts[i][1].url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="searchLink"
+                >
+                  <span>
+                    {numToString(state.data.posts[i][1].comments)} comments
+                  </span>
+                </a>
               </div>
             </div>
           </div>
