@@ -415,6 +415,24 @@ export default function Trends() {
           </span>
         );
 
+        // Post Upvote Ratio DOM
+        let percentUpvoted = (
+          <div
+            style={{
+              float: "right",
+              fontSize: "13px",
+              color: "gray",
+            }}
+          >
+            {Math.floor(
+              (100 * state.data.posts[i][1].upvotes) /
+                (Math.abs(state.data.posts[i][1].downvotes) +
+                  state.data.posts[i][1].upvotes)
+            )}
+            % Upvoted
+          </div>
+        );
+
         // List of post links
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -520,12 +538,16 @@ export default function Trends() {
                         )}
                       </span>
                     )}
-                    {state.expandedPosts.includes(i) && <span>{newText}</span>}
+                    {state.expandedPosts.includes(i) && (
+                      <span>
+                        {newText}
+                        {percentUpvoted}
+                      </span>
+                    )}
                   </div>
                 )}
                 {newText.length === 0 && (
                   <div
-                    className="searchLink"
                     style={{
                       fontSize: "13px",
                       marginTop: "5px",
@@ -533,7 +555,10 @@ export default function Trends() {
                     }}
                   >
                     {state.expandedPosts.includes(i) && !loadableImg && (
-                      <span>OP only provided a title for this post</span>
+                      <span>
+                        OP only provided a title for this post
+                        {percentUpvoted}
+                      </span>
                     )}
                   </div>
                 )}
@@ -642,9 +667,9 @@ export default function Trends() {
                                 <span> {outLinkDOM}</span>
                               )}
                             <br />
-                            <div style={{ float: "right" }}>
-                              {threadLinkDOM}
-                            </div>
+                            <br />
+                            {percentUpvoted}
+                            <div style={{ float: "left" }}>{threadLinkDOM}</div>
                           </div>
                           <div
                             style={{
