@@ -660,7 +660,6 @@ export default function Trends() {
                               <div className="centering">
                                 <ReactHlsPlayer
                                   src={state.data.posts[i][1].media}
-                                  autoPlay={true}
                                   muted={true}
                                   controls={true}
                                   loop={true}
