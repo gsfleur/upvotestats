@@ -433,6 +433,31 @@ export default function Trends() {
           </div>
         );
 
+        // Whether post is streamable video link
+        let streamable =
+          state.data.posts[i][1].urlDest !== undefined &&
+          state.data.posts[i][1].urlDest.includes("streamable.com");
+
+        // Getting streamable embed link
+        let streamableLink = "";
+        if (streamable) {
+          let parts = state.data.posts[i][1].urlDest.split("/");
+          streamableLink =
+            "https://streamable.com/e/" + parts[parts.length - 1];
+        }
+
+        // Whether post is gfycat gif
+        let gfycat =
+          state.data.posts[i][1].urlDest !== undefined &&
+          state.data.posts[i][1].urlDest.includes("gfycat.com");
+
+        // Getting gfycat embed link
+        let gfycatLink = "";
+        if (gfycat) {
+          let parts = state.data.posts[i][1].urlDest.split("/");
+          gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
+        }
+
         // List of post links
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -677,24 +702,26 @@ export default function Trends() {
                               height: "100%",
                             }}
                           >
-                            {!state.data.posts[i][1].isVideo && (
-                              <div className="centering">
-                                <img
-                                  src={imgSource}
-                                  className="postImgStandard"
-                                  alt="Reddit Post Thumbnail"
-                                  style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    minWidth: "275px",
-                                  }}
-                                  onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = "missing.png";
-                                  }}
-                                />
-                              </div>
-                            )}
+                            {!state.data.posts[i][1].isVideo &&
+                              !streamable &&
+                              !gfycat && (
+                                <div className="centering">
+                                  <img
+                                    src={imgSource}
+                                    className="postImgStandard"
+                                    alt="Reddit Post Thumbnail"
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      minWidth: "275px",
+                                    }}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = "missing.png";
+                                    }}
+                                  />
+                                </div>
+                              )}
                             {state.data.posts[i][1].isVideo && (
                               <div className="centering">
                                 <ReactHlsPlayer
@@ -708,6 +735,61 @@ export default function Trends() {
                                   height="100%"
                                   poster={state.data.posts[i][1].urlToImage}
                                 />
+                              </div>
+                            )}
+                            {streamable && (
+                              <div
+                                style={{
+                                  width: "100%",
+                                  height: "0px",
+                                  position: "relative",
+                                  paddingBottom: "56.250%",
+                                }}
+                              >
+                                <iframe
+                                  src={streamableLink}
+                                  frameBorder="0"
+                                  width="100%"
+                                  height="100%"
+                                  allowFullScreen
+                                  title={
+                                    state.data.posts[i][1].title +
+                                    "-streamable-" +
+                                    i
+                                  }
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    position: "absolute",
+                                  }}
+                                ></iframe>
+                              </div>
+                            )}
+                            {gfycat && (
+                              <div
+                                style={{
+                                  position: "relative",
+                                  paddingBottom: "calc(70.80% + 44px)",
+                                }}
+                              >
+                                <iframe
+                                  src={gfycatLink}
+                                  frameBorder="0"
+                                  scrolling="no"
+                                  width="100%"
+                                  height="100%"
+                                  title={
+                                    state.data.posts[i][1].title +
+                                    "-gfycat-" +
+                                    i
+                                  }
+                                  style={{
+                                    position: "absolute",
+                                    top: "0",
+                                    left: "0",
+                                  }}
+                                  allowFullScreen
+                                ></iframe>
                               </div>
                             )}
                           </div>
