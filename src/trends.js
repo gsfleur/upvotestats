@@ -596,7 +596,7 @@ export default function Trends() {
                       defaultValue="default"
                     >
                       <option value="default" hidden disabled>
-                        option
+                        Not interested?
                       </option>
                       <option value={"interest"} style={{ color: "black" }}>
                         Hide this post
