@@ -182,6 +182,7 @@ export default function Trends() {
         fontSize: "13px",
         height: "0px",
         borderStyle: "hidden",
+        width: "10px",
       },
       "& .MuiNativeSelect-icon": {
         color: "gray",
