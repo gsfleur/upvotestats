@@ -137,6 +137,28 @@ export default function Trends() {
     });
   };
 
+  // Handle Requst Post Removal Event
+  const handleReport = (event) => {
+    let id = event.target.id.split("-")[1];
+    let key =
+      "upvotestats-hidden-" +
+      new Date().getMonth() +
+      "-" +
+      new Date().getFullYear();
+
+    // Initializing stored key value pair
+    if (localStorage.getItem(key) === null) localStorage.setItem(key, "");
+
+    // Storing url of removed posts requested user
+    localStorage.setItem(key, localStorage.getItem(key) + " " + postLinks[id]);
+
+    setState({
+      ...state,
+      loaded: false,
+      expandedPosts: [],
+    });
+  };
+
   // Dropdown menu styling
   const useStyles = makeStyles({
     root: {
@@ -149,8 +171,20 @@ export default function Trends() {
       "& .MuiNativeSelect-icon": {
         color: "silver",
       },
-      "& .MuiNativeSelect-nativeInput": {
-        backgoundColor: "#222222",
+    },
+    root2: {
+      "& .MuiNativeSelect-root": {
+        border: "none",
+      },
+      "& .MuiNativeSelect-select": {
+        color: "silver",
+        padding: "5px",
+        fontSize: "13px",
+        height: "0px",
+        borderStyle: "hidden",
+      },
+      "& .MuiNativeSelect-icon": {
+        color: "gray",
       },
     },
   });
@@ -172,6 +206,24 @@ export default function Trends() {
 
         // Skip potential duplicates
         if (postLinks.includes(state.data.posts[i][1].url)) continue;
+
+        // Key of hidden posts requested user (new key every month)
+        let removeKey =
+          "upvotestats-hidden-" +
+          new Date().getMonth() +
+          "-" +
+          new Date().getFullYear();
+
+        // Initializing stored key value pair
+        if (localStorage.getItem(removeKey) === null)
+          localStorage.setItem(removeKey, "");
+
+        // Getting list of all posts
+        let removedList = localStorage.getItem(removeKey).split(" ");
+        removedList = removedList.filter((url) => url.includes("reddit.com"));
+
+        // Skip posts the user has requested to remove
+        if (removedList.includes(state.data.posts[i][1].url)) continue;
 
         // Date since post published
         const timeInDay = 24 * 60 * 60 * 1000;
@@ -472,6 +524,7 @@ export default function Trends() {
                 e.target.className !== "searchLink" &&
                 e.target.className !== "searchLink2" &&
                 e.target.className !== "iconImg" &&
+                !e.target.id.includes("report") &&
                 e.target.id !== "threadLink"
               )
                 openPost(i);
@@ -480,13 +533,14 @@ export default function Trends() {
             <div className="postLink">
               <div
                 className="newsText"
-                style={{ float: "left", overflow: "hidden" }}
+                style={{ float: "left", overflow: "hidden", width: "100%" }}
               >
                 <div
                   style={{
                     fontSize: "12px",
                     marginBottom: "5px",
                     color: "gray",
+                    width: "100%",
                   }}
                 >
                   {postListDOM.length + 1} &bull;{" "}
@@ -533,6 +587,25 @@ export default function Trends() {
                       spoiler
                     </span>
                   )}
+                  <div style={{ float: "right", display: "inline-block" }}>
+                    <NativeSelect
+                      disableUnderline
+                      className={classes.root2}
+                      id={"report-" + postListDOM.length}
+                      onChange={handleReport}
+                      defaultValue="default"
+                    >
+                      <option value="default" hidden disabled>
+                        option
+                      </option>
+                      <option value={"interest"} style={{ color: "black" }}>
+                        Hide this post
+                      </option>
+                      <option value={"report"} style={{ color: "black" }}>
+                        Report this post
+                      </option>
+                    </NativeSelect>
+                  </div>
                 </div>
 
                 {state.data.posts[i][1].trends.length > 0 && (
