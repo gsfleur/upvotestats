@@ -182,7 +182,7 @@ export default function Trends() {
         fontSize: "13px",
         height: "0px",
         borderStyle: "hidden",
-        width: "10px",
+        width: "5px",
       },
       "& .MuiNativeSelect-icon": {
         color: "gray",
@@ -560,34 +560,6 @@ export default function Trends() {
                   &bull;{" "}
                   {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
                   &darr;
-                  {state.data.posts[i][1].nsfw === true && (
-                    <span
-                      style={{
-                        color: "indianred",
-                        border: "1px solid indianred",
-                        padding: "0px 5px 2px 5px",
-                        borderRadius: "3px",
-                        fontSize: "10.5px",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      nsfw
-                    </span>
-                  )}
-                  {state.data.posts[i][1].urlToImage === "spoilerIcon.png" && (
-                    <span
-                      style={{
-                        color: "gray",
-                        border: "1px solid gray",
-                        padding: "0px 5px 2px 5px",
-                        borderRadius: "3px",
-                        fontSize: "10.5px",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      spoiler
-                    </span>
-                  )}
                   <div style={{ float: "right", display: "inline-block" }}>
                     <NativeSelect
                       disableUnderline
@@ -612,6 +584,36 @@ export default function Trends() {
                 {state.data.posts[i][1].trends.length > 0 && (
                   <div style={{ fontSize: "14px" }}>
                     <b>{state.data.posts[i][1].trends[0]}</b>
+
+                    {state.data.posts[i][1].nsfw === true && (
+                      <span
+                        style={{
+                          color: "indianred",
+                          border: "1px solid indianred",
+                          padding: "0px 5px 2px 5px",
+                          borderRadius: "3px",
+                          fontSize: "10.5px",
+                          marginLeft: "5px",
+                        }}
+                      >
+                        nsfw
+                      </span>
+                    )}
+                    {state.data.posts[i][1].urlToImage ===
+                      "spoilerIcon.png" && (
+                      <span
+                        style={{
+                          color: "gray",
+                          border: "1px solid gray",
+                          padding: "0px 5px 2px 5px",
+                          borderRadius: "3px",
+                          fontSize: "10.5px",
+                          marginLeft: "5px",
+                        }}
+                      >
+                        spoiler
+                      </span>
+                    )}
                   </div>
                 )}
 
@@ -988,9 +990,7 @@ export default function Trends() {
                   rel="noreferrer"
                   className="searchLink"
                 >
-                  <span>
-                    {numToString(state.data.posts[i][1].comments)} comments
-                  </span>
+                  {numToString(state.data.posts[i][1].comments)} comments
                 </a>
               </div>
             </div>
