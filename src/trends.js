@@ -5,6 +5,8 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export default function Trends() {
   window.document.title = "Trends on Reddit - Upvote Stats";
@@ -169,7 +171,7 @@ export default function Trends() {
         height: "25px",
       },
       "& .MuiNativeSelect-icon": {
-        color: "silver",
+        color: "gray",
       },
     },
     root2: {
@@ -186,6 +188,8 @@ export default function Trends() {
       },
       "& .MuiNativeSelect-icon": {
         color: "gray",
+        fontSize: "medium",
+        marginTop: "3.2px",
       },
     },
   });
@@ -566,6 +570,7 @@ export default function Trends() {
                       className={classes.root2}
                       id={"report-" + postListDOM.length}
                       onChange={handleReport}
+                      IconComponent={MoreHorizIcon}
                       defaultValue="default"
                     >
                       <option value="default" hidden disabled>
@@ -1242,6 +1247,7 @@ export default function Trends() {
                     defaultValue={state.sortDate}
                     className={classes.root}
                     onChange={handleTimeChange}
+                    IconComponent={ExpandMoreIcon}
                     id="selectDate"
                   >
                     <option value={"today"} style={{ color: "black" }}>
@@ -1267,7 +1273,9 @@ export default function Trends() {
                     defaultValue={state.sortBy}
                     className={classes.root}
                     onChange={handleSortChange}
+                    IconComponent={ExpandMoreIcon}
                     id="selectSort"
+                    width="100%"
                   >
                     <option value={"hot"} style={{ color: "black" }}>
                       Popular
@@ -1276,10 +1284,10 @@ export default function Trends() {
                       Coins
                     </option>
                     <option value={"comments"} style={{ color: "black" }}>
-                      Comments
+                      Replies
                     </option>
                     <option value={"downvotes"} style={{ color: "black" }}>
-                      Downvote Ratio
+                      Disputed
                     </option>
                   </NativeSelect>
                 </FormControl>
