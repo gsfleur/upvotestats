@@ -515,6 +515,51 @@ export default function Trends() {
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
         }
 
+        let topTrend = "";
+        // Capitalizing the first letter of each word in trending phrase
+        if (state.data.posts[i][1].trends.length > 0) {
+          let parts = state.data.posts[i][1].trends[0].split(" ");
+          for (let t = 0; t < parts.length; t++) {
+            topTrend +=
+              parts[t].charAt(0).toUpperCase() + parts[t].slice(1) + " ";
+          }
+          topTrend = topTrend.slice(0, -1);
+        }
+
+        // Content warnings such as NSFW and Spoilers
+        let contentWarnings = (
+          <span>
+            {state.data.posts[i][1].nsfw === true && (
+              <span
+                style={{
+                  color: "indianred",
+                  border: "1px solid indianred",
+                  padding: "0px 5px 2px 5px",
+                  borderRadius: "3px",
+                  fontSize: "10.5px",
+                  marginLeft: "10px",
+                }}
+              >
+                NSFW
+              </span>
+            )}
+            {state.data.posts[i][1].urlToImage === "spoilerIcon.png" && (
+              <span
+                style={{
+                  color: "gray",
+                  border: "1px solid gray",
+                  padding: "0px 5px 2px 5px",
+                  borderRadius: "3px",
+                  fontSize: "10.5px",
+                  marginLeft: "0px",
+                }}
+              >
+                SPOILER
+              </span>
+            )}
+          </span>
+        );
+
         // List of post links
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -588,43 +633,14 @@ export default function Trends() {
 
                 {state.data.posts[i][1].trends.length > 0 && (
                   <div style={{ fontSize: "14px" }}>
-                    <b>{state.data.posts[i][1].trends[0]}</b>
-
-                    {state.data.posts[i][1].nsfw === true && (
-                      <span
-                        style={{
-                          color: "indianred",
-                          border: "1px solid indianred",
-                          padding: "0px 5px 2px 5px",
-                          borderRadius: "3px",
-                          fontSize: "10.5px",
-                          marginLeft: "5px",
-                        }}
-                      >
-                        nsfw
-                      </span>
-                    )}
-                    {state.data.posts[i][1].urlToImage ===
-                      "spoilerIcon.png" && (
-                      <span
-                        style={{
-                          color: "gray",
-                          border: "1px solid gray",
-                          padding: "0px 5px 2px 5px",
-                          borderRadius: "3px",
-                          fontSize: "10.5px",
-                          marginLeft: "5px",
-                        }}
-                      >
-                        spoiler
-                      </span>
-                    )}
+                    <b>{topTrend}</b>
                   </div>
                 )}
 
                 {!loadableImg && (
                   <div style={{ fontSize: "14px", marginTop: "5px" }}>
                     {state.data.posts[i][1].title}
+                    {contentWarnings}
                   </div>
                 )}
 
@@ -754,6 +770,7 @@ export default function Trends() {
                           {diffDays >= 14 && diffDays < 21 && <span>2w</span>}
                           {diffDays >= 21 && diffDays < 28 && <span>3w</span>}
                           {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
+                          {contentWarnings}
                         </div>
                       </div>
                       {state.expandedPosts.includes(i) && (
