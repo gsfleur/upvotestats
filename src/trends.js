@@ -1355,6 +1355,37 @@ export default function Trends() {
             </div>
           </div>
         )}
+        {state.loaded === true && state.error === true && (
+          <div>
+            <div className="centering">
+              <img src="errorImg.jpg" alt="error koala" width="250px" />
+            </div>
+            <div className="centering">
+              <span style={{ fontSize: "20px" }}>
+                <b>Sorry, something went wrong</b>
+              </span>
+            </div>
+            <br />
+            <div className="centering">
+              <span style={{ textAlign: "center", fontSize: "13px" }}>
+                Try reloading the page. I'm working hard to fix
+              </span>
+            </div>
+            <div className="centering">
+              <span style={{ textAlign: "center", fontSize: "13px" }}>
+                Upvote Stats for you as quick as possible.
+              </span>
+            </div>
+            <div className="centering">
+              <button
+                onClick={() => (window.location.href = "trends")}
+                className="reloadButton"
+              >
+                RELOAD
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
