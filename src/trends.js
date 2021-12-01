@@ -534,7 +534,7 @@ export default function Trends() {
                 style={{
                   color: "indianred",
                   border: "1px solid indianred",
-                  padding: "0px 5px 2px 5px",
+                  padding: "0px 2px 0px 2px",
                   borderRadius: "3px",
                   fontSize: "10.5px",
                   marginLeft: "10px",
@@ -548,10 +548,10 @@ export default function Trends() {
                 style={{
                   color: "gray",
                   border: "1px solid gray",
-                  padding: "0px 5px 2px 5px",
+                  padding: "0px 2px 0px 2px",
                   borderRadius: "3px",
                   fontSize: "10.5px",
-                  marginLeft: "0px",
+                  marginLeft: "10px",
                 }}
               >
                 SPOILER
