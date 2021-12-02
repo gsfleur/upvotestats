@@ -285,6 +285,17 @@ export default function Trends() {
           state.data.posts[i][1].urlToImage !== "nsfw" &&
           state.data.posts[i][1].urlToImage !== "spoiler";
 
+        // Capitalizing the first letter of each word in trending phrases
+        for (let tr = 0; tr < state.data.posts[i][1].trends.length; tr++) {
+          let newTrend = "";
+          let parts = state.data.posts[i][1].trends[tr].split(" ");
+          for (let t = 0; t < parts.length; t++) {
+            newTrend +=
+              parts[t].charAt(0).toUpperCase() + parts[t].slice(1) + " ";
+          }
+          state.data.posts[i][1].trends[tr] = newTrend.slice(0, -1);
+        }
+
         // DOM for "trending with" section
         let trendingWith = [];
         let trends = state.data.posts[i][1].trends;
@@ -513,19 +524,6 @@ export default function Trends() {
         if (gfycat) {
           let parts = state.data.posts[i][1].urlDest.split("/");
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
-        }
-
-        console.log(state.data.posts[i][1].trends.length);
-        // Capitalizing the first letter of each word in trending phrases
-        for (let tr = 0; tr < state.data.posts[i][1].trends.length; tr++) {
-          let newTrend = "";
-          let parts = state.data.posts[i][1].trends[tr].split(" ");
-          for (let t = 0; t < parts.length; t++) {
-            newTrend +=
-              parts[t].charAt(0).toUpperCase() + parts[t].slice(1) + " ";
-          }
-          state.data.posts[i][1].trends[tr] = newTrend.slice(0, -1);
-          console.log(newTrend);
         }
 
         // Content warnings such as NSFW and Spoilers
