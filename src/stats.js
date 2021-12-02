@@ -50,6 +50,7 @@ export default function Stats() {
 
   let postListDOM = []; // DOM for posts
   let postLinks = []; // ids of all posts
+  let markdown = "";
   if (state.loaded === true && state.error === false) {
     // Creating DOM for posts
     if (state.data.posts !== undefined) {
@@ -71,6 +72,15 @@ export default function Stats() {
           margin: "0px",
           padding: "0px",
         };
+
+        markdown +=
+          i +
+          1 +
+          ". [" +
+          state.data.posts[i][1].title +
+          "](" +
+          state.data.posts[i][1].url +
+          ") ";
 
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
@@ -161,7 +171,7 @@ export default function Stats() {
                     <br />
                     <div
                       style={{
-                        height: "15px",
+                        height: "20px",
                         width:
                           Math.ceil(
                             100 *
@@ -176,7 +186,7 @@ export default function Stats() {
                     >
                       <div
                         style={{
-                          fontSize: "10px",
+                          fontSize: "13px",
                           textAlign: "center",
                           color: "black",
                           fontWeight: "bold",
@@ -194,6 +204,7 @@ export default function Stats() {
         );
       }
     }
+    console.log(markdown);
   }
 
   /*
