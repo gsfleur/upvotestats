@@ -515,15 +515,15 @@ export default function Trends() {
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
         }
 
-        let topTrend = "";
-        // Capitalizing the first letter of each word in trending phrase
-        if (state.data.posts[i][1].trends.length > 0) {
-          let parts = state.data.posts[i][1].trends[0].split(" ");
+        // Capitalizing the first letter of each word in trending phrases
+        for (let tr = 0; tr < state.data.posts[i][1].trends.length; tr++) {
+          let newTrend = "";
+          let parts = state.data.posts[i][1].trends[tr].split(" ");
           for (let t = 0; t < parts.length; t++) {
-            topTrend +=
+            newTrend +=
               parts[t].charAt(0).toUpperCase() + parts[t].slice(1) + " ";
           }
-          topTrend = topTrend.slice(0, -1);
+          state.data.posts[i][1].trends[tr] = newTrend.slice(0, -1);
         }
 
         // Content warnings such as NSFW and Spoilers
@@ -633,7 +633,7 @@ export default function Trends() {
 
                 {state.data.posts[i][1].trends.length > 0 && (
                   <div style={{ fontSize: "14px" }}>
-                    <b>{topTrend}</b>
+                    <b>{state.data.posts[i][1].trends[0]}</b>
                   </div>
                 )}
 
