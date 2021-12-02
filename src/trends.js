@@ -515,6 +515,7 @@ export default function Trends() {
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
         }
 
+        console.log(state.data.posts[i][1].trends.length);
         // Capitalizing the first letter of each word in trending phrases
         for (let tr = 0; tr < state.data.posts[i][1].trends.length; tr++) {
           let newTrend = "";
@@ -524,6 +525,7 @@ export default function Trends() {
               parts[t].charAt(0).toUpperCase() + parts[t].slice(1) + " ";
           }
           state.data.posts[i][1].trends[tr] = newTrend.slice(0, -1);
+          console.log(newTrend);
         }
 
         // Content warnings such as NSFW and Spoilers
