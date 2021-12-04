@@ -248,9 +248,7 @@ export default function Trends() {
           state.data.posts[i][1].urlToImage !== "" &&
           state.data.posts[i][1].urlToImage !== "default" &&
           state.data.posts[i][1].urlToImage !== "self" &&
-          state.data.posts[i][1].urlToImage !== "image" &&
-          state.data.posts[i][1].urlToImage !== "nsfw" &&
-          state.data.posts[i][1].urlToImage !== "spoiler";
+          state.data.posts[i][1].urlToImage !== "image";
 
         // DOM for "trending with" section
         let trendingWith = [];
