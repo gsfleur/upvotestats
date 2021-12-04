@@ -242,29 +242,6 @@ export default function Trends() {
         let hours = Math.abs(firstDate - secondDate);
         hours /= 60 * 60 * 1000;
 
-        if (state.data.posts[i][1].urlDest !== undefined) {
-          // Default NSFW warning img
-          if (state.data.posts[i][1].urlToImage === "nsfw")
-            state.data.posts[i][1].urlToImage = "nsfwIcon.png";
-
-          // Default Spoiler warning img
-          if (state.data.posts[i][1].urlToImage === "spoiler")
-            state.data.posts[i][1].urlToImage = "spoilerIcon.png";
-
-          // Default img for tweets if og:image not found
-          if (
-            state.data.posts[i][1].urlToImage === "default" ||
-            state.data.posts[i][1].urlToImage === ""
-          ) {
-            // Twitter img
-            if (state.data.posts[i][1].urlDest.includes("twitter.com"))
-              state.data.posts[i][1].urlToImage = "twitterIcon.png";
-            // Instagram Img
-            if (state.data.posts[i][1].urlDest.includes("instagram.com"))
-              state.data.posts[i][1].urlToImage = "instagramIcon.png";
-          }
-        }
-
         // Determine whether to show image
         let loadableImg =
           state.data.posts[i][1].urlToImage !== null &&
