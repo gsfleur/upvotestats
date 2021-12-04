@@ -265,16 +265,6 @@ export default function Trends() {
           }
         }
 
-        // Set image to website favicon if possible
-        if (state.data.posts[i][1].urlToImage === "default") {
-          if (state.data.posts[i][1].urlDest !== undefined) {
-            state.data.posts[i][1].urlToImage =
-              "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=" +
-              state.data.posts[i][1].urlDest +
-              "&size=128";
-          }
-        }
-
         // Determine whether to show image
         let loadableImg =
           state.data.posts[i][1].urlToImage !== null &&
@@ -284,17 +274,6 @@ export default function Trends() {
           state.data.posts[i][1].urlToImage !== "image" &&
           state.data.posts[i][1].urlToImage !== "nsfw" &&
           state.data.posts[i][1].urlToImage !== "spoiler";
-
-        // Capitalizing the first letter of each word in trending phrases
-        for (let tr = 0; tr < state.data.posts[i][1].trends.length; tr++) {
-          let newTrend = "";
-          let parts = state.data.posts[i][1].trends[tr].split(" ");
-          for (let t = 0; t < parts.length; t++) {
-            newTrend +=
-              parts[t].charAt(0).toUpperCase() + parts[t].slice(1) + " ";
-          }
-          state.data.posts[i][1].trends[tr] = newTrend.slice(0, -1);
-        }
 
         // DOM for "trending with" section
         let trendingWith = [];
@@ -328,35 +307,6 @@ export default function Trends() {
           );
         }
 
-        // Text of the post
-        let text = state.data.posts[i][1].text;
-        let textParts = text.split("\n");
-        let newText = "";
-
-        // Removing links from text
-        let removeText = ["www", "https", "http", "*"];
-        if (text !== undefined) {
-          for (let t = 0; t < textParts.length; t++) {
-            let allow = true;
-            for (let r = 0; r < removeText.length; r++) {
-              if (textParts[t].includes(removeText[r])) allow = false;
-              // Removing stray html encodings
-              if (textParts[t].startsWith("&") && textParts[t].endsWith(";"))
-                allow = false;
-
-              // Remove words that don't have a letter or number
-              if (
-                textParts[t].match(".*[a-zA-Z].*") === null &&
-                textParts[t].match(".*[0-9].*") === null
-              ) {
-                allow = false;
-              }
-            }
-
-            if (allow === true) newText += textParts[t] + " ";
-          }
-        }
-
         // Determine if title/text has a really long word
         let containsLongWord = false;
         let titleParts = state.data.posts[i][1].title.trim().split(/\s+/);
@@ -366,10 +316,13 @@ export default function Trends() {
             break;
           }
         }
-        let newTextParts = newText.substring(0, 180).trim().split(/\s+/);
+        let textParts = state.data.posts[i][1].text
+          .substring(0, 180)
+          .trim()
+          .split(/\s+/);
         if (!containsLongWord) {
-          for (let t = 0; t < newTextParts.length; t++) {
-            if (newTextParts[t].length > 21) {
+          for (let t = 0; t < textParts.length; t++) {
+            if (textParts[t].length > 21) {
               containsLongWord = true;
               break;
             }
@@ -644,7 +597,7 @@ export default function Trends() {
                   </div>
                 )}
 
-                {newText.length > 0 && (
+                {state.data.posts[i][1].text.length > 0 && (
                   <div
                     style={{
                       fontSize: "13px",
@@ -654,21 +607,21 @@ export default function Trends() {
                   >
                     {!state.expandedPosts.includes(i) && (
                       <span>
-                        {newText.substring(0, 160)}
-                        {newText.length > 160 && (
+                        {state.data.posts[i][1].text.substring(0, 160)}
+                        {state.data.posts[i][1].text.length > 160 && (
                           <span>... [click text to read more]</span>
                         )}
                       </span>
                     )}
                     {state.expandedPosts.includes(i) && (
                       <span>
-                        {newText}
+                        {state.data.posts[i][1].text}
                         {percentUpvoted}
                       </span>
                     )}
                   </div>
                 )}
-                {newText.length === 0 && (
+                {state.data.posts[i][1].text.length === 0 && (
                   <div
                     style={{
                       fontSize: "13px",
