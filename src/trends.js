@@ -282,7 +282,7 @@ export default function Trends() {
           );
         }
 
-        // Determine if title/text has a really long word
+        // Determine if title has a really long word
         let containsLongWord = false;
         let titleParts = state.data.posts[i][1].title.trim().split(/\s+/);
         for (let t = 0; t < titleParts.length; t++) {
@@ -291,10 +291,8 @@ export default function Trends() {
             break;
           }
         }
-        let textParts = state.data.posts[i][1].text
-          .substring(0, 180)
-          .trim()
-          .split(/\s+/);
+        // Determine if text has a really long word
+        let textParts = state.data.posts[i][1].text.trim().split(/\s+/);
         if (!containsLongWord) {
           for (let t = 0; t < textParts.length; t++) {
             if (textParts[t].length > 21) {
@@ -304,15 +302,24 @@ export default function Trends() {
           }
         }
 
-        // Default post/img body css
+        // Default post img body css
         let imgBodyCSS = {
           display: "inline-block",
           width: "100%",
           marginTop: "5px",
         };
+        // Default post text body css
+        let textBodyCSS = {
+          fontSize: "13px",
+          marginTop: "5px",
+          color: "silver",
+        };
 
-        // Break by letter if word is long (long links or words)
-        if (containsLongWord) imgBodyCSS["wordBreak"] = "break-all";
+        // Break by letter if word is very long (long links or words)
+        if (containsLongWord) {
+          imgBodyCSS["wordBreak"] = "break-all";
+          textBodyCSS["wordBreak"] = "break-all";
+        }
 
         // Image Source
         let imgSource = state.data.posts[i][1].redditMediaDomain
@@ -573,13 +580,7 @@ export default function Trends() {
                 )}
 
                 {state.data.posts[i][1].text.length > 0 && (
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      marginTop: "5px",
-                      color: "silver",
-                    }}
-                  >
+                  <div style={textBodyCSS}>
                     {!state.expandedPosts.includes(i) && (
                       <span>
                         {state.data.posts[i][1].text.substring(0, 160)}
