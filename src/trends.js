@@ -422,6 +422,13 @@ export default function Trends() {
         // Description of posts
         let author = (
           <span>
+            {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
+            {hours > 24 && hours <= 48 && <span>1d ago</span>}
+            {hours > 48 && diffDays < 7 && <span>{diffDays}d ago</span>}
+            {diffDays >= 7 && diffDays < 14 && <span>1w ago</span>}
+            {diffDays >= 14 && diffDays < 21 && <span>2w ago</span>}
+            {diffDays >= 21 && diffDays < 28 && <span>3w ago</span>}
+            {diffDays >= 28 && diffDays < 35 && <span>1m ago</span>} by{" "}
             <a
               className="searchLink2"
               href={"https://www.reddit.com/u/" + state.data.posts[i][1].author}
@@ -429,14 +436,7 @@ export default function Trends() {
               target="_blank"
             >
               {state.data.posts[i][1].author}
-            </a>{" "}
-            posted {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
-            {hours > 24 && hours <= 48 && <span>1d ago</span>}
-            {hours > 48 && diffDays < 7 && <span>{diffDays}d ago</span>}
-            {diffDays >= 7 && diffDays < 14 && <span>1w ago</span>}
-            {diffDays >= 14 && diffDays < 21 && <span>2w ago</span>}
-            {diffDays >= 21 && diffDays < 28 && <span>3w ago</span>}
-            {diffDays >= 28 && diffDays < 35 && <span>1m ago</span>}
+            </a>
             <div style={{ float: "right", marginRight: "20px" }}>
               {threadLinkDOM}
             </div>
@@ -447,7 +447,7 @@ export default function Trends() {
         let percentUpvoted = (
           <div
             style={{
-              float: "right",
+              float: "left",
               fontSize: "13px",
               color: "gray",
             }}
@@ -764,9 +764,7 @@ export default function Trends() {
                               )}
                             <br />
                             <br />
-                            <div style={{ float: "left" }}>
-                              {percentUpvoted}
-                            </div>
+                            {percentUpvoted}
                             <div style={{ float: "right" }}>
                               {threadLinkDOM}
                             </div>
@@ -986,7 +984,6 @@ export default function Trends() {
                   <div
                     style={{
                       fontSize: "12px",
-                      marginTop: "-5px",
                       color: "gray",
                     }}
                   >
