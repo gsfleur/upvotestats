@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 export default function Trends() {
   window.document.title = "Trends on Reddit - Upvote Stats";
@@ -24,6 +25,7 @@ export default function Trends() {
     funnyData: undefined,
     sportData: undefined,
     expandedPosts: [],
+    showOptions: false,
   });
 
   useEffect(() => {
@@ -1246,69 +1248,95 @@ export default function Trends() {
                 )}
               </div>
             </div>
-
             <div className="centering">
               <div
                 style={{
-                  fontSize: "12px",
-                  color: "gray",
+                  fontSize: "16px",
+                  color: "gainsboro",
                   marginTop: "0px",
                   marginBottom: "5px",
                   width: "90%",
                 }}
               >
-                <FormControl focused variant="standard" htmlFor="selectDate">
-                  <InputLabel variant="standard">Date</InputLabel>
-                  <NativeSelect
-                    defaultValue={state.sortDate}
-                    className={classes.root}
-                    onChange={handleTimeChange}
-                    IconComponent={ExpandMoreIcon}
-                    id="selectDate"
-                  >
-                    <option value={"today"} style={{ color: "black" }}>
-                      Today
-                    </option>
-                    <option value={"week"} style={{ color: "black" }}>
-                      Week
-                    </option>
-                    <option value={"month"} style={{ color: "black" }}>
-                      Month
-                    </option>
-                  </NativeSelect>
-                </FormControl>
-                <FormControl
-                  focused
-                  variant="standard"
-                  style={{ marginLeft: "20px" }}
+                <b>World Wide Trends</b>
+                <div
+                  style={{ float: "right" }}
+                  onClick={() =>
+                    setState({
+                      ...state,
+                      showOptions: state.showOptions ? false : true,
+                    })
+                  }
                 >
-                  <InputLabel variant="standard" htmlFor="selectSort">
-                    Sort
-                  </InputLabel>
-                  <NativeSelect
-                    defaultValue={state.sortBy}
-                    className={classes.root}
-                    onChange={handleSortChange}
-                    IconComponent={ExpandMoreIcon}
-                    id="selectSort"
-                    width="100%"
-                  >
-                    <option value={"hot"} style={{ color: "black" }}>
-                      Popular
-                    </option>
-                    <option value={"coins"} style={{ color: "black" }}>
-                      Coins
-                    </option>
-                    <option value={"comments"} style={{ color: "black" }}>
-                      Comments
-                    </option>
-                    <option value={"downvotes"} style={{ color: "black" }}>
-                      Downvote Ratio
-                    </option>
-                  </NativeSelect>
-                </FormControl>
+                  <SettingsOutlinedIcon fontSize="medium" />
+                </div>
               </div>
             </div>
+
+            {state.showOptions && (
+              <div className="centering">
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: "gray",
+                    marginTop: "0px",
+                    marginBottom: "5px",
+                    width: "90%",
+                  }}
+                >
+                  <FormControl focused variant="standard" htmlFor="selectDate">
+                    <InputLabel variant="standard">Date</InputLabel>
+                    <NativeSelect
+                      defaultValue={state.sortDate}
+                      className={classes.root}
+                      onChange={handleTimeChange}
+                      IconComponent={ExpandMoreIcon}
+                      id="selectDate"
+                    >
+                      <option value={"today"} style={{ color: "black" }}>
+                        Today
+                      </option>
+                      <option value={"week"} style={{ color: "black" }}>
+                        Week
+                      </option>
+                      <option value={"month"} style={{ color: "black" }}>
+                        Month
+                      </option>
+                    </NativeSelect>
+                  </FormControl>
+                  <FormControl
+                    focused
+                    variant="standard"
+                    style={{ marginLeft: "20px" }}
+                  >
+                    <InputLabel variant="standard" htmlFor="selectSort">
+                      Sort
+                    </InputLabel>
+                    <NativeSelect
+                      defaultValue={state.sortBy}
+                      className={classes.root}
+                      onChange={handleSortChange}
+                      IconComponent={ExpandMoreIcon}
+                      id="selectSort"
+                      width="100%"
+                    >
+                      <option value={"hot"} style={{ color: "black" }}>
+                        Popular
+                      </option>
+                      <option value={"coins"} style={{ color: "black" }}>
+                        Coins
+                      </option>
+                      <option value={"comments"} style={{ color: "black" }}>
+                        Comments
+                      </option>
+                      <option value={"downvotes"} style={{ color: "black" }}>
+                        Downvote Ratio
+                      </option>
+                    </NativeSelect>
+                  </FormControl>
+                </div>
+              </div>
+            )}
             {postListDOM}
 
             {state.loaded === true && postListDOM.length === 0 && (
