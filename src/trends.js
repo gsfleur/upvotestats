@@ -278,8 +278,10 @@ export default function Trends() {
         // Load trends until width would be too large to fit all in one line
         for (
           let t = 1;
-          t < trends.length &&
-          lengthLimit < Math.min(650, window.innerWidth) - 120;
+          state.expandedPosts.includes(i)
+            ? t < trends.length
+            : t < trends.length &&
+              lengthLimit < Math.min(650, window.innerWidth) - 120;
           t++
         ) {
           lengthLimit += trends[t].length * 13;
@@ -292,6 +294,7 @@ export default function Trends() {
                 padding: "5px",
                 float: "left",
                 marginRight: "5px",
+                marginTop: "10px",
                 backgroundImage:
                   "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
               }}
@@ -427,7 +430,7 @@ export default function Trends() {
             >
               {state.data.posts[i][1].author}
             </a>{" "}
-            {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
+            posted {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
             {hours > 24 && hours <= 48 && <span>1d ago</span>}
             {hours > 48 && diffDays < 7 && <span>{diffDays}d ago</span>}
             {diffDays >= 7 && diffDays < 14 && <span>1w ago</span>}
@@ -573,7 +576,8 @@ export default function Trends() {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    {"r/" + state.data.posts[i][1].subreddit}
+                    {state.data.posts[i][1].subreddit.charAt(0).toUpperCase() +
+                      state.data.posts[i][1].subreddit.slice(1)}
                   </a>{" "}
                   &bull; {numToString(state.data.posts[i][1].upvotes)} &uarr;
                   &bull;{" "}
@@ -909,7 +913,7 @@ export default function Trends() {
                             className="postDate"
                             style={{
                               fontSize: "14px",
-                              marginBottom: "20px",
+                              marginBottom: "30px",
                               color: "gainsboro",
                               float: "left",
                               width: "calc(100% - 120px)",
@@ -982,7 +986,7 @@ export default function Trends() {
                   <div
                     style={{
                       fontSize: "12px",
-                      marginTop: "5px",
+                      marginTop: "-5px",
                       color: "gray",
                     }}
                   >
@@ -1299,10 +1303,10 @@ export default function Trends() {
                       Coins
                     </option>
                     <option value={"comments"} style={{ color: "black" }}>
-                      Replies
+                      Comments
                     </option>
                     <option value={"downvotes"} style={{ color: "black" }}>
-                      Disputed
+                      Downvote Ratio
                     </option>
                   </NativeSelect>
                 </FormControl>
