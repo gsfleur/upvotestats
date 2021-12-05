@@ -1274,17 +1274,22 @@ export default function Trends() {
                     })
                   }
                 >
-                  <div style={{ float: "right", marginTop: "-2px" }}>
-                    <SortRoundedIcon fontSize="small" />
-                  </div>
                   <div
                     style={{
                       float: "right",
                       fontWeight: "bold",
-                      marginRight: "5px",
                     }}
                   >
                     SORT
+                    <div
+                      style={{
+                        float: "right",
+                        marginTop: "-2.5px",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      <SortRoundedIcon fontSize="small" />
+                    </div>
                   </div>
                 </button>
               </div>
