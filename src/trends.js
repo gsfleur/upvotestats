@@ -1101,7 +1101,7 @@ export default function Trends() {
                   style={{
                     margin: "0px",
                     width: "100%",
-                    height: "105px",
+                    height: state.showOptions ? "138px" : "78px",
                     border: "1.5px solid #292929",
                     borderRadius: "20px",
                   }}
