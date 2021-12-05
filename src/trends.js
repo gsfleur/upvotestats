@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import SortRoundedIcon from "@mui/icons-material/SortRounded";
 
 export default function Trends() {
   window.document.title = "Trends on Reddit - Upvote Stats";
@@ -260,6 +260,12 @@ export default function Trends() {
           // Custom Instagram Img
           if (state.data.posts[i][1].urlDest.includes("instagram.com"))
             state.data.posts[i][1].urlToImage = "instagramIcon.png";
+          // Custom Instagram Img
+          if (
+            state.data.posts[i][1].urlDest.includes("streamable.com") &&
+            state.data.posts[i][1].urlToImage === "image"
+          )
+            state.data.posts[i][1].urlToImage = "streamableIcon.png";
         }
 
         // Determine whether to show image
@@ -1259,8 +1265,8 @@ export default function Trends() {
                 }}
               >
                 <b>World Wide Trends</b>
-                <div
-                  style={{ float: "right" }}
+                <button
+                  className="sortButton2"
                   onClick={() =>
                     setState({
                       ...state,
@@ -1268,8 +1274,19 @@ export default function Trends() {
                     })
                   }
                 >
-                  <SettingsOutlinedIcon fontSize="medium" />
-                </div>
+                  <div style={{ float: "right", marginTop: "-2px" }}>
+                    <SortRoundedIcon fontSize="small" />
+                  </div>
+                  <div
+                    style={{
+                      float: "right",
+                      fontWeight: "bold",
+                      marginRight: "5px",
+                    }}
+                  >
+                    SORT
+                  </div>
+                </button>
               </div>
             </div>
 

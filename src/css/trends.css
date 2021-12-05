@@ -94,6 +94,19 @@
   border: 1px solid #222222;
 }
 
+.sortButton2 {
+  border: none;
+  background: none;
+  text-decoration: none;
+  font-size: 13px;
+  float: right;
+  color: silver;
+  border-radius: 10px;
+}
+.sortButton2:hover {
+  color: dodgerblue;
+}
+
 .reloadButton {
   border: none;
   background: none;
