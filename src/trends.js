@@ -252,18 +252,12 @@ export default function Trends() {
           if (state.data.posts[i][1].urlToImage === "spoiler")
             state.data.posts[i][1].urlToImage = "spoilerIcon.png";
 
-          // Default img for tweets if og:image not found
-          if (
-            state.data.posts[i][1].urlToImage === "default" ||
-            state.data.posts[i][1].urlToImage === ""
-          ) {
-            // Twitter img
-            if (state.data.posts[i][1].urlDest.includes("twitter.com"))
-              state.data.posts[i][1].urlToImage = "twitterIcon.png";
-            // Instagram Img
-            if (state.data.posts[i][1].urlDest.includes("instagram.com"))
-              state.data.posts[i][1].urlToImage = "instagramIcon.png";
-          }
+          // Custom Twitter img
+          if (state.data.posts[i][1].urlDest.includes("twitter.com"))
+            state.data.posts[i][1].urlToImage = "twitterIcon.png";
+          // Custom Instagram Img
+          if (state.data.posts[i][1].urlDest.includes("instagram.com"))
+            state.data.posts[i][1].urlToImage = "instagramIcon.png";
         }
 
         // Determine whether to show image
@@ -433,14 +427,16 @@ export default function Trends() {
             >
               {state.data.posts[i][1].author}
             </a>{" "}
-            posted {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
+            {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
             {hours > 24 && hours <= 48 && <span>1d ago</span>}
             {hours > 48 && diffDays < 7 && <span>{diffDays}d ago</span>}
             {diffDays >= 7 && diffDays < 14 && <span>1w ago</span>}
             {diffDays >= 14 && diffDays < 21 && <span>2w ago</span>}
             {diffDays >= 21 && diffDays < 28 && <span>3w ago</span>}
-            {diffDays >= 28 && diffDays < 35 && <span>1m ago</span>}{" "}
-            {threadLinkDOM}
+            {diffDays >= 28 && diffDays < 35 && <span>1m ago</span>}
+            <div style={{ float: "right", marginRight: "20px" }}>
+              {threadLinkDOM}
+            </div>
           </span>
         );
 
@@ -485,6 +481,19 @@ export default function Trends() {
         if (gfycat) {
           let parts = state.data.posts[i][1].urlDest.split("/");
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
+        }
+
+        // Whether post is imgur
+        let imgur =
+          state.data.posts[i][1].urlDest !== undefined &&
+          state.data.posts[i][1].urlDest.includes("imgur.com");
+
+        // Getting imgur embed link
+        let imgurLink = "";
+        if (imgur) {
+          let parts = state.data.posts[i][1].urlDest.split("/");
+          parts = parts[parts.length - 1].split(".");
+          imgurLink = "https://imgur.com/" + parts[0] + "/embed";
         }
 
         // Content warnings such as NSFW and Spoilers
@@ -618,7 +627,9 @@ export default function Trends() {
                     {state.expandedPosts.includes(i) && (
                       <span>
                         {state.data.posts[i][1].text}
-                        {percentUpvoted}
+                        <div style={{ marginRight: "20px" }}>
+                          {percentUpvoted}
+                        </div>
                       </span>
                     )}
                   </div>
@@ -632,10 +643,13 @@ export default function Trends() {
                     }}
                   >
                     {state.expandedPosts.includes(i) && !loadableImg && (
-                      <span>
-                        OP only provided a title for this post
+                      <div
+                        style={{
+                          marginRight: "20px",
+                        }}
+                      >
                         {percentUpvoted}
-                      </span>
+                      </div>
                     )}
                   </div>
                 )}
@@ -746,8 +760,12 @@ export default function Trends() {
                               )}
                             <br />
                             <br />
-                            {percentUpvoted}
-                            <div style={{ float: "left" }}>{threadLinkDOM}</div>
+                            <div style={{ float: "left" }}>
+                              {percentUpvoted}
+                            </div>
+                            <div style={{ float: "right" }}>
+                              {threadLinkDOM}
+                            </div>
                           </div>
                           <div
                             style={{
@@ -757,7 +775,8 @@ export default function Trends() {
                           >
                             {!state.data.posts[i][1].isVideo &&
                               !streamable &&
-                              !gfycat && (
+                              !gfycat &&
+                              !imgur && (
                                 <div className="centering">
                                   <img
                                     src={imgSource}
@@ -845,6 +864,30 @@ export default function Trends() {
                                 ></iframe>
                               </div>
                             )}
+                            {imgur && (
+                              <div
+                                style={{
+                                  position: "relative",
+                                  paddingBottom: "100%",
+                                }}
+                              >
+                                <iframe
+                                  src={imgurLink}
+                                  frameBorder="0"
+                                  width="100%"
+                                  height="100%"
+                                  title={
+                                    state.data.posts[i][1].title + "-imgur-" + i
+                                  }
+                                  style={{
+                                    position: "absolute",
+                                    top: "0",
+                                    left: "0",
+                                  }}
+                                  allowFullScreen
+                                ></iframe>
+                              </div>
+                            )}
                           </div>
                         </span>
                       )}
@@ -886,7 +929,7 @@ export default function Trends() {
                           style={{
                             position: "absolute",
                             bottom: "10px",
-                            marginLeft: "110px",
+                            right: "20px",
                           }}
                         >
                           {threadLinkDOM}
