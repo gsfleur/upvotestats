@@ -374,6 +374,20 @@ export default function Trends() {
                 e.target.style.color = "DodgerBlue";
               }}
             >
+              <img
+                id="threadLink"
+                src={
+                  "https://www.google.com/s2/favicons?sz=16&domain_url=" +
+                  state.data.posts[i][1].urlDest
+                }
+                alt={"favicon icon"}
+                style={{
+                  marginRight: "5px",
+                  marginTop: "3px",
+                  float: "left",
+                  borderRadius: "2px",
+                }}
+              />
               {destLink}
               <img
                 id="threadLink"
