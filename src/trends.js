@@ -1251,7 +1251,7 @@ export default function Trends() {
                   width: "90%",
                 }}
               >
-                <b>World Wide Trends</b>
+                <b>Trends on Reddit</b>
                 <button
                   className="sortButton2"
                   onClick={() =>
