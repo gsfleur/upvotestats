@@ -383,7 +383,6 @@ export default function Trends() {
                 alt={"favicon icon"}
                 style={{
                   marginRight: "5px",
-                  marginTop: "3px",
                   float: "left",
                   borderRadius: "2px",
                 }}
