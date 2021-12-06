@@ -253,19 +253,6 @@ export default function Trends() {
           // Default Spoiler warning img
           if (state.data.posts[i][1].urlToImage === "spoiler")
             state.data.posts[i][1].urlToImage = "spoilerIcon.png";
-
-          // Custom Twitter img
-          if (state.data.posts[i][1].urlDest.includes("twitter.com"))
-            state.data.posts[i][1].urlToImage = "twitterIcon.png";
-          // Custom Instagram Img
-          if (state.data.posts[i][1].urlDest.includes("instagram.com"))
-            state.data.posts[i][1].urlToImage = "instagramIcon.png";
-          // Custom Instagram Img
-          if (
-            state.data.posts[i][1].urlDest.includes("streamable.com") &&
-            state.data.posts[i][1].urlToImage === "image"
-          )
-            state.data.posts[i][1].urlToImage = "streamableIcon.png";
         }
 
         // Determine whether to show image
