@@ -221,19 +221,10 @@ export default function Trends() {
 
         // DOM for "trending with" section
         let trendingWith = [];
-        let lengthLimit = 0;
         const trends = posts[i][1].trends;
 
         // Load trends until width would be too large to fit all in one line
-        for (
-          let t = 1;
-          state.expandedPosts.includes(i)
-            ? t < trends.length
-            : t < trends.length &&
-              lengthLimit < Math.min(650, window.innerWidth) - 120;
-          t++
-        ) {
-          lengthLimit += trends[t].length * 13;
+        for (let t = 1; t < trends.length; t++) {
           trendingWith.push(
             <div
               style={{
@@ -900,9 +891,11 @@ export default function Trends() {
                     style={{
                       fontSize: "12px",
                       color: "gray",
+                      overflow: "hidden",
+                      height: state.expandedPosts.includes(i) ? "100%" : "38px",
                     }}
                   >
-                    <span>{trendingWith}</span>
+                    {trendingWith}
                   </div>
                 </div>
               )}
