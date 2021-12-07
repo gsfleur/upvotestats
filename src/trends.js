@@ -23,7 +23,7 @@ export default function Trends() {
     allData: undefined,
     newsData: undefined,
     funnyData: undefined,
-    sportData: undefined,
+    sportsData: undefined,
     expandedPosts: [],
     showOptions: false,
   });
@@ -32,84 +32,44 @@ export default function Trends() {
     let componentMounted = true;
     if (state.loaded === false) {
       (async () => {
+        // Names of all categories
+        const categories = ["all", "news", "funny", "sports"];
+
         // Date when starting request
-        let beforeDate = new Date();
-        // Loading data from backend
-        await axios
-          .get(
-            process.env.REACT_APP_BACKEND +
-              "posts/all?sort=" +
-              state.sortBy +
-              "&time=" +
-              state.sortDate
-          )
-          .then((res) => {
-            state.allData = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-            state.error = true;
-          });
-        await axios
-          .get(
-            process.env.REACT_APP_BACKEND +
-              "posts/news?sort=" +
-              state.sortBy +
-              "&time=" +
-              state.sortDate
-          )
-          .then((res) => {
-            state.newsData = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-            state.error = true;
-          });
-        await axios
-          .get(
-            process.env.REACT_APP_BACKEND +
-              "posts/funny?sort=" +
-              state.sortBy +
-              "&time=" +
-              state.sortDate
-          )
-          .then((res) => {
-            state.funnyData = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-            state.error = true;
-          });
-        await axios
-          .get(
-            process.env.REACT_APP_BACKEND +
-              "posts/sports?sort=" +
-              state.sortBy +
-              "&time=" +
-              state.sortDate
-          )
-          .then((res) => {
-            state.sportData = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-            state.error = true;
-          });
+        const beforeDate = new Date();
+
+        // Loading all category data from backend
+        categories.map(async (category) => {
+          await axios
+            .get(
+              process.env.REACT_APP_BACKEND +
+                "posts/" +
+                category +
+                "?sort=" +
+                state.sortBy +
+                "&time=" +
+                state.sortDate
+            )
+            .then((res) => {
+              state[category + "Data"] = res.data;
+            })
+            .catch((err) => {
+              console.log(err);
+              state.error = true;
+            });
+        });
+
         // Date after request is finished
-        let afterDate = new Date();
+        const afterDate = new Date();
 
         // Update state
         if (componentMounted) {
           // Delay so load keyshine can complete one full pass (looks smoother/cleaner)
           setTimeout(() => {
-            let data = state.allData;
-            if (state.sort === "news") data = state.newsData;
-            if (state.sort === "funny") data = state.funnyData;
-            if (state.sort === "sports") data = state.sportData;
             setState({
               ...state,
               loaded: true,
-              data: data,
+              data: state[state.sort + "Data"],
             });
           }, Math.min(500, Math.max(0, 500 - (afterDate - beforeDate))));
         }
@@ -143,12 +103,9 @@ export default function Trends() {
 
   // Handle Requst Post Removal Event
   const handleReport = (event) => {
-    let id = event.target.id.split("-")[1];
-    let key =
-      "upvotestats-hidden-" +
-      new Date().getMonth() +
-      "-" +
-      new Date().getFullYear();
+    const d = new Date();
+    const id = event.target.id.split("-")[1];
+    const key = "upvotestats-hidden-" + d.getMonth() + "-" + d.getFullYear();
 
     // Initializing stored key value pair
     if (localStorage.getItem(key) === null) localStorage.setItem(key, "");
@@ -196,30 +153,28 @@ export default function Trends() {
     },
   });
 
+  // Material UI Styling
   const classes = useStyles();
 
   let postListDOM = []; // DOM for posts
   let postLinks = []; // ids of all posts
-  if (state.loaded === true && state.error === false) {
+
+  // If data was loaded properly
+  if (state.loaded && !state.error) {
+    const posts = state.data.posts;
     // Creating DOM for posts
-    if (state.data.posts !== undefined) {
-      for (
-        let i = 0;
-        i < state.data.posts.length && postListDOM.length < 30;
-        i++
-      ) {
+    if (posts !== undefined) {
+      for (let i = 0; i < posts.length && postListDOM.length < 30; i++) {
         // Skip deleted posts
-        if (state.data.posts[i][1].text === "[deleted]") continue;
+        if (posts[i][1].text === "[deleted]") continue;
 
         // Skip potential duplicates
-        if (postLinks.includes(state.data.posts[i][1].url)) continue;
+        if (postLinks.includes(posts[i][1].url)) continue;
 
         // Key of hidden posts requested user (new key every month)
-        let removeKey =
-          "upvotestats-hidden-" +
-          new Date().getMonth() +
-          "-" +
-          new Date().getFullYear();
+        const d = new Date();
+        const removeKey =
+          "upvotestats-hidden-" + d.getMonth() + "-" + d.getFullYear();
 
         // Initializing stored key value pair
         if (localStorage.getItem(removeKey) === null)
@@ -230,45 +185,44 @@ export default function Trends() {
         removedList = removedList.filter((url) => url.includes("reddit.com"));
 
         // Skip posts the user has requested to remove
-        if (removedList.includes(state.data.posts[i][1].url)) continue;
+        if (removedList.includes(posts[i][1].url)) continue;
 
         // Date since post published
         const timeInDay = 24 * 60 * 60 * 1000;
-        const firstDate = new Date(state.data.posts[i][1].publishedAt);
+        const firstDate = new Date(posts[i][1].publishedAt);
         const secondDate = new Date();
         const diffDays = Math.round(
           Math.abs((firstDate - secondDate) / timeInDay)
         );
 
         // hours since post
-        let hours = Math.abs(firstDate - secondDate);
-        hours /= 60 * 60 * 1000;
+        const hours = Math.abs(firstDate - secondDate) / (60 * 60 * 1000);
 
         // Custom images for thumbnail if theres a link
-        if (state.data.posts[i][1].urlDest !== undefined) {
+        if (posts[i][1].urlDest !== undefined) {
           // Default NSFW warning img
-          if (state.data.posts[i][1].urlToImage === "nsfw")
-            state.data.posts[i][1].urlToImage = "nsfwIcon.png";
+          if (posts[i][1].urlToImage === "nsfw")
+            posts[i][1].urlToImage = "nsfwIcon.png";
 
           // Default Spoiler warning img
-          if (state.data.posts[i][1].urlToImage === "spoiler")
-            state.data.posts[i][1].urlToImage = "spoilerIcon.png";
+          if (posts[i][1].urlToImage === "spoiler")
+            posts[i][1].urlToImage = "spoilerIcon.png";
         }
 
         // Determine whether to show image
         let loadableImg =
-          state.data.posts[i][1].urlToImage !== null &&
-          state.data.posts[i][1].urlToImage !== "" &&
-          state.data.posts[i][1].urlToImage !== "default" &&
-          state.data.posts[i][1].urlToImage !== "self" &&
-          state.data.posts[i][1].urlToImage !== "nsfw" &&
-          state.data.posts[i][1].urlToImage !== "spoiler" &&
-          state.data.posts[i][1].urlToImage !== "image";
+          posts[i][1].urlToImage !== null &&
+          posts[i][1].urlToImage !== "" &&
+          posts[i][1].urlToImage !== "default" &&
+          posts[i][1].urlToImage !== "self" &&
+          posts[i][1].urlToImage !== "nsfw" &&
+          posts[i][1].urlToImage !== "spoiler" &&
+          posts[i][1].urlToImage !== "image";
 
         // DOM for "trending with" section
         let trendingWith = [];
-        let trends = state.data.posts[i][1].trends;
         let lengthLimit = 0;
+        const trends = posts[i][1].trends;
 
         // Load trends until width would be too large to fit all in one line
         for (
@@ -300,26 +254,6 @@ export default function Trends() {
           );
         }
 
-        // Determine if title has a really long word
-        let containsLongWord = false;
-        let titleParts = state.data.posts[i][1].title.trim().split(/\s+/);
-        for (let t = 0; t < titleParts.length; t++) {
-          if (titleParts[t].length > 21) {
-            containsLongWord = true;
-            break;
-          }
-        }
-        // Determine if text has a really long word
-        let textParts = state.data.posts[i][1].text.trim().split(/\s+/);
-        if (!containsLongWord) {
-          for (let t = 0; t < textParts.length; t++) {
-            if (textParts[t].length > 21) {
-              containsLongWord = true;
-              break;
-            }
-          }
-        }
-
         // Default post img body css
         let imgBodyCSS = {
           display: "inline-block",
@@ -333,19 +267,23 @@ export default function Trends() {
           color: "silver",
         };
 
+        // Arary of words in title and text
+        const titleParts = posts[i][1].title.trim().split(/\s+/);
+        const textParts = posts[i][1].text.trim().split(/\s+/);
+
         // Break by letter if word is very long (long links or words)
-        if (containsLongWord) {
+        if (hasLongWords(titleParts) || hasLongWords(textParts)) {
           imgBodyCSS["wordBreak"] = "break-all";
           textBodyCSS["wordBreak"] = "break-all";
         }
 
         // Image Source
-        let imgSource = state.data.posts[i][1].redditMediaDomain
-          ? state.data.posts[i][1].urlDest
-          : state.data.posts[i][1].urlToImage;
+        const imgSource = posts[i][1].redditMediaDomain
+          ? posts[i][1].urlDest
+          : posts[i][1].urlToImage;
 
-        // Link Destination String
-        let destLink = state.data.posts[i][1].urlDest;
+        // Link Destination as String
+        let destLink = posts[i][1].urlDest;
         if (destLink !== undefined) {
           destLink = destLink.replace("https://", "");
           destLink = destLink.replace("http://", "");
@@ -354,10 +292,10 @@ export default function Trends() {
         }
 
         // Destination Link DOM
-        let outLinkDOM = (
+        const outLinkDOM = (
           <div style={{ display: "inline-block", width: "100%" }}>
             <a
-              href={state.data.posts[i][1].urlDest}
+              href={posts[i][1].urlDest}
               target="_blank"
               rel="noreferrer"
               className="searchLink"
@@ -396,9 +334,9 @@ export default function Trends() {
         );
 
         // Reddit Post Link DOM
-        let threadLinkDOM = (
+        const threadLinkDOM = (
           <a
-            href={state.data.posts[i][1].url}
+            href={posts[i][1].url}
             target="_blank"
             rel="noreferrer"
             className="searchLink"
@@ -415,7 +353,7 @@ export default function Trends() {
         );
 
         // Description of posts
-        let author = (
+        const author = (
           <span>
             {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
             {hours > 24 && hours <= 48 && <span>1d ago</span>}
@@ -426,11 +364,11 @@ export default function Trends() {
             {diffDays >= 28 && diffDays < 35 && <span>1m ago</span>} by{" "}
             <a
               className="searchLink2"
-              href={"https://www.reddit.com/u/" + state.data.posts[i][1].author}
+              href={"https://www.reddit.com/u/" + posts[i][1].author}
               rel="noreferrer"
               target="_blank"
             >
-              {state.data.posts[i][1].author}
+              {posts[i][1].author}
             </a>
             <div style={{ float: "right", marginRight: "20px" }}>
               {threadLinkDOM}
@@ -439,7 +377,7 @@ export default function Trends() {
         );
 
         // Post Upvote Ratio DOM
-        let percentUpvoted = (
+        const percentUpvoted = (
           <div
             style={{
               float: "left",
@@ -448,56 +386,55 @@ export default function Trends() {
             }}
           >
             {Math.floor(
-              (100 * state.data.posts[i][1].upvotes) /
-                (Math.abs(state.data.posts[i][1].downvotes) +
-                  state.data.posts[i][1].upvotes)
+              (100 * posts[i][1].upvotes) /
+                (Math.abs(posts[i][1].downvotes) + posts[i][1].upvotes)
             )}
             % Upvoted
           </div>
         );
 
         // Whether post is streamable video link
-        let streamable =
-          state.data.posts[i][1].urlDest !== undefined &&
-          state.data.posts[i][1].urlDest.includes("streamable.com");
+        const streamable =
+          posts[i][1].urlDest !== undefined &&
+          posts[i][1].urlDest.includes("streamable.com");
 
         // Getting streamable embed link
         let streamableLink = "";
         if (streamable) {
-          let parts = state.data.posts[i][1].urlDest.split("/");
+          const parts = posts[i][1].urlDest.split("/");
           streamableLink =
             "https://streamable.com/e/" + parts[parts.length - 1];
         }
 
         // Whether post is gfycat gif
-        let gfycat =
-          state.data.posts[i][1].urlDest !== undefined &&
-          state.data.posts[i][1].urlDest.includes("gfycat.com");
+        const gfycat =
+          posts[i][1].urlDest !== undefined &&
+          posts[i][1].urlDest.includes("gfycat.com");
 
         // Getting gfycat embed link
         let gfycatLink = "";
         if (gfycat) {
-          let parts = state.data.posts[i][1].urlDest.split("/");
+          const parts = posts[i][1].urlDest.split("/");
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
         }
 
         // Whether post is imgur
-        let imgur =
-          state.data.posts[i][1].urlDest !== undefined &&
-          state.data.posts[i][1].urlDest.includes("imgur.com");
+        const imgur =
+          posts[i][1].urlDest !== undefined &&
+          posts[i][1].urlDest.includes("imgur.com");
 
         // Getting imgur embed link
         let imgurLink = "";
         if (imgur) {
-          let parts = state.data.posts[i][1].urlDest.split("/");
+          let parts = posts[i][1].urlDest.split("/");
           parts = parts[parts.length - 1].split(".");
           imgurLink = "https://imgur.com/" + parts[0] + "/embed";
         }
 
         // Content warnings such as NSFW and Spoilers
-        let contentWarnings = (
+        const contentWarnings = (
           <span>
-            {state.data.posts[i][1].nsfw === true && (
+            {posts[i][1].nsfw === true && (
               <span
                 style={{
                   color: "indianred",
@@ -511,7 +448,7 @@ export default function Trends() {
                 NSFW
               </span>
             )}
-            {state.data.posts[i][1].urlToImage === "spoilerIcon.png" && (
+            {posts[i][1].urlToImage === "spoilerIcon.png" && (
               <span
                 style={{
                   color: "gray",
@@ -529,7 +466,7 @@ export default function Trends() {
         );
 
         // List of post links
-        postLinks.push(state.data.posts[i][1].url);
+        postLinks.push(posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
           <div
@@ -564,20 +501,15 @@ export default function Trends() {
                   {postListDOM.length + 1} &bull;{" "}
                   <a
                     className="searchLink"
-                    href={
-                      "https://www.reddit.com/r/" +
-                      state.data.posts[i][1].subreddit
-                    }
+                    href={"https://www.reddit.com/r/" + posts[i][1].subreddit}
                     rel="noreferrer"
                     target="_blank"
                   >
-                    {state.data.posts[i][1].subreddit.charAt(0).toUpperCase() +
-                      state.data.posts[i][1].subreddit.slice(1)}
+                    {posts[i][1].subreddit.charAt(0).toUpperCase() +
+                      posts[i][1].subreddit.slice(1)}
                   </a>{" "}
-                  &bull; {numToString(state.data.posts[i][1].upvotes)} &uarr;
-                  &bull;{" "}
-                  {numToString(Math.abs(state.data.posts[i][1].downvotes))}{" "}
-                  &darr;
+                  &bull; {numToString(posts[i][1].upvotes)} &uarr; &bull;{" "}
+                  {numToString(Math.abs(posts[i][1].downvotes))} &darr;
                   <div style={{ float: "right", display: "inline-block" }}>
                     <NativeSelect
                       disableUnderline
@@ -600,32 +532,32 @@ export default function Trends() {
                   </div>
                 </div>
 
-                {state.data.posts[i][1].trends.length > 0 && (
+                {posts[i][1].trends.length > 0 && (
                   <div style={{ fontSize: "14px" }}>
-                    <b>{state.data.posts[i][1].trends[0]}</b>
+                    <b>{posts[i][1].trends[0]}</b>
                   </div>
                 )}
 
                 {!loadableImg && (
                   <div style={{ fontSize: "14px", marginTop: "5px" }}>
-                    {state.data.posts[i][1].title}
+                    {posts[i][1].title}
                     {contentWarnings}
                   </div>
                 )}
 
-                {state.data.posts[i][1].text.length > 0 && (
+                {posts[i][1].text.length > 0 && (
                   <div style={textBodyCSS}>
                     {!state.expandedPosts.includes(i) && (
                       <span>
-                        {state.data.posts[i][1].text.substring(0, 160)}
-                        {state.data.posts[i][1].text.length > 160 && (
+                        {posts[i][1].text.substring(0, 160)}
+                        {posts[i][1].text.length > 160 && (
                           <span>... [click text to read more]</span>
                         )}
                       </span>
                     )}
                     {state.expandedPosts.includes(i) && (
                       <span>
-                        {state.data.posts[i][1].text}
+                        {posts[i][1].text}
                         <div style={{ marginRight: "20px" }}>
                           {percentUpvoted}
                         </div>
@@ -633,7 +565,7 @@ export default function Trends() {
                     )}
                   </div>
                 )}
-                {state.data.posts[i][1].text.length === 0 && (
+                {posts[i][1].text.length === 0 && (
                   <div
                     style={{
                       fontSize: "13px",
@@ -680,28 +612,27 @@ export default function Trends() {
                       >
                         <a
                           href={
-                            "https://www.reddit.com/u/" +
-                            state.data.posts[i][1].author
+                            "https://www.reddit.com/u/" + posts[i][1].author
                           }
                           rel="noreferrer"
                           target="_blank"
                         >
-                          {state.data.posts[i][1].icon === "" && (
+                          {posts[i][1].icon === "" && (
                             <img
                               className="iconImg"
                               src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
-                              alt={state.data.posts[i][1].author + " icon"}
+                              alt={posts[i][1].author + " icon"}
                               onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = "missing.png";
                               }}
                             />
                           )}
-                          {state.data.posts[i][1].icon !== "" && (
+                          {posts[i][1].icon !== "" && (
                             <img
                               className="iconImg"
-                              src={state.data.posts[i][1].icon}
-                              alt={state.data.posts[i][1].author + " icon"}
+                              src={posts[i][1].icon}
+                              alt={posts[i][1].author + " icon"}
                               onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src = "missing.png";
@@ -720,13 +651,12 @@ export default function Trends() {
                           <a
                             className="searchLink2"
                             href={
-                              "https://www.reddit.com/u/" +
-                              state.data.posts[i][1].author
+                              "https://www.reddit.com/u/" + posts[i][1].author
                             }
                             rel="noreferrer"
                             target="_blank"
                           >
-                            {state.data.posts[i][1].author}
+                            {posts[i][1].author}
                           </a>{" "}
                           &bull;{" "}
                           {hours <= 24 && <span>{Math.floor(hours)}h</span>}
@@ -752,9 +682,9 @@ export default function Trends() {
                               width: "100%",
                             }}
                           >
-                            {state.data.posts[i][1].title}
-                            {!state.data.posts[i][1].redditMediaDomain &&
-                              state.data.posts[i][1].urlDest !== undefined && (
+                            {posts[i][1].title}
+                            {!posts[i][1].redditMediaDomain &&
+                              posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
                               )}
                             <br />
@@ -770,7 +700,7 @@ export default function Trends() {
                               height: "100%",
                             }}
                           >
-                            {!state.data.posts[i][1].isVideo &&
+                            {!posts[i][1].isVideo &&
                               !streamable &&
                               !gfycat &&
                               !imgur && (
@@ -791,10 +721,10 @@ export default function Trends() {
                                   />
                                 </div>
                               )}
-                            {state.data.posts[i][1].isVideo && (
+                            {posts[i][1].isVideo && (
                               <div className="centering">
                                 <ReactHlsPlayer
-                                  src={state.data.posts[i][1].media}
+                                  src={posts[i][1].media}
                                   muted={true}
                                   controls={true}
                                   loop={true}
@@ -802,7 +732,7 @@ export default function Trends() {
                                   id={"video" + i}
                                   className="postVideoStandard"
                                   height="100%"
-                                  poster={state.data.posts[i][1].urlToImage}
+                                  poster={posts[i][1].urlToImage}
                                 />
                               </div>
                             )}
@@ -821,11 +751,7 @@ export default function Trends() {
                                   width="100%"
                                   height="100%"
                                   allowFullScreen
-                                  title={
-                                    state.data.posts[i][1].title +
-                                    "-streamable-" +
-                                    i
-                                  }
+                                  title={posts[i][1].title + "-streamable-" + i}
                                   style={{
                                     width: "100%",
                                     height: "100%",
@@ -847,11 +773,7 @@ export default function Trends() {
                                   scrolling="no"
                                   width="100%"
                                   height="100%"
-                                  title={
-                                    state.data.posts[i][1].title +
-                                    "-gfycat-" +
-                                    i
-                                  }
+                                  title={posts[i][1].title + "-gfycat-" + i}
                                   style={{
                                     position: "absolute",
                                     top: "0",
@@ -873,9 +795,7 @@ export default function Trends() {
                                   frameBorder="0"
                                   width="100%"
                                   height="100%"
-                                  title={
-                                    state.data.posts[i][1].title + "-imgur-" + i
-                                  }
+                                  title={posts[i][1].title + "-imgur-" + i}
                                   style={{
                                     position: "absolute",
                                     top: "0",
@@ -891,7 +811,7 @@ export default function Trends() {
                       {!state.expandedPosts.includes(i) && (
                         <span>
                           <img
-                            src={state.data.posts[i][1].urlToImage}
+                            src={posts[i][1].urlToImage}
                             className="postImgStandard"
                             alt="Reddit Post Thumbnail"
                             style={{
@@ -913,9 +833,9 @@ export default function Trends() {
                               marginLeft: "10px",
                             }}
                           >
-                            {state.data.posts[i][1].title}
-                            {!state.data.posts[i][1].redditMediaDomain &&
-                              state.data.posts[i][1].urlDest !== undefined && (
+                            {posts[i][1].title}
+                            {!posts[i][1].redditMediaDomain &&
+                              posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
                               )}
                           </div>
@@ -937,8 +857,8 @@ export default function Trends() {
                 </div>
               )}
 
-              {!state.data.posts[i][1].redditMediaDomain &&
-                state.data.posts[i][1].urlDest !== undefined &&
+              {!posts[i][1].redditMediaDomain &&
+                posts[i][1].urlDest !== undefined &&
                 !loadableImg && <span> {outLinkDOM}</span>}
 
               {!loadableImg && (
@@ -993,20 +913,20 @@ export default function Trends() {
                   marginTop: "5px",
                 }}
               >
-                {state.data.posts[i][1].awards > 0 && (
+                {posts[i][1].awards > 0 && (
                   <span>
-                    {numToString(state.data.posts[i][1].coins)} coins &bull;{" "}
-                    {numToString(state.data.posts[i][1].awards)} awards &bull;{" "}
+                    {numToString(posts[i][1].coins)} coins &bull;{" "}
+                    {numToString(posts[i][1].awards)} awards &bull;{" "}
                   </span>
                 )}
 
                 <a
-                  href={state.data.posts[i][1].url}
+                  href={posts[i][1].url}
                   target="_blank"
                   rel="noreferrer"
                   className="searchLink"
                 >
-                  {numToString(state.data.posts[i][1].comments)} comments
+                  {numToString(posts[i][1].comments)} comments
                 </a>
               </div>
             </div>
@@ -1028,6 +948,18 @@ export default function Trends() {
   }
 
   /**
+   * Determine if title/text has a really long word
+   * @param {*} text - text to search through
+   * @returns whether text contains long words
+   */
+  function hasLongWords(text) {
+    for (let t = 0; t < text.length; t++) {
+      if (text[t].length > 21) return true;
+    }
+    return false;
+  }
+
+  /**
    * Converts number to string with abbreviation
    * @param {*} num - Number to convert
    * @returns Number with abbreviation
@@ -1042,8 +974,50 @@ export default function Trends() {
       : Math.abs(num);
   }
 
+  /**
+   * Creates menu button for specific cateogry
+   * @param {*} category - category to create menu for
+   * @returns DOM for category menu button
+   */
+  function menuCategory(category) {
+    return (
+      <span>
+        {state.sort === category && (
+          <button
+            className="timeButton"
+            style={{ borderBottom: "3px solid DodgerBlue" }}
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </button>
+        )}
+        {state.sort !== category && (
+          <button
+            className="timeButton"
+            style={{ color: "silver" }}
+            onMouseOver={(e) => {
+              e.target.style.color = "white";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.color = "silver";
+            }}
+            onClick={() =>
+              setState({
+                ...state,
+                sort: category,
+                data: state[category + "Data"],
+                expandedPosts: [],
+              })
+            }
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </button>
+        )}
+      </span>
+    );
+  }
+
   // Loading Objects
-  let loadingDOM = (
+  const loadingDOM = (
     <div>
       <div
         className="loading"
@@ -1077,7 +1051,7 @@ export default function Trends() {
   return (
     <div className="centering">
       <div className="today">
-        {state.loaded === false && (
+        {!state.loaded && (
           <div>
             <div className="centering">
               <div
@@ -1109,7 +1083,7 @@ export default function Trends() {
             </div>
           </div>
         )}
-        {state.loaded === true && state.error === false && (
+        {state.loaded && !state.error && (
           <div>
             <div className="centering">
               <div
@@ -1119,126 +1093,10 @@ export default function Trends() {
                   marginBottom: "10px",
                 }}
               >
-                {state.sort === "all" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid DodgerBlue" }}
-                  >
-                    All
-                  </button>
-                )}
-                {state.sort !== "all" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "all",
-                        data: state.allData,
-                        expandedPosts: [],
-                      })
-                    }
-                  >
-                    All
-                  </button>
-                )}
-                {state.sort === "news" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid DodgerBlue" }}
-                  >
-                    News
-                  </button>
-                )}
-                {state.sort !== "news" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "news",
-                        data: state.newsData,
-                        expandedPosts: [],
-                      })
-                    }
-                  >
-                    News
-                  </button>
-                )}
-                {state.sort === "funny" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid DodgerBlue" }}
-                  >
-                    Funny
-                  </button>
-                )}
-                {state.sort !== "funny" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "funny",
-                        data: state.funnyData,
-                        expandedPosts: [],
-                      })
-                    }
-                  >
-                    Funny
-                  </button>
-                )}
-                {state.sort === "sports" && (
-                  <button
-                    className="timeButton"
-                    style={{ borderBottom: "3px solid DodgerBlue" }}
-                  >
-                    Sports
-                  </button>
-                )}
-                {state.sort !== "sports" && (
-                  <button
-                    className="timeButton"
-                    style={{ color: "silver" }}
-                    onMouseOver={(e) => {
-                      e.target.style.color = "white";
-                    }}
-                    onMouseOut={(e) => {
-                      e.target.style.color = "silver";
-                    }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        sort: "sports",
-                        data: state.sportData,
-                        expandedPosts: [],
-                      })
-                    }
-                  >
-                    Sports
-                  </button>
-                )}
+                {menuCategory("all")}
+                {menuCategory("news")}
+                {menuCategory("funny")}
+                {menuCategory("sports")}
               </div>
             </div>
             <div className="centering">
@@ -1348,7 +1206,7 @@ export default function Trends() {
             )}
             {postListDOM}
 
-            {state.loaded === true && postListDOM.length === 0 && (
+            {state.loaded && postListDOM.length === 0 && (
               <div style={{ textAlign: "center" }}>
                 <div
                   style={{
@@ -1416,7 +1274,7 @@ export default function Trends() {
             </div>
           </div>
         )}
-        {state.loaded === true && state.error === true && (
+        {state.loaded && state.error && (
           <div>
             <div className="centering">
               <img src="errorImg.jpg" alt="error koala" width="250px" />
