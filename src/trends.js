@@ -1027,7 +1027,7 @@ export default function Trends() {
           style={{
             border: "1.5px solid #292929",
             borderRadius: "20px",
-            height: "180px",
+            height: window.innerWidth > 600 ? "180px" : "100px",
           }}
         ></div>
       </div>
