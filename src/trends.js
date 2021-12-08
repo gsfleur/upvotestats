@@ -824,7 +824,7 @@ export default function Trends() {
                               width:
                                 window.innerWidth > 600
                                   ? "calc(100% - 120px)"
-                                  : "calc(100% - 80px)",
+                                  : "calc(100% - 90px)",
                               marginLeft: "10px",
                             }}
                           >
@@ -1027,7 +1027,7 @@ export default function Trends() {
           style={{
             border: "1.5px solid #292929",
             borderRadius: "20px",
-            height: window.innerWidth > 600 ? "180px" : "100px",
+            height: window.innerWidth > 600 ? "180px" : "120px",
           }}
         ></div>
       </div>
