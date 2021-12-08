@@ -361,9 +361,11 @@ export default function Trends() {
             >
               {posts[i][1].author}
             </a>
-            <div style={{ float: "right", marginRight: "20px" }}>
-              {threadLinkDOM}
-            </div>
+            {state.expandedPosts.includes(i) && (
+              <div style={{ float: "right", marginRight: "20px" }}>
+                {threadLinkDOM}
+              </div>
+            )}
           </span>
         );
 
@@ -817,10 +819,12 @@ export default function Trends() {
                             className="postDate"
                             style={{
                               fontSize: "14px",
-                              marginBottom: "30px",
                               color: "gainsboro",
                               float: "left",
-                              width: "calc(100% - 120px)",
+                              width:
+                                window.innerWidth > 600
+                                  ? "calc(100% - 120px)"
+                                  : "calc(100% - 80px)",
                               marginLeft: "10px",
                             }}
                           >
@@ -831,17 +835,6 @@ export default function Trends() {
                               )}
                           </div>
                         </span>
-                      )}
-                      {!state.expandedPosts.includes(i) && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            bottom: "10px",
-                            right: "20px",
-                          }}
-                        >
-                          {threadLinkDOM}
-                        </div>
                       )}
                     </div>
                   </div>

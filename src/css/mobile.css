@@ -36,4 +36,13 @@
     width: 50%;
     align-items: center;
   }
+  .postImgStandard {
+    width: 60px;
+    height: 60px;
+  }
+  .iconImg {
+    margin-top: 5px;
+    width: 20px;
+    height: 20px;
+  }
 }
