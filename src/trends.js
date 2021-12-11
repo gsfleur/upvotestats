@@ -1108,7 +1108,7 @@ export default function Trends() {
                 <b>Trends on Reddit</b>
                 <button
                   className="sortButton2"
-                  style={{ padding: "4px 0px 0px 0px" }}
+                  style={{ padding: "2px 0px 0px 0px" }}
                   onClick={() =>
                     setState({
                       ...state,
