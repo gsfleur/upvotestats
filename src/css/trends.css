@@ -63,6 +63,12 @@
   border-radius: 20px;
 }
 
+.blur {
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+  transform: scale(0.8);
+}
+
 .postDate {
   color: gainsboro;
   width: 100%;

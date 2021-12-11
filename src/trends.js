@@ -198,15 +198,15 @@ export default function Trends() {
         // hours since post
         const hours = Math.abs(firstDate - secondDate) / (60 * 60 * 1000);
 
-        // Custom images for thumbnail if theres a link
+        let thumbCSS = "postImgStandard";
+        // Adding blur to posts with images that are NSFW/Spoiler
         if (posts[i][1].urlDest !== undefined) {
-          // Default NSFW warning img
-          if (posts[i][1].urlToImage === "nsfw")
-            posts[i][1].urlToImage = "nsfwIcon.png";
+          if (posts[i][1].nsfw || posts[i][1].spoiler) {
+            thumbCSS += " blur";
 
-          // Default Spoiler warning img
-          if (posts[i][1].urlToImage === "spoiler")
-            posts[i][1].urlToImage = "spoilerIcon.png";
+            // changing thumbnail to img source
+            posts[i][1].urlToImage = posts[i][1].source;
+          }
         }
 
         // Determine whether to show image
@@ -271,7 +271,9 @@ export default function Trends() {
         // Image Source
         const imgSource = posts[i][1].redditMediaDomain
           ? posts[i][1].urlDest
-          : posts[i][1].urlToImage;
+          : posts[i][1].source === undefined
+          ? posts[i][1].urlToImage
+          : posts[i][1].source;
 
         // Link Destination as String
         let destLink = posts[i][1].urlDest;
@@ -427,7 +429,7 @@ export default function Trends() {
         // Content warnings such as NSFW and Spoilers
         const contentWarnings = (
           <span>
-            {posts[i][1].nsfw === true && (
+            {posts[i][1].nsfw && (
               <span
                 style={{
                   color: "indianred",
@@ -441,7 +443,7 @@ export default function Trends() {
                 NSFW
               </span>
             )}
-            {posts[i][1].urlToImage === "spoilerIcon.png" && (
+            {posts[i][1].spoiler && (
               <span
                 style={{
                   color: "gray",
@@ -805,7 +807,7 @@ export default function Trends() {
                         <span>
                           <img
                             src={posts[i][1].urlToImage}
-                            className="postImgStandard"
+                            className={thumbCSS}
                             alt="Reddit Post Thumbnail"
                             style={{
                               float: "left",
