@@ -1132,21 +1132,21 @@ export default function Trends() {
                 >
                   <div
                     style={{
-                      fontWeight: "bold",
                       position: "absolute",
-                      bottom: "0",
-                      right: "0",
-                    }}
-                  >
-                    SORT
-                  </div>
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "40px",
+                      right: "0px",
                     }}
                   >
                     <SortRoundedIcon fontSize="medium" />
+                  </div>
+                  <div
+                    style={{
+                      fontWeight: "bold",
+                      position: "absolute",
+                      bottom: "0",
+                      right: "30px",
+                    }}
+                  >
+                    SORT
                   </div>
                 </button>
               </div>
