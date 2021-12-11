@@ -209,15 +209,17 @@ export default function Trends() {
           }
         }
 
+        // Setting thumbnail to source
+        if (posts[i][1].urlToImage === "image")
+          posts[i][1].urlToImage = posts[i][1].source;
+
         // Determine whether to show image
         let loadableImg =
           posts[i][1].urlToImage !== null &&
           posts[i][1].urlToImage !== "" &&
           posts[i][1].urlToImage !== "default" &&
           posts[i][1].urlToImage !== "self" &&
-          posts[i][1].urlToImage !== "nsfw" &&
-          posts[i][1].urlToImage !== "spoiler" &&
-          posts[i][1].urlToImage !== "image";
+          posts[i][1].urlDest !== undefined;
 
         // DOM for "trending with" section
         let trendingWith = [];
