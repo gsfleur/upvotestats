@@ -45,4 +45,7 @@
     width: 25px;
     height: 25px;
   }
+  .blur {
+    transform: scale(0.8);
+  }
 }
