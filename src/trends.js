@@ -757,7 +757,6 @@ export default function Trends() {
                                   poster={posts[i][1].urlToImage}
                                   webkit-playsinline="true"
                                   playsInline={true}
-                                  autoPlay={true}
                                 />
                               </div>
                             )}
