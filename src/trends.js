@@ -1102,8 +1102,6 @@ export default function Trends() {
                 style={{
                   fontSize: "16px",
                   color: "gainsboro",
-                  marginTop: "0px",
-                  marginBottom: "5px",
                   width: "90%",
                 }}
               >
@@ -1124,15 +1122,15 @@ export default function Trends() {
                     }}
                   >
                     SORT
-                    <div
-                      style={{
-                        float: "right",
-                        marginTop: "-3px",
-                        marginLeft: "5px",
-                      }}
-                    >
-                      <SortRoundedIcon fontSize="small" />
-                    </div>
+                  </div>
+                  <div
+                    style={{
+                      float: "right",
+                      marginTop: "-7.16%",
+                      marginRight: "3px",
+                    }}
+                  >
+                    <SortRoundedIcon fontSize="medium" />
                   </div>
                 </button>
               </div>
@@ -1144,7 +1142,7 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginTop: "0px",
+                    marginTop: "5px",
                     marginBottom: "5px",
                     width: "90%",
                   }}
