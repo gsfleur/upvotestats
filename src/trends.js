@@ -755,8 +755,9 @@ export default function Trends() {
                                   className="postVideoStandard"
                                   height="100%"
                                   poster={posts[i][1].urlToImage}
-                                  webkit-playsinline={true}
-                                  playsinline={true}
+                                  webkit-playsinline="true"
+                                  playsInline={true}
+                                  autoPlay={true}
                                 />
                               </div>
                             )}
