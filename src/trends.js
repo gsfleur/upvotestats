@@ -1127,7 +1127,7 @@ export default function Trends() {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "-2.5px",
+                        marginTop: "-3px",
                         marginLeft: "5px",
                       }}
                     >
