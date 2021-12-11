@@ -39,25 +39,24 @@ export default function Trends() {
         const beforeDate = new Date();
 
         // Loading all category data from backend
-        categories.map(async (category) => {
-          await axios
-            .get(
-              process.env.REACT_APP_BACKEND +
-                "posts/" +
-                category +
-                "?sort=" +
-                state.sortBy +
-                "&time=" +
-                state.sortDate
-            )
-            .then((res) => {
-              state[category + "Data"] = res.data;
-            })
-            .catch((err) => {
-              console.log(err);
-              state.error = true;
-            });
-        });
+        await Promise.all(
+          categories.map(async (category) => {
+            await axios
+              .get(
+                process.env.REACT_APP_BACKEND +
+                  "posts/" +
+                  category +
+                  "?sort=" +
+                  state.sortBy +
+                  "&time=" +
+                  state.sortDate
+              )
+              .then((res) => {
+                state[category + "Data"] = res.data;
+              })
+              .catch(() => (state.error = true));
+          })
+        );
 
         // Date after request is finished
         const afterDate = new Date();
@@ -1103,12 +1102,15 @@ export default function Trends() {
                   fontSize: "16px",
                   color: "gainsboro",
                   width: "90%",
+                  position: "relative",
+                  height: "20px",
+                  marginBottom: "10px",
                 }}
               >
                 <b>Trends on Reddit</b>
                 <button
                   className="sortButton2"
-                  style={{ padding: "1px 0px 0px 0px" }}
+                  style={{ padding: "0px" }}
                   onClick={() =>
                     setState({
                       ...state,
@@ -1118,17 +1120,18 @@ export default function Trends() {
                 >
                   <div
                     style={{
-                      float: "right",
                       fontWeight: "bold",
+                      position: "absolute",
+                      bottom: "0",
+                      right: "0",
                     }}
                   >
                     SORT
                   </div>
                   <div
                     style={{
-                      float: "right",
-                      marginTop: "-7.16%",
-                      marginRight: "3px",
+                      position: "absolute",
+                      right: "40px",
                     }}
                   >
                     <SortRoundedIcon fontSize="medium" />
@@ -1143,7 +1146,6 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginTop: "5px",
                     marginBottom: "5px",
                     width: "90%",
                   }}
