@@ -517,8 +517,7 @@ export default function Trends() {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    {posts[i][1].subreddit.charAt(0).toUpperCase() +
-                      posts[i][1].subreddit.slice(1)}
+                    {posts[i][1].subName}
                   </a>{" "}
                   &bull; {numToString(posts[i][1].upvotes)} &uarr; &bull;{" "}
                   {numToString(Math.abs(posts[i][1].downvotes))} &darr;
