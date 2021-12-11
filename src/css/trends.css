@@ -63,10 +63,15 @@
   border-radius: 20px;
 }
 
+.blurOuter {
+  width: 100px;
+  overflow: hidden;
+  float: left;
+  border-radius: 10px;
+}
 .blur {
   filter: blur(10px);
   -webkit-filter: blur(10px);
-  transform: scale(0.9);
 }
 
 .postDate {

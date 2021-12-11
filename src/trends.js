@@ -198,11 +198,11 @@ export default function Trends() {
         // hours since post
         const hours = Math.abs(firstDate - secondDate) / (60 * 60 * 1000);
 
-        let thumbCSS = "postImgStandard";
+        let blurred = false;
         // Adding blur to posts with images that are NSFW/Spoiler
         if (posts[i][1].urlDest !== undefined) {
           if (posts[i][1].nsfw || posts[i][1].spoiler) {
-            thumbCSS += " blur";
+            blurred = true;
 
             // changing thumbnail to img source
             posts[i][1].urlToImage = posts[i][1].source;
@@ -274,6 +274,21 @@ export default function Trends() {
           : posts[i][1].source === undefined
           ? posts[i][1].urlToImage
           : posts[i][1].source;
+
+        const thumbnail = (
+          <img
+            src={posts[i][1].urlToImage}
+            className="postImgStandard"
+            alt="Reddit Post Thumbnail"
+            style={{
+              float: "left",
+            }}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "missing.png";
+            }}
+          />
+        );
 
         // Link Destination as String
         let destLink = posts[i][1].urlDest;
@@ -805,18 +820,12 @@ export default function Trends() {
                       )}
                       {!state.expandedPosts.includes(i) && (
                         <span>
-                          <img
-                            src={posts[i][1].urlToImage}
-                            className={thumbCSS}
-                            alt="Reddit Post Thumbnail"
-                            style={{
-                              float: "left",
-                            }}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "missing.png";
-                            }}
-                          />
+                          {!blurred && <span>{thumbnail}</span>}
+                          {blurred && (
+                            <div className="blurOuter">
+                              <div className="blur">{thumbnail}</div>
+                            </div>
+                          )}
                           <div
                             className="postDate"
                             style={{
