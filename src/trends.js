@@ -559,9 +559,21 @@ export default function Trends() {
                   <div style={textBodyCSS}>
                     {!state.expandedPosts.includes(i) && (
                       <span>
-                        {posts[i][1].text.substring(0, 160)}
-                        {posts[i][1].text.length > 160 && (
-                          <span>... [click text to read more]</span>
+                        {posts[i][1].spoiler && (
+                          <span>
+                            Text hidden due to spoiler
+                            {posts[i][1].text.length > 160 && (
+                              <span>... [click text to read more]</span>
+                            )}
+                          </span>
+                        )}
+                        {!posts[i][1].spoiler && (
+                          <span>
+                            {posts[i][1].text.substring(0, 160)}
+                            {posts[i][1].text.length > 160 && (
+                              <span>... [click text to read more]</span>
+                            )}
+                          </span>
                         )}
                       </span>
                     )}
