@@ -1135,7 +1135,7 @@ export default function Trends() {
                   color: "gainsboro",
                   width: "90%",
                   position: "relative",
-                  height: "20px",
+                  height: "18px",
                   marginBottom: "10px",
                 }}
               >
@@ -1153,7 +1153,8 @@ export default function Trends() {
                   <div
                     style={{
                       position: "absolute",
-                      right: "0px",
+                      right: "37px",
+                      marginTop: "-2px",
                     }}
                   >
                     <SortRoundedIcon fontSize="medium" />
@@ -1163,7 +1164,7 @@ export default function Trends() {
                       fontWeight: "bold",
                       position: "absolute",
                       bottom: "0",
-                      right: "30px",
+                      right: "0px",
                     }}
                   >
                     SORT
