@@ -209,15 +209,18 @@ export default function Trends() {
         }
 
         // Setting thumbnail to source
-        if (posts[i][1].urlToImage === "image")
+        if (posts[i][1].source !== undefined)
           posts[i][1].urlToImage = posts[i][1].source;
 
         // Determine whether to show image
         let loadableImg =
           posts[i][1].urlToImage !== null &&
+          posts[i][1].urlToImage !== undefined &&
           posts[i][1].urlToImage !== "" &&
           posts[i][1].urlToImage !== "default" &&
           posts[i][1].urlToImage !== "self" &&
+          (posts[i][1].source !== undefined ||
+            posts[i][1].urlToImage.includes("https")) &&
           posts[i][1].urlDest !== undefined;
 
         // DOM for "trending with" section
@@ -580,7 +583,7 @@ export default function Trends() {
                     {state.expandedPosts.includes(i) && (
                       <span>
                         {posts[i][1].text}
-                        <div style={{ marginRight: "20px" }}>
+                        <div style={{ marginRight: "20px", marginTop: "5px" }}>
                           {percentUpvoted}
                         </div>
                       </span>
