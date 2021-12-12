@@ -861,7 +861,17 @@ export default function Trends() {
                               marginLeft: "10px",
                             }}
                           >
-                            {posts[i][1].title}
+                            {window.innerWidth >= 600 && (
+                              <span>{posts[i][1].title}</span>
+                            )}
+                            {window.innerWidth < 600 && (
+                              <span>
+                                {posts[i][1].title.substring(0, 100)}
+                                {posts[i][1].title.length > 100 && (
+                                  <span>...</span>
+                                )}
+                              </span>
+                            )}
                             {!posts[i][1].redditMediaDomain &&
                               posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
