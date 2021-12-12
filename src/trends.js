@@ -208,9 +208,14 @@ export default function Trends() {
           }
         }
 
-        // Setting thumbnail to source
-        if (posts[i][1].source !== undefined)
-          posts[i][1].urlToImage = posts[i][1].source;
+        // Setting thumbnail to source if thumb not available
+        if (posts[i][1].source !== undefined) {
+          if (
+            posts[i][1].urlToImage === "image" ||
+            posts[i][1].urlToImage === "default"
+          )
+            posts[i][1].urlToImage = posts[i][1].source;
+        }
 
         // Determine whether to show image
         let loadableImg =
