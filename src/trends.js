@@ -555,6 +555,11 @@ export default function Trends() {
                     <b>{posts[i][1].trends[0]}</b>
                   </div>
                 )}
+                {posts[i][1].trends.length === 0 && (
+                  <div style={{ fontSize: "14px" }}>
+                    <b>{posts[i][1].subName}</b>
+                  </div>
+                )}
 
                 {!loadableImg && (
                   <div style={{ fontSize: "14px", marginTop: "5px" }}>
