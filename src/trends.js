@@ -1135,8 +1135,8 @@ export default function Trends() {
                   color: "gainsboro",
                   width: "90%",
                   position: "relative",
-                  height: "18px",
-                  marginBottom: "10px",
+                  height: "23px",
+                  marginBottom: "0px",
                 }}
               >
                 <b>Trends on Reddit</b>
@@ -1154,16 +1154,16 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "37px",
-                      marginTop: "-2px",
+                      bottom: "0",
                     }}
                   >
-                    <SortRoundedIcon fontSize="medium" />
+                    <SortRoundedIcon fontSize="small" />
                   </div>
                   <div
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "0",
+                      bottom: "5.5px",
                       right: "0px",
                     }}
                   >
@@ -1179,7 +1179,8 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginBottom: "5px",
+                    marginTop: "5px",
+                    marginBottom: "3px",
                     width: "90%",
                   }}
                 >
