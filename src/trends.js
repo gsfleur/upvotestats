@@ -308,6 +308,86 @@ export default function Trends() {
           destLink = destLink.substring(0, 15) + "...";
         }
 
+        let textDOM = []; // holds text
+        let textDOMLimited = []; // holds character limited version of text
+        let postText = posts[i][1].text; // entire text from backend
+        let textLimitedLength = 0; // number of characters in limited text
+        let linkLength = 0; // number of characters in url link
+        let textLimit = 160; // text character limit
+
+        let leftIndex = postText.indexOf("["); // left side of link from markdown
+        let rightIndex = postText.indexOf(")"); // right side of link from markdown
+        let linkInfo = postText.substring(leftIndex + 1, rightIndex);
+        let linkItems = 0; // number of markdown link items
+
+        // Converting markdown styled urls into clickable links
+        while (
+          linkInfo.length > 0 &&
+          linkInfo.includes("](") &&
+          (linkInfo.includes("http:") || linkInfo.includes("https:"))
+        ) {
+          linkItems++; // new link item
+          // length of text before the markdown link
+          textLimitedLength = postText.substring(0, leftIndex).length;
+
+          // Text of link
+          let linkText = linkInfo.split("](")[0];
+          // Url for the link
+          let linkRef = linkInfo.split("](")[1];
+          // Link DOM
+          let inLink = (
+            <a
+              key={"textDomLink-" + i + "-line-" + linkItems}
+              className="searchLink"
+              href={linkRef}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: "dodgerblue" }}
+            >
+              [{linkText}]
+            </a>
+          );
+
+          // Length of url link in markdown
+          linkLength += linkRef.length;
+          // Add limited text before adding the link
+          if (textLimitedLength < textLimit) {
+            textDOMLimited.push(
+              <span key={"textDomLimited-" + i + "-line-" + linkItems}>
+                {postText.substring(0, leftIndex)}
+              </span>
+            );
+            textDOMLimited.push(inLink);
+          }
+          // Add text before adding the link
+          textDOM.push(
+            <span key={"textDom-" + i + "-line-" + linkItems}>
+              {postText.substring(0, leftIndex)}
+            </span>
+          );
+          textDOM.push(inLink);
+
+          // Find next link in markdown style if there is one
+          postText = postText.substring(rightIndex + 1, postText.length);
+          leftIndex = postText.indexOf("[");
+          rightIndex = postText.indexOf(")");
+          linkInfo = postText.substring(leftIndex + 1, rightIndex);
+        }
+        // Add remaining text from post
+        textDOM.push(
+          <span key={"textDom-" + i + "-line-" + linkItems + 1}>
+            {postText}{" "}
+          </span>
+        );
+        // Add remaining character limited text from post
+        if (textLimitedLength < textLimit) {
+          textDOMLimited.push(
+            <span key={"textDomLimited-" + i + "-line-" + linkItems + 1}>
+              {postText.substring(0, textLimit - textLimitedLength)}
+            </span>
+          );
+        }
+
         // Destination Link DOM
         const outLinkDOM = (
           <div style={{ display: "inline-block", width: "100%" }}>
@@ -577,17 +657,22 @@ export default function Trends() {
                         )}
                         {!posts[i][1].spoiler && (
                           <span>
-                            {posts[i][1].text.substring(0, 160)}
-                            {posts[i][1].text.length > 160 && (
-                              <span>... [click to read more]</span>
-                            )}
+                            {textDOMLimited}
+                            {posts[i][1].text.length > textLimit &&
+                              linkItems === 0 && (
+                                <span>... [click to read more]</span>
+                              )}
+                            {posts[i][1].text.length - linkLength > textLimit &&
+                              linkItems > 0 && (
+                                <span>... [click to read more]</span>
+                              )}
                           </span>
                         )}
                       </span>
                     )}
                     {state.expandedPosts.includes(i) && (
                       <span>
-                        {posts[i][1].text}
+                        {textDOM}
                         <div style={{ marginRight: "20px", marginTop: "5px" }}>
                           {percentUpvoted}
                         </div>
@@ -983,6 +1068,14 @@ export default function Trends() {
    */
   function hasLongWords(text) {
     for (let t = 0; t < text.length; t++) {
+      let leftIndex = text[t].indexOf("["); // left side of link from markdown
+      let rightIndex = text[t].indexOf(")"); // right side of link from markdown
+      let linkInfo = text[t].substring(leftIndex + 1, rightIndex);
+
+      // Ignore long links if they are in markdown style
+      if (linkInfo.includes("http:") || linkInfo.includes("https:"))
+        return false;
+
       if (text[t].length > 21) return true;
     }
     return false;
