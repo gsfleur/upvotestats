@@ -318,6 +318,7 @@ export default function Trends() {
 
         let leftIndex = postText.indexOf("["); // left side of link from markdown
         let rightIndex = postText.indexOf(")"); // right side of link from markdown
+        let leftCloseIndex = postText.indexOf("]"); // left closing side of link from markdown
 
         // contains link text and url
         let linkInfo = postText.substring(leftIndex + 1, rightIndex);
@@ -331,34 +332,39 @@ export default function Trends() {
           !linkInfo.includes("[") &&
           (linkInfo.includes("http:") || linkInfo.includes("https:"));
 
+        // ensure left to right order of markdown link style
+        let ensureOrder = () => {
+          while (
+            (rightIndex < leftIndex || rightIndex < leftCloseIndex) &&
+            rightIndex > -1
+          )
+            rightIndex = postText.indexOf(")", rightIndex + 1);
+        };
+
         // Ensures markdown link meets all criteria
         let getNextMarkdownLink = () => {
           // Gets next valid markdown url text link
           while (leftIndex > -1 && rightIndex > -1) {
             if (isValidMarkdownLink()) break;
-            // ensure left to right order of markdown link style
-            while (rightIndex < leftIndex && rightIndex > -1)
-              rightIndex = postText.indexOf(")", rightIndex + 1);
+
+            ensureOrder();
+            linkInfo = postText.substring(leftIndex + 1, rightIndex);
 
             // ensure right most '[' is the leftIndex
             while (linkInfo.includes("[")) {
               leftIndex = postText.indexOf("[", leftIndex + 1);
               rightIndex = postText.indexOf(")");
+              leftCloseIndex = postText.indexOf("]");
 
-              // ensure left to right order of markdown link style
-              while (rightIndex < leftIndex && rightIndex > -1)
-                rightIndex = postText.indexOf(")", rightIndex + 1);
-
-              // set to next markdown text link
+              ensureOrder();
               linkInfo = postText.substring(leftIndex + 1, rightIndex);
             }
-
-            linkInfo = postText.substring(leftIndex + 1, rightIndex);
 
             // If not valid, get next possible indexes
             if (!isValidMarkdownLink()) {
               leftIndex = postText.indexOf("[", leftIndex + 1);
               rightIndex = postText.indexOf(")", rightIndex + 1);
+              leftCloseIndex = postText.indexOf("]", leftIndex + 1);
             }
           }
         };
@@ -419,6 +425,7 @@ export default function Trends() {
           postText = postText.substring(rightIndex + 1, postText.length);
           leftIndex = postText.indexOf("[");
           rightIndex = postText.indexOf(")");
+          leftCloseIndex = postText.indexOf("]");
           linkInfo = postText.substring(leftIndex + 1, rightIndex);
           // check for next valid markdown url link
           if (!isValidMarkdownLink()) getNextMarkdownLink();
