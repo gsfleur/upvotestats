@@ -289,6 +289,7 @@ export default function Trends() {
             src={posts[i][1].urlToImage}
             className="postImgStandard"
             alt="Reddit Post Thumbnail"
+            loading="lazy"
             style={{
               float: "left",
             }}
@@ -473,6 +474,7 @@ export default function Trends() {
                 alt={"outbound icon"}
                 width="13px"
                 height="13px"
+                loading="lazy"
                 style={{
                   marginLeft: "3px",
                   float: "right",
@@ -848,6 +850,7 @@ export default function Trends() {
                             <img
                               className="iconImg"
                               src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                              loading="lazy"
                               alt={posts[i][1].author + " icon"}
                               onError={(e) => {
                                 e.target.onerror = null;
@@ -859,6 +862,7 @@ export default function Trends() {
                             <img
                               className="iconImg"
                               src={posts[i][1].icon}
+                              loading="lazy"
                               alt={posts[i][1].author + " icon"}
                               onError={(e) => {
                                 e.target.onerror = null;
