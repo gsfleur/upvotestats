@@ -492,6 +492,60 @@ export default function Trends() {
           </div>
         );
 
+        // Whether post discusses covid
+        let covidPost = false;
+        // Covid keywords
+        const covidWords = ["coronavirus", "covid", "cdc", "vaccin"];
+
+        // Detect whether array contains covid key words
+        let hasCovidWords = (arr1, arr2) => {
+          if (!covidPost) {
+            for (let t = 0; t < arr1.length; t++) {
+              for (let c = 0; c < covidWords.length; c++) {
+                if (arr1[t].toLowerCase().includes(arr2[c])) {
+                  covidPost = true;
+                  break;
+                }
+              }
+            }
+          }
+        };
+
+        // Check title, text, and trends for covid key words
+        hasCovidWords(titleParts, covidWords);
+        hasCovidWords(textParts, covidWords);
+        hasCovidWords(trends, covidWords);
+
+        // Covid CDC help notification
+        const covidDOM = (
+          <div
+            style={{
+              fontSize: "13px",
+              borderLeft: "5px solid dodgerblue",
+              padding: "5px",
+              marginTop: "5px",
+              borderRadius: "2px",
+              backgroundImage:
+                "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
+              overflow: "auto",
+            }}
+          >
+            Get the latest information from the CDC about COVID-19.
+            <a
+              className="searchLink"
+              href="https://www.cdc.gov/coronavirus/2019-ncov/index.html"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                color: "dodgerblue",
+                float: "right",
+              }}
+            >
+              LEARN MORE
+            </a>
+          </div>
+        );
+
         // Whether post is streamable video link
         const streamable =
           posts[i][1].urlDest !== undefined &&
@@ -1001,6 +1055,7 @@ export default function Trends() {
                   )}
                 </div>
               )}
+              {covidPost && <span>{covidDOM}</span>}
               {trends.length > 0 && (
                 <div
                   style={{
