@@ -530,7 +530,8 @@ export default function Trends() {
               overflow: "auto",
             }}
           >
-            Get the latest information from the CDC about COVID-19.
+            Get the latest information from the CDC about COVID-19 health and
+            safety
             <a
               className="searchLink"
               href="https://www.cdc.gov/coronavirus/2019-ncov/index.html"
