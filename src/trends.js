@@ -314,21 +314,61 @@ export default function Trends() {
         let textLimitedLength = 0; // number of characters in limited text
         let linkLength = 0; // number of characters in url link
         let textLimit = 160; // text character limit
+        let linkItems = 0; // number of markdown link items
 
         let leftIndex = postText.indexOf("["); // left side of link from markdown
         let rightIndex = postText.indexOf(")"); // right side of link from markdown
-        let linkInfo = postText.substring(leftIndex + 1, rightIndex);
-        let linkItems = 0; // number of markdown link items
 
-        // Converting markdown styled urls into clickable links
-        while (
+        // contains link text and url
+        let linkInfo = postText.substring(leftIndex + 1, rightIndex);
+
+        // Whether text has valid markdown url form
+        // ex: "[Source](https://www.google.com)"
+        // linkinfo = "Source](https://www.google.com"
+        let isValidMarkdownLink = () =>
           linkInfo.length > 0 &&
           linkInfo.includes("](") &&
-          (linkInfo.includes("http:") || linkInfo.includes("https:"))
-        ) {
+          !linkInfo.includes("[") &&
+          (linkInfo.includes("http:") || linkInfo.includes("https:"));
+
+        // Ensures markdown link meets all criteria
+        let getNextMarkdownLink = () => {
+          // Gets next valid markdown url text link
+          while (leftIndex > -1 && rightIndex > -1) {
+            if (isValidMarkdownLink()) break;
+            // ensure left to right order of markdown link style
+            while (rightIndex < leftIndex && rightIndex > -1)
+              rightIndex = postText.indexOf(")", rightIndex + 1);
+
+            // ensure right most '[' is the leftIndex
+            while (linkInfo.includes("[")) {
+              leftIndex = postText.indexOf("[", leftIndex + 1);
+              rightIndex = postText.indexOf(")");
+
+              // ensure left to right order of markdown link style
+              while (rightIndex < leftIndex && rightIndex > -1)
+                rightIndex = postText.indexOf(")", rightIndex + 1);
+
+              // set to next markdown text link
+              linkInfo = postText.substring(leftIndex + 1, rightIndex);
+            }
+
+            linkInfo = postText.substring(leftIndex + 1, rightIndex);
+
+            // If not valid, get next possible indexes
+            if (!isValidMarkdownLink()) {
+              leftIndex = postText.indexOf("[", leftIndex + 1);
+              rightIndex = postText.indexOf(")", rightIndex + 1);
+            }
+          }
+        };
+
+        // Get first markdown text link
+        getNextMarkdownLink();
+
+        // Converting markdown styled urls into clickable links
+        while (isValidMarkdownLink()) {
           linkItems++; // new link item
-          // length of text before the markdown link
-          textLimitedLength = postText.substring(0, leftIndex).length;
 
           // Text of link
           let linkText = linkInfo.split("](")[0];
@@ -349,15 +389,23 @@ export default function Trends() {
           );
 
           // Length of url link in markdown
-          linkLength += linkRef.length;
+          linkLength += linkRef.length + 2;
           // Add limited text before adding the link
           if (textLimitedLength < textLimit) {
             textDOMLimited.push(
               <span key={"textDomLimited-" + i + "-line-" + linkItems}>
-                {postText.substring(0, leftIndex)}
+                {postText.substring(0, Math.min(textLimit, leftIndex))}
               </span>
             );
-            textDOMLimited.push(inLink);
+
+            // add link if within limit range
+            if (leftIndex < textLimit) textDOMLimited.push(inLink);
+
+            // length of total characters added
+            textLimitedLength +=
+              postText.substring(0, Math.min(textLimit, leftIndex)).length +
+              linkText.length +
+              2;
           }
           // Add text before adding the link
           textDOM.push(
@@ -372,6 +420,8 @@ export default function Trends() {
           leftIndex = postText.indexOf("[");
           rightIndex = postText.indexOf(")");
           linkInfo = postText.substring(leftIndex + 1, rightIndex);
+          // check for next valid markdown url link
+          if (!isValidMarkdownLink()) getNextMarkdownLink();
         }
         // Add remaining text from post
         textDOM.push(
