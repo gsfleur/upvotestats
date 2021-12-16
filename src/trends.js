@@ -581,16 +581,25 @@ export default function Trends() {
             style={{
               fontSize: "13px",
               borderLeft: "5px solid dodgerblue",
+              borderTop: "1px solid #222222",
+              borderBottom: "1px solid #222222",
+              borderRight: "1px solid #222222",
               padding: "5px",
               marginTop: "5px",
-              borderRadius: "2px",
+              borderRadius: "5px",
               backgroundImage:
                 "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
               overflow: "auto",
             }}
           >
-            Get the latest information from the CDC about COVID-19 health and
-            safety
+            {window.innerWidth >= 600 && (
+              <span>
+                Get the latest information from the CDC about COVID-19
+              </span>
+            )}
+            {window.innerWidth < 600 && (
+              <span>See latest information from CDC</span>
+            )}
             <a
               className="searchLink"
               href="https://www.cdc.gov/coronavirus/2019-ncov/index.html"
