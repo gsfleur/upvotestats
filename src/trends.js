@@ -1,4 +1,6 @@
 import axios from "axios";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 import { useState, useEffect } from "react";
 import ReactHlsPlayer from "react-hls-player";
 import InputLabel from "@mui/material/InputLabel";
@@ -231,6 +233,8 @@ export default function Trends() {
         // DOM for "trending with" section
         let trendingWith = [];
         const trends = posts[i][1].trends;
+        // word limit for text in non expanded form
+        const wordLimit = 30;
 
         // Load trends until width would be too large to fit all in one line
         for (let t = 1; t < trends.length; t++) {
@@ -263,16 +267,20 @@ export default function Trends() {
         // Default post text body css
         let textBodyCSS = {
           fontSize: "13px",
-          marginTop: "5px",
           color: "silver",
         };
 
         // Arary of words in title and text
-        const titleParts = posts[i][1].title.trim().split(/\s+/);
-        const textParts = posts[i][1].text.trim().split(/\s+/);
+        let titleParts = posts[i][1].title.trim().split(/\s+/);
+        let textParts = posts[i][1].text.trim().split(/\s+/);
 
-        // Break by letter if word is very long (long links or words)
-        if (hasLongWords(titleParts) || hasLongWords(textParts)) {
+        // Break by character if word is very long (long links or words)
+        titleParts = breakLongCharacters(titleParts);
+        textParts = breakLongCharacters(textParts);
+        posts[i][1].title = titleParts.join(" ");
+        posts[i][1].text = textParts.join(" ");
+
+        if (hasLongCharacters(titleParts) || hasLongCharacters(textParts)) {
           imgBodyCSS["wordBreak"] = "break-all";
           textBodyCSS["wordBreak"] = "break-all";
         }
@@ -284,6 +292,7 @@ export default function Trends() {
           ? posts[i][1].urlToImage
           : posts[i][1].source;
 
+        // Image thumbnail
         const thumbnail = (
           <img
             src={posts[i][1].urlToImage}
@@ -307,143 +316,6 @@ export default function Trends() {
           destLink = destLink.replace("http://", "");
           destLink = destLink.replace("www.", "");
           destLink = destLink.substring(0, 15) + "...";
-        }
-
-        let textDOM = []; // holds text
-        let textDOMLimited = []; // holds character limited version of text
-        let postText = posts[i][1].text; // entire text from backend
-        let textLimitedLength = 0; // number of characters in limited text
-        let linkLength = 0; // number of characters in url link
-        let textLimit = 160; // text character limit
-        let linkItems = 0; // number of markdown link items
-
-        let leftIndex = postText.indexOf("["); // left side of link from markdown
-        let rightIndex = postText.indexOf(")"); // right side of link from markdown
-        let leftCloseIndex = postText.indexOf("]"); // left closing side of link from markdown
-
-        // contains link text and url
-        let linkInfo = postText.substring(leftIndex + 1, rightIndex);
-
-        // Whether text has valid markdown url form
-        // ex: "[Source](https://www.google.com)"
-        // linkinfo = "Source](https://www.google.com"
-        let isValidMarkdownLink = () =>
-          linkInfo.length > 0 &&
-          linkInfo.includes("](") &&
-          !linkInfo.includes("[") &&
-          (linkInfo.includes("http:") || linkInfo.includes("https:"));
-
-        // ensure left to right order of markdown link style
-        let ensureOrder = () => {
-          while (
-            (rightIndex < leftIndex || rightIndex < leftCloseIndex) &&
-            rightIndex > -1
-          )
-            rightIndex = postText.indexOf(")", rightIndex + 1);
-        };
-
-        // Ensures markdown link meets all criteria
-        let getNextMarkdownLink = () => {
-          // Gets next valid markdown url text link
-          while (leftIndex > -1 && rightIndex > -1) {
-            if (isValidMarkdownLink()) break;
-
-            ensureOrder();
-            linkInfo = postText.substring(leftIndex + 1, rightIndex);
-
-            // ensure right most '[' is the leftIndex
-            while (linkInfo.includes("[")) {
-              leftIndex = postText.indexOf("[", leftIndex + 1);
-              rightIndex = postText.indexOf(")");
-              leftCloseIndex = postText.indexOf("]");
-
-              ensureOrder();
-              linkInfo = postText.substring(leftIndex + 1, rightIndex);
-            }
-
-            // If not valid, get next possible indexes
-            if (!isValidMarkdownLink()) {
-              leftIndex = postText.indexOf("[", leftIndex + 1);
-              rightIndex = postText.indexOf(")", rightIndex + 1);
-              leftCloseIndex = postText.indexOf("]", leftIndex + 1);
-            }
-          }
-        };
-
-        // Get first markdown text link
-        getNextMarkdownLink();
-
-        // Converting markdown styled urls into clickable links
-        while (isValidMarkdownLink()) {
-          linkItems++; // new link item
-
-          // Text of link
-          let linkText = linkInfo.split("](")[0];
-          // Url for the link
-          let linkRef = linkInfo.split("](")[1];
-          // Link DOM
-          let inLink = (
-            <a
-              key={"textDomLink-" + i + "-line-" + linkItems}
-              className="searchLink"
-              href={linkRef}
-              target="_blank"
-              rel="noreferrer"
-              style={{ color: "dodgerblue" }}
-            >
-              [{linkText}]
-            </a>
-          );
-
-          // Length of url link in markdown
-          linkLength += linkRef.length + 2;
-          // Add limited text before adding the link
-          if (textLimitedLength < textLimit) {
-            textDOMLimited.push(
-              <span key={"textDomLimited-" + i + "-line-" + linkItems}>
-                {postText.substring(0, Math.min(textLimit, leftIndex))}
-              </span>
-            );
-
-            // add link if within limit range
-            if (leftIndex < textLimit) textDOMLimited.push(inLink);
-
-            // length of total characters added
-            textLimitedLength +=
-              postText.substring(0, Math.min(textLimit, leftIndex)).length +
-              linkText.length +
-              2;
-          }
-          // Add text before adding the link
-          textDOM.push(
-            <span key={"textDom-" + i + "-line-" + linkItems}>
-              {postText.substring(0, leftIndex)}
-            </span>
-          );
-          textDOM.push(inLink);
-
-          // Find next link in markdown style if there is one
-          postText = postText.substring(rightIndex + 1, postText.length);
-          leftIndex = postText.indexOf("[");
-          rightIndex = postText.indexOf(")");
-          leftCloseIndex = postText.indexOf("]");
-          linkInfo = postText.substring(leftIndex + 1, rightIndex);
-          // check for next valid markdown url link
-          if (!isValidMarkdownLink()) getNextMarkdownLink();
-        }
-        // Add remaining text from post
-        textDOM.push(
-          <span key={"textDom-" + i + "-line-" + linkItems + 1}>
-            {postText}{" "}
-          </span>
-        );
-        // Add remaining character limited text from post
-        if (textLimitedLength < textLimit) {
-          textDOMLimited.push(
-            <span key={"textDomLimited-" + i + "-line-" + linkItems + 1}>
-              {postText.substring(0, textLimit - textLimitedLength)}
-            </span>
-          );
         }
 
         // Destination Link DOM
@@ -549,6 +421,26 @@ export default function Trends() {
             )}
             % Upvoted
           </div>
+        );
+
+        // Markdown text
+        let markdown = (text) => (
+          <ReactMarkdown
+            components={{
+              a: ({ node, ...props }) => (
+                // eslint-disable-next-line
+                <a
+                  className="searchLink"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "dodgerblue" }}
+                  {...props}
+                />
+              ),
+            }}
+            children={text}
+            remarkPlugins={[remarkGfm]}
+          />
         );
 
         // Whether post discusses covid
@@ -776,26 +668,30 @@ export default function Trends() {
                     {!state.expandedPosts.includes(i) && (
                       <span>
                         {posts[i][1].spoiler && (
-                          <span>Text hidden... [click to view spoiler]</span>
+                          <span>
+                            {markdown("Text hidden... [click to read more]")}
+                          </span>
                         )}
                         {!posts[i][1].spoiler && (
                           <span>
-                            {textDOMLimited}
-                            {posts[i][1].text.length > textLimit &&
-                              linkItems === 0 && (
-                                <span>... [click to read more]</span>
-                              )}
-                            {posts[i][1].text.length - linkLength > textLimit &&
-                              linkItems > 0 && (
-                                <span>... [click to read more]</span>
-                              )}
+                            {textParts.length > wordLimit && (
+                              <span>
+                                {markdown(
+                                  textParts.slice(0, wordLimit).join(" ") +
+                                    "... [click to read more]"
+                                )}
+                              </span>
+                            )}
+                            {textParts.length <= wordLimit && (
+                              <span>{markdown(posts[i][1].text)}</span>
+                            )}
                           </span>
                         )}
                       </span>
                     )}
                     {state.expandedPosts.includes(i) && (
                       <span>
-                        {textDOM}
+                        {markdown(posts[i][1].text)}
                         <div style={{ marginRight: "20px", marginTop: "5px" }}>
                           {percentUpvoted}
                         </div>
@@ -1105,7 +1001,6 @@ export default function Trends() {
                       className="postDate"
                       style={{
                         fontSize: "13px",
-                        marginTop: "5px",
                         color: "silver",
                       }}
                     >
@@ -1117,7 +1012,6 @@ export default function Trends() {
                       className="postDate"
                       style={{
                         fontSize: "13px",
-                        marginTop: "5px",
                         color: "silver",
                       }}
                     >
@@ -1188,23 +1082,47 @@ export default function Trends() {
   }
 
   /**
-   * Determine if title/text has a really long word
+   * Determine if text has a really long characters
    * @param {*} text - text to search through
-   * @returns whether text contains long words
+   * @returns whether text contains long characters
    */
-  function hasLongWords(text) {
+  function hasLongCharacters(text) {
     for (let t = 0; t < text.length; t++) {
-      let leftIndex = text[t].indexOf("["); // left side of link from markdown
-      let rightIndex = text[t].indexOf(")"); // right side of link from markdown
-      let linkInfo = text[t].substring(leftIndex + 1, rightIndex);
-
-      // Ignore long links if they are in markdown style
-      if (linkInfo.includes("http:") || linkInfo.includes("https:"))
-        return false;
-
       if (text[t].length > 21) return true;
     }
+
     return false;
+  }
+
+  /**
+   * Break up text with long non letter/number characters
+   * @param {*} text - text to search through
+   * @returns array of text
+   */
+  function breakLongCharacters(text) {
+    let consecutiveNonLetters = 0;
+
+    // Loop through characters
+    for (let t = 0; t < text.length; t++) {
+      for (let c = 0; c < text[t].length; c++) {
+        let ch = text[t].charCodeAt(c);
+        // char is letter or number
+        let isLetterOrNum =
+          (ch > 64 && ch < 91) || (ch > 96 && ch < 123) || (ch > 47 && ch < 58);
+
+        if (isLetterOrNum) consecutiveNonLetters = 0;
+
+        // text has long non consecutive non letters/numbers, seperate with space
+        if (consecutiveNonLetters > 20) {
+          text[t] = text[t].slice(0, c) + " " + text[t].slice(c);
+          consecutiveNonLetters = 0;
+        }
+
+        if (!isLetterOrNum) consecutiveNonLetters++;
+      }
+    }
+
+    return text;
   }
 
   /**
