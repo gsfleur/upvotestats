@@ -269,6 +269,11 @@ export default function Trends() {
           fontSize: "13px",
           color: "silver",
         };
+        // Default post title for no img
+        let noImgTitleCSS = {
+          fontSize: "14px",
+          marginTop: "5px",
+        };
 
         // Arary of words in title and text
         let titleParts = posts[i][1].title.trim().split(/\s+/);
@@ -283,6 +288,7 @@ export default function Trends() {
         if (hasLongCharacters(titleParts) || hasLongCharacters(textParts)) {
           imgBodyCSS["wordBreak"] = "break-all";
           textBodyCSS["wordBreak"] = "break-all";
+          noImgTitleCSS["wordBreak"] = "break-all";
         }
 
         // Image Source
@@ -593,7 +599,7 @@ export default function Trends() {
                 )}
 
                 {!loadableImg && (
-                  <div style={{ fontSize: "14px", marginTop: "5px" }}>
+                  <div style={noImgTitleCSS}>
                     {posts[i][1].title}
                     {contentWarnings}
                   </div>
@@ -896,24 +902,12 @@ export default function Trends() {
                               fontSize: "14px",
                               color: "gainsboro",
                               float: "left",
-                              width:
-                                window.innerWidth > 600
-                                  ? "calc(100% - 120px)"
-                                  : "calc(100% - 90px)",
                               marginLeft: "10px",
                             }}
                           >
-                            {window.innerWidth >= 600 && (
-                              <span>{posts[i][1].title}</span>
-                            )}
-                            {window.innerWidth < 600 && (
-                              <span>
-                                {posts[i][1].title.substring(0, 100)}
-                                {posts[i][1].title.length > 100 && (
-                                  <span>...</span>
-                                )}
-                              </span>
-                            )}
+                            <span className="limitText">
+                              {posts[i][1].title}
+                            </span>
                             {!posts[i][1].redditMediaDomain &&
                               posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
@@ -1023,7 +1017,16 @@ export default function Trends() {
    */
   function hasLongCharacters(text) {
     for (let t = 0; t < text.length; t++) {
-      if (text[t].length > 21) return true;
+      let isMarkdownLink =
+        text[t].startsWith("[") &&
+        text[t].includes("](") &&
+        text[t].endsWith(")") &&
+        (text[t].includes("https:") || text[t].includes("http:"));
+
+      // Ignore links in markdown conversion
+      if (isMarkdownLink) text[t] = text[t].split("](")[0];
+
+      if (text[t].length > 22) return true;
     }
 
     return false;
@@ -1048,7 +1051,7 @@ export default function Trends() {
         if (isLetterOrNum) consecutiveNonLetters = 0;
 
         // text has long non consecutive non letters/numbers, seperate with space
-        if (consecutiveNonLetters > 20) {
+        if (consecutiveNonLetters > 22) {
           text[t] = text[t].slice(0, c) + " " + text[t].slice(c);
           consecutiveNonLetters = 0;
         }
