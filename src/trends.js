@@ -266,6 +266,8 @@ export default function Trends() {
         let textBodyCSS = {
           fontSize: "13px",
           color: "silver",
+          paddingTop: "10px",
+          paddingBottom: "10px",
         };
         // Default post title for no img
         let noImgTitleCSS = {
@@ -407,7 +409,7 @@ export default function Trends() {
 
         // Post Upvote Ratio DOM
         const percentUpvoted = (
-          <div>
+          <div style={{ overflow: "auto" }}>
             <div
               style={{
                 float: "left",
@@ -438,6 +440,9 @@ export default function Trends() {
                   style={{ color: "dodgerblue" }}
                   {...props}
                 />
+              ),
+              p: ({ node, ...props }) => (
+                <p style={{ margin: "0px" }} {...props} />
               ),
             }}
             children={text}
@@ -602,28 +607,30 @@ export default function Trends() {
                 )}
 
                 {posts[i][1].text.length > 0 && (
-                  <div style={textBodyCSS}>
-                    {!state.expandedPosts.includes(i) && (
-                      <span>
-                        {posts[i][1].spoiler && (
-                          <span>
-                            {markdown("Text hidden... [click to read more]")}
-                          </span>
-                        )}
-                        {!posts[i][1].spoiler && (
-                          <div className="limitText2">
-                            {markdown(posts[i][1].text)}
-                          </div>
-                        )}
-                      </span>
-                    )}
+                  <span>
+                    <div style={textBodyCSS}>
+                      {!state.expandedPosts.includes(i) && (
+                        <span>
+                          {posts[i][1].spoiler && (
+                            <div>
+                              {markdown("Text hidden... [click to read more]")}
+                            </div>
+                          )}
+                          {!posts[i][1].spoiler && (
+                            <div className="limitText2">
+                              {markdown(posts[i][1].text)}
+                            </div>
+                          )}
+                        </span>
+                      )}
+                      {state.expandedPosts.includes(i) && (
+                        <div>{markdown(posts[i][1].text)}</div>
+                      )}
+                    </div>
                     {state.expandedPosts.includes(i) && (
-                      <span>
-                        {markdown(posts[i][1].text)}
-                        <div>{percentUpvoted}</div>
-                      </span>
+                      <span>{percentUpvoted}</span>
                     )}
-                  </div>
+                  </span>
                 )}
                 {posts[i][1].text.length === 0 && (
                   <div
