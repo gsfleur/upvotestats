@@ -611,7 +611,7 @@ export default function Trends() {
                           </span>
                         )}
                         {!posts[i][1].spoiler && (
-                          <span className="limitTextwMargin">
+                          <span className="limitText">
                             <span>{markdown(posts[i][1].text)}</span>
                           </span>
                         )}
