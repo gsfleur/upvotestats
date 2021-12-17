@@ -233,8 +233,6 @@ export default function Trends() {
         // DOM for "trending with" section
         let trendingWith = [];
         const trends = posts[i][1].trends;
-        // word limit for text in non expanded form
-        const wordLimit = 30;
 
         // Load trends until width would be too large to fit all in one line
         for (let t = 1; t < trends.length; t++) {
@@ -404,28 +402,26 @@ export default function Trends() {
             >
               {posts[i][1].author}
             </a>
-            {state.expandedPosts.includes(i) && (
-              <div style={{ float: "right", marginRight: "20px" }}>
-                {threadLinkDOM}
-              </div>
-            )}
           </span>
         );
 
         // Post Upvote Ratio DOM
         const percentUpvoted = (
-          <div
-            style={{
-              float: "left",
-              fontSize: "13px",
-              color: "gray",
-            }}
-          >
-            {Math.floor(
-              (100 * posts[i][1].upvotes) /
-                (Math.abs(posts[i][1].downvotes) + posts[i][1].upvotes)
-            )}
-            % Upvoted
+          <div>
+            <div
+              style={{
+                float: "left",
+                fontSize: "13px",
+                color: "gray",
+              }}
+            >
+              {Math.floor(
+                (100 * posts[i][1].upvotes) /
+                  (Math.abs(posts[i][1].downvotes) + posts[i][1].upvotes)
+              )}
+              % Upvoted
+            </div>
+            <div style={{ float: "right" }}>{threadLinkDOM}</div>
           </div>
         );
 
@@ -615,18 +611,8 @@ export default function Trends() {
                           </span>
                         )}
                         {!posts[i][1].spoiler && (
-                          <span>
-                            {textParts.length > wordLimit && (
-                              <span>
-                                {markdown(
-                                  textParts.slice(0, wordLimit).join(" ") +
-                                    "... [click to read more]"
-                                )}
-                              </span>
-                            )}
-                            {textParts.length <= wordLimit && (
-                              <span>{markdown(posts[i][1].text)}</span>
-                            )}
+                          <span className="limitTextwMargin">
+                            <span>{markdown(posts[i][1].text)}</span>
                           </span>
                         )}
                       </span>
@@ -634,9 +620,7 @@ export default function Trends() {
                     {state.expandedPosts.includes(i) && (
                       <span>
                         {markdown(posts[i][1].text)}
-                        <div style={{ marginRight: "20px", marginTop: "5px" }}>
-                          {percentUpvoted}
-                        </div>
+                        <div>{percentUpvoted}</div>
                       </span>
                     )}
                   </div>
@@ -650,13 +634,7 @@ export default function Trends() {
                     }}
                   >
                     {state.expandedPosts.includes(i) && !loadableImg && (
-                      <div
-                        style={{
-                          marginRight: "20px",
-                        }}
-                      >
-                        {percentUpvoted}
-                      </div>
+                      <div>{percentUpvoted}</div>
                     )}
                   </div>
                 )}
@@ -768,9 +746,6 @@ export default function Trends() {
                             <br />
                             <br />
                             {percentUpvoted}
-                            <div style={{ float: "right" }}>
-                              {threadLinkDOM}
-                            </div>
                           </div>
                           <div
                             style={{
@@ -1026,7 +1001,7 @@ export default function Trends() {
       // Ignore links in markdown conversion
       if (isMarkdownLink) text[t] = text[t].split("](")[0];
 
-      if (text[t].length > 22) return true;
+      if (text[t].length > 30) return true;
     }
 
     return false;
@@ -1051,7 +1026,7 @@ export default function Trends() {
         if (isLetterOrNum) consecutiveNonLetters = 0;
 
         // text has long non consecutive non letters/numbers, seperate with space
-        if (consecutiveNonLetters > 22) {
+        if (consecutiveNonLetters > 30) {
           text[t] = text[t].slice(0, c) + " " + text[t].slice(c);
           consecutiveNonLetters = 0;
         }
