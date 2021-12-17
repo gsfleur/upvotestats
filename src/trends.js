@@ -1000,10 +1000,9 @@ export default function Trends() {
   function hasLongCharacters(text) {
     for (let t = 0; t < text.length; t++) {
       let isMarkdownLink =
-        text[t].startsWith("[") &&
         text[t].includes("](") &&
         text[t].endsWith(")") &&
-        (text[t].includes("https:") || text[t].includes("http:"));
+        (text[t].includes("(https:") || text[t].includes("(http:"));
 
       // Ignore links in markdown conversion
       if (isMarkdownLink) text[t] = text[t].split("](")[0];
