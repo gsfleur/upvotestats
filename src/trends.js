@@ -752,6 +752,7 @@ export default function Trends() {
                               posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
                               )}
+                            <br />
                             {percentUpvoted}
                           </div>
                           <div
