@@ -266,8 +266,8 @@ export default function Trends() {
         let textBodyCSS = {
           fontSize: "13px",
           color: "silver",
-          paddingTop: "10px",
-          paddingBottom: "10px",
+          paddingTop: "5px",
+          paddingBottom: "5px",
         };
         // Default post title for no img
         let noImgTitleCSS = {
