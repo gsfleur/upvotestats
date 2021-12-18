@@ -574,11 +574,13 @@ export default function Trends() {
                 {posts[i][1].trends.length > 0 && (
                   <div style={{ fontSize: "14px" }}>
                     <b>{posts[i][1].trends[0]}</b>
+                    {contentWarnings}
                   </div>
                 )}
                 {posts[i][1].trends.length === 0 && (
                   <div style={{ fontSize: "14px" }}>
                     <b>{posts[i][1].subName}</b>
+                    {contentWarnings}
                   </div>
                 )}
 
@@ -590,7 +592,6 @@ export default function Trends() {
                     }}
                   >
                     {markdown(titleParts.join(" "))}
-                    {contentWarnings}
                   </div>
                 )}
 
@@ -733,7 +734,6 @@ export default function Trends() {
                           {diffDays >= 14 && diffDays < 21 && <span>2w</span>}
                           {diffDays >= 21 && diffDays < 28 && <span>3w</span>}
                           {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
-                          {contentWarnings}
                         </div>
                       </div>
                       {state.expandedPosts.includes(i) && (
