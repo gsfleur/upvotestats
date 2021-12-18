@@ -482,7 +482,7 @@ export default function Trends() {
                   padding: "0px 2px 0px 2px",
                   borderRadius: "3px",
                   fontSize: "10.5px",
-                  marginLeft: "10px",
+                  marginLeft: "7.5px",
                 }}
               >
                 NSFW
@@ -496,7 +496,7 @@ export default function Trends() {
                   padding: "0px 2px 0px 2px",
                   borderRadius: "3px",
                   fontSize: "10.5px",
-                  marginLeft: "10px",
+                  marginLeft: "7.5px",
                 }}
               >
                 SPOILER
@@ -752,8 +752,6 @@ export default function Trends() {
                               posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
                               )}
-                            <br />
-                            <br />
                             {percentUpvoted}
                           </div>
                           <div
