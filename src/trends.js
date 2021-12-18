@@ -257,40 +257,15 @@ export default function Trends() {
           );
         }
 
-        // Default post img body css
-        let imgBodyCSS = {
-          display: "inline-block",
-          width: "100%",
-          marginTop: "5px",
-        };
-        // Default post text body css
-        let textBodyCSS = {
-          fontSize: "13px",
-          color: "silver",
-          paddingTop: "5px",
-          paddingBottom: "5px",
-        };
-        // Default post title for no img
-        let noImgTitleCSS = {
-          fontSize: "14px",
-          marginTop: "5px",
-        };
-
         // Arary of words in title and text
         let titleParts = posts[i][1].title.trim().split(/\s+/);
         let textParts = posts[i][1].text.trim().split(/\s+/);
 
         // Break by character if word is very long (long links or words)
+        titleParts = breakLongWords(titleParts);
+        textParts = breakLongWords(textParts);
         titleParts = breakLongCharacters(titleParts);
         textParts = breakLongCharacters(textParts);
-        posts[i][1].title = titleParts.join(" ");
-        posts[i][1].text = textParts.join(" ");
-
-        if (hasLongCharacters(titleParts) || hasLongCharacters(textParts)) {
-          imgBodyCSS["wordBreak"] = "break-all";
-          textBodyCSS["wordBreak"] = "break-all";
-          noImgTitleCSS["wordBreak"] = "break-all";
-        }
 
         // Image Source
         const imgSource = posts[i][1].redditMediaDomain
@@ -449,6 +424,9 @@ export default function Trends() {
               li: ({ node, ...props }) => <span {...props} />,
               ol: ({ node, ...props }) => <span {...props} />,
               ul: ({ node, ...props }) => <span {...props} />,
+              em: ({ node, ...props }) => (
+                <span style={{ wordBreak: "break-all" }} {...props} />
+              ),
             }}
             children={text}
             remarkPlugins={[remarkGfm]}
@@ -605,15 +583,27 @@ export default function Trends() {
                 )}
 
                 {!loadableImg && (
-                  <div style={noImgTitleCSS}>
-                    {posts[i][1].title}
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      marginTop: "5px",
+                    }}
+                  >
+                    {markdown(titleParts.join(" "))}
                     {contentWarnings}
                   </div>
                 )}
 
                 {posts[i][1].text.length > 0 && (
                   <span>
-                    <div style={textBodyCSS}>
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "silver",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
+                      }}
+                    >
                       {!state.expandedPosts.includes(i) && (
                         <span>
                           {posts[i][1].spoiler && (
@@ -623,13 +613,13 @@ export default function Trends() {
                           )}
                           {!posts[i][1].spoiler && (
                             <div className="limitText2">
-                              {markdown(posts[i][1].text)}
+                              {markdown(textParts.join(" "))}
                             </div>
                           )}
                         </span>
                       )}
                       {state.expandedPosts.includes(i) && (
-                        <div>{markdown(posts[i][1].text)}</div>
+                        <div>{markdown(textParts.join(" "))}</div>
                       )}
                     </div>
                     {state.expandedPosts.includes(i) && (
@@ -652,7 +642,14 @@ export default function Trends() {
                 )}
               </div>
               {loadableImg && (
-                <div className="imgBody" style={imgBodyCSS}>
+                <div
+                  className="imgBody"
+                  style={{
+                    display: "inline-block",
+                    width: "100%",
+                    marginTop: "5px",
+                  }}
+                >
                   <div
                     style={{
                       position: "relative",
@@ -750,7 +747,7 @@ export default function Trends() {
                               width: "100%",
                             }}
                           >
-                            {posts[i][1].title}
+                            {markdown(titleParts.join(" "))}
                             {!posts[i][1].redditMediaDomain &&
                               posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
@@ -893,7 +890,7 @@ export default function Trends() {
                             }}
                           >
                             <span className="limitText">
-                              {posts[i][1].title}
+                              {markdown(titleParts.join(" "))}
                             </span>
                             {!posts[i][1].redditMediaDomain &&
                               posts[i][1].urlDest !== undefined && (
@@ -998,31 +995,35 @@ export default function Trends() {
   }
 
   /**
-   * Determine if text has a really long characters
+   * Break up long words by adding em tag in markdown which
+   * react markdown will turn into a span with the break-all property
    * @param {*} text - text to search through
-   * @returns whether text contains long characters
+   * @returns array of text with long words surrounded by em markdown tag
    */
-  function hasLongCharacters(text) {
+  function breakLongWords(text) {
     // Loop through each wor din text array
     for (let t = 0; t < text.length; t++) {
-      let isMarkdownLink =
+      const isMarkdownLink =
         text[t].includes("](") &&
         text[t].endsWith(")") &&
         (text[t].includes("(https:") || text[t].includes("(http:"));
 
+      // text that will actually bew viewable (href links are hidden)
+      let actualSize = text[t];
       // Ignore links in markdown conversion
-      if (isMarkdownLink) text[t] = text[t].split("](")[0];
+      if (isMarkdownLink) actualSize = text[t].split("](")[0];
 
-      if (text[t].length > 30) return true;
+      // Add italicized markdown that will have dom with break-all
+      if (actualSize.length > 30) text[t] = "***" + text[t] + "***";
     }
 
-    return false;
+    return text;
   }
 
   /**
    * Break up text with long non letter/number characters
    * @param {*} text - text to search through
-   * @returns array of text
+   * @returns array of text with long characters seperated by space
    */
   function breakLongCharacters(text) {
     let consecutiveNonLetters = 0;
