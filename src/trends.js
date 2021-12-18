@@ -1014,7 +1014,7 @@ export default function Trends() {
       if (isMarkdownLink) actualSize = text[t].split("](")[0];
 
       // Add italicized markdown that will have dom with break-all
-      if (actualSize.length > 30) text[t] = "***" + text[t] + "***";
+      if (actualSize.length > 25) text[t] = "***" + text[t] + "***";
     }
 
     return text;
@@ -1039,7 +1039,7 @@ export default function Trends() {
         if (isLetterOrNum) consecutiveNonLetters = 0;
 
         // text has long non consecutive non letters/numbers, seperate with space
-        if (consecutiveNonLetters > 30) {
+        if (consecutiveNonLetters > 25) {
           text[t] = text[t].slice(0, c) + " " + text[t].slice(c);
           consecutiveNonLetters = 0;
         }
