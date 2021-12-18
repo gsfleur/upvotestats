@@ -83,7 +83,7 @@ export default function Home() {
   });
 
   // Loading objects
-  let loadingDOM = (
+  const loadingDOM = (
     <div
       className="homeCards loading"
       style={{

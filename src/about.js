@@ -13,8 +13,6 @@ export default function About() {
             Coin value is based under the assumption that 500 coins equals two
             dollards USD. There is no downvote metric for comments since there
             is no downvote ratio like there is for upvotes.
-            <br />
-            <br />
             <h3>Trending Page</h3>
             The Trends Page features posts on r/All along with the phrases that
             are trending in their comment sections. The posts are sorted by
@@ -24,8 +22,6 @@ export default function About() {
             techniques on the comments. The data for this page will update every
             hour. More stats about this data can be found at the bottom of the
             trends page.
-            <br />
-            <br />
             <h3>Searching subreddits</h3>
             By default, only the most recent one hundred top posts from this
             past month are analyzed for the convenience of processing time.

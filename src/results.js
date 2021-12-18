@@ -81,125 +81,6 @@ export default function Results(props) {
     ],
   };
 
-  // DOM for lowest upvote ratio posts
-  let downvoteListDOM = [];
-  for (
-    let i = 0;
-    i < props.mostDownvoted.length && downvoteListDOM.length < 50;
-    i++
-  ) {
-    // Skip deleted posts
-    if (props.mostDownvoted[i][1].text === "[deleted]") continue;
-
-    // DOM of post in list
-    downvoteListDOM.push(
-      <div className="centering" key={"today-" + i}>
-        <a
-          href={props.mostDownvoted[i][1].url}
-          className="postLink"
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            maxWidth: "450px",
-            border: "1.5px solid #292929",
-            borderRadius: "10px",
-            padding: "10px 10px 0px 10px",
-            marginTop: "10px",
-            marginBottom: "10px",
-          }}
-        >
-          <div
-            className="newsText"
-            style={{
-              overflow: "hidden",
-              width: "100%",
-            }}
-          >
-            <div
-              className="searchLink"
-              style={{
-                fontSize: "13px",
-                marginBottom: "10px",
-                color: "silver",
-              }}
-            >
-              {downvoteListDOM.length + 1} &bull;{" "}
-              {"r/" + props.mostDownvoted[i][1].subreddit} &bull;{" "}
-              {numToString(props.mostDownvoted[i][1].upvotes)} upvotes &bull;{" "}
-              {numToString(Math.abs(props.mostDownvoted[i][1].downvotes))}{" "}
-              downvotes
-              {props.mostDownvoted[i][1].nsfw === true && (
-                <span> &bull; NSFW</span>
-              )}
-            </div>
-            <div
-              style={{
-                width: Math.floor(props.mostDownvoted[i][0] * 100 - 5) + "%",
-                backgroundColor: "indianred",
-                height: "20px",
-                fontSize: "13px",
-                padding: "0px 10px 0px 0px",
-                float: "left",
-                textAlign: "right",
-                borderTopLeftRadius: "10px",
-                borderBottomLeftRadius: "10px",
-                border: "1px solid #0d0d0d",
-              }}
-            >
-              {Math.floor(props.mostDownvoted[i][0] * 100)}%
-            </div>
-            <div
-              style={{
-                width:
-                  Math.floor(100 - props.mostDownvoted[i][0] * 100 - 5) + "%",
-                backgroundColor: "royalblue",
-                height: "20px",
-                fontSize: "13px",
-                textAlign: "left",
-                padding: "0px 0px 0px 10px",
-                float: "left",
-                borderTopRightRadius: "10px",
-                borderBottomRightRadius: "10px",
-                border: "1px solid #0d0d0d",
-              }}
-            >
-              {Math.floor(100 - props.mostDownvoted[i][0] * 100) > 10 && (
-                <span>
-                  {Math.floor(100 - props.mostDownvoted[i][0] * 100)}%
-                </span>
-              )}
-            </div>
-          </div>
-          <div
-            className="searchLink"
-            style={{
-              fontSize: "16px",
-              marginTop: "10px",
-            }}
-          >
-            {props.mostDownvoted[i][1].title}
-          </div>
-          <div
-            style={{
-              width: "100%",
-              fontSize: "13px",
-              marginBottom: "10px",
-              color: "silver",
-              marginTop: "10px",
-            }}
-          >
-            {numToString(props.mostDownvoted[i][1].comments)} comments
-            {props.mostDownvoted[i][1].coins > 0 && (
-              <span>
-                , {numToString(props.mostDownvoted[i][1].coins)} reddit coins
-              </span>
-            )}
-          </div>
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div>
       {data.length > 0 && (
@@ -251,10 +132,6 @@ export default function Results(props) {
         <div className="itemContext">COINS</div>
         <div className="awardsHeader">{numToString(props.stats.awards)}</div>
         <div className="itemContext">AWARDS</div>
-      </div>
-      <div className="header">
-        <div className="title">LOWEST UPVOTE RATIO</div>
-        <div style={{ textAlign: "left" }}>{downvoteListDOM}</div>
       </div>
     </div>
   );

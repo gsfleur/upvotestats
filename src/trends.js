@@ -168,6 +168,7 @@ export default function Trends() {
       for (let i = 0; i < posts.length && postListDOM.length < 30; i++) {
         // Skip deleted posts
         if (posts[i][1].text === "[deleted]") continue;
+        if (posts[i][1].author === "[deleted]") continue;
 
         // Skip potential duplicates
         if (postLinks.includes(posts[i][1].url)) continue;
@@ -210,7 +211,7 @@ export default function Trends() {
           }
         }
 
-        // Setting thumbnail to source if thumb not available
+        // Setting thumbnail to source if thumbnail not available
         if (posts[i][1].source !== undefined) {
           if (
             posts[i][1].urlToImage === "image" ||
@@ -220,7 +221,7 @@ export default function Trends() {
         }
 
         // Determine whether to show image
-        let loadableImg =
+        const loadableImg =
           posts[i][1].urlToImage !== null &&
           posts[i][1].urlToImage !== undefined &&
           posts[i][1].urlToImage !== "" &&
@@ -234,7 +235,7 @@ export default function Trends() {
         let trendingWith = [];
         const trends = posts[i][1].trends;
 
-        // Load trends until width would be too large to fit all in one line
+        // Load dom for all sub level trends
         for (let t = 1; t < trends.length; t++) {
           trendingWith.push(
             <div
@@ -315,7 +316,7 @@ export default function Trends() {
           />
         );
 
-        // Link Destination as String
+        // Link Destination converted to string
         let destLink = posts[i][1].urlDest;
         if (destLink !== undefined) {
           destLink = destLink.replace("https://", "");
@@ -427,8 +428,8 @@ export default function Trends() {
           </div>
         );
 
-        // Markdown text
-        let markdown = (text) => (
+        // Markdown DOM for post text
+        const markdown = (text) => (
           <ReactMarkdown
             components={{
               a: ({ node, ...props }) => (
@@ -445,6 +446,9 @@ export default function Trends() {
                 <p style={{ margin: "0px" }} {...props} />
               ),
               strong: ({ node, ...props }) => <span {...props} />,
+              li: ({ node, ...props }) => <span {...props} />,
+              ol: ({ node, ...props }) => <span {...props} />,
+              ul: ({ node, ...props }) => <span {...props} />,
             }}
             children={text}
             remarkPlugins={[remarkGfm]}
@@ -999,6 +1003,7 @@ export default function Trends() {
    * @returns whether text contains long characters
    */
   function hasLongCharacters(text) {
+    // Loop through each wor din text array
     for (let t = 0; t < text.length; t++) {
       let isMarkdownLink =
         text[t].includes("](") &&
