@@ -444,6 +444,7 @@ export default function Trends() {
               p: ({ node, ...props }) => (
                 <p style={{ margin: "0px" }} {...props} />
               ),
+              strong: ({ node, ...props }) => <span {...props} />,
             }}
             children={text}
             remarkPlugins={[remarkGfm]}
