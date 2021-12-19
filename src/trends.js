@@ -262,8 +262,13 @@ export default function Trends() {
         let textParts = posts[i][1].text.trim().split(/\s+/);
 
         // Adding content warning tags in text, later to be converted in markdown
-        if (posts[i][1].nsfw) titleParts.unshift("![NSFW](notification)");
-        if (posts[i][1].spoiler) titleParts.unshift("![SPOILER](notification)");
+        if (loadableImg) {
+          if (posts[i][1].nsfw) titleParts.unshift("![NSFW](0)");
+          if (posts[i][1].spoiler) titleParts.unshift("![SPOILER](0)");
+        } else {
+          if (posts[i][1].nsfw) titleParts.push("![NSFW](2.5)");
+          if (posts[i][1].spoiler) titleParts.push("![SPOILER](2.5)");
+        }
 
         // Break by character if word is very long (long links or words)
         titleParts = breakLongWords(titleParts);
@@ -440,6 +445,7 @@ export default function Trends() {
                     padding: "0px 2px 0px 2px",
                     borderRadius: "3px",
                     fontSize: "10.5px",
+                    marginLeft: props.src + "px",
                     marginRight: "2.5px",
                   }}
                 >
