@@ -261,6 +261,10 @@ export default function Trends() {
         let titleParts = posts[i][1].title.trim().split(/\s+/);
         let textParts = posts[i][1].text.trim().split(/\s+/);
 
+        // Adding content warning tags in text, later to be converted in markdown
+        if (posts[i][1].nsfw) titleParts.unshift("![NSFW](notification)");
+        if (posts[i][1].spoiler) titleParts.unshift("![SPOILER](notification)");
+
         // Break by character if word is very long (long links or words)
         titleParts = breakLongWords(titleParts);
         textParts = breakLongWords(textParts);
@@ -427,6 +431,21 @@ export default function Trends() {
               em: ({ node, ...props }) => (
                 <span style={{ wordBreak: "break-all" }} {...props} />
               ),
+              img: ({ node, ...props }) => (
+                <span
+                  {...props}
+                  style={{
+                    color: "indianred",
+                    border: "1px solid indianred",
+                    padding: "0px 2px 0px 2px",
+                    borderRadius: "3px",
+                    fontSize: "10.5px",
+                    marginRight: "2.5px",
+                  }}
+                >
+                  {props.alt}
+                </span>
+              ),
             }}
             children={text}
             remarkPlugins={[remarkGfm]}
@@ -470,40 +489,6 @@ export default function Trends() {
           parts = parts[parts.length - 1].split(".");
           imgurLink = "https://imgur.com/" + parts[0] + "/embed";
         }
-
-        // Content warnings such as NSFW and Spoilers
-        const contentWarnings = (
-          <span>
-            {posts[i][1].nsfw && (
-              <span
-                style={{
-                  color: "indianred",
-                  border: "1px solid indianred",
-                  padding: "0px 2px 0px 2px",
-                  borderRadius: "3px",
-                  fontSize: "10.5px",
-                  marginLeft: "7.5px",
-                }}
-              >
-                NSFW
-              </span>
-            )}
-            {posts[i][1].spoiler && (
-              <span
-                style={{
-                  color: "gray",
-                  border: "1px solid gray",
-                  padding: "0px 2px 0px 2px",
-                  borderRadius: "3px",
-                  fontSize: "10.5px",
-                  marginLeft: "7.5px",
-                }}
-              >
-                SPOILER
-              </span>
-            )}
-          </span>
-        );
 
         // List of post links
         postLinks.push(posts[i][1].url);
@@ -574,13 +559,11 @@ export default function Trends() {
                 {posts[i][1].trends.length > 0 && (
                   <div style={{ fontSize: "14px" }}>
                     <b>{posts[i][1].trends[0]}</b>
-                    {contentWarnings}
                   </div>
                 )}
                 {posts[i][1].trends.length === 0 && (
                   <div style={{ fontSize: "14px" }}>
                     <b>{posts[i][1].subName}</b>
-                    {contentWarnings}
                   </div>
                 )}
 
