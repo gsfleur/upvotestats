@@ -762,7 +762,8 @@ export default function Trends() {
                                     style={{
                                       width: "100%",
                                       height: "100%",
-                                      minWidth: "275px",
+                                      maxHeight: "50vh",
+                                      objectFit: "contain",
                                     }}
                                     onError={(e) => {
                                       e.target.onerror = null;
