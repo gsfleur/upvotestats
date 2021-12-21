@@ -486,21 +486,6 @@ export default function Trends() {
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
         }
 
-        // Whether post is gif/vid imgur
-        const imgur =
-          posts[i][1].urlDest !== undefined &&
-          posts[i][1].urlDest.includes("imgur.com") &&
-          !posts[i][1].urlDest.includes(".jpg") &&
-          !posts[i][1].urlDest.includes(".png");
-
-        // Getting imgur embed link
-        let imgurLink = "";
-        if (imgur) {
-          let parts = posts[i][1].urlDest.split("/");
-          parts = parts[parts.length - 1].split(".");
-          imgurLink = "https://imgur.com/" + parts[0] + "/embed";
-        }
-
         // List of post links
         postLinks.push(posts[i][1].url);
         // DOM of post in list
@@ -753,29 +738,26 @@ export default function Trends() {
                               height: "100%",
                             }}
                           >
-                            {!posts[i][1].isVideo &&
-                              !streamable &&
-                              !gfycat &&
-                              !imgur && (
-                                <div className="centering">
-                                  <img
-                                    src={imgSource}
-                                    className="postImgStandard"
-                                    alt="Reddit Post Thumbnail"
-                                    loading="lazy"
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      maxHeight: "50vh",
-                                      objectFit: "contain",
-                                    }}
-                                    onError={(e) => {
-                                      e.target.onerror = null;
-                                      e.target.src = "missing.png";
-                                    }}
-                                  />
-                                </div>
-                              )}
+                            {!posts[i][1].isVideo && !streamable && !gfycat && (
+                              <div className="centering">
+                                <img
+                                  src={imgSource}
+                                  className="postImgStandard"
+                                  alt="Reddit Post Thumbnail"
+                                  loading="lazy"
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    maxHeight: "50vh",
+                                    objectFit: "contain",
+                                  }}
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "missing.png";
+                                  }}
+                                />
+                              </div>
+                            )}
                             {posts[i][1].isVideo && (
                               <div className="centering">
                                 <ReactHlsPlayer
@@ -831,28 +813,6 @@ export default function Trends() {
                                   width="100%"
                                   height="100%"
                                   title={posts[i][1].title + "-gfycat-" + i}
-                                  style={{
-                                    position: "absolute",
-                                    top: "0",
-                                    left: "0",
-                                  }}
-                                  allowFullScreen
-                                ></iframe>
-                              </div>
-                            )}
-                            {imgur && (
-                              <div
-                                style={{
-                                  position: "relative",
-                                  paddingBottom: "100%",
-                                }}
-                              >
-                                <iframe
-                                  src={imgurLink}
-                                  frameBorder="0"
-                                  width="100%"
-                                  height="100%"
-                                  title={posts[i][1].title + "-imgur-" + i}
                                   style={{
                                     position: "absolute",
                                     top: "0",
