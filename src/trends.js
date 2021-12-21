@@ -474,18 +474,6 @@ export default function Trends() {
             "https://streamable.com/e/" + parts[parts.length - 1];
         }
 
-        // Whether post is gfycat gif
-        const gfycat =
-          posts[i][1].urlDest !== undefined &&
-          posts[i][1].urlDest.includes("gfycat.com");
-
-        // Getting gfycat embed link
-        let gfycatLink = "";
-        if (gfycat) {
-          const parts = posts[i][1].urlDest.split("/");
-          gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
-        }
-
         // List of post links
         postLinks.push(posts[i][1].url);
         // DOM of post in list
@@ -738,7 +726,7 @@ export default function Trends() {
                               height: "100%",
                             }}
                           >
-                            {!posts[i][1].isVideo && !streamable && !gfycat && (
+                            {!posts[i][1].isVideo && !streamable && (
                               <div className="centering">
                                 <img
                                   src={imgSource}
@@ -796,29 +784,6 @@ export default function Trends() {
                                     height: "100%",
                                     position: "absolute",
                                   }}
-                                ></iframe>
-                              </div>
-                            )}
-                            {gfycat && (
-                              <div
-                                style={{
-                                  position: "relative",
-                                  paddingBottom: "calc(70.80% + 44px)",
-                                }}
-                              >
-                                <iframe
-                                  src={gfycatLink}
-                                  frameBorder="0"
-                                  scrolling="no"
-                                  width="100%"
-                                  height="100%"
-                                  title={posts[i][1].title + "-gfycat-" + i}
-                                  style={{
-                                    position: "absolute",
-                                    top: "0",
-                                    left: "0",
-                                  }}
-                                  allowFullScreen
                                 ></iframe>
                               </div>
                             )}
