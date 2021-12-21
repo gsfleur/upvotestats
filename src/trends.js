@@ -486,10 +486,12 @@ export default function Trends() {
           gfycatLink = "https://gfycat.com/ifr/" + parts[parts.length - 1];
         }
 
-        // Whether post is imgur
+        // Whether post is gif/vid imgur
         const imgur =
           posts[i][1].urlDest !== undefined &&
-          posts[i][1].urlDest.includes("imgur.com");
+          posts[i][1].urlDest.includes("imgur.com") &&
+          !posts[i][1].urlDest.includes(".jpg") &&
+          !posts[i][1].urlDest.includes(".png");
 
         // Getting imgur embed link
         let imgurLink = "";
@@ -1378,7 +1380,7 @@ export default function Trends() {
                 }}
               >
                 <div style={{ marginTop: "5px" }}>
-                  Trends from{" "}
+                  Trends from the top{" "}
                   {state.data.stats.posts.count
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
