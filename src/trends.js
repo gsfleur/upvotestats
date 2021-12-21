@@ -169,13 +169,10 @@ export default function Trends() {
     // Creating DOM for posts
     if (posts !== undefined) {
       for (let i = 0; i < posts.length && postListDOM.length < 30; i++) {
-        // Skip deleted posts
+        // Skip deleted, cross, or duped posts
         if (posts[i][1].text === "[deleted]") continue;
         if (posts[i][1].author === "[deleted]") continue;
-        // Skip cross posts
         if (posts[i][1].isCrossPost) continue;
-
-        // Skip potential duplicates
         if (postLinks.includes(posts[i][1].url)) continue;
 
         // Key of hidden posts requested user (new key every month)
@@ -759,7 +756,7 @@ export default function Trends() {
                                   id={"video" + i}
                                   className="postVideoStandard"
                                   height="100%"
-                                  poster={posts[i][1].urlToImage}
+                                  poster={posts[i][1].source}
                                   webkit-playsinline="true"
                                   playsInline={true}
                                 />
