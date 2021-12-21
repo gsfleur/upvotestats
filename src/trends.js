@@ -1201,7 +1201,6 @@ export default function Trends() {
                   marginBottom: "10px",
                 }}
               >
-                <b>Trends on Reddit</b>
                 <button
                   className="sortButton2"
                   style={{ padding: "0px" }}
@@ -1216,7 +1215,7 @@ export default function Trends() {
                   <div
                     style={{
                       position: "absolute",
-                      left: "130px",
+                      left: "0",
                       bottom: "-3px",
                     }}
                   >
@@ -1232,6 +1231,9 @@ export default function Trends() {
                     )}
                   </div>
                 </button>
+                <div style={{ position: "absolute", left: "30px" }}>
+                  <b>Trends on Reddit</b>
+                </div>
                 <button
                   className="sortButton2"
                   style={{ padding: "0px" }}
@@ -1245,7 +1247,7 @@ export default function Trends() {
                   <div
                     style={{
                       position: "absolute",
-                      right: "37px",
+                      right: "40px",
                       bottom: "0",
                     }}
                   >
@@ -1271,7 +1273,7 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginBottom: "10px",
+                    marginBottom: "8px",
                     width: "90%",
                   }}
                 >
