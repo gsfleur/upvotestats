@@ -1198,6 +1198,7 @@ export default function Trends() {
                   width: "90%",
                   position: "relative",
                   height: "20px",
+                  marginBottom: "10px",
                 }}
               >
                 <b>Trends on Reddit</b>
@@ -1215,7 +1216,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "120px",
-                      bottom: "0px",
+                      bottom: "-5px",
                     }}
                   >
                     <SortRoundedIcon fontSize="small" />
@@ -1224,7 +1225,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "5px",
+                      bottom: "0px",
                       right: "80px",
                     }}
                   >
@@ -1246,7 +1247,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "55px",
-                      bottom: "0px",
+                      bottom: "-5px",
                     }}
                   >
                     {state.expandAll && (
@@ -1264,7 +1265,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "5px",
+                      bottom: "0px",
                       right: "0px",
                     }}
                   >
@@ -1280,7 +1281,6 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginTop: "10px",
                     marginBottom: "5px",
                     width: "90%",
                   }}
