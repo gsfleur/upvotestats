@@ -9,6 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
+import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
 
 export default function Trends() {
@@ -28,6 +30,7 @@ export default function Trends() {
     sportsData: undefined,
     expandedPosts: [],
     showOptions: false,
+    expandAll: false,
   });
 
   useEffect(() => {
@@ -594,7 +597,7 @@ export default function Trends() {
                         paddingBottom: "5px",
                       }}
                     >
-                      {!state.expandedPosts.includes(i) && (
+                      {!isExpanded(i) && (
                         <span>
                           {posts[i][1].spoiler && (
                             <div>
@@ -608,13 +611,11 @@ export default function Trends() {
                           )}
                         </span>
                       )}
-                      {state.expandedPosts.includes(i) && (
+                      {isExpanded(i) && (
                         <div>{markdown(textParts.join(" "))}</div>
                       )}
                     </div>
-                    {state.expandedPosts.includes(i) && (
-                      <span>{percentUpvoted}</span>
-                    )}
+                    {isExpanded(i) && <span>{percentUpvoted}</span>}
                   </span>
                 )}
                 {posts[i][1].text.length === 0 && (
@@ -625,7 +626,7 @@ export default function Trends() {
                       color: "silver",
                     }}
                   >
-                    {state.expandedPosts.includes(i) && !loadableImg && (
+                    {isExpanded(i) && !loadableImg && (
                       <div>{percentUpvoted}</div>
                     )}
                   </div>
@@ -725,7 +726,7 @@ export default function Trends() {
                           {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
                         </div>
                       </div>
-                      {state.expandedPosts.includes(i) && (
+                      {isExpanded(i) && (
                         <span>
                           <div
                             className="postDate"
@@ -861,7 +862,7 @@ export default function Trends() {
                           </div>
                         </span>
                       )}
-                      {!state.expandedPosts.includes(i) && (
+                      {!isExpanded(i) && (
                         <span>
                           {!blurred && <span>{thumbnail}</span>}
                           {blurred && (
@@ -899,7 +900,7 @@ export default function Trends() {
 
               {!loadableImg && (
                 <div>
-                  {!state.expandedPosts.includes(i) && (
+                  {!isExpanded(i) && (
                     <div
                       className="postDate"
                       style={{
@@ -910,7 +911,7 @@ export default function Trends() {
                       {author}
                     </div>
                   )}
-                  {state.expandedPosts.includes(i) && (
+                  {isExpanded(i) && (
                     <div
                       className="postDate"
                       style={{
@@ -935,7 +936,7 @@ export default function Trends() {
                       fontSize: "12px",
                       color: "gray",
                       overflow: "hidden",
-                      height: state.expandedPosts.includes(i) ? "100%" : "38px",
+                      height: isExpanded(i) ? "100%" : "38px",
                     }}
                   >
                     {trendingWith}
@@ -977,7 +978,7 @@ export default function Trends() {
    * @param {*} i - id of post to open
    */
   function openPost(i) {
-    if (!state.expandedPosts.includes(i)) state.expandedPosts.push(i);
+    if (!isExpanded(i)) state.expandedPosts.push(i);
     else state.expandedPosts = state.expandedPosts.filter((e) => e !== i);
 
     setState({ ...state });
@@ -1038,6 +1039,15 @@ export default function Trends() {
     }
 
     return text;
+  }
+
+  /**
+   * Determine whether post is expanded
+   * @param {*} index num in array to check
+   * @returns whether post has been expanded
+   */
+  function isExpanded(index) {
+    return state.expandedPosts.includes(index) || state.expandAll;
   }
 
   /**
@@ -1188,10 +1198,40 @@ export default function Trends() {
                   width: "90%",
                   position: "relative",
                   height: "23px",
-                  marginBottom: "0px",
+                  marginBottom: "10px",
                 }}
               >
                 <b>Trends on Reddit</b>
+                <button
+                  className="sortButton2"
+                  style={{ padding: "0px" }}
+                  onClick={() =>
+                    setState({
+                      ...state,
+                      expandAll: state.expandAll ? false : true,
+                      expandedPosts: [],
+                    })
+                  }
+                >
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "130px",
+                      bottom: "-3px",
+                    }}
+                  >
+                    {state.expandAll && (
+                      <span>
+                        <UnfoldLessIcon fontSize="small" />
+                      </span>
+                    )}
+                    {!state.expandAll && (
+                      <span>
+                        <UnfoldMoreIcon fontSize="small" />
+                      </span>
+                    )}
+                  </div>
+                </button>
                 <button
                   className="sortButton2"
                   style={{ padding: "0px" }}
@@ -1231,8 +1271,7 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginTop: "5px",
-                    marginBottom: "3px",
+                    marginBottom: "10px",
                     width: "90%",
                   }}
                 >
