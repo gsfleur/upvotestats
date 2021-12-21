@@ -760,6 +760,7 @@ export default function Trends() {
                                     src={imgSource}
                                     className="postImgStandard"
                                     alt="Reddit Post Thumbnail"
+                                    loading="lazy"
                                     style={{
                                       width: "100%",
                                       height: "100%",
