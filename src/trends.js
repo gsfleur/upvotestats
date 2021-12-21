@@ -172,6 +172,8 @@ export default function Trends() {
         // Skip deleted posts
         if (posts[i][1].text === "[deleted]") continue;
         if (posts[i][1].author === "[deleted]") continue;
+        // Skip cross posts
+        if (posts[i][1].isCrossPost) continue;
 
         // Skip potential duplicates
         if (postLinks.includes(posts[i][1].url)) continue;
