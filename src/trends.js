@@ -78,6 +78,30 @@ export default function Trends() {
           }, Math.min(500, Math.max(0, 500 - (afterDate - beforeDate))));
         }
       })();
+    } else {
+      // Autoplay videos if they appear within viewport
+      let videos = document.querySelectorAll("video");
+      videos.forEach((video) => {
+        video.muted = true;
+        let playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            let observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.intersectionRatio !== 1 && !video.paused) {
+                    video.pause();
+                  } else if (video.paused) {
+                    video.play();
+                  }
+                });
+              },
+              { threshold: 0.5 }
+            );
+            observer.observe(video);
+          });
+        }
+      });
     }
 
     return () => {
