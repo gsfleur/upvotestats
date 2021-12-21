@@ -1197,8 +1197,7 @@ export default function Trends() {
                   color: "gainsboro",
                   width: "90%",
                   position: "relative",
-                  height: "23px",
-                  marginBottom: "0px",
+                  height: "20px",
                 }}
               >
                 <b>Trends on Reddit</b>
@@ -1216,7 +1215,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "120px",
-                      bottom: "0",
+                      bottom: "0px",
                     }}
                   >
                     <SortRoundedIcon fontSize="small" />
@@ -1225,7 +1224,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "5.5px",
+                      bottom: "5px",
                       right: "80px",
                     }}
                   >
@@ -1247,24 +1246,25 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "55px",
+                      bottom: "0px",
                     }}
                   >
                     {state.expandAll && (
-                      <span>
+                      <div>
                         <UnfoldLessIcon fontSize="small" />
-                      </span>
+                      </div>
                     )}
                     {!state.expandAll && (
-                      <span>
+                      <div>
                         <UnfoldMoreIcon fontSize="small" />
-                      </span>
+                      </div>
                     )}
                   </div>
                   <div
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "5.5px",
+                      bottom: "5px",
                       right: "0px",
                     }}
                   >
@@ -1280,7 +1280,7 @@ export default function Trends() {
                   style={{
                     fontSize: "12px",
                     color: "gray",
-                    marginTop: "5px",
+                    marginTop: "10px",
                     marginBottom: "5px",
                     width: "90%",
                   }}
