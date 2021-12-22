@@ -31,6 +31,7 @@ export default function Trends() {
     expandedPosts: [],
     showOptions: false,
     expandAll: false,
+    videoElements: [],
   });
 
   useEffect(() => {
@@ -79,29 +80,43 @@ export default function Trends() {
         }
       })();
     } else {
-      // Autoplay videos if they appear within viewport
+      // Autoplay videos if they appear within user viewport
       let videos = document.querySelectorAll("video");
-      videos.forEach((video) => {
-        video.muted = true;
-        let playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            let observer = new IntersectionObserver(
-              (entries) => {
-                entries.forEach((entry) => {
-                  if (entry.intersectionRatio !== 1 && !video.paused) {
-                    video.pause();
-                  } else if (video.paused) {
-                    video.play();
-                  }
-                });
-              },
-              { threshold: 0.5 }
-            );
-            observer.observe(video);
-          });
+      (async () => {
+        for (let i = 0; i < videos.length; i++) {
+          let video = videos[i];
+          // load observer for unmarked element
+          if (!state.videoElements.includes(video)) {
+            video.muted = true;
+            let playPromise = undefined;
+
+            // loading play promise
+            if (!state.expandAll) playPromise = await video.play();
+            else playPromise = video.play();
+
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  let observer = new IntersectionObserver(
+                    (entries) => {
+                      entries.forEach((entry) => {
+                        if (entry.intersectionRatio !== 1 && !video.paused) {
+                          video.pause();
+                        } else if (video.paused) {
+                          video.play();
+                        }
+                      });
+                    },
+                    { threshold: 0.3 }
+                  );
+                  observer.observe(video);
+                  state.videoElements.push(video);
+                })
+                .catch(() => {});
+            }
+          }
         }
-      });
+      })().catch(() => {});
     }
 
     return () => {
@@ -115,6 +130,7 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
+      videoElements: [],
       sortDate: event.target.value,
     });
   };
@@ -125,6 +141,7 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
+      videoElements: [],
       sortBy: event.target.value,
     });
   };
@@ -145,6 +162,7 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
+      videoElements: [],
     });
   };
 
@@ -455,10 +473,10 @@ export default function Trends() {
               p: ({ node, ...props }) => (
                 <p style={{ margin: "0px" }} {...props} />
               ),
-              strong: ({ node, ...props }) => <span {...props} />,
-              li: ({ node, ...props }) => <span {...props} />,
-              ol: ({ node, ...props }) => <span {...props} />,
-              ul: ({ node, ...props }) => <span {...props} />,
+              strong: () => <span></span>,
+              li: () => <span></span>,
+              ol: () => <span></span>,
+              ul: () => <span></span>,
               em: ({ node, ...props }) => (
                 <span style={{ wordBreak: "break-all" }} {...props} />
               ),
@@ -512,7 +530,8 @@ export default function Trends() {
                 e.target.className !== "searchLink2" &&
                 e.target.className !== "iconImg" &&
                 !e.target.id.includes("report") &&
-                e.target.id !== "threadLink"
+                e.target.id !== "threadLink" &&
+                !state.expandAll
               )
                 openPost(i);
             }}
@@ -1048,6 +1067,7 @@ export default function Trends() {
                 sort: category,
                 data: state[category + "Data"],
                 expandedPosts: [],
+                videoElements: [],
               })
             }
           >
@@ -1191,6 +1211,7 @@ export default function Trends() {
                       ...state,
                       expandAll: state.expandAll ? false : true,
                       expandedPosts: [],
+                      videoElements: [],
                     })
                   }
                 >
