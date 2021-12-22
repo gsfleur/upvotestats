@@ -80,36 +80,40 @@ export default function Trends() {
         }
       })();
     } else {
-      // Autoplay videos if they appear within user viewport
+      // Get all videos
       let videos = document.querySelectorAll("video");
+      // percentage of video that needs to be on screen to autoplay
+      const threshold = 0.3;
       (async () => {
+        // Loop through all video tags
         for (let i = 0; i < videos.length; i++) {
           let video = videos[i];
-          // load observer for unmarked element
+          // load observer for unmarked video elements
           if (!state.videoElements.includes(video)) {
             video.muted = true;
-            let playPromise = undefined;
-
             // loading play promise
-            if (!state.expandAll) playPromise = await video.play();
-            else playPromise = video.play();
-
+            let playPromise = video.play();
             if (playPromise !== undefined) {
               playPromise
                 .then(() => {
+                  // Autoplay videos if they appear within user viewport
                   let observer = new IntersectionObserver(
                     (entries) => {
                       entries.forEach((entry) => {
-                        if (entry.intersectionRatio !== 1 && !video.paused) {
+                        if (
+                          entry.intersectionRatio < threshold &&
+                          !video.paused
+                        ) {
                           video.pause();
                         } else if (video.paused) {
-                          video.play();
+                          video.play().catch(() => {});
                         }
                       });
                     },
-                    { threshold: 0.3 }
+                    { threshold: threshold }
                   );
                   observer.observe(video);
+                  // mark video element as seen
                   state.videoElements.push(video);
                 })
                 .catch(() => {});
