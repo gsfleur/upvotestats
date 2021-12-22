@@ -31,7 +31,7 @@ export default function Trends() {
     expandedPosts: [],
     showOptions: false,
     expandAll: false,
-    videoElements: [],
+    videoIDs: [],
   });
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function Trends() {
         for (let i = 0; i < videos.length; i++) {
           let video = videos[i];
           // load observer for unmarked video elements
-          if (!state.videoElements.includes(video)) {
+          if (!state.videoIDs.includes(video.id)) {
             video.muted = true;
             // loading play promise
             let playPromise = video.play();
@@ -114,10 +114,13 @@ export default function Trends() {
                   );
                   observer.observe(video);
                   // mark video element as seen
-                  state.videoElements.push(video);
+                  state.videoIDs.push(video.id);
                 })
                 .catch(() => {});
             }
+          } else {
+            // autoplay first post if its a video in expand all mode
+            if (video.id === "video0" && state.expandAll) video.play();
           }
         }
       })().catch(() => {});
@@ -134,7 +137,7 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
-      videoElements: [],
+      videoIDs: [],
       sortDate: event.target.value,
     });
   };
@@ -145,7 +148,7 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
-      videoElements: [],
+      videoIDs: [],
       sortBy: event.target.value,
     });
   };
@@ -166,7 +169,7 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
-      videoElements: [],
+      videoIDs: [],
     });
   };
 
@@ -952,6 +955,11 @@ export default function Trends() {
    * @param {*} i - id of post to open
    */
   function openPost(i) {
+    // removing video id
+    if (isExpanded(i))
+      state.videoIDs = state.videoIDs.filter((e) => e !== "video" + i);
+
+    // adding/removing to expanded posts list
     if (!isExpanded(i)) state.expandedPosts.push(i);
     else state.expandedPosts = state.expandedPosts.filter((e) => e !== i);
 
@@ -1071,7 +1079,7 @@ export default function Trends() {
                 sort: category,
                 data: state[category + "Data"],
                 expandedPosts: [],
-                videoElements: [],
+                videoIDs: [],
               })
             }
           >
@@ -1210,14 +1218,14 @@ export default function Trends() {
                 <button
                   className="sortButton2"
                   style={{ padding: "0px" }}
-                  onClick={() =>
+                  onClick={() => {
                     setState({
                       ...state,
                       expandAll: state.expandAll ? false : true,
                       expandedPosts: [],
-                      videoElements: [],
-                    })
-                  }
+                      videoIDs: state.expandAll ? [] : state.videoIDs,
+                    });
+                  }}
                 >
                   <div
                     style={{
