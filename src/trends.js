@@ -12,6 +12,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 export default function Trends() {
   window.document.title = "Trends on Reddit - Upvote Stats";
@@ -269,6 +271,12 @@ export default function Trends() {
             posts[i][1].urlToImage === "default"
           )
             posts[i][1].urlToImage = posts[i][1].source;
+        }
+
+        // Setting source to a gallery image
+        if (posts[i][1].isGallery && !posts[i][1].isVideo) {
+          posts[i][1].source =
+            posts[i][1].mediaMetadata[posts[i][1].galleryItem];
         }
 
         // Determine whether to show image
@@ -538,6 +546,7 @@ export default function Trends() {
                 e.target.className !== "iconImg" &&
                 !e.target.id.includes("report") &&
                 e.target.id !== "threadLink" &&
+                e.target.className.baseVal === undefined &&
                 !state.expandAll
               )
                 openPost(i);
@@ -774,24 +783,87 @@ export default function Trends() {
                             }}
                           >
                             {!posts[i][1].isVideo && !streamable && (
-                              <div className="centering">
-                                <img
-                                  src={imgSource}
-                                  className="postImgStandard"
-                                  alt="Reddit Post Thumbnail"
-                                  loading="lazy"
-                                  style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    maxHeight: "50vh",
-                                    objectFit: "contain",
-                                  }}
-                                  onError={(e) => {
-                                    e.target.onerror = null;
-                                    e.target.src = "missing.png";
-                                  }}
-                                />
-                              </div>
+                              <span>
+                                {posts[i][1].isGallery && (
+                                  <div
+                                    className="centering"
+                                    style={{ marginBottom: "10px" }}
+                                  >
+                                    <ArrowCircleLeftIcon
+                                      className="nextButton"
+                                      onClick={() => {
+                                        let currIndex = posts[i][1].galleryItem;
+                                        // getting next index for gallery item
+                                        posts[i][1].galleryItem = Math.max(
+                                          0,
+                                          posts[i][1].galleryItem - 1
+                                        );
+                                        // if index changed, update
+                                        if (
+                                          currIndex !== posts[i][1].galleryItem
+                                        ) {
+                                          setState({
+                                            ...state,
+                                          });
+                                        }
+                                      }}
+                                    />
+                                    <div
+                                      style={{
+                                        marginLeft: "10px",
+                                        marginRight: "10px",
+                                        border: "1px solid gray",
+                                        borderRadius: "10px",
+                                        padding: "5px 5px 5px 5px",
+                                        fontSize: "11px",
+                                        width: "60px",
+                                        textAlign: "center",
+                                      }}
+                                    >
+                                      {posts[i][1].galleryItem + 1}
+                                      &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
+                                      {posts[i][1].mediaMetadata.length}
+                                    </div>
+                                    <ArrowCircleRightIcon
+                                      className="nextButton"
+                                      onClick={() => {
+                                        let currIndex = posts[i][1].galleryItem;
+                                        // getting next index for gallery item
+                                        posts[i][1].galleryItem = Math.min(
+                                          posts[i][1].mediaMetadata.length - 1,
+                                          posts[i][1].galleryItem + 1
+                                        );
+                                        // if index changed, update
+                                        if (
+                                          currIndex !== posts[i][1].galleryItem
+                                        ) {
+                                          setState({
+                                            ...state,
+                                          });
+                                        }
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                                <div className="centering">
+                                  <img
+                                    src={imgSource}
+                                    className="postImgStandard"
+                                    alt="Reddit Post Thumbnail"
+                                    loading="lazy"
+                                    style={{
+                                      width: "100%",
+                                      height: "100%",
+                                      maxHeight: "50vh",
+                                      objectFit: "contain",
+                                    }}
+                                    onError={(e) => {
+                                      e.target.onerror = null;
+                                      e.target.src = "missing.png";
+                                    }}
+                                  />
+                                </div>
+                              </span>
                             )}
                             {posts[i][1].isVideo && (
                               <div className="centering">

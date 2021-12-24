@@ -119,6 +119,17 @@
   color: dodgerblue;
 }
 
+.nextButton {
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  font-size: 13px;
+  color: silver;
+}
+.nextButton:hover {
+  color: dodgerblue;
+}
+
 .reloadButton {
   border: none;
   background: none;
