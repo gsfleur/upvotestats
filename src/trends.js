@@ -153,7 +153,7 @@ export default function Trends() {
     });
   };
 
-  // Handle Requst Post Removal Event
+  // Handle Request Post Removal Event
   const handleReport = (event) => {
     const d = new Date();
     const id = event.target.id.split("-")[1];
@@ -273,8 +273,8 @@ export default function Trends() {
 
         // Determine whether to show image
         const loadableImg =
-          posts[i][1].urlToImage !== null &&
           posts[i][1].urlToImage !== undefined &&
+          posts[i][1].urlToImage !== null &&
           posts[i][1].urlToImage !== "" &&
           posts[i][1].urlToImage !== "default" &&
           posts[i][1].urlToImage !== "self" &&
@@ -309,23 +309,23 @@ export default function Trends() {
         }
 
         // Arary of words in title and text
-        let titleParts = posts[i][1].title.trim().split(/\s+/);
-        let textParts = posts[i][1].text.trim().split(/\s+/);
+        let postTitle = posts[i][1].title;
+        let postText = posts[i][1].text;
 
         // Adding content warning tags in text, later to be converted in markdown
         if (loadableImg) {
-          if (posts[i][1].nsfw) titleParts.unshift("![NSFW](0)");
-          if (posts[i][1].spoiler) titleParts.unshift("![SPOILER](0)");
+          if (posts[i][1].nsfw) postTitle = "![NSFW](0) " + postTitle;
+          if (posts[i][1].spoiler) postTitle = "![SPOILER](0) " + postTitle;
         } else {
-          if (posts[i][1].nsfw) titleParts.push("![NSFW](2.5)");
-          if (posts[i][1].spoiler) titleParts.push("![SPOILER](2.5)");
+          if (posts[i][1].nsfw) postTitle += " ![NSFW](2.5)";
+          if (posts[i][1].spoiler) postTitle += " ![SPOILER](2.5)";
         }
 
         // Break by character if word is very long (long links or words)
-        titleParts = breakLongWords(titleParts);
-        textParts = breakLongWords(textParts);
-        titleParts = breakLongCharacters(titleParts);
-        textParts = breakLongCharacters(textParts);
+        postTitle = breakLongWords(postTitle);
+        postText = breakLongWords(postText);
+        postTitle = breakLongCharacters(postTitle);
+        postText = breakLongCharacters(postText);
 
         // Image Source
         const imgSource = posts[i][1].redditMediaDomain
@@ -480,10 +480,7 @@ export default function Trends() {
               p: ({ node, ...props }) => (
                 <p style={{ margin: "0px" }} {...props} />
               ),
-              strong: () => <span></span>,
-              li: () => <span></span>,
-              ol: () => <span></span>,
-              ul: () => <span></span>,
+              strong: ({ node, ...props }) => <span {...props} />,
               em: ({ node, ...props }) => (
                 <span style={{ wordBreak: "break-all" }} {...props} />
               ),
@@ -495,7 +492,7 @@ export default function Trends() {
                     border: "1px solid indianred",
                     padding: "0px 2px 0px 2px",
                     borderRadius: "3px",
-                    fontSize: "10.5px",
+                    fontSize: "10px",
                     marginLeft: props.src + "px",
                     marginRight: "2.5px",
                   }}
@@ -503,6 +500,9 @@ export default function Trends() {
                   {props.alt}
                 </span>
               ),
+              li: () => <span></span>,
+              ol: () => <span></span>,
+              ul: () => <span></span>,
             }}
             children={text}
             remarkPlugins={[remarkGfm]}
@@ -607,7 +607,7 @@ export default function Trends() {
                       marginTop: "5px",
                     }}
                   >
-                    {markdown(titleParts.join(" "))}
+                    {markdown(postTitle)}
                   </div>
                 )}
 
@@ -630,14 +630,12 @@ export default function Trends() {
                           )}
                           {!posts[i][1].spoiler && (
                             <div className="limitText2">
-                              {markdown(textParts.join(" "))}
+                              {markdown(postText)}
                             </div>
                           )}
                         </span>
                       )}
-                      {isExpanded(i) && (
-                        <div>{markdown(textParts.join(" "))}</div>
-                      )}
+                      {isExpanded(i) && <div>{markdown(postText)}</div>}
                     </div>
                     {isExpanded(i) && <span>{percentUpvoted}</span>}
                   </span>
@@ -761,7 +759,7 @@ export default function Trends() {
                               width: "100%",
                             }}
                           >
-                            {markdown(titleParts.join(" "))}
+                            {markdown(postTitle)}
                             {!posts[i][1].redditMediaDomain &&
                               posts[i][1].urlDest !== undefined && (
                                 <span> {outLinkDOM}</span>
@@ -857,7 +855,7 @@ export default function Trends() {
                             }}
                           >
                             <span className="limitText">
-                              {markdown(titleParts.join(" "))}
+                              {markdown(postTitle)}
                             </span>
                             {!posts[i][1].redditMediaDomain &&
                               posts[i][1].urlDest !== undefined && (
@@ -973,23 +971,39 @@ export default function Trends() {
    * @returns array of text with long words surrounded by em markdown tag
    */
   function breakLongWords(text) {
-    // Loop through each wor din text array
-    for (let t = 0; t < text.length; t++) {
-      const isMarkdownLink =
-        text[t].includes("](") &&
-        text[t].endsWith(")") &&
-        (text[t].includes("(https:") || text[t].includes("(http:"));
+    // getting array of text surrounded by brackets
+    let m = text.match(/\[(.*?)\]/g);
 
-      // text that will actually bew viewable (href links are hidden)
-      let actualSize = text[t];
-      // Ignore links in markdown conversion
-      if (isMarkdownLink) actualSize = text[t].split("](")[0];
-
-      // Add italicized markdown that will have dom with break-all
-      if (actualSize.length > 25) text[t] = "***" + text[t] + "***";
+    // replacing spaces with ":s:" for text surrounded by brackets
+    // goal is to keep link and url markdown as one when seperated by spaces
+    if (m !== null) {
+      for (let i = 0; i < m.length; i++) {
+        let r = m[i].replace(/\s+/g, ":s:");
+        text = text.replace(m[i], r);
+      }
     }
 
-    return text;
+    // splitting text by spaces
+    text = text.split(/\s+/);
+
+    // Loop through each word in text array
+    for (let t = 0; t < text.length; t++) {
+      const isMarkdownLink = text[t].match(/\[(.*?)\]\((.*?)\)/g) !== null;
+
+      // text that will actually be viewable (href links are hidden)
+      let visibleText = text[t];
+      // Ignore url links in markdown conversion
+      if (isMarkdownLink) visibleText = text[t].split("](")[0];
+
+      // replace ":s:" with regular spaces
+      text[t] = text[t].replace(/:s:/g, " ");
+      visibleText = visibleText.replace(/:s:/g, " ");
+
+      // Add markdown that will convert to a span with break-all
+      if (visibleText.length > 25) text[t] = "***" + text[t] + "***";
+    }
+
+    return text.join(" ");
   }
 
   /**
@@ -998,6 +1012,7 @@ export default function Trends() {
    * @returns array of text with long characters seperated by space
    */
   function breakLongCharacters(text) {
+    text = text.split(/\s+/);
     let consecutiveNonLetters = 0;
 
     // Loop through characters
@@ -1020,7 +1035,7 @@ export default function Trends() {
       }
     }
 
-    return text;
+    return text.join(" ");
   }
 
   /**
