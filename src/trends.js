@@ -974,7 +974,7 @@ export default function Trends() {
                   )}
                 </div>
               )}
-              {trends.length > 0 && (
+              {trends.length > 1 && (
                 <div
                   style={{
                     width: "100%",
