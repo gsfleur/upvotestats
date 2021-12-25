@@ -1048,10 +1048,13 @@ export default function Trends() {
   function breakLongWords(text) {
     // getting array of text surrounded by brackets
     let m = text.match(/\[(.*?)\]/g);
+    let m2 = text.match(/\[(.*?)\[(.*?)\](.*?)\]/g);
 
-    // replacing spaces with ":s:" for text surrounded by brackets
-    // goal is to keep link and url markdown as one when seperated by spaces
     if (m !== null) {
+      // combining arrays of text that are enclosed by brackets
+      if (m2 !== null) m = m.concat(m2.filter((item) => m.indexOf(item) < 0));
+      // replacing spaces with ":s:" in text, goal is to keep link
+      // and url markdown as one after being seperated by spaces
       for (let i = 0; i < m.length; i++) {
         let r = m[i].replace(/\s+/g, ":s:");
         text = text.replace(m[i], r);
@@ -1074,8 +1077,12 @@ export default function Trends() {
       text[t] = text[t].replace(/:s:/g, " ");
       visibleText = visibleText.replace(/:s:/g, " ");
 
+      // getting the length of the longest word
+      let maxLength = visibleText.split(/\s+/g).map((n) => (n = n.length));
+      maxLength = maxLength.reduce((max, n) => Math.max(max, n));
+
       // Add markdown that will convert to a span with break-all
-      if (visibleText.length > 25) text[t] = "***" + text[t] + "***";
+      if (maxLength > 25) text[t] = "***" + text[t] + "***";
     }
 
     return text.join(" ");
