@@ -274,10 +274,12 @@ export default function Trends() {
             posts[i][1].urlToImage = posts[i][1].source;
         }
 
-        // Setting source to a gallery image
+        // Setting source to specific image in reddit gallery
         if (posts[i][1].isGallery && !posts[i][1].isVideo) {
-          posts[i][1].source =
-            posts[i][1].mediaMetadata[posts[i][1].galleryItem];
+          if (posts[i][1].mediaMetadata.length > 0) {
+            posts[i][1].source =
+              posts[i][1].mediaMetadata[posts[i][1].galleryItem];
+          }
         }
 
         // Determine whether to show image
