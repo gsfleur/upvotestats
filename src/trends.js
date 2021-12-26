@@ -1082,8 +1082,17 @@ export default function Trends() {
 
       // text that will actually be viewable (href links are hidden)
       let visibleText = text[t];
-      // Ignore url links in markdown conversion
-      if (isMarkdownLink) visibleText = text[t].split("](")[0];
+      // Remove ref and keep title from markdown link
+      if (isMarkdownLink) {
+        p = text[t].match(/\((.*?)\)/g);
+        if (p !== null) {
+          // getting visible text from markdown link
+          for (let i = 0; i < p.length; i++) {
+            if (p[i].includes("https://") || p[i].includes("http://"))
+              visibleText = visibleText.replace(p[i], "");
+          }
+        }
+      }
 
       // replace ":s:" with regular spaces
       text[t] = text[t].replace(/:s:/g, " ");
