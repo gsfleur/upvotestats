@@ -1061,6 +1061,18 @@ export default function Trends() {
       }
     }
 
+    // getting array of text surrouned by parentheses
+    let p = text.match(/\((.*?)\)/g);
+    if (p !== null) {
+      // replacing spaces with "%20" in text that contains markdown link
+      for (let i = 0; i < p.length; i++) {
+        if (p[i].includes("https://") || p[i].includes("http://")) {
+          let r = p[i].replace(/\s+/g, "%20");
+          text = text.replace(p[i], r);
+        }
+      }
+    }
+
     // splitting text by spaces
     text = text.split(/\s+/);
 
