@@ -373,76 +373,64 @@ export default function Trends() {
 
         // Destination Link DOM
         const outLinkDOM = (
-          <div style={{ display: "inline-block", width: "100%" }}>
-            <a
-              href={posts[i][1].urlDest}
-              target="_blank"
-              rel="noreferrer"
-              className="searchLink"
-              style={{
-                fontSize: "13px",
-                color: "DodgerBlue",
-                float: "left",
-                marginTop: "5px",
-              }}
-              onMouseOver={(e) => {
-                e.target.style.color = "#4BA6FF";
-              }}
-              onMouseOut={(e) => {
-                e.target.style.color = "DodgerBlue";
-              }}
-            >
-              {destLink}
-              <img
-                id="threadLink"
-                src="outbound.png"
-                alt={"outbound icon"}
-                width="13px"
-                height="13px"
-                loading="lazy"
-                style={{
-                  marginLeft: "3px",
-                  float: "right",
-                  marginTop: "3px",
-                }}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "missing.png";
-                }}
-              />
-            </a>
-          </div>
-        );
-
-        // Reddit Post Link DOM
-        const threadLinkDOM = (
-          <a
-            href={posts[i][1].url}
-            target="_blank"
-            rel="noreferrer"
-            className="searchLink"
-          >
-            <span
-              id="threadLink"
-              style={{
-                fontSize: "13px",
-              }}
-            >
-              View thread
-            </span>
-          </a>
-        );
-
-        // Description of posts
-        const author = (
           <span>
-            {hours <= 24 && <span>{Math.floor(hours)}h ago</span>}
-            {hours > 24 && hours <= 48 && <span>1d ago</span>}
-            {hours > 48 && diffDays < 7 && <span>{diffDays}d ago</span>}
-            {diffDays >= 7 && diffDays < 14 && <span>1w ago</span>}
-            {diffDays >= 14 && diffDays < 21 && <span>2w ago</span>}
-            {diffDays >= 21 && diffDays < 28 && <span>3w ago</span>}
-            {diffDays >= 28 && diffDays < 35 && <span>1m ago</span>} by{" "}
+            {!posts[i][1].redditMediaDomain &&
+              posts[i][1].urlDest !== undefined && (
+                <div
+                  style={{
+                    display: "inline-block",
+                    width: "100%",
+                    marginTop: "5px",
+                  }}
+                >
+                  <a
+                    href={posts[i][1].urlDest}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="searchLink"
+                    style={{
+                      fontSize: "13px",
+                      color: "DodgerBlue",
+                      float: "left",
+                    }}
+                  >
+                    {destLink}
+                    <img
+                      id="threadLink"
+                      src="outbound.png"
+                      alt={"outbound icon"}
+                      width="13px"
+                      height="13px"
+                      loading="lazy"
+                      style={{
+                        marginLeft: "3px",
+                        float: "right",
+                        marginTop: "3px",
+                      }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "missing.png";
+                      }}
+                    />
+                  </a>
+                </div>
+              )}
+          </span>
+        );
+
+        // Post author information
+        const author = (
+          <div
+            className="postDate"
+            style={{
+              fontSize: "13px",
+              color: "silver",
+              marginTop: "5px",
+            }}
+          >
+            {hours <= 24 && <span>{Math.floor(hours)}h</span>}
+            {hours > 24 && diffDays < 7 && <span>{diffDays}d</span>}
+            {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
             <a
               className="searchLink2"
               href={"https://www.reddit.com/u/" + posts[i][1].author}
@@ -451,27 +439,49 @@ export default function Trends() {
             >
               {posts[i][1].author}
             </a>
-          </span>
+          </div>
         );
 
-        // Post Upvote Ratio DOM
-        const percentUpvoted = (
-          <div style={{ overflow: "auto" }}>
-            <div
-              style={{
-                float: "left",
-                fontSize: "13px",
-                color: "gray",
-              }}
-            >
-              {Math.floor(
-                (100 * posts[i][1].upvotes) /
-                  (Math.abs(posts[i][1].downvotes) + posts[i][1].upvotes)
-              )}
-              % Upvoted
-            </div>
-            <div style={{ float: "right" }}>{threadLinkDOM}</div>
-          </div>
+        // Post thread link DOM
+        const threadLinkDOM = (
+          <span>
+            {isExpanded(i) && (
+              <div
+                style={{
+                  marginTop:
+                    (!posts[i][1].redditMediaDomain &&
+                      posts[i][1].urlDest !== undefined) ||
+                    !loadableImg
+                      ? "5px"
+                      : "10px",
+                }}
+              >
+                <div
+                  style={{
+                    float: "left",
+                    fontSize: "13px",
+                    color: "gray",
+                  }}
+                >
+                  {Math.floor(
+                    (100 * posts[i][1].upvotes) /
+                      (Math.abs(posts[i][1].downvotes) + posts[i][1].upvotes)
+                  )}
+                  % Upvoted
+                </div>
+                <a
+                  href={posts[i][1].url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="searchLink"
+                  id="threadLink"
+                  style={{ float: "right", fontSize: "13px" }}
+                >
+                  View thread
+                </a>
+              </div>
+            )}
+          </span>
         );
 
         // Markdown DOM for post text
@@ -560,6 +570,7 @@ export default function Trends() {
                 className="newsText"
                 style={{ float: "left", overflow: "hidden", width: "100%" }}
               >
+                {/* Post rank, subreddit name, and options button */}
                 <div
                   style={{
                     fontSize: "12px",
@@ -601,71 +612,65 @@ export default function Trends() {
                   </div>
                 </div>
 
+                {/* Main Trend associated with post */}
                 {posts[i][1].trends.length > 0 && (
-                  <div style={{ fontSize: "14px" }}>
-                    <b>{posts[i][1].trends[0]}</b>
-                  </div>
-                )}
-                {posts[i][1].trends.length === 0 && (
-                  <div style={{ fontSize: "14px" }}>
-                    <b>{posts[i][1].subName}</b>
+                  <div style={{ fontSize: "14px", marginBottom: "5px" }}>
+                    <b>
+                      {posts[i][1].trends.length > 0
+                        ? posts[i][1].trends[0]
+                        : posts[i][1].subName}
+                    </b>
                   </div>
                 )}
 
+                {/* Post title, if no image */}
                 {!loadableImg && (
                   <div
                     style={{
                       fontSize: "14px",
-                      marginTop: "5px",
                     }}
                   >
                     {markdown(postTitle)}
                   </div>
                 )}
 
+                {/* Post text if available */}
                 {posts[i][1].text.length > 0 && (
-                  <span>
-                    <div
-                      style={{
-                        fontSize: "13px",
-                        color: "silver",
-                        paddingTop: "5px",
-                        paddingBottom: "5px",
-                      }}
-                    >
-                      {!isExpanded(i) && (
-                        <span>
-                          {posts[i][1].spoiler && (
-                            <div>
-                              {markdown("Text hidden... [click to read more]")}
-                            </div>
-                          )}
-                          {!posts[i][1].spoiler && (
-                            <div className="limitText2">
-                              {markdown(postText)}
-                            </div>
-                          )}
-                        </span>
-                      )}
-                      {isExpanded(i) && <div>{markdown(postText)}</div>}
-                    </div>
-                    {isExpanded(i) && <span>{percentUpvoted}</span>}
-                  </span>
-                )}
-                {posts[i][1].text.length === 0 && (
                   <div
                     style={{
                       fontSize: "13px",
-                      marginTop: "5px",
                       color: "silver",
+                      paddingTop: "5px",
                     }}
                   >
-                    {isExpanded(i) && !loadableImg && (
-                      <div>{percentUpvoted}</div>
+                    {!isExpanded(i) && (
+                      <div className="limitText2">
+                        {posts[i][1].spoiler
+                          ? markdown("Text hidden... [click to read more]")
+                          : markdown(postText)}
+                      </div>
+                    )}
+                    {isExpanded(i) && <div>{markdown(postText)}</div>}
+                    {!loadableImg && (
+                      <span>
+                        {author}
+                        {outLinkDOM}
+                        {threadLinkDOM}
+                      </span>
                     )}
                   </div>
                 )}
+                {/* Post text if unavailable */}
+                {posts[i][1].text.length === 0 && !loadableImg && (
+                  <span>
+                    {author}
+                    {outLinkDOM}
+                    {threadLinkDOM}
+                  </span>
+                )}
               </div>
+
+              {/* Post with image */}
               {loadableImg && (
                 <div
                   className="imgBody"
@@ -689,6 +694,7 @@ export default function Trends() {
                         padding: "10px 10px 10px 10px",
                       }}
                     >
+                      {/* Post author name, icon and creation date */}
                       <div
                         style={{
                           width: "100%",
@@ -705,30 +711,20 @@ export default function Trends() {
                           rel="noreferrer"
                           target="_blank"
                         >
-                          {posts[i][1].icon === "" && (
-                            <img
-                              className="iconImg"
-                              src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
-                              loading="lazy"
-                              alt={posts[i][1].author + " icon"}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = "missing.png";
-                              }}
-                            />
-                          )}
-                          {posts[i][1].icon !== "" && (
-                            <img
-                              className="iconImg"
-                              src={posts[i][1].icon}
-                              loading="lazy"
-                              alt={posts[i][1].author + " icon"}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = "missing.png";
-                              }}
-                            />
-                          )}
+                          <img
+                            className="iconImg"
+                            src={
+                              posts[i][1].icon !== ""
+                                ? posts[i][1].icon
+                                : "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                            }
+                            loading="lazy"
+                            alt={posts[i][1].author + " icon"}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "missing.png";
+                            }}
+                          />
                         </a>
                         <div
                           style={{
@@ -750,16 +746,16 @@ export default function Trends() {
                           </a>{" "}
                           &bull;{" "}
                           {hours <= 24 && <span>{Math.floor(hours)}h</span>}
-                          {hours > 24 && hours <= 48 && <span>1d</span>}
-                          {hours > 48 && diffDays < 7 && (
+                          {hours > 24 && diffDays < 7 && (
                             <span>{diffDays}d</span>
                           )}
-                          {diffDays >= 7 && diffDays < 14 && <span>1w</span>}
-                          {diffDays >= 14 && diffDays < 21 && <span>2w</span>}
-                          {diffDays >= 21 && diffDays < 28 && <span>3w</span>}
-                          {diffDays >= 28 && diffDays < 35 && <span>1m</span>}
+                          {diffDays >= 7 && (
+                            <span>{Math.floor(diffDays / 7)}w</span>
+                          )}
                         </div>
                       </div>
+
+                      {/* Expanded post with image */}
                       {isExpanded(i) && (
                         <span>
                           <div
@@ -772,12 +768,8 @@ export default function Trends() {
                             }}
                           >
                             {markdown(postTitle)}
-                            {!posts[i][1].redditMediaDomain &&
-                              posts[i][1].urlDest !== undefined && (
-                                <span> {outLinkDOM}</span>
-                              )}
-                            <br />
-                            {percentUpvoted}
+                            {outLinkDOM}
+                            {threadLinkDOM}
                           </div>
                           <div
                             style={{
@@ -785,8 +777,10 @@ export default function Trends() {
                               height: "100%",
                             }}
                           >
+                            {/* Post is not a video */}
                             {!posts[i][1].isVideo && !streamable && (
                               <span>
+                                {/* Post is a gallery with multiple images */}
                                 {posts[i][1].isGallery && (
                                   <div
                                     className="centering"
@@ -848,6 +842,7 @@ export default function Trends() {
                                     />
                                   </div>
                                 )}
+                                {/* Post image */}
                                 <div className="centering">
                                   <img
                                     src={imgSource}
@@ -868,6 +863,7 @@ export default function Trends() {
                                 </div>
                               </span>
                             )}
+                            {/* Post video */}
                             {posts[i][1].isVideo && (
                               <div className="centering">
                                 <ReactHlsPlayer
@@ -885,6 +881,7 @@ export default function Trends() {
                                 />
                               </div>
                             )}
+                            {/* Post is a streamable.com video */}
                             {streamable && (
                               <div
                                 style={{
@@ -912,6 +909,8 @@ export default function Trends() {
                           </div>
                         </span>
                       )}
+
+                      {/* Collapsed post with thumbnail */}
                       {!isExpanded(i) && (
                         <span>
                           {!blurred && <span>{thumbnail}</span>}
@@ -932,10 +931,7 @@ export default function Trends() {
                             <span className="limitText">
                               {markdown(postTitle)}
                             </span>
-                            {!posts[i][1].redditMediaDomain &&
-                              posts[i][1].urlDest !== undefined && (
-                                <span> {outLinkDOM}</span>
-                              )}
+                            {outLinkDOM}
                           </div>
                         </span>
                       )}
@@ -944,36 +940,7 @@ export default function Trends() {
                 </div>
               )}
 
-              {!posts[i][1].redditMediaDomain &&
-                posts[i][1].urlDest !== undefined &&
-                !loadableImg && <span> {outLinkDOM}</span>}
-
-              {!loadableImg && (
-                <div>
-                  {!isExpanded(i) && (
-                    <div
-                      className="postDate"
-                      style={{
-                        fontSize: "13px",
-                        color: "silver",
-                      }}
-                    >
-                      {author}
-                    </div>
-                  )}
-                  {isExpanded(i) && (
-                    <div
-                      className="postDate"
-                      style={{
-                        fontSize: "13px",
-                        color: "silver",
-                      }}
-                    >
-                      {author}
-                    </div>
-                  )}
-                </div>
-              )}
+              {/* Section for other trending phrases */}
               {trends.length > 1 && (
                 <div
                   style={{
@@ -993,6 +960,8 @@ export default function Trends() {
                   </div>
                 </div>
               )}
+
+              {/* Post statistics */}
               <div
                 style={{
                   fontSize: "12px",
@@ -1006,7 +975,6 @@ export default function Trends() {
                     {numToString(posts[i][1].awards)} awards &bull;{" "}
                   </span>
                 )}
-
                 <a
                   href={posts[i][1].url}
                   target="_blank"
