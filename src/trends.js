@@ -700,7 +700,7 @@ export default function Trends() {
                           width: "100%",
                           display: "inline-block",
                           marginBottom: "5px",
-                          fontSize: "13px",
+                          fontSize: "12px",
                           color: "silver",
                         }}
                       >
