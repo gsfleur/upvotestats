@@ -1445,7 +1445,7 @@ export default function Trends() {
                 }}
               >
                 <div style={{ marginTop: "5px" }}>
-                  Trends from the top{" "}
+                  Trends from{" "}
                   {state.data.stats.posts.count
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
