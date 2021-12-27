@@ -39,6 +39,8 @@
   color: gainsboro;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  transition: opacity 0.3s;
+  opacity: 1;
 }
 .postLink:hover {
   background-color: #29292916;

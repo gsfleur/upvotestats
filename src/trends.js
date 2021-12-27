@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import ReactHlsPlayer from "react-hls-player";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import { InView } from "react-intersection-observer";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -33,7 +34,6 @@ export default function Trends() {
     expandedPosts: [],
     showOptions: false,
     expandAll: false,
-    videoIDs: [],
   });
 
   useEffect(() => {
@@ -81,51 +81,6 @@ export default function Trends() {
           }, Math.min(500, Math.max(0, 500 - (afterDate - beforeDate))));
         }
       })();
-    } else {
-      // Get all videos
-      let videos = document.querySelectorAll("video");
-      // percentage of video that needs to be on screen to autoplay
-      const threshold = 0.3;
-      (async () => {
-        // Loop through all video tags
-        for (let i = 0; i < videos.length; i++) {
-          let video = videos[i];
-          // load observer for unmarked video elements
-          if (!state.videoIDs.includes(video.id)) {
-            video.muted = true;
-            // loading play promise
-            let playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise
-                .then(() => {
-                  // Autoplay videos if they appear within user viewport
-                  let observer = new IntersectionObserver(
-                    (entries) => {
-                      entries.forEach((entry) => {
-                        if (
-                          entry.intersectionRatio < threshold &&
-                          !video.paused
-                        ) {
-                          video.pause();
-                        } else if (video.paused) {
-                          video.play().catch(() => {});
-                        }
-                      });
-                    },
-                    { threshold: threshold }
-                  );
-                  observer.observe(video);
-                  // mark video element as seen
-                  state.videoIDs.push(video.id);
-                })
-                .catch(() => {});
-            }
-          } else {
-            // autoplay first post if its a video in expand all mode
-            if (video.id === "video0" && state.expandAll) video.play();
-          }
-        }
-      })().catch(() => {});
     }
 
     return () => {
@@ -139,7 +94,6 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
-      videoIDs: [],
       sortDate: event.target.value,
     });
   };
@@ -150,7 +104,6 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
-      videoIDs: [],
       sortBy: event.target.value,
     });
   };
@@ -171,7 +124,6 @@ export default function Trends() {
       ...state,
       loaded: false,
       expandedPosts: [],
-      videoIDs: [],
     });
   };
 
@@ -566,422 +518,454 @@ export default function Trends() {
                 openPost(i);
             }}
           >
-            <div className="postLink">
-              <div
-                className="newsText"
-                style={{ float: "left", overflow: "hidden", width: "100%" }}
+            <div className="postLink" id={"trends-" + i}>
+              <InView
+                as="div"
+                threshold={0.2}
+                onChange={(inView, entry) => {
+                  let elm = document.getElementById("trends-" + i);
+                  if (inView) {
+                    elm.style.opacity = "1";
+                  } else {
+                    elm.style.opacity = "0";
+                  }
+                }}
               >
-                {/* Post rank, subreddit name, and options button */}
                 <div
-                  style={{
-                    fontSize: "13px",
-                    marginBottom: "5px",
-                    color: "gray",
-                    width: "100%",
-                  }}
+                  className="newsText"
+                  style={{ float: "left", overflow: "hidden", width: "100%" }}
                 >
-                  {postListDOM.length + 1} &bull;{" "}
-                  <a
-                    className="searchLink"
-                    href={"https://www.reddit.com/r/" + posts[i][1].subreddit}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    {posts[i][1].subName}
-                  </a>{" "}
-                  &bull; {numToString(posts[i][1].upvotes)} &uarr;
-                  <div style={{ float: "right", display: "inline-block" }}>
-                    <NativeSelect
-                      disableUnderline
-                      className={classes.root2}
-                      id={"report-" + postListDOM.length}
-                      onChange={handleReport}
-                      IconComponent={MoreHorizIcon}
-                      defaultValue="default"
-                    >
-                      <option value="default" hidden disabled>
-                        Not interested?
-                      </option>
-                      <option value={"interest"} style={{ color: "black" }}>
-                        Hide this post
-                      </option>
-                      <option value={"report"} style={{ color: "black" }}>
-                        Report this post
-                      </option>
-                    </NativeSelect>
-                  </div>
-                </div>
-
-                {/* Main Trend associated with post */}
-                <div style={{ fontSize: "14px", marginBottom: "5px" }}>
-                  <b>
-                    {posts[i][1].trends.length > 0
-                      ? posts[i][1].trends[0]
-                      : posts[i][1].subName}
-                  </b>
-                </div>
-
-                {/* Post title, if no image */}
-                {!loadableImg && (
-                  <div
-                    style={{
-                      fontSize: "14px",
-                    }}
-                  >
-                    {markdown(postTitle)}
-                  </div>
-                )}
-
-                {/* Post text if available */}
-                {posts[i][1].text.length > 0 && (
+                  {/* Post rank, subreddit name, and options button */}
                   <div
                     style={{
                       fontSize: "13px",
-                      color: "silver",
-                      paddingTop: "5px",
+                      marginBottom: "5px",
+                      color: "gray",
+                      width: "100%",
                     }}
                   >
-                    {!isExpanded(i) && (
-                      <div className="limitText2">
-                        {posts[i][1].spoiler
-                          ? markdown("Text hidden... [click to read more]")
-                          : markdown(postText)}
-                      </div>
-                    )}
-                    {isExpanded(i) && <div>{markdown(postText)}</div>}
-                    {!loadableImg && (
-                      <span>
-                        {author}
-                        {outLinkDOM}
-                        {threadLinkDOM}
-                      </span>
-                    )}
+                    {postListDOM.length + 1} &bull;{" "}
+                    <a
+                      className="searchLink"
+                      href={"https://www.reddit.com/r/" + posts[i][1].subreddit}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      {posts[i][1].subName}
+                    </a>{" "}
+                    &bull; {numToString(posts[i][1].upvotes)} &uarr;
+                    <div style={{ float: "right", display: "inline-block" }}>
+                      <NativeSelect
+                        disableUnderline
+                        className={classes.root2}
+                        id={"report-" + postListDOM.length}
+                        onChange={handleReport}
+                        IconComponent={MoreHorizIcon}
+                        defaultValue="default"
+                      >
+                        <option value="default" hidden disabled>
+                          Not interested?
+                        </option>
+                        <option value={"interest"} style={{ color: "black" }}>
+                          Hide this post
+                        </option>
+                        <option value={"report"} style={{ color: "black" }}>
+                          Report this post
+                        </option>
+                      </NativeSelect>
+                    </div>
                   </div>
-                )}
-                {/* Post text if unavailable */}
-                {posts[i][1].text.length === 0 && !loadableImg && (
-                  <span>
-                    {author}
-                    {outLinkDOM}
-                    {threadLinkDOM}
-                  </span>
-                )}
-              </div>
 
-              {/* Post with image */}
-              {loadableImg && (
-                <div
-                  className="imgBody"
-                  style={{
-                    display: "inline-block",
-                    width: "100%",
-                    marginTop: "5px",
-                  }}
-                >
+                  {/* Main Trend associated with post */}
+                  <div style={{ fontSize: "14px", marginBottom: "5px" }}>
+                    <b>
+                      {posts[i][1].trends.length > 0
+                        ? posts[i][1].trends[0]
+                        : posts[i][1].subName}
+                    </b>
+                  </div>
+
+                  {/* Post title, if no image */}
+                  {!loadableImg && (
+                    <div
+                      style={{
+                        fontSize: "14px",
+                      }}
+                    >
+                      {markdown(postTitle)}
+                    </div>
+                  )}
+
+                  {/* Post text if available */}
+                  {posts[i][1].text.length > 0 && (
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "silver",
+                        paddingTop: "5px",
+                      }}
+                    >
+                      {!isExpanded(i) && (
+                        <div className="limitText2">
+                          {posts[i][1].spoiler
+                            ? markdown("Text hidden... [click to read more]")
+                            : markdown(postText)}
+                        </div>
+                      )}
+                      {isExpanded(i) && <div>{markdown(postText)}</div>}
+                      {!loadableImg && (
+                        <span>
+                          {author}
+                          {outLinkDOM}
+                          {threadLinkDOM}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {/* Post text if unavailable */}
+                  {posts[i][1].text.length === 0 && !loadableImg && (
+                    <span>
+                      {author}
+                      {outLinkDOM}
+                      {threadLinkDOM}
+                    </span>
+                  )}
+                </div>
+
+                {/* Post with image */}
+                {loadableImg && (
                   <div
+                    className="imgBody"
                     style={{
-                      position: "relative",
-                      height: "100%",
+                      display: "inline-block",
+                      width: "100%",
+                      marginTop: "5px",
                     }}
                   >
                     <div
                       style={{
-                        overflow: "auto",
-                        border: "1px solid #292929",
-                        borderRadius: "20px",
-                        padding: "10px 10px 10px 10px",
+                        position: "relative",
+                        height: "100%",
                       }}
                     >
-                      {/* Post author name, icon and creation date */}
                       <div
                         style={{
-                          width: "100%",
-                          display: "inline-block",
-                          marginBottom: "5px",
-                          fontSize: "13px",
-                          color: "silver",
+                          overflow: "auto",
+                          border: "1px solid #292929",
+                          borderRadius: "20px",
+                          padding: "10px 10px 10px 10px",
                         }}
                       >
-                        <a
-                          href={
-                            "https://www.reddit.com/u/" + posts[i][1].author
-                          }
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          <img
-                            className="iconImg"
-                            src={
-                              posts[i][1].icon !== ""
-                                ? posts[i][1].icon
-                                : "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
-                            }
-                            loading="lazy"
-                            alt={posts[i][1].author + " icon"}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "missing.png";
-                            }}
-                          />
-                        </a>
+                        {/* Post author name, icon and creation date */}
                         <div
                           style={{
-                            float: "left",
-                            marginTop: "6.5px",
-                            marginBottom: "6.5px",
-                            marginLeft: "5px",
+                            width: "100%",
+                            display: "inline-block",
+                            marginBottom: "5px",
+                            fontSize: "13px",
+                            color: "silver",
                           }}
                         >
                           <a
-                            className="searchLink2"
                             href={
                               "https://www.reddit.com/u/" + posts[i][1].author
                             }
                             rel="noreferrer"
                             target="_blank"
                           >
-                            {posts[i][1].author}
-                          </a>{" "}
-                          &bull;{" "}
-                          {hours <= 24 && <span>{Math.floor(hours)}h</span>}
-                          {hours > 24 && diffDays < 7 && (
-                            <span>{diffDays}d</span>
-                          )}
-                          {diffDays >= 7 && (
-                            <span>{Math.floor(diffDays / 7)}w</span>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Expanded post with image */}
-                      {isExpanded(i) && (
-                        <span>
+                            <img
+                              className="iconImg"
+                              src={
+                                posts[i][1].icon !== ""
+                                  ? posts[i][1].icon
+                                  : "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                              }
+                              loading="lazy"
+                              alt={posts[i][1].author + " icon"}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "missing.png";
+                              }}
+                            />
+                          </a>
                           <div
-                            className="postDate"
                             style={{
-                              fontSize: "14px",
-                              marginBottom: "10px",
-                              color: "gainsboro",
-                              width: "100%",
+                              float: "left",
+                              marginTop: "6.5px",
+                              marginBottom: "6.5px",
+                              marginLeft: "5px",
                             }}
                           >
-                            {markdown(postTitle)}
-                            {outLinkDOM}
-                            {threadLinkDOM}
+                            <a
+                              className="searchLink2"
+                              href={
+                                "https://www.reddit.com/u/" + posts[i][1].author
+                              }
+                              rel="noreferrer"
+                              target="_blank"
+                            >
+                              {posts[i][1].author}
+                            </a>{" "}
+                            &bull;{" "}
+                            {hours <= 24 && <span>{Math.floor(hours)}h</span>}
+                            {hours > 24 && diffDays < 7 && (
+                              <span>{diffDays}d</span>
+                            )}
+                            {diffDays >= 7 && (
+                              <span>{Math.floor(diffDays / 7)}w</span>
+                            )}
                           </div>
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                            }}
-                          >
-                            {/* Post is not a video */}
-                            {!posts[i][1].isVideo && !streamable && (
-                              <span>
-                                {/* Post is a gallery with multiple images */}
-                                {posts[i][1].isGallery && (
-                                  <div
-                                    className="centering"
-                                    style={{ marginBottom: "10px" }}
-                                  >
-                                    <ArrowCircleLeftIcon
-                                      className="nextButton"
-                                      onClick={() => {
-                                        let currIndex = posts[i][1].galleryItem;
-                                        // getting next index for gallery item
-                                        posts[i][1].galleryItem = Math.max(
-                                          0,
-                                          posts[i][1].galleryItem - 1
-                                        );
-                                        // if index changed, update
-                                        if (
-                                          currIndex !== posts[i][1].galleryItem
-                                        ) {
-                                          setState({
-                                            ...state,
-                                          });
-                                        }
-                                      }}
-                                    />
+                        </div>
+
+                        {/* Expanded post with image */}
+                        {isExpanded(i) && (
+                          <span>
+                            <div
+                              className="postDate"
+                              style={{
+                                fontSize: "14px",
+                                marginBottom: "10px",
+                                color: "gainsboro",
+                                width: "100%",
+                              }}
+                            >
+                              {markdown(postTitle)}
+                              {outLinkDOM}
+                              {threadLinkDOM}
+                            </div>
+                            <div
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                              }}
+                            >
+                              {/* Post is not a video */}
+                              {!posts[i][1].isVideo && !streamable && (
+                                <span>
+                                  {/* Post is a gallery with multiple images */}
+                                  {posts[i][1].isGallery && (
                                     <div
-                                      style={{
-                                        marginLeft: "10px",
-                                        marginRight: "10px",
-                                        border: "1px solid gray",
-                                        borderRadius: "10px",
-                                        padding: "5px 5px 5px 5px",
-                                        fontSize: "11px",
-                                        width: "60px",
-                                        textAlign: "center",
-                                      }}
+                                      className="centering"
+                                      style={{ marginBottom: "10px" }}
                                     >
-                                      {posts[i][1].galleryItem + 1}
-                                      &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
-                                      {posts[i][1].mediaMetadata.length}
+                                      <ArrowCircleLeftIcon
+                                        className="nextButton"
+                                        onClick={() => {
+                                          let currIndex =
+                                            posts[i][1].galleryItem;
+                                          // getting next index for gallery item
+                                          posts[i][1].galleryItem = Math.max(
+                                            0,
+                                            posts[i][1].galleryItem - 1
+                                          );
+                                          // if index changed, update
+                                          if (
+                                            currIndex !==
+                                            posts[i][1].galleryItem
+                                          ) {
+                                            setState({
+                                              ...state,
+                                            });
+                                          }
+                                        }}
+                                      />
+                                      <div
+                                        style={{
+                                          marginLeft: "10px",
+                                          marginRight: "10px",
+                                          border: "1px solid gray",
+                                          borderRadius: "10px",
+                                          padding: "5px 5px 5px 5px",
+                                          fontSize: "11px",
+                                          width: "60px",
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        {posts[i][1].galleryItem + 1}
+                                        &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
+                                        {posts[i][1].mediaMetadata.length}
+                                      </div>
+                                      <ArrowCircleRightIcon
+                                        className="nextButton"
+                                        onClick={() => {
+                                          let currIndex =
+                                            posts[i][1].galleryItem;
+                                          // getting next index for gallery item
+                                          posts[i][1].galleryItem = Math.min(
+                                            posts[i][1].mediaMetadata.length -
+                                              1,
+                                            posts[i][1].galleryItem + 1
+                                          );
+                                          // if index changed, update
+                                          if (
+                                            currIndex !==
+                                            posts[i][1].galleryItem
+                                          ) {
+                                            setState({
+                                              ...state,
+                                            });
+                                          }
+                                        }}
+                                      />
                                     </div>
-                                    <ArrowCircleRightIcon
-                                      className="nextButton"
-                                      onClick={() => {
-                                        let currIndex = posts[i][1].galleryItem;
-                                        // getting next index for gallery item
-                                        posts[i][1].galleryItem = Math.min(
-                                          posts[i][1].mediaMetadata.length - 1,
-                                          posts[i][1].galleryItem + 1
-                                        );
-                                        // if index changed, update
-                                        if (
-                                          currIndex !== posts[i][1].galleryItem
-                                        ) {
-                                          setState({
-                                            ...state,
-                                          });
-                                        }
+                                  )}
+                                  {/* Post image */}
+                                  <div className="centering">
+                                    <img
+                                      src={imgSource}
+                                      className="postImgStandard"
+                                      alt="Reddit Post Thumbnail"
+                                      loading="lazy"
+                                      style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        maxHeight: "50vh",
+                                        objectFit: "contain",
+                                      }}
+                                      onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "missing.png";
                                       }}
                                     />
                                   </div>
-                                )}
-                                {/* Post image */}
-                                <div className="centering">
-                                  <img
-                                    src={imgSource}
-                                    className="postImgStandard"
-                                    alt="Reddit Post Thumbnail"
-                                    loading="lazy"
+                                </span>
+                              )}
+                              {/* Post video */}
+                              {posts[i][1].isVideo && (
+                                <InView
+                                  as="div"
+                                  threshold={0.3}
+                                  onChange={(inView, entry) => {
+                                    let video = document.getElementById(
+                                      "video" + i
+                                    );
+                                    if (inView) video.play();
+                                    else video.pause();
+                                  }}
+                                >
+                                  <div className="centering">
+                                    <ReactHlsPlayer
+                                      src={posts[i][1].media}
+                                      muted={true}
+                                      controls={true}
+                                      loop={true}
+                                      width="100%"
+                                      id={"video" + i}
+                                      className="postVideoStandard"
+                                      height="100%"
+                                      poster={posts[i][1].source}
+                                      webkit-playsinline="true"
+                                      playsInline={true}
+                                    />
+                                  </div>
+                                </InView>
+                              )}
+                              {/* Post is a streamable.com video */}
+                              {streamable && (
+                                <div
+                                  style={{
+                                    width: "100%",
+                                    height: "0px",
+                                    position: "relative",
+                                    paddingBottom: "56.250%",
+                                  }}
+                                >
+                                  <iframe
+                                    src={streamableLink}
+                                    frameBorder="0"
+                                    width="100%"
+                                    height="100%"
+                                    allowFullScreen
+                                    title={
+                                      posts[i][1].title + "-streamable-" + i
+                                    }
                                     style={{
                                       width: "100%",
                                       height: "100%",
-                                      maxHeight: "50vh",
-                                      objectFit: "contain",
+                                      position: "absolute",
                                     }}
-                                    onError={(e) => {
-                                      e.target.onerror = null;
-                                      e.target.src = "missing.png";
-                                    }}
-                                  />
+                                  ></iframe>
                                 </div>
-                              </span>
-                            )}
-                            {/* Post video */}
-                            {posts[i][1].isVideo && (
-                              <div className="centering">
-                                <ReactHlsPlayer
-                                  src={posts[i][1].media}
-                                  muted={true}
-                                  controls={true}
-                                  loop={true}
-                                  width="100%"
-                                  id={"video" + i}
-                                  className="postVideoStandard"
-                                  height="100%"
-                                  poster={posts[i][1].source}
-                                  webkit-playsinline="true"
-                                  playsInline={true}
-                                />
-                              </div>
-                            )}
-                            {/* Post is a streamable.com video */}
-                            {streamable && (
-                              <div
-                                style={{
-                                  width: "100%",
-                                  height: "0px",
-                                  position: "relative",
-                                  paddingBottom: "56.250%",
-                                }}
-                              >
-                                <iframe
-                                  src={streamableLink}
-                                  frameBorder="0"
-                                  width="100%"
-                                  height="100%"
-                                  allowFullScreen
-                                  title={posts[i][1].title + "-streamable-" + i}
-                                  style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    position: "absolute",
-                                  }}
-                                ></iframe>
-                              </div>
-                            )}
-                          </div>
-                        </span>
-                      )}
-
-                      {/* Collapsed post with thumbnail */}
-                      {!isExpanded(i) && (
-                        <span>
-                          {!blurred && <span>{thumbnail}</span>}
-                          {blurred && (
-                            <div className="blurOuter">
-                              <div className="blur">{thumbnail}</div>
+                              )}
                             </div>
-                          )}
-                          <div
-                            className="postDate"
-                            style={{
-                              fontSize: "14px",
-                              color: "gainsboro",
-                              float: "left",
-                              marginLeft: "10px",
-                            }}
-                          >
-                            <span className="limitText">
-                              {markdown(postTitle)}
-                            </span>
-                            {outLinkDOM}
-                          </div>
-                        </span>
-                      )}
+                          </span>
+                        )}
+
+                        {/* Collapsed post with thumbnail */}
+                        {!isExpanded(i) && (
+                          <span>
+                            {!blurred && <span>{thumbnail}</span>}
+                            {blurred && (
+                              <div className="blurOuter">
+                                <div className="blur">{thumbnail}</div>
+                              </div>
+                            )}
+                            <div
+                              className="postDate"
+                              style={{
+                                fontSize: "14px",
+                                color: "gainsboro",
+                                float: "left",
+                                marginLeft: "10px",
+                              }}
+                            >
+                              <span className="limitText">
+                                {markdown(postTitle)}
+                              </span>
+                              {outLinkDOM}
+                            </div>
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Section for other trending phrases */}
-              {trends.length > 1 && (
-                <div
-                  style={{
-                    width: "100%",
-                    display: "inline-block",
-                  }}
-                >
+                {/* Section for other trending phrases */}
+                {trends.length > 1 && (
                   <div
                     style={{
-                      fontSize: "13px",
-                      color: "gray",
-                      overflow: "hidden",
-                      height: isExpanded(i) ? "100%" : "40px",
+                      width: "100%",
+                      display: "inline-block",
                     }}
                   >
-                    {trendingWith}
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "gray",
+                        overflow: "hidden",
+                        height: isExpanded(i) ? "100%" : "40px",
+                      }}
+                    >
+                      {trendingWith}
+                    </div>
                   </div>
-                </div>
-              )}
-
-              {/* Post statistics */}
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "gray",
-                  marginTop: "3px",
-                }}
-              >
-                {posts[i][1].awards > 0 && (
-                  <span>
-                    {numToString(posts[i][1].coins)} coins &bull;{" "}
-                    {numToString(posts[i][1].awards)} awards &bull;{" "}
-                  </span>
                 )}
-                <a
-                  href={posts[i][1].url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="searchLink"
+
+                {/* Post statistics */}
+                <div
+                  style={{
+                    fontSize: "13px",
+                    color: "gray",
+                    marginTop: "3px",
+                  }}
                 >
-                  {numToString(posts[i][1].comments)} comments
-                </a>
-              </div>
+                  {posts[i][1].awards > 0 && (
+                    <span>
+                      {numToString(posts[i][1].coins)} coins &bull;{" "}
+                      {numToString(posts[i][1].awards)} awards &bull;{" "}
+                    </span>
+                  )}
+                  <a
+                    href={posts[i][1].url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="searchLink"
+                  >
+                    {numToString(posts[i][1].comments)} comments
+                  </a>
+                </div>
+              </InView>
             </div>
           </div>
         );
@@ -994,10 +978,6 @@ export default function Trends() {
    * @param {*} i - id of post to open
    */
   function openPost(i) {
-    // removing video id
-    if (isExpanded(i))
-      state.videoIDs = state.videoIDs.filter((e) => e !== "video" + i);
-
     // adding/removing to expanded posts list
     if (!isExpanded(i)) state.expandedPosts.push(i);
     else state.expandedPosts = state.expandedPosts.filter((e) => e !== i);
@@ -1163,7 +1143,6 @@ export default function Trends() {
                 sort: category,
                 data: state[category + "Data"],
                 expandedPosts: [],
-                videoIDs: [],
               })
             }
           >
@@ -1307,7 +1286,6 @@ export default function Trends() {
                       ...state,
                       expandAll: state.expandAll ? false : true,
                       expandedPosts: [],
-                      videoIDs: state.expandAll ? [] : state.videoIDs,
                     });
                   }}
                 >
@@ -1407,7 +1385,6 @@ export default function Trends() {
               </div>
             )}
             {postListDOM}
-
             {state.loaded && postListDOM.length === 0 && (
               <div style={{ textAlign: "center" }}>
                 <div
