@@ -5,13 +5,8 @@ import "./css/search.css";
 import "./css/results.css";
 import "./css/trends.css";
 import "./css/mobile.css";
-import React from "react";
-import Home from "./home";
-import About from "./about";
-import Trends from "./trends";
-import Scroll from "./scroll";
-import Search from "./search";
 import Fab from "@material-ui/core/Fab";
+import React, { Suspense, lazy } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,6 +14,14 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+// Route based code splitting
+const Home = lazy(() => import("./home"));
+const About = lazy(() => import("./about"));
+const Footer = lazy(() => import("./footer"));
+const Trends = lazy(() => import("./trends"));
+const Scroll = lazy(() => import("./scroll"));
+const Search = lazy(() => import("./search"));
 
 // Material UI Styling
 const useStyles = makeStyles((theme) => ({
@@ -74,24 +77,27 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <div className="centering">
           <div className="content">
-            <Switch>
-              <Route path="/search">
-                <Search />
-              </Route>
-              <Route path="/about">
-                <About />
-              </Route>
-              <Route path="/trends">
-                <Trends />
-              </Route>
-              <Route path="/">
-                <Search />
-                <Home />
-              </Route>
-            </Switch>
+            <Suspense fallback={<span></span>}>
+              <Switch>
+                <Route path="/search">
+                  <Search />
+                </Route>
+                <Route path="/about">
+                  <About />
+                </Route>
+                <Route path="/trends">
+                  <Trends />
+                </Route>
+                <Route path="/">
+                  <Search />
+                  <Home />
+                </Route>
+              </Switch>
+              <Scroll />
+              <Footer />
+            </Suspense>
           </div>
         </div>
-        <Scroll />
         <div id="backToTop" className="backToTopButton">
           <Fab
             color="default"
@@ -101,43 +107,6 @@ export default function App() {
           >
             <KeyboardArrowUpIcon />
           </Fab>
-        </div>
-        <div className="centering">
-          <div className="footer">
-            <a
-              href="https://ko-fi.com/Q5Q0733FX"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                height="36"
-                style={{ border: "0px", height: "36px" }}
-                src="https://cdn.ko-fi.com/cdn/kofi5.png?v=3"
-                border="0"
-                alt="Buy Me a Coffee at ko-fi.com"
-              />
-            </a>
-            <br />
-            <br />
-            <div
-              style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}
-            >
-              &copy; {new Date().getFullYear()} Upvote Stats
-            </div>
-            <br />
-            <div
-              style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}
-            >
-              <a
-                className="searchLink"
-                href="https://github.com/gsfleur/upvotestats"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <b>Open Source</b>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </Router>
