@@ -405,7 +405,7 @@ export default function Trends() {
                     (!posts[i][1].redditMediaDomain &&
                       posts[i][1].urlDest !== undefined) ||
                     !loadableImg
-                      ? "5px"
+                      ? "3px"
                       : "10px",
                 }}
               >
