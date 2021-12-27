@@ -226,6 +226,7 @@ export default function Trends() {
         if (posts[i][1].isCrossPost) continue;
         if (postLinks.includes(posts[i][1].url)) continue;
         if (posts[i][1].subreddit.startsWith("u_")) continue;
+        if (posts[i][1].trends.length < 3) continue;
 
         // Key of hidden posts requested user (new key every month)
         const d = new Date();
