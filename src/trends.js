@@ -521,7 +521,7 @@ export default function Trends() {
             <div className="postLink" id={"trends-" + i}>
               <InView
                 as="div"
-                threshold={0.2}
+                threshold={0.1}
                 onChange={(inView, entry) => {
                   let elm = document.getElementById("trends-" + i);
                   if (inView) {
