@@ -310,7 +310,7 @@ export default function Trends() {
                 marginRight: "5px",
                 marginTop: "10px",
                 backgroundImage:
-                  "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.05) 99%",
+                  "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.03) 99%",
               }}
               key={"trendWith-" + i + "-" + t}
             >
@@ -573,7 +573,7 @@ export default function Trends() {
                 {/* Post rank, subreddit name, and options button */}
                 <div
                   style={{
-                    fontSize: "12px",
+                    fontSize: "13px",
                     marginBottom: "5px",
                     color: "gray",
                     width: "100%",
@@ -588,8 +588,7 @@ export default function Trends() {
                   >
                     {posts[i][1].subName}
                   </a>{" "}
-                  &bull; {numToString(posts[i][1].upvotes)} &uarr; &bull;{" "}
-                  {numToString(Math.abs(posts[i][1].downvotes))} &darr;
+                  &bull; {numToString(posts[i][1].upvotes)} &uarr;
                   <div style={{ float: "right", display: "inline-block" }}>
                     <NativeSelect
                       disableUnderline
@@ -613,15 +612,13 @@ export default function Trends() {
                 </div>
 
                 {/* Main Trend associated with post */}
-                {posts[i][1].trends.length > 0 && (
-                  <div style={{ fontSize: "14px", marginBottom: "5px" }}>
-                    <b>
-                      {posts[i][1].trends.length > 0
-                        ? posts[i][1].trends[0]
-                        : posts[i][1].subName}
-                    </b>
-                  </div>
-                )}
+                <div style={{ fontSize: "14px", marginBottom: "5px" }}>
+                  <b>
+                    {posts[i][1].trends.length > 0
+                      ? posts[i][1].trends[0]
+                      : posts[i][1].subName}
+                  </b>
+                </div>
 
                 {/* Post title, if no image */}
                 {!loadableImg && (
@@ -700,7 +697,7 @@ export default function Trends() {
                           width: "100%",
                           display: "inline-block",
                           marginBottom: "5px",
-                          fontSize: "12px",
+                          fontSize: "13px",
                           color: "silver",
                         }}
                       >
@@ -950,10 +947,10 @@ export default function Trends() {
                 >
                   <div
                     style={{
-                      fontSize: "12px",
+                      fontSize: "13px",
                       color: "gray",
                       overflow: "hidden",
-                      height: isExpanded(i) ? "100%" : "38px",
+                      height: isExpanded(i) ? "100%" : "40px",
                     }}
                   >
                     {trendingWith}
@@ -964,9 +961,9 @@ export default function Trends() {
               {/* Post statistics */}
               <div
                 style={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   color: "gray",
-                  marginTop: "5px",
+                  marginTop: "3px",
                 }}
               >
                 {posts[i][1].awards > 0 && (
@@ -1216,7 +1213,7 @@ export default function Trends() {
             <div className="centering">
               <div
                 style={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   color: "gray",
                   marginTop: "0px",
                   marginBottom: "6px",
@@ -1349,7 +1346,7 @@ export default function Trends() {
               <div className="centering">
                 <div
                   style={{
-                    fontSize: "12px",
+                    fontSize: "13px",
                     color: "gray",
                     marginBottom: "5px",
                     width: "90%",
@@ -1438,7 +1435,7 @@ export default function Trends() {
             <div className="centering">
               <div
                 style={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   color: "gray",
                   marginTop: "10px",
                   marginBottom: "10px",
