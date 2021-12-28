@@ -606,7 +606,7 @@ export default function Trends() {
                       }}
                     >
                       {!isExpanded(i) && (
-                        <div className="limitText2">
+                        <div className="limitText4">
                           {posts[i][1].spoiler
                             ? markdown("Text hidden... [click to read more]")
                             : markdown(postText)}
@@ -909,7 +909,7 @@ export default function Trends() {
                                 marginLeft: "10px",
                               }}
                             >
-                              <span className="limitText">
+                              <span className="limitText3">
                                 {markdown(postTitle)}
                               </span>
                               {outLinkDOM}

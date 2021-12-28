@@ -147,14 +147,6 @@
 .reloadButton:hover {
   background-image: linear-gradient(transparent, rgb(255, 255, 255, 0.05));
 }
-.limitText2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
 .limitText4 {
   overflow: hidden;
   text-overflow: ellipsis;
