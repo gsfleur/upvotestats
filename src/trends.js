@@ -253,22 +253,16 @@ export default function Trends() {
         // Load dom for all sub level trends
         for (let t = 1; t < trends.length; t++) {
           trendingWith.push(
-            <div
+            <span
               style={{
                 color: "silver",
-                borderRadius: "10px",
-                border: "1px solid #222222",
-                padding: "5px",
-                float: "left",
                 marginRight: "5px",
-                marginTop: "10px",
-                backgroundImage:
-                  "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.03) 99%",
               }}
               key={"trendWith-" + i + "-" + t}
             >
               {trends[t]}
-            </div>
+              {t < trends.length - 1 && <span>,</span>}
+            </span>
           );
         }
 
@@ -313,6 +307,30 @@ export default function Trends() {
               e.target.src = "missing.png";
             }}
           />
+        );
+
+        // Post author information
+        const author = (
+          <div
+            className="postDate"
+            style={{
+              fontSize: "13px",
+              color: "silver",
+              marginTop: "5px",
+            }}
+          >
+            {hours <= 24 && <span>{Math.floor(hours)}h</span>}
+            {hours > 24 && diffDays < 7 && <span>{diffDays}d</span>}
+            {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
+            <a
+              className="searchLink2"
+              href={"https://www.reddit.com/u/" + posts[i][1].author}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {posts[i][1].author}
+            </a>
+          </div>
         );
 
         // Link Destination converted to string
@@ -371,42 +389,14 @@ export default function Trends() {
           </span>
         );
 
-        // Post author information
-        const author = (
-          <div
-            className="postDate"
-            style={{
-              fontSize: "13px",
-              color: "silver",
-              marginTop: "5px",
-            }}
-          >
-            {hours <= 24 && <span>{Math.floor(hours)}h</span>}
-            {hours > 24 && diffDays < 7 && <span>{diffDays}d</span>}
-            {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
-            <a
-              className="searchLink2"
-              href={"https://www.reddit.com/u/" + posts[i][1].author}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {posts[i][1].author}
-            </a>
-          </div>
-        );
-
         // Post thread link DOM
         const threadLinkDOM = (
           <span>
             {isExpanded(i) && (
               <div
                 style={{
-                  marginTop:
-                    (!posts[i][1].redditMediaDomain &&
-                      posts[i][1].urlDest !== undefined) ||
-                    !loadableImg
-                      ? "3px"
-                      : "10px",
+                  marginTop: "5px",
+                  overflow: "auto",
                 }}
               >
                 <div
@@ -606,7 +596,7 @@ export default function Trends() {
                       }}
                     >
                       {!isExpanded(i) && (
-                        <div className="limitText2">
+                        <div className="limitText4">
                           {posts[i][1].spoiler
                             ? markdown("Text hidden... [click to read more]")
                             : markdown(postText)}
@@ -909,7 +899,7 @@ export default function Trends() {
                                 marginLeft: "10px",
                               }}
                             >
-                              <span className="limitText">
+                              <span className="limitText3">
                                 {markdown(postTitle)}
                               </span>
                               {outLinkDOM}
@@ -927,18 +917,15 @@ export default function Trends() {
                     style={{
                       width: "100%",
                       display: "inline-block",
+                      marginTop: "5px",
+                      fontSize: "13px",
+                      color: "gray",
                     }}
                   >
-                    <div
-                      style={{
-                        fontSize: "13px",
-                        color: "gray",
-                        overflow: "hidden",
-                        height: isExpanded(i) ? "100%" : "40px",
-                      }}
-                    >
-                      {trendingWith}
-                    </div>
+                    {isExpanded(i) && trendingWith}
+                    {!isExpanded(i) && (
+                      <span className="limitText2">{trendingWith}</span>
+                    )}
                   </div>
                 )}
 
@@ -947,7 +934,7 @@ export default function Trends() {
                   style={{
                     fontSize: "13px",
                     color: "gray",
-                    marginTop: "3px",
+                    marginTop: "5px",
                   }}
                 >
                   {posts[i][1].awards > 0 && (

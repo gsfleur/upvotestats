@@ -51,7 +51,7 @@
   .postDate {
     width: calc(100% - 90px);
   }
-  .limitText {
+  .limitText3 {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
