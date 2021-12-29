@@ -178,13 +178,13 @@ export default function Trends() {
         // DOM of post in list
         postListDOM.push(
           <TrendItem
-            key={"post-" + i}
             index={i}
             post={posts[i][1]}
             postLinks={postLinks}
             collapsedAll={state.collapsedAll}
             handleReport={handleReport}
             postListDOMLength={postListDOM.length}
+            key={state.sort + +"-post-" + i}
           />
         );
       }
