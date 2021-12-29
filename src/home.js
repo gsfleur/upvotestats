@@ -1,10 +1,5 @@
 import axios from "axios";
-import { numToString } from "./results";
-import { topReddits } from "./topReddits";
 import { useState, useEffect } from "react";
-
-// Top Reddit Communities
-const communities = topReddits;
 
 export default function Home() {
   window.document.title = "Home - Upvote Stats";
@@ -16,56 +11,58 @@ export default function Home() {
     cardsDOM: [],
   });
 
-  // Getting top 100 communities
-  let examples = communities.slice(0, 100);
-
-  // Randomizing profile cards with Schwartzian transformation
-  examples = examples
-    .map((a) => ({ sort: Math.random(), value: a }))
-    .sort((a, b) => a.sort - b.sort)
-    .map((a) => a.value);
-
   useEffect(() => {
     let componentMounted = true;
     if (state.loaded === false) {
       (async () => {
-        // Creating cards for communities
-        for (let i = 0; i < examples.length && state.cardsDOM.length < 5; i++) {
-          await axios
-            .get(
-              "https://www.reddit.com/r/" +
-                examples[i].subreddit +
-                "/top.json?t=month&limit=1"
-            )
-            .then((res) => {
-              // Getting subscriber amount
-              let subs = res.data.data.children[0].data.subreddit_subscribers;
+        // Getting subreddit name and subscribers
+        let communities = {};
+        await axios
+          .get(process.env.REACT_APP_BACKEND + "posts/all")
+          .then((res) => {
+            let posts = res.data.posts;
+            for (let i = 0; i < posts.length; i++) {
+              let sub = posts[i][1].subreddit;
+              let subscribers = posts[i][1].subscribers;
 
-              state.cardsDOM.push(
-                <button
-                  key={"card-" + i}
-                  className="homeCards"
-                  style={{ border: "none" }}
-                  onClick={() =>
-                    (window.location.href =
-                      "/search?q=" + examples[i].subreddit)
-                  }
-                >
-                  r/{examples[i].subreddit}
-                  <br />
-                  <span style={{ color: "gray", fontSize: "14px" }}>
-                    {numToString(subs)} subscribers
-                  </span>
-                </button>
-              );
-            })
-            .catch((err) => {
-              // skip over buttons for subs that are privated
-              if (err.response.data.reason !== "private") {
-                state.error = true;
-                console.log(err);
+              // saving name and sub count
+              if (communities[sub] === undefined)
+                communities[sub] = subscribers;
+            }
+          })
+          .catch((err) => {
+            state.error = true;
+            console.log(err);
+          });
+
+        let subData = []; // adding data to array
+        for (const [key, value] of Object.entries(communities))
+          subData.push([key, value]);
+
+        // Randomizing profile cards with Schwartzian transformation
+        subData = subData
+          .map((a) => ({ sort: Math.random(), value: a }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((a) => a.value);
+
+        // Creating cards for communities
+        for (let i = 0; i < subData.length && state.cardsDOM.length < 5; i++) {
+          state.cardsDOM.push(
+            <button
+              key={"card-" + i}
+              className="homeCards"
+              style={{ border: "none" }}
+              onClick={() =>
+                (window.location.href = "/search?q=" + subData[i][0])
               }
-            });
+            >
+              r/{subData[i][0]}
+              <br />
+              <span style={{ color: "gray", fontSize: "14px" }}>
+                {numToString(subData[i][1])} subscribers
+              </span>
+            </button>
+          );
         }
 
         // Update state
@@ -112,4 +109,19 @@ export default function Home() {
       )}
     </div>
   );
+}
+
+/**
+ * Converts number to string with abbreviation
+ * @param {*} num - Number to convert
+ * @returns Number with abbreviation
+ */
+export function numToString(num) {
+  return Math.abs(num) >= 1.0e9
+    ? (Math.abs(num) / 1.0e9).toFixed(2) + "B"
+    : Math.abs(num) >= 1.0e6
+    ? (Math.abs(num) / 1.0e6).toFixed(2) + "M"
+    : Math.abs(num) >= 1.0e3
+    ? (Math.abs(num) / 1.0e3).toFixed(2) + "K"
+    : Math.abs(num);
 }
