@@ -401,12 +401,7 @@ export default function Trends() {
             {isExpanded(i) && (
               <div
                 style={{
-                  marginTop:
-                    (!posts[i][1].redditMediaDomain &&
-                      posts[i][1].urlDest !== undefined) ||
-                    !loadableImg
-                      ? "3px"
-                      : "10px",
+                  marginTop: "5px",
                 }}
               >
                 <div
@@ -521,7 +516,7 @@ export default function Trends() {
             <div className="postLink" id={"trends-" + i}>
               <InView
                 as="div"
-                threshold={0.1}
+                threshold={0.05}
                 onChange={(inView, entry) => {
                   let elm = document.getElementById("trends-" + i);
                   if (inView) {
