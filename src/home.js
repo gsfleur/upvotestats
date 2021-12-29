@@ -82,7 +82,7 @@ export default function Home() {
   // Loading objects
   const loadingDOM = (
     <div
-      className="homeCards loading"
+      className="homeCards"
       style={{
         border: "none",
         height: "50px",
