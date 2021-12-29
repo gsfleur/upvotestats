@@ -21,7 +21,8 @@ export default function Stats() {
       (async () => {
         await axios
           .get(
-            process.env.REACT_APP_BACKEND + "posts/all?sort=coins&time=month"
+            process.env.REACT_APP_BACKEND +
+              "posts/news?sort=comments&time=month"
           )
           .then((res) => {
             state.monthData = res.data;
@@ -65,6 +66,14 @@ export default function Stats() {
         // Skip potential duplicates
         if (postLinks.includes(state.data.posts[i][1].url)) continue;
 
+        // Date since post published
+        const timeInDay = 24 * 60 * 60 * 1000;
+        const firstDate = new Date(state.data.posts[i][1].publishedAt);
+        const secondDate = new Date();
+        const diffDays = Math.round(
+          Math.abs((firstDate - secondDate) / timeInDay)
+        );
+
         // Default post/img body css
         let imgBodyCSS = {
           display: "inline-block",
@@ -82,6 +91,10 @@ export default function Stats() {
           state.data.posts[i][1].url +
           ") ";
 
+        if (state.data.posts[i][1].title.includes("Zealand"))
+          state.data.posts[i][1].urlToImage =
+            "https://external-preview.redd.it/QJMwMxrfKghHazca4dpF-_LvjU8a0pFUsN9o6-CUVTI.jpg?auto=webp&s=7050b11bd29324bf4c01d5df4ce71bf9266a955a";
+
         postLinks.push(state.data.posts[i][1].url);
         // DOM of post in list
         postListDOM.push(
@@ -94,7 +107,7 @@ export default function Stats() {
               style={{
                 margin: "0px 0px 10px 0px",
                 padding: "0px",
-                width: "100%",
+                width: "90%",
               }}
             >
               <div className="imgBody" style={imgBodyCSS}>
@@ -104,31 +117,6 @@ export default function Stats() {
                     paddingBottom: "0px",
                   }}
                 >
-                  {i + 1 < 10 && (
-                    <div
-                      style={{
-                        float: "left",
-                        fontSize: "40px",
-                        padding: "5px 15px 10px 20px",
-                        color: "black",
-                      }}
-                    >
-                      {i + 1}
-                    </div>
-                  )}
-                  {i + 1 >= 10 && (
-                    <div
-                      style={{
-                        float: "left",
-                        fontSize: "40px",
-                        marginLeft: "-20px",
-                        padding: "5px 15px 10px 20px",
-                        color: "black",
-                      }}
-                    >
-                      {i + 1}
-                    </div>
-                  )}
                   <img
                     src={state.data.posts[i][1].urlToImage}
                     className="postImgStandard"
@@ -150,15 +138,16 @@ export default function Stats() {
                     style={{
                       fontSize: "16px",
                       marginBottom: "10px",
-                      color: "black",
+                      color: "gainsboro",
                       float: "left",
-                      width: "calc(100% - 150px)",
+                      width: "calc(100% - 90px)",
                       marginLeft: "10px",
                     }}
                   >
-                    <span style={{ color: "black" }}>
-                      {"r/" + state.data.posts[i][1].subreddit} &bull;{" "}
-                      {numToString(state.data.posts[i][1].awards)} Awards
+                    <span style={{ color: "gainsboro" }}>
+                      {state.data.posts[i][1].subName} &bull;{" "}
+                      {numToString(state.data.posts[i][1].upvotes)}&uarr; &bull;{" "}
+                      {diffDays}d
                       {state.data.posts[i][1].nsfw === true && (
                         <span> &bull; NSFW</span>
                       )}
@@ -175,25 +164,28 @@ export default function Stats() {
                         width:
                           Math.ceil(
                             100 *
-                              (state.data.posts[i][1].coins /
-                                state.data.posts[0][1].coins)
+                              (state.data.posts[i][1].comments /
+                                state.data.posts[0][1].comments)
                           ) + "%",
                         display: "inline-block",
                         border: "1px solid black",
                         borderRadius: "10px",
-                        backgroundColor: "gold",
+                        backgroundColor: "dodgerblue",
+                        marginTop: "5px",
                       }}
                     >
                       <div
                         style={{
-                          fontSize: "13px",
+                          fontSize: "13.5px",
                           textAlign: "center",
-                          color: "black",
+                          color: "gainsboro",
                           fontWeight: "bold",
                           paddingRight: "5px",
+                          textShadow:
+                            "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
                         }}
                       >
-                        {numToString(state.data.posts[i][1].coins)} coins
+                        {numToString(state.data.posts[i][1].comments)} comments
                       </div>
                     </div>
                   </div>
@@ -294,25 +286,18 @@ export default function Stats() {
             <div>
               <div className="centering">
                 <span style={{ fontSize: "24px" }}>
-                  POSTS AWARDED THE MOST REDDIT COINS
+                  MOST DISCUSSED NEWS POSTS
                 </span>
               </div>
               <div className="centering">
                 <span style={{ fontSize: "13px" }}>
-                  Out of the Top (most upvoted) 1000 posts that made r/All this
-                  past month
+                  Out of the Top (most upvoted) ~1000 posts that made r/All this
+                  month
                 </span>
                 <br />
                 <br />
               </div>
               {postListDOM}
-              <div className="centering">
-                <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-                  upvotestats.com/trends
-                </span>
-                <br />
-                <br />
-              </div>
             </div>
           )}
         {state.loaded === true && postListDOM.length === 0 && (
