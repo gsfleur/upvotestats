@@ -25,7 +25,7 @@ export default function Results(props) {
     },
     subtitle: {
       text:
-        document.ontouchstart === undefined
+        document.ontouchstart == null
           ? "Click and drag in the plot area to zoom in"
           : "Pinch the chart to zoom in",
     },
@@ -124,7 +124,7 @@ export default function Results(props) {
         <div className="profitHeader">
           $ {numToString(props.stats.earnings)}
         </div>
-        <div className="itemContext">ESTIMATED EARNINGS</div>
+        <div className="itemContext">ESTIMATED VALUE</div>
       </div>
       <div className="header">
         <div className="title">MONETARY STATS</div>

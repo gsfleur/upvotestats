@@ -20,11 +20,11 @@ export default function Trends() {
     sort: "all",
     sortBy: "hot",
     sortDate: "today",
-    data: undefined,
-    allData: undefined,
-    newsData: undefined,
-    funnyData: undefined,
-    sportsData: undefined,
+    data: null,
+    allData: null,
+    newsData: null,
+    funnyData: null,
+    sportsData: null,
     showOptions: false,
     collapsedAll: false,
   });
@@ -124,7 +124,7 @@ export default function Trends() {
   if (state.loaded && !state.error) {
     const posts = state.data.posts;
     // Creating DOM for posts
-    if (posts !== undefined) {
+    if (posts != null) {
       for (let i = 0; i < posts.length && postListDOM.length < 30; i++) {
         // Skip deleted, cross, or duped posts
         if (posts[i][1].text === "[deleted]") continue;

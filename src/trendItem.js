@@ -59,7 +59,7 @@ export default function TrendItem(props) {
 
   // Adding blur to posts with images that are NSFW/Spoiler
   let blurred = false;
-  if (post.urlDest !== undefined) {
+  if (post.urlDest != null) {
     if (post.nsfw || post.spoiler) {
       // changing thumbnail to img source
       blurred = true;
@@ -68,7 +68,7 @@ export default function TrendItem(props) {
   }
 
   // Setting thumbnail to source if thumbnail not available
-  if (post.source !== undefined) {
+  if (post.source != null) {
     if (post.urlToImage === "image" || post.urlToImage === "default")
       post.urlToImage = post.source;
   }
@@ -82,13 +82,12 @@ export default function TrendItem(props) {
 
   // Determine whether to show image
   const loadableImg =
-    post.urlToImage !== undefined &&
-    post.urlToImage !== null &&
+    post.urlToImage != null &&
     post.urlToImage !== "" &&
     post.urlToImage !== "default" &&
     post.urlToImage !== "self" &&
-    (post.source !== undefined || post.urlToImage.includes("https")) &&
-    post.urlDest !== undefined;
+    (post.source != null || post.urlToImage.includes("https")) &&
+    post.urlDest != null;
 
   // DOM for "trending with" section
   let trendingWith = [];
@@ -138,7 +137,7 @@ export default function TrendItem(props) {
   // Image Source
   const imgSource = post.redditMediaDomain
     ? post.urlDest
-    : post.source === undefined
+    : post.source == null
     ? post.urlToImage
     : post.source;
 
@@ -161,7 +160,7 @@ export default function TrendItem(props) {
 
   // Link Destination converted to string
   let destLink = post.urlDest;
-  if (destLink !== undefined) {
+  if (destLink != null) {
     destLink = destLink.replace("https://", "");
     destLink = destLink.replace("http://", "");
     destLink = destLink.replace("www.", "");
@@ -171,7 +170,7 @@ export default function TrendItem(props) {
   // Destination Link DOM
   const outLinkDOM = (
     <span>
-      {!post.redditMediaDomain && post.urlDest !== undefined && (
+      {!post.redditMediaDomain && post.urlDest != null && (
         <div
           style={{
             display: "inline-block",
@@ -320,7 +319,7 @@ export default function TrendItem(props) {
 
   // Whether post is streamable video link
   const streamable =
-    post.urlDest !== undefined && post.urlDest.includes("streamable.com");
+    post.urlDest != null && post.urlDest.includes("streamable.com");
 
   // Getting streamable embed link
   let streamableLink = "";
@@ -343,7 +342,7 @@ export default function TrendItem(props) {
           e.target.className !== "iconImg" &&
           !e.target.id.includes("report") &&
           e.target.id !== "threadLink" &&
-          e.target.className.baseVal === undefined &&
+          e.target.className.baseVal == null &&
           !props.collapsedAll
         )
           setState({ ...state, collapsed: isCollapsed() ? false : true });

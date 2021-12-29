@@ -136,11 +136,11 @@ export default function Search() {
       let obj = arr[i].data;
 
       // Skip if missing important keys
-      if (arr[i].kind === "t1") if (obj.ups === undefined) continue;
-      if (arr[i].kind === "more") if (obj.children === undefined) continue;
+      if (arr[i].kind === "t1") if (obj.ups == null) continue;
+      if (arr[i].kind === "more") if (obj.children == null) continue;
 
       state.resource += "\n--------------------\n";
-      if (obj.permalink !== undefined) {
+      if (obj.permalink != null) {
         state.resource += "LINK: " + obj.permalink + "\n";
         link.setValue(
           obj.permalink.substring(
@@ -168,7 +168,7 @@ export default function Search() {
       let downvotes =
         obj.ups - Math.floor((100 * obj.ups) / (100 * obj.upvote_ratio));
 
-      if (obj.upvote_ratio === undefined) downvotes = 0;
+      if (obj.upvote_ratio == null) downvotes = 0;
 
       // Adding stats for posts
       if (kind === "posts") {
@@ -205,10 +205,7 @@ export default function Search() {
         }
       }
 
-      if (
-        obj.all_awardings !== undefined &&
-        obj.total_awards_received !== undefined
-      ) {
+      if (obj.all_awardings != null && obj.total_awards_received != null) {
         state.resource += "\nAWARDS | ";
         // Adding amount of awards
         state.stats.awards += obj.total_awards_received;
@@ -228,7 +225,7 @@ export default function Search() {
         let dateCreated = d.getTime();
         if (coins > 0) {
           // Store amount of coins given out on each day
-          if (state.dates[dateCreated] === undefined) {
+          if (state.dates[dateCreated] == null) {
             state.dates[dateCreated] = coins;
           } else {
             state.dates[dateCreated] += coins;
@@ -239,7 +236,7 @@ export default function Search() {
       // Recursion to access each reply for each comment
       if (kind === "comments") {
         if (arr[i].kind === "t1") {
-          if (obj.replies.data !== undefined)
+          if (obj.replies.data != null)
             calculate(obj.replies.data.children, "comments");
         }
       }
@@ -353,7 +350,7 @@ export default function Search() {
       )}
       {state.loaded === true && searching && state.error === false && (
         <div>
-          {state.after !== undefined &&
+          {state.after != null &&
             state.after !== null &&
             state.after.length > 0 && (
               <div className="centering">

@@ -26,8 +26,7 @@ export default function Home() {
               let subscribers = posts[i][1].subscribers;
 
               // saving name and sub count
-              if (communities[sub] === undefined)
-                communities[sub] = subscribers;
+              if (communities[sub] == null) communities[sub] = subscribers;
             }
           })
           .catch((err) => {
