@@ -12,8 +12,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 const communities = topReddits;
 
 export default function Search() {
-  window.document.title = "Search - Upvote Stats";
-
   // Getting id from URL search param
   const urlParams = new URLSearchParams(window.location.search);
   const q = urlParams.get("q");
