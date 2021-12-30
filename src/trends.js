@@ -18,7 +18,7 @@ export default function Trends() {
     loaded: false,
     error: false,
     sort: "all",
-    sortBy: "hot",
+    sortBy: "upvotes",
     sortDate: "today",
     data: null,
     allData: null,
@@ -466,14 +466,23 @@ export default function Trends() {
                       <option value={"upvotes"} style={{ color: "black" }}>
                         Upvotes
                       </option>
+                      <option value={"downvotes"} style={{ color: "black" }}>
+                        Downvotes
+                      </option>
+                      <option value={"awards"} style={{ color: "black" }}>
+                        Awards
+                      </option>
                       <option value={"coins"} style={{ color: "black" }}>
                         Coins
                       </option>
                       <option value={"comments"} style={{ color: "black" }}>
                         Comments
                       </option>
-                      <option value={"downvotes"} style={{ color: "black" }}>
-                        Downvotes
+                      <option value={"upvoteratio"} style={{ color: "black" }}>
+                        Upvote Ratio
+                      </option>
+                      <option value={"downratio"} style={{ color: "black" }}>
+                        Downvote Ratio
                       </option>
                     </NativeSelect>
                   </FormControl>
