@@ -22,8 +22,8 @@ export default function Home() {
           .then((res) => {
             let posts = res.data.posts;
             for (let i = 0; i < posts.length; i++) {
-              let sub = posts[i][1].subreddit;
-              let subscribers = posts[i][1].subscribers;
+              let sub = posts[i].subreddit;
+              let subscribers = posts[i].subscribers;
 
               // saving name and sub count
               if (communities[sub] == null) communities[sub] = subscribers;

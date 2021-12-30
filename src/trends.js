@@ -18,7 +18,7 @@ export default function Trends() {
     loaded: false,
     error: false,
     sort: "all",
-    sortBy: "hot",
+    sortBy: "upvotes",
     sortDate: "today",
     data: null,
     allData: null,
@@ -127,12 +127,12 @@ export default function Trends() {
     if (posts != null) {
       for (let i = 0; i < posts.length && postListDOM.length < 30; i++) {
         // Skip deleted, cross, or duped posts
-        if (posts[i][1].text === "[deleted]") continue;
-        if (posts[i][1].author === "[deleted]") continue;
-        if (posts[i][1].isCrossPost) continue;
-        if (posts[i][1].subreddit.startsWith("u_")) continue;
-        if (posts[i][1].trends.length < 3) continue;
-        if (postLinks.includes(posts[i][1].url)) continue;
+        if (posts[i].text === "[deleted]") continue;
+        if (posts[i].author === "[deleted]") continue;
+        if (posts[i].isCrossPost) continue;
+        if (posts[i].subreddit.startsWith("u_")) continue;
+        if (posts[i].trends.length < 3) continue;
+        if (postLinks.includes(posts[i].url)) continue;
 
         // Key of hidden posts requested user (new key every month)
         const d = new Date();
@@ -148,10 +148,10 @@ export default function Trends() {
         removedList = removedList.filter((url) => url.includes("reddit.com"));
 
         // Skip posts the user has requested to remove
-        if (removedList.includes(posts[i][1].url)) continue;
+        if (removedList.includes(posts[i].url)) continue;
 
         // List of post links
-        postLinks.push(posts[i][1].url);
+        postLinks.push(posts[i].url);
 
         // Handle Request Post Removal Event
         const handleReport = (event) => {
@@ -179,7 +179,7 @@ export default function Trends() {
         postListDOM.push(
           <TrendItem
             index={i}
-            post={posts[i][1]}
+            post={posts[i]}
             postLinks={postLinks}
             collapsedAll={state.collapsedAll}
             handleReport={handleReport}
@@ -463,8 +463,14 @@ export default function Trends() {
                       id="selectSort"
                       width="100%"
                     >
-                      <option value={"hot"} style={{ color: "black" }}>
-                        Popular
+                      <option value={"upvotes"} style={{ color: "black" }}>
+                        Upvotes
+                      </option>
+                      <option value={"downvotes"} style={{ color: "black" }}>
+                        Downvotes
+                      </option>
+                      <option value={"awards"} style={{ color: "black" }}>
+                        Awards
                       </option>
                       <option value={"coins"} style={{ color: "black" }}>
                         Coins
@@ -472,7 +478,10 @@ export default function Trends() {
                       <option value={"comments"} style={{ color: "black" }}>
                         Comments
                       </option>
-                      <option value={"downvotes"} style={{ color: "black" }}>
+                      <option value={"upvoteratio"} style={{ color: "black" }}>
+                        Upvote Ratio
+                      </option>
+                      <option value={"downratio"} style={{ color: "black" }}>
                         Downvote Ratio
                       </option>
                     </NativeSelect>
@@ -521,11 +530,10 @@ export default function Trends() {
               >
                 <div style={{ marginTop: "5px" }}>
                   Trends from{" "}
-                  {state.data.stats.posts.count
+                  {state.data.stats.posts
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                  posts and {numToString(state.data.stats.comments.count)}{" "}
-                  comments
+                  posts and {numToString(state.data.stats.comments)} comments
                 </div>
                 <div
                   style={{
