@@ -127,12 +127,6 @@ export default function TrendItem(props) {
     if (post.spoiler) postTitle += " ![SPOILER](2.5)";
   }
 
-  // Break by character if word is very long (long links/words)
-  postTitle = breakLongWords(postTitle);
-  postText = breakLongWords(postText);
-  postTitle = breakLongCharacters(postTitle);
-  postText = breakLongCharacters(postText);
-
   // Image Source
   const imgSource = post.redditMediaDomain
     ? post.urlDest
@@ -351,7 +345,7 @@ export default function TrendItem(props) {
       <div className="postLink" id={"trends-" + i}>
         <InView
           as="div"
-          threshold={0.05}
+          threshold={0.01}
           onChange={(inView, entry) => {
             let elm = document.getElementById("trends-" + i);
             if (inView) {
@@ -783,111 +777,6 @@ export default function TrendItem(props) {
    */
   function isCollapsed() {
     return state.collapsed || props.collapsedAll;
-  }
-
-  /**
-   * Break up long words by adding em tag in markdown which
-   * react markdown will turn into a span with the break-all property
-   * @param {*} text - text to search through
-   * @returns array of text with long words surrounded by em markdown tag
-   */
-  function breakLongWords(text) {
-    // getting array of text surrounded by brackets
-    let m = text.match(/\[(.*?)\]/g);
-    let m2 = text.match(/\[(.*?)\[(.*?)\](.*?)\]/g);
-
-    if (m !== null) {
-      // combining arrays of text that are enclosed by brackets
-      if (m2 !== null) m = m.concat(m2.filter((item) => m.indexOf(item) < 0));
-      // replacing spaces with ":s:" in text, goal is to keep link
-      // and url markdown as one after being seperated by spaces
-      for (let i = 0; i < m.length; i++) {
-        let r = m[i].replace(/\s+/g, ":s:");
-        text = text.replace(m[i], r);
-      }
-    }
-
-    // getting array of text surrouned by parentheses
-    let p = text.match(/\((.*?)\)/g);
-    if (p !== null) {
-      // replacing spaces with "%20" in text that contains markdown link
-      for (let i = 0; i < p.length; i++) {
-        if (p[i].includes("https://") || p[i].includes("http://")) {
-          let r = p[i].replace(/\s+/g, "%20");
-          text = text.replace(p[i], r);
-        }
-      }
-    }
-
-    // splitting text by spaces
-    text = text.split(/\s+/);
-
-    // Loop through each word in text array
-    for (let t = 0; t < text.length; t++) {
-      const isMarkdownLink =
-        text[t].match(/\[(.*?)\]\((.*?)\)/g) !== null &&
-        text[t].startsWith("[") &&
-        text[t].endsWith(")");
-
-      // text that will actually be viewable (href links are hidden)
-      let visibleText = text[t];
-      // Remove ref and keep title from markdown link
-      if (isMarkdownLink) {
-        p = text[t].match(/\((.*?)\)/g);
-        if (p !== null) {
-          // getting visible text from markdown link
-          for (let i = 0; i < p.length; i++) {
-            if (p[i].includes("https://") || p[i].includes("http://"))
-              visibleText = visibleText.replace(p[i], "");
-          }
-        }
-      }
-
-      // replace ":s:" with regular spaces
-      text[t] = text[t].replace(/:s:/g, " ");
-      visibleText = visibleText.replace(/:s:/g, " ");
-
-      // getting the length of the longest word
-      let maxLength = visibleText.split(/\s+/g).map((n) => (n = n.length));
-      maxLength = maxLength.reduce((max, n) => Math.max(max, n));
-
-      // Add markdown that will convert to a span with break-all
-      if (maxLength > 25) text[t] = "***" + text[t] + "***";
-    }
-
-    return text.join(" ");
-  }
-
-  /**
-   * Break up text with long non letter/number characters
-   * @param {*} text - text to search through
-   * @returns array of text with long characters seperated by space
-   */
-  function breakLongCharacters(text) {
-    text = text.split(/\s+/);
-    let consecutiveNonLetters = 0;
-
-    // Loop through characters
-    for (let t = 0; t < text.length; t++) {
-      for (let c = 0; c < text[t].length; c++) {
-        let ch = text[t].charCodeAt(c);
-        // char is letter or number
-        let isLetterOrNum =
-          (ch > 64 && ch < 91) || (ch > 96 && ch < 123) || (ch > 47 && ch < 58);
-
-        if (isLetterOrNum) consecutiveNonLetters = 0;
-
-        // text has long non consecutive non letters/numbers, seperate with space
-        if (consecutiveNonLetters > 25) {
-          text[t] = text[t].slice(0, c) + " " + text[t].slice(c);
-          consecutiveNonLetters = 0;
-        }
-
-        if (!isLetterOrNum) consecutiveNonLetters++;
-      }
-    }
-
-    return text.join(" ");
   }
 
   /**
