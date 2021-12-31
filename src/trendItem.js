@@ -53,9 +53,8 @@ export default function TrendItem(props) {
   const firstDate = new Date(post.publishedAt);
   const secondDate = new Date();
   const diffDays = Math.round(Math.abs((firstDate - secondDate) / timeInDay));
-
-  // hours since post
-  const hours = Math.abs(firstDate - secondDate) / (60 * 60 * 1000);
+  const hours = Math.floor(Math.abs(firstDate - secondDate) / (60 * 60 * 1000));
+  const minutes = Math.floor(Math.abs(firstDate - secondDate) / (60 * 1000));
 
   // Adding blur to posts with images that are NSFW/Spoiler
   let blurred = false;
@@ -223,8 +222,9 @@ export default function TrendItem(props) {
         marginTop: "5px",
       }}
     >
-      {hours <= 24 && <span>{Math.floor(hours)}h</span>}
-      {hours > 24 && diffDays < 7 && <span>{diffDays}d</span>}
+      {hours === 0 && <span>{minutes} min</span>}
+      {hours < 24 && hours > 0 && <span>{hours}h</span>}
+      {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
       {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
       <a
         className="searchLink2"
@@ -528,8 +528,9 @@ export default function TrendItem(props) {
                       >
                         {post.author}
                       </a>{" "}
-                      &bull; {hours <= 24 && <span>{Math.floor(hours)}h</span>}
-                      {hours > 24 && diffDays < 7 && <span>{diffDays}d</span>}
+                      &bull; {hours === 0 && <span>{minutes} min</span>}
+                      {hours < 24 && hours > 0 && <span>{hours}h</span>}
+                      {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
                       {diffDays >= 7 && (
                         <span>{Math.floor(diffDays / 7)}w</span>
                       )}

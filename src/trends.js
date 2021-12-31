@@ -18,7 +18,7 @@ export default function Trends() {
     loaded: false,
     error: false,
     sort: "all",
-    sortBy: "upvotes",
+    sortBy: "hot",
     sortDate: "today",
     data: null,
     allData: null,
@@ -463,11 +463,11 @@ export default function Trends() {
                       id="selectSort"
                       width="100%"
                     >
-                      <option value={"upvotes"} style={{ color: "black" }}>
-                        Upvotes
+                      <option value={"hot"} style={{ color: "black" }}>
+                        Hot
                       </option>
-                      <option value={"downvotes"} style={{ color: "black" }}>
-                        Downvotes
+                      <option value={"new"} style={{ color: "black" }}>
+                        New
                       </option>
                       <option value={"awards"} style={{ color: "black" }}>
                         Awards
@@ -477,6 +477,12 @@ export default function Trends() {
                       </option>
                       <option value={"comments"} style={{ color: "black" }}>
                         Comments
+                      </option>
+                      <option value={"upvotes"} style={{ color: "black" }}>
+                        Upvotes
+                      </option>
+                      <option value={"downvotes"} style={{ color: "black" }}>
+                        Downvotes
                       </option>
                       <option value={"upvoteratio"} style={{ color: "black" }}>
                         Upvote Ratio
