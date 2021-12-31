@@ -14,10 +14,6 @@ export default function Footer() {
         <br />
         <br />
         <div style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}>
-          &copy; {new Date().getFullYear()} Upvote Stats
-        </div>
-        <br />
-        <div style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}>
           <a
             className="searchLink"
             href="https://github.com/gsfleur/upvotestats"
@@ -26,6 +22,11 @@ export default function Footer() {
           >
             <b>Open Source</b>
           </a>
+        </div>
+        <br />
+        <div style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}>
+          &copy; 2021-{new Date().getFullYear().toString().substring(2, 4)}{" "}
+          Upvote Stats
         </div>
       </div>
     </div>
