@@ -823,7 +823,10 @@ export default function TrendItem(props) {
 
     // Loop through each word in text array
     for (let t = 0; t < text.length; t++) {
-      const isMarkdownLink = text[t].match(/\[(.*?)\]\((.*?)\)/g) !== null;
+      const isMarkdownLink =
+        text[t].match(/\[(.*?)\]\((.*?)\)/g) !== null &&
+        text[t].startsWith("[") &&
+        text[t].endsWith(")");
 
       // text that will actually be viewable (href links are hidden)
       let visibleText = text[t];
