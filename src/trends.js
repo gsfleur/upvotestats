@@ -151,18 +151,6 @@ export default function Trends() {
         // Skip posts the user has requested to remove
         if (removedList.includes(posts[i].url)) continue;
 
-        // Number of posts with specific subreddit
-        if (subredditCount[posts[i].subreddit] == null) {
-          subredditCount[posts[i].subreddit] = 1;
-        } else {
-          subredditCount[posts[i].subreddit] =
-            subredditCount[posts[i].subreddit] + 1;
-        }
-
-        // Skip if more than 5 posts from the same sub are already in the list
-        if (subredditCount[posts[i].subreddit] > 5 && state.sortBy === "hot")
-          continue;
-
         // List of post links
         postLinks.push(posts[i].url);
 
