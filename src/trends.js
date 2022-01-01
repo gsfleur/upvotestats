@@ -159,8 +159,8 @@ export default function Trends() {
             subredditCount[posts[i].subreddit] + 1;
         }
 
-        // Skip if more than 3 posts from the same sub are already in the list
-        if (subredditCount[posts[i].subreddit] > 3 && state.sortBy === "hot")
+        // Skip if more than 5 posts from the same sub are already in the list
+        if (subredditCount[posts[i].subreddit] > 5 && state.sortBy === "hot")
           continue;
 
         // List of post links
