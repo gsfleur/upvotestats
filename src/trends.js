@@ -119,6 +119,7 @@ export default function Trends() {
 
   let postListDOM = []; // DOM for posts
   let postLinks = []; // urls of all posts
+  let subredditCount = {}; // key: subreddit, value: amount of posts
 
   // If data was loaded properly
   if (state.loaded && !state.error) {
@@ -149,6 +150,18 @@ export default function Trends() {
 
         // Skip posts the user has requested to remove
         if (removedList.includes(posts[i].url)) continue;
+
+        // Number of posts with specific subreddit
+        if (subredditCount[posts[i].subreddit] == null) {
+          subredditCount[posts[i].subreddit] = 1;
+        } else {
+          subredditCount[posts[i].subreddit] =
+            subredditCount[posts[i].subreddit] + 1;
+        }
+
+        // Skip if more than 3 posts from the same sub are already in the list
+        if (subredditCount[posts[i].subreddit] > 3 && state.sortBy === "hot")
+          continue;
 
         // List of post links
         postLinks.push(posts[i].url);
