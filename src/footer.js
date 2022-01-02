@@ -25,8 +25,7 @@ export default function Footer() {
         </div>
         <br />
         <div style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}>
-          &copy; 2021-{new Date().getFullYear().toString().substring(2, 4)}{" "}
-          Upvote Stats
+          &copy; {new Date().getFullYear()} Upvote Stats
         </div>
       </div>
     </div>
