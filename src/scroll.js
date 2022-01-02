@@ -8,7 +8,6 @@ export default function Scroll() {
   // Component state
   const [state, setState] = useState({ loaded: false });
 
-  // Load data from chess api
   useEffect(() => {
     let componentMounted = true;
 

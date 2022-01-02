@@ -119,7 +119,6 @@ export default function Trends() {
 
   let postListDOM = []; // DOM for posts
   let postLinks = []; // urls of all posts
-  let subredditCount = {}; // key: subreddit, value: amount of posts
 
   // If data was loaded properly
   if (state.loaded && !state.error) {
