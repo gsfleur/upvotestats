@@ -116,7 +116,7 @@ export default function TrendItem(props) {
 
   // Arary of words in title and text
   let postTitle = post.title;
-  let postText = post.text;
+  let postText = fixMarkdown(post.text);
 
   // Adding content warning tags in text, later to be converted in markdown
   if (loadableImg) {
@@ -283,9 +283,7 @@ export default function TrendItem(props) {
         ),
         p: ({ node, ...props }) => <p style={{ margin: "0px" }} {...props} />,
         strong: ({ node, ...props }) => <span {...props} />,
-        em: ({ node, ...props }) => (
-          <span style={{ wordBreak: "break-all" }} {...props} />
-        ),
+        em: ({ node, ...props }) => <span {...props} />,
         img: ({ node, ...props }) => (
           <span
             {...props}
@@ -792,5 +790,28 @@ export default function TrendItem(props) {
       : Math.abs(num) >= 1.0e3
       ? (Math.abs(num) / 1.0e3).toFixed(1) + "K"
       : Math.abs(num);
+  }
+
+  /**
+   * Ensure markdown contents are in correct form
+   * @param {*} text - text to search through
+   * @returns array of text with words
+   */
+  function fixMarkdown(text) {
+    // getting everything surrounded by parenthesis
+    const p = text.match(/\((.*?)\)/g);
+    if (p !== null) {
+      for (let i = 0; i < p.length; i++) {
+        // Changing all spaces within a link to '%20'
+        if (p[i].includes("https://") || p[i].includes("http://")) {
+          if (text.charAt(text.indexOf(p[i]) - 1) === "]") {
+            let link = p[i];
+            link = link.replace(/\s/g, "%20");
+            text = text.replace(p[i], link);
+          }
+        }
+      }
+    }
+    return text;
   }
 }
