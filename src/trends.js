@@ -535,11 +535,8 @@ export default function Trends() {
                 }}
               >
                 <div style={{ marginTop: "5px" }}>
-                  Trends from{" "}
-                  {state.data.stats.posts
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                  posts and {numToString(state.data.stats.comments)} comments
+                  Trends from {numToString(state.data.stats.posts)} posts and{" "}
+                  {numToString(state.data.stats.comments)} comments
                 </div>
                 <div
                   style={{
