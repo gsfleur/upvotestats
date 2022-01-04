@@ -179,7 +179,7 @@ export default function TrendItem(props) {
             style={{
               fontSize: "13px",
               color: "DodgerBlue",
-              float: "left",
+              position: "relative",
             }}
           >
             {destLink}
@@ -187,13 +187,13 @@ export default function TrendItem(props) {
               id="threadLink"
               src="outbound.png"
               alt={"outbound icon"}
-              width="11px"
-              height="11px"
+              width="13px"
+              height="13px"
               loading="lazy"
               style={{
-                marginLeft: "3px",
-                float: "right",
-                marginTop: "4px",
+                position: "absolute",
+                bottom: "1px",
+                marginLeft: "2px",
               }}
               onError={(e) => {
                 e.target.onerror = null;
