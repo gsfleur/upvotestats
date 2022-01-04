@@ -192,7 +192,7 @@ export default function TrendItem(props) {
               loading="lazy"
               style={{
                 position: "absolute",
-                bottom: "1px",
+                bottom: "1.5px",
                 marginLeft: "2px",
               }}
               onError={(e) => {
