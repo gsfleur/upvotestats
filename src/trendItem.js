@@ -267,20 +267,40 @@ export default function TrendItem(props) {
     </span>
   );
 
+  // Markdown DOM bullet
+  const bullet = (props) => {
+    if (
+      props.children != null &&
+      props.children.length > 0 &&
+      props.children[1].props.children != null
+    ) {
+      return <span>- {props.children[1].props.children[0]}</span>;
+    } else {
+      return <span></span>;
+    }
+  };
+
   // Markdown DOM for post text
   const markdown = (text) => (
     <ReactMarkdown
       components={{
-        a: ({ node, ...props }) => (
-          // eslint-disable-next-line
-          <a
-            className="searchLink"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: "dodgerblue" }}
-            {...props}
-          />
-        ),
+        a: ({ node, ...props }) => {
+          if (props.children != null && props.children.length >= 0) {
+            return (
+              <a
+                className="searchLink"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: "dodgerblue" }}
+                href={props.href}
+              >
+                {props.children[0]}
+              </a>
+            );
+          } else {
+            return <span></span>;
+          }
+        },
         p: ({ node, ...props }) => <p style={{ margin: "0px" }} {...props} />,
         strong: ({ node, ...props }) => <span {...props} />,
         em: ({ node, ...props }) => <span {...props} />,
@@ -300,9 +320,9 @@ export default function TrendItem(props) {
             {props.alt}
           </span>
         ),
-        li: () => <span></span>,
-        ol: () => <span></span>,
-        ul: () => <span></span>,
+        li: ({ node, ...props }) => bullet(props),
+        ol: ({ node, ...props }) => bullet(props),
+        ul: ({ node, ...props }) => bullet(props),
       }}
       children={text}
       remarkPlugins={[remarkGfm]}
