@@ -11,7 +11,7 @@ import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
 
 export default function Trends() {
-  window.document.title = "Trends on Reddit - Upvote Stats";
+  window.document.title = "Reddit Trends - Upvote Stats";
 
   // Component State
   const [state, setState] = useState({
@@ -344,7 +344,7 @@ export default function Trends() {
                   marginBottom: "10px",
                 }}
               >
-                <b>Trends on Reddit</b>
+                <b>Reddit Trends</b>
                 <button
                   className="sortButton2"
                   style={{ padding: "0px" }}

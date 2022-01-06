@@ -97,7 +97,7 @@ export default function Results(props) {
       </div>
       <div className="centering">
         <div className="header twoColumn">
-          <div className="title">POSTS</div>
+          <div className="title">POST</div>
           <div className="size30 upsHeader">
             {numToString(props.stats.posts.upvotes)}
           </div>
@@ -108,7 +108,7 @@ export default function Results(props) {
           <div className="itemContext">DOWNVOTES</div>
         </div>
         <div className="header twoColumn">
-          <div className="title">COMMENTS</div>
+          <div className="title">COMMENT</div>
           <div className="size30 upsHeader">
             {numToString(props.stats.comments.upvotes)}
           </div>
