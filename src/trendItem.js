@@ -753,7 +753,8 @@ export default function TrendItem(props) {
                   fontSize: "13px",
                   color: "gray",
                   overflow: "hidden",
-                  height: isCollapsed() ? "80px" : "40px",
+                  height: "100%",
+                  maxHeight: isCollapsed() ? "80px" : "40px",
                 }}
               >
                 {trendingWith}
