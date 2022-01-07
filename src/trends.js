@@ -339,41 +339,10 @@ export default function Trends() {
                 style={{
                   color: "gainsboro",
                   width: "90%",
-                  position: "relative",
                   marginBottom: "10px",
                 }}
               >
                 <b>Reddit Trends</b>
-                <button
-                  className="sortButton2"
-                  style={{ padding: "0px" }}
-                  onClick={() =>
-                    setState({
-                      ...state,
-                      showOptions: state.showOptions ? false : true,
-                    })
-                  }
-                >
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "120px",
-                      top: "10%",
-                    }}
-                  >
-                    <SortRoundedIcon fontSize="small" />
-                  </div>
-                  <div
-                    style={{
-                      fontWeight: "bold",
-                      position: "absolute",
-                      top: "20%",
-                      right: "80px",
-                    }}
-                  >
-                    SORT
-                  </div>
-                </button>
                 <button
                   className="sortButton2"
                   style={{ padding: "0px" }}
@@ -386,9 +355,20 @@ export default function Trends() {
                 >
                   <div
                     style={{
-                      position: "absolute",
-                      right: "55px",
-                      top: "10%",
+                      fontWeight: "bold",
+                      float: "right",
+                      paddingTop: "2.5px",
+                      height: "17.5px",
+                      marginTop: "3px",
+                    }}
+                  >
+                    EXPAND
+                  </div>
+                  <div
+                    style={{
+                      float: "right",
+                      height: "20px",
+                      marginTop: "3px",
                     }}
                   >
                     {state.collapsedAll && (
@@ -402,15 +382,39 @@ export default function Trends() {
                       </div>
                     )}
                   </div>
+                </button>
+
+                <button
+                  className="sortButton2"
+                  style={{ padding: "0px" }}
+                  onClick={() =>
+                    setState({
+                      ...state,
+                      showOptions: state.showOptions ? false : true,
+                    })
+                  }
+                >
                   <div
                     style={{
                       fontWeight: "bold",
-                      position: "absolute",
-                      top: "20%",
-                      right: "0px",
+                      float: "right",
+                      paddingTop: "2.5px",
+                      height: "17.5px",
+                      marginRight: "5px",
+                      marginTop: "3px",
                     }}
                   >
-                    EXPAND
+                    SORT
+                  </div>
+                  <div
+                    style={{
+                      float: "right",
+                      height: "20px",
+                      marginTop: "3px",
+                      marginRight: "3px",
+                    }}
+                  >
+                    <SortRoundedIcon fontSize="small" />
                   </div>
                 </button>
               </div>
