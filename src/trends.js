@@ -340,6 +340,7 @@ export default function Trends() {
                   color: "gainsboro",
                   width: "90%",
                   marginBottom: "10px",
+                  outline: "1px solid green",
                 }}
               >
                 <b>Reddit Trends</b>
@@ -402,6 +403,7 @@ export default function Trends() {
                       height: "17.5px",
                       marginRight: "5px",
                       marginTop: "3px",
+                      outline: "1px solid red",
                     }}
                   >
                     SORT
@@ -412,6 +414,7 @@ export default function Trends() {
                       height: "20px",
                       marginTop: "3px",
                       marginRight: "3px",
+                      outline: "1px solid aqua",
                     }}
                   >
                     <SortRoundedIcon fontSize="small" />
