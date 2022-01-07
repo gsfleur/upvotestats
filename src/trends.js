@@ -335,12 +335,11 @@ export default function Trends() {
             {/* Sort and Expand Buttons */}
             <div className="centering">
               <div
+                className="trendHeader"
                 style={{
-                  fontSize: "16px",
                   color: "gainsboro",
                   width: "90%",
                   position: "relative",
-                  height: "20px",
                   marginBottom: "10px",
                 }}
               >
@@ -359,7 +358,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "120px",
-                      bottom: "-5px",
+                      top: "2.2px",
                     }}
                   >
                     <SortRoundedIcon fontSize="small" />
@@ -368,7 +367,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "0px",
+                      top: "5px",
                       right: "80px",
                     }}
                   >
@@ -389,7 +388,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "55px",
-                      bottom: "-5px",
+                      top: "2.2px",
                     }}
                   >
                     {state.collapsedAll && (
@@ -407,7 +406,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      bottom: "0px",
+                      top: "5px",
                       right: "0px",
                     }}
                   >

@@ -60,3 +60,21 @@
     -webkit-box-orient: vertical;
   }
 }
+
+@media screen and (max-width: 420px) {
+  .trendHeader {
+    font-size: 19px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .trendHeader {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .trendHeader {
+    font-size: 17px;
+  }
+}
