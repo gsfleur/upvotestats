@@ -340,7 +340,6 @@ export default function Trends() {
                   color: "gainsboro",
                   width: "90%",
                   marginBottom: "10px",
-                  outline: "1px solid green",
                 }}
               >
                 <b>Reddit Trends</b>
@@ -358,8 +357,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       float: "right",
-                      marginTop: "3px",
-                      outline: "1px solid yellow",
+                      marginTop: "2px",
                     }}
                   >
                     EXPAND
@@ -367,8 +365,6 @@ export default function Trends() {
                   <div
                     style={{
                       float: "right",
-                      marginTop: "3px",
-                      outline: "1px solid orange",
                     }}
                   >
                     {state.collapsedAll && (
@@ -399,8 +395,7 @@ export default function Trends() {
                       fontWeight: "bold",
                       float: "right",
                       marginRight: "5px",
-                      marginTop: "3px",
-                      outline: "1px solid red",
+                      marginTop: "2px",
                     }}
                   >
                     SORT
@@ -408,9 +403,7 @@ export default function Trends() {
                   <div
                     style={{
                       float: "right",
-                      marginTop: "3px",
                       marginRight: "3px",
-                      outline: "1px solid aqua",
                     }}
                   >
                     <SortRoundedIcon fontSize="small" />
