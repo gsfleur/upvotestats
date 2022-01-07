@@ -13,6 +13,7 @@ export default function TrendItem(props) {
   // Component State
   const [state, setState] = useState({
     collapsed: false,
+    viewed: false,
   });
 
   // Dropdown menu styling
@@ -368,7 +369,8 @@ export default function TrendItem(props) {
             let elm = document.getElementById("trends-" + i);
             if (inView) {
               elm.style.opacity = "1";
-            } else {
+              state.viewed = true;
+            } else if (!state.viewed) {
               elm.style.opacity = "0";
             }
           }}
