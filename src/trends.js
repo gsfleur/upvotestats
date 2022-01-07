@@ -358,7 +358,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "120px",
-                      top: "2.2px",
+                      top: "10%",
                     }}
                   >
                     <SortRoundedIcon fontSize="small" />
@@ -367,7 +367,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      top: "5px",
+                      top: "20%",
                       right: "80px",
                     }}
                   >
@@ -388,7 +388,7 @@ export default function Trends() {
                     style={{
                       position: "absolute",
                       right: "55px",
-                      top: "2.2px",
+                      top: "10%",
                     }}
                   >
                     {state.collapsedAll && (
@@ -406,7 +406,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       position: "absolute",
-                      top: "5px",
+                      top: "20%",
                       right: "0px",
                     }}
                   >
