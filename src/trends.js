@@ -358,9 +358,8 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       float: "right",
-                      paddingTop: "2.5px",
-                      height: "17.5px",
                       marginTop: "3px",
+                      outline: "1px solid yellow",
                     }}
                   >
                     EXPAND
@@ -368,8 +367,8 @@ export default function Trends() {
                   <div
                     style={{
                       float: "right",
-                      height: "20px",
                       marginTop: "3px",
+                      outline: "1px solid orange",
                     }}
                   >
                     {state.collapsedAll && (
@@ -399,8 +398,6 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       float: "right",
-                      paddingTop: "2.5px",
-                      height: "17.5px",
                       marginRight: "5px",
                       marginTop: "3px",
                       outline: "1px solid red",
@@ -411,7 +408,6 @@ export default function Trends() {
                   <div
                     style={{
                       float: "right",
-                      height: "20px",
                       marginTop: "3px",
                       marginRight: "3px",
                       outline: "1px solid aqua",
