@@ -6,6 +6,9 @@ import FormControl from "@mui/material/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
+import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
+import SortRoundedIcon from "@mui/icons-material/SortRounded";
 
 export default function Trends() {
   window.document.title = "Reddit Trends - Upvote Stats";
@@ -359,10 +362,14 @@ export default function Trends() {
                     }}
                   >
                     {state.collapsedAll && (
-                      <i class="material-icons">unfold_less</i>
+                      <div>
+                        <UnfoldLessIcon fontSize="small" />
+                      </div>
                     )}
                     {!state.collapsedAll && (
-                      <i class="material-icons">unfold_more</i>
+                      <div>
+                        <UnfoldMoreIcon fontSize="medium" />
+                      </div>
                     )}
                   </div>
                 </button>
@@ -393,7 +400,7 @@ export default function Trends() {
                       marginRight: "3px",
                     }}
                   >
-                    <i class="material-icons">sort</i>
+                    <SortRoundedIcon fontSize="medium" />
                   </div>
                 </button>
               </div>

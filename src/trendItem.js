@@ -162,36 +162,47 @@ export default function TrendItem(props) {
   }
 
   // Destination Link DOM
-  const hasOutLink = !post.redditMediaDomain && post.urlDest != null;
   const outLinkDOM = (
     <span>
-      {hasOutLink && (
-        <a
-          href={post.urlDest}
-          target="_blank"
-          rel="noreferrer"
+      {!post.redditMediaDomain && post.urlDest != null && (
+        <div
           style={{
-            fontSize: "13px",
-            color: "DodgerBlue",
             display: "inline-block",
+            width: "100%",
             marginTop: loadableImg ? "4px" : "2px",
           }}
         >
-          <span className="searchLink" style={{ float: "left" }}>
-            {destLink}
-          </span>
-          <span
-            class="material-icons"
+          <a
+            href={post.urlDest}
+            target="_blank"
+            rel="noreferrer"
+            className="searchLink"
             style={{
-              fontSize: "18px",
-              marginLeft: "3px",
-              float: "left",
-              marginTop: "1.5px",
+              fontSize: "13px",
+              color: "DodgerBlue",
+              position: "relative",
             }}
           >
-            link
-          </span>
-        </a>
+            {destLink}
+            <img
+              id="threadLink"
+              src="outbound.png"
+              alt={"outbound icon"}
+              width="13px"
+              height="13px"
+              loading="lazy"
+              style={{
+                position: "absolute",
+                bottom: "1.5px",
+                marginLeft: "3px",
+              }}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "missing.png";
+              }}
+            />
+          </a>
+        </div>
       )}
     </span>
   );
@@ -227,7 +238,7 @@ export default function TrendItem(props) {
       {isCollapsed() && (
         <div
           style={{
-            marginTop: hasOutLink ? "0px" : "5px",
+            marginTop: "5px",
           }}
         >
           <div
