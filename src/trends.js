@@ -253,7 +253,7 @@ export default function Trends() {
       <div
         className="loading"
         style={{
-          margin: "14px 0px 15px 0px",
+          margin: "0px 0px 15px 0px",
           width: "230px",
           height: "20px",
           border: "1.5px solid #292929",
@@ -266,6 +266,7 @@ export default function Trends() {
           overflow: "auto",
           display: "inline-block",
           width: "100%",
+          marginBottom: "10px",
         }}
       >
         <div

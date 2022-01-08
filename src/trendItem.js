@@ -364,7 +364,7 @@ export default function TrendItem(props) {
       <div className="postLink" id={"trends-" + i}>
         <InView
           as="div"
-          threshold={0.2}
+          threshold={state.collapsed ? 0.2 : 0.01}
           onChange={(inView, entry) => {
             let elm = document.getElementById("trends-" + i);
             if (inView) {
