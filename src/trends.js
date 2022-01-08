@@ -272,7 +272,7 @@ export default function Trends() {
           style={{
             border: "1.5px solid #292929",
             borderRadius: "20px",
-            height: window.innerWidth > 600 ? "180px" : "120px",
+            height: window.innerWidth > 600 ? "150px" : "110px",
           }}
         ></div>
       </div>
@@ -290,21 +290,14 @@ export default function Trends() {
                 style={{
                   fontSize: "13px",
                   color: "gray",
-                  marginTop: "0px",
                   marginBottom: "6px",
                   width: "90%",
                 }}
               >
-                <div
-                  className="loading"
-                  style={{
-                    margin: "0px",
-                    width: "100%",
-                    height: state.showOptions ? "138px" : "78px",
-                    border: "1.5px solid #292929",
-                    borderRadius: "20px",
-                  }}
-                ></div>
+                {loadingDOM}
+                {loadingDOM}
+                {loadingDOM}
+                {loadingDOM}
                 {loadingDOM}
                 {loadingDOM}
                 {loadingDOM}
