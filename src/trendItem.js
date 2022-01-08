@@ -186,7 +186,7 @@ export default function TrendItem(props) {
               fontSize: "18px",
               marginLeft: "3px",
               float: "left",
-              marginTop: "2px",
+              marginTop: "1.5px",
             }}
           >
             link

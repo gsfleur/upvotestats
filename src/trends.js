@@ -348,7 +348,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       float: "right",
-                      marginTop: "5px",
+                      marginTop: "4px",
                     }}
                   >
                     EXPAND
@@ -382,7 +382,7 @@ export default function Trends() {
                       fontWeight: "bold",
                       float: "right",
                       marginRight: "5px",
-                      marginTop: "5px",
+                      marginTop: "4px",
                     }}
                   >
                     SORT
