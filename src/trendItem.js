@@ -162,47 +162,36 @@ export default function TrendItem(props) {
   }
 
   // Destination Link DOM
+  const hasOutLink = !post.redditMediaDomain && post.urlDest != null;
   const outLinkDOM = (
     <span>
-      {!post.redditMediaDomain && post.urlDest != null && (
-        <div
+      {hasOutLink && (
+        <a
+          href={post.urlDest}
+          target="_blank"
+          rel="noreferrer"
           style={{
+            fontSize: "13px",
+            color: "DodgerBlue",
             display: "inline-block",
-            width: "100%",
             marginTop: loadableImg ? "4px" : "2px",
           }}
         >
-          <a
-            href={post.urlDest}
-            target="_blank"
-            rel="noreferrer"
-            className="searchLink"
+          <span className="searchLink" style={{ float: "left" }}>
+            {destLink}
+          </span>
+          <span
+            class="material-icons"
             style={{
-              fontSize: "13px",
-              color: "DodgerBlue",
-              position: "relative",
+              fontSize: "18px",
+              marginLeft: "3px",
+              float: "left",
+              marginTop: "2px",
             }}
           >
-            {destLink}
-            <img
-              id="threadLink"
-              src="outbound.png"
-              alt={"outbound icon"}
-              width="13px"
-              height="13px"
-              loading="lazy"
-              style={{
-                position: "absolute",
-                bottom: "1.5px",
-                marginLeft: "2px",
-              }}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "missing.png";
-              }}
-            />
-          </a>
-        </div>
+            link
+          </span>
+        </a>
       )}
     </span>
   );
@@ -238,7 +227,7 @@ export default function TrendItem(props) {
       {isCollapsed() && (
         <div
           style={{
-            marginTop: "5px",
+            marginTop: hasOutLink ? "0px" : "5px",
           }}
         >
           <div

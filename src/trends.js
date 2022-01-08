@@ -6,9 +6,6 @@ import FormControl from "@mui/material/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
-import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
-import SortRoundedIcon from "@mui/icons-material/SortRounded";
 
 export default function Trends() {
   window.document.title = "Reddit Trends - Upvote Stats";
@@ -351,7 +348,7 @@ export default function Trends() {
                     style={{
                       fontWeight: "bold",
                       float: "right",
-                      marginTop: "2px",
+                      marginTop: "5px",
                     }}
                   >
                     EXPAND
@@ -362,14 +359,10 @@ export default function Trends() {
                     }}
                   >
                     {state.collapsedAll && (
-                      <div>
-                        <UnfoldLessIcon fontSize="small" />
-                      </div>
+                      <i class="material-icons">unfold_less</i>
                     )}
                     {!state.collapsedAll && (
-                      <div>
-                        <UnfoldMoreIcon fontSize="small" />
-                      </div>
+                      <i class="material-icons">unfold_more</i>
                     )}
                   </div>
                 </button>
@@ -389,7 +382,7 @@ export default function Trends() {
                       fontWeight: "bold",
                       float: "right",
                       marginRight: "5px",
-                      marginTop: "2px",
+                      marginTop: "5px",
                     }}
                   >
                     SORT
@@ -400,7 +393,7 @@ export default function Trends() {
                       marginRight: "3px",
                     }}
                   >
-                    <SortRoundedIcon fontSize="small" />
+                    <i class="material-icons">sort</i>
                   </div>
                 </button>
               </div>
