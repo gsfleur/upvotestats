@@ -113,12 +113,16 @@
   background: none;
   text-decoration: none;
   font-size: 13px;
-  float: right;
   color: silver;
   border-radius: 10px;
 }
 .sortButton2:hover {
   color: dodgerblue;
+}
+
+.menuButtonOptions {
+  display: inline-block;
+  width: calc(100% / 3);
 }
 
 .nextButton {
@@ -154,8 +158,4 @@
   -webkit-line-clamp: 4;
   line-clamp: 4;
   -webkit-box-orient: vertical;
-}
-
-.trendHeader {
-  font-size: 20px;
 }
