@@ -156,3 +156,17 @@
   line-clamp: 4;
   -webkit-box-orient: vertical;
 }
+
+div::-webkit-scrollbar {
+  height: 10px;
+}
+
+div::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: transparent;
+  outline: 1px solid #222222;
+}
+
+div::-webkit-scrollbar:vertical {
+  display: none;
+}

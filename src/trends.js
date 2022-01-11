@@ -347,11 +347,12 @@ export default function Trends() {
                 }}
               >
                 <div
+                  className="scroll"
                   style={{
                     display: "flex",
                     justifyContent: "flex-start",
                     width: "800%",
-                    maxWidth: "375px",
+                    maxWidth: "450px",
                   }}
                 >
                   <button
