@@ -89,7 +89,6 @@
   background: none;
   padding: 10px 10px 10px 10px;
   text-decoration: none;
-  font-weight: bold;
   font-size: 18px;
   color: white;
   border-radius: 0px;
@@ -118,11 +117,6 @@
 }
 .sortButton2:hover {
   color: dodgerblue;
-}
-
-.menuButtonOptions {
-  display: inline-block;
-  width: calc(100% / 3);
 }
 
 .nextButton {
