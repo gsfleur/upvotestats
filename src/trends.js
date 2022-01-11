@@ -30,6 +30,7 @@ export default function Trends() {
     showOptions: false,
     collapsedAll: false,
     nsfw: true,
+    spoiler: true,
   });
 
   useEffect(() => {
@@ -139,6 +140,8 @@ export default function Trends() {
 
         // Skip nsfw posts if requested
         if (!state.nsfw && posts[i].nsfw) continue;
+        // Skip spoiler posts if requested
+        if (!state.spoiler && posts[i].spoiler) continue;
 
         // Key of hidden posts requested user (new key every month)
         const d = new Date();
@@ -424,7 +427,7 @@ export default function Trends() {
                   <div
                     style={{
                       float: "right",
-                      marginRight: "3px",
+                      marginRight: "4px",
                     }}
                   >
                     {state.nsfw && (
@@ -433,6 +436,42 @@ export default function Trends() {
                       </div>
                     )}
                     {!state.nsfw && (
+                      <div>
+                        <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                      </div>
+                    )}
+                  </div>
+                </button>
+                <button
+                  className="sortButton2"
+                  style={{ padding: "0px" }}
+                  onClick={() => {
+                    setState({
+                      ...state,
+                      spoiler: state.spoiler ? false : true,
+                    });
+                  }}
+                >
+                  <div
+                    style={{
+                      float: "right",
+                      marginTop: "4px",
+                    }}
+                  >
+                    Spoiler
+                  </div>
+                  <div
+                    style={{
+                      float: "right",
+                      marginRight: "4px",
+                    }}
+                  >
+                    {state.spoiler && (
+                      <div>
+                        <CheckBoxOutlinedIcon fontSize="medium" />
+                      </div>
+                    )}
+                    {!state.spoiler && (
                       <div>
                         <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
                       </div>
