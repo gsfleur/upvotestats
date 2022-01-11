@@ -348,6 +348,8 @@ export default function Trends() {
               >
                 <div
                   style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
                     width: "800%",
                     maxWidth: "375px",
                   }}
