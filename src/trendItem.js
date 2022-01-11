@@ -87,7 +87,8 @@ export default function TrendItem(props) {
     post.urlToImage !== "default" &&
     post.urlToImage !== "self" &&
     (post.source != null || post.urlToImage.includes("https")) &&
-    post.urlDest != null;
+    post.urlDest != null &&
+    props.showMedia;
 
   // DOM for "trending with" section
   let trendingWith = [];

@@ -31,6 +31,7 @@ export default function Trends() {
     collapsedAll: false,
     nsfw: true,
     spoiler: true,
+    media: true,
   });
 
   useEffect(() => {
@@ -194,6 +195,7 @@ export default function Trends() {
             handleReport={handleReport}
             postListDOMLength={postListDOM.length}
             key={state.sort + +"-post-" + i}
+            showMedia={state.media}
           />
         );
       }
@@ -341,143 +343,189 @@ export default function Trends() {
                 style={{
                   color: "gainsboro",
                   width: "90%",
+                  overflow: "auto",
                 }}
               >
-                <button
-                  className="sortButton2"
-                  style={{ padding: "0px" }}
-                  onClick={() =>
-                    setState({
-                      ...state,
-                      showOptions: state.showOptions ? false : true,
-                    })
-                  }
-                >
-                  <div
-                    style={{
-                      float: "right",
-                      marginTop: "4px",
-                    }}
-                  >
-                    Sort
-                  </div>
-                  <div
-                    style={{
-                      float: "right",
-                      marginRight: "3px",
-                    }}
-                  >
-                    <SortRoundedIcon fontSize="medium" />
-                  </div>
-                </button>
-                <button
-                  className="sortButton2"
-                  style={{ padding: "0px" }}
-                  onClick={() => {
-                    setState({
-                      ...state,
-                      collapsedAll: state.collapsedAll ? false : true,
-                    });
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    width: "800%",
+                    maxWidth: "365px",
                   }}
                 >
-                  <div
-                    style={{
-                      float: "right",
-                      marginTop: "4px",
+                  <button
+                    className="sortButton2"
+                    style={{ padding: "0px" }}
+                    onClick={() =>
+                      setState({
+                        ...state,
+                        showOptions: state.showOptions ? false : true,
+                      })
+                    }
+                  >
+                    <div
+                      style={{
+                        float: "right",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Sort
+                    </div>
+                    <div
+                      style={{
+                        float: "right",
+                        marginRight: "3px",
+                      }}
+                    >
+                      <SortRoundedIcon fontSize="medium" />
+                    </div>
+                  </button>
+                  <button
+                    className="sortButton2"
+                    style={{ padding: "0px" }}
+                    onClick={() => {
+                      setState({
+                        ...state,
+                        collapsedAll: state.collapsedAll ? false : true,
+                      });
                     }}
                   >
-                    Expand
-                  </div>
-                  <div
-                    style={{
-                      float: "right",
-                      marginLeft: "-5px",
+                    <div
+                      style={{
+                        float: "right",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Expand
+                    </div>
+                    <div
+                      style={{
+                        float: "right",
+                        marginLeft: "-5px",
+                      }}
+                    >
+                      {state.collapsedAll && (
+                        <div>
+                          <UnfoldLessIcon fontSize="medium" />
+                        </div>
+                      )}
+                      {!state.collapsedAll && (
+                        <div>
+                          <UnfoldMoreIcon fontSize="medium" />
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                  <button
+                    className="sortButton2"
+                    style={{ padding: "0px" }}
+                    onClick={() => {
+                      setState({
+                        ...state,
+                        nsfw: state.nsfw ? false : true,
+                      });
                     }}
                   >
-                    {state.collapsedAll && (
-                      <div>
-                        <UnfoldLessIcon fontSize="medium" />
-                      </div>
-                    )}
-                    {!state.collapsedAll && (
-                      <div>
-                        <UnfoldMoreIcon fontSize="medium" />
-                      </div>
-                    )}
-                  </div>
-                </button>
-                <button
-                  className="sortButton2"
-                  style={{ padding: "0px" }}
-                  onClick={() => {
-                    setState({
-                      ...state,
-                      nsfw: state.nsfw ? false : true,
-                    });
-                  }}
-                >
-                  <div
-                    style={{
-                      float: "right",
-                      marginTop: "4px",
+                    <div
+                      style={{
+                        float: "right",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Nsfw
+                    </div>
+                    <div
+                      style={{
+                        float: "right",
+                        marginRight: "4px",
+                      }}
+                    >
+                      {state.nsfw && (
+                        <div>
+                          <CheckBoxOutlinedIcon fontSize="medium" />
+                        </div>
+                      )}
+                      {!state.nsfw && (
+                        <div>
+                          <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                  <button
+                    className="sortButton2"
+                    style={{ padding: "0px" }}
+                    onClick={() => {
+                      setState({
+                        ...state,
+                        spoiler: state.spoiler ? false : true,
+                      });
                     }}
                   >
-                    Nsfw
-                  </div>
-                  <div
-                    style={{
-                      float: "right",
-                      marginRight: "4px",
+                    <div
+                      style={{
+                        float: "right",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Spoiler
+                    </div>
+                    <div
+                      style={{
+                        float: "right",
+                        marginRight: "4px",
+                      }}
+                    >
+                      {state.spoiler && (
+                        <div>
+                          <CheckBoxOutlinedIcon fontSize="medium" />
+                        </div>
+                      )}
+                      {!state.spoiler && (
+                        <div>
+                          <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                  <button
+                    className="sortButton2"
+                    style={{ padding: "0px" }}
+                    onClick={() => {
+                      setState({
+                        ...state,
+                        media: state.media ? false : true,
+                      });
                     }}
                   >
-                    {state.nsfw && (
-                      <div>
-                        <CheckBoxOutlinedIcon fontSize="medium" />
-                      </div>
-                    )}
-                    {!state.nsfw && (
-                      <div>
-                        <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
-                      </div>
-                    )}
-                  </div>
-                </button>
-                <button
-                  className="sortButton2"
-                  style={{ padding: "0px" }}
-                  onClick={() => {
-                    setState({
-                      ...state,
-                      spoiler: state.spoiler ? false : true,
-                    });
-                  }}
-                >
-                  <div
-                    style={{
-                      float: "right",
-                      marginTop: "4px",
-                    }}
-                  >
-                    Spoiler
-                  </div>
-                  <div
-                    style={{
-                      float: "right",
-                      marginRight: "4px",
-                    }}
-                  >
-                    {state.spoiler && (
-                      <div>
-                        <CheckBoxOutlinedIcon fontSize="medium" />
-                      </div>
-                    )}
-                    {!state.spoiler && (
-                      <div>
-                        <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
-                      </div>
-                    )}
-                  </div>
-                </button>
+                    <div
+                      style={{
+                        float: "right",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Media
+                    </div>
+                    <div
+                      style={{
+                        float: "right",
+                        marginRight: "4px",
+                      }}
+                    >
+                      {state.media && (
+                        <div>
+                          <CheckBoxOutlinedIcon fontSize="medium" />
+                        </div>
+                      )}
+                      {!state.media && (
+                        <div>
+                          <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
             {/* Sorting Menu Options */}
