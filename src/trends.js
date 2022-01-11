@@ -342,6 +342,7 @@ export default function Trends() {
               >
                 <button
                   className="sortButton2"
+                  style={{ padding: "0px" }}
                   onClick={() =>
                     setState({
                       ...state,
@@ -368,6 +369,7 @@ export default function Trends() {
                 </button>
                 <button
                   className="sortButton2"
+                  style={{ padding: "0px" }}
                   onClick={() => {
                     setState({
                       ...state,
@@ -403,6 +405,7 @@ export default function Trends() {
                 </button>
                 <button
                   className="sortButton2"
+                  style={{ padding: "0px" }}
                   onClick={() => {
                     setState({
                       ...state,

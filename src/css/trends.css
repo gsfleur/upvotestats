@@ -114,6 +114,7 @@
   font-size: 13px;
   color: silver;
   border-radius: 10px;
+  margin-right: 3%;
 }
 .sortButton2:hover {
   color: dodgerblue;
