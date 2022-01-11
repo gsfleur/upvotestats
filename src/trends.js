@@ -388,7 +388,7 @@ export default function Trends() {
                   <div
                     style={{
                       float: "right",
-                      marginLeft: "-4px",
+                      marginLeft: "-5px",
                     }}
                   >
                     {state.collapsedAll && (
