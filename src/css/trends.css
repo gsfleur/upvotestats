@@ -158,11 +158,9 @@
 }
 
 div::-webkit-scrollbar {
-  height: 10px;
+  height: 0px;
 }
 
 div::-webkit-scrollbar-thumb {
-  border-radius: 10px;
   background-color: transparent;
-  outline: 1px solid #222222;
 }
