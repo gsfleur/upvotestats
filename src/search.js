@@ -317,7 +317,7 @@ export default function Search() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search for any subreddit on reddit.com"
+                label="Search upvote data for any subreddit"
                 margin="normal"
                 variant="outlined"
               />
