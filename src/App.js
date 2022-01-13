@@ -30,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    marginTop: "-14px",
   },
   title: {
     flexGrow: 1,
+    marginTop: "-15px",
   },
 }));
 
@@ -42,6 +44,7 @@ export default function App() {
     <Router>
       <div>
         <AppBar
+          className="titleHeader"
           position="static"
           style={{
             background: "#0a0a0a",
@@ -59,7 +62,7 @@ export default function App() {
                 <img src="favicon.ico" alt="logo" height="30px" width="30px" />
               </IconButton>
             </a>
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h7" className={classes.title}>
               <a href="/" className="menuButton">
                 Home
               </a>

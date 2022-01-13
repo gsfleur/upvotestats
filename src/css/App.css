@@ -17,6 +17,10 @@
   hyphens: auto;
 }
 
+.titleHeader {
+  height: 50px;
+}
+
 .menuButton {
   text-decoration: none;
   color: white;
@@ -83,6 +87,6 @@
 
 video {
   width: 100%;
-  max-height: 60vh;
+  max-height: 50vh;
   border-radius: 10px;
 }

@@ -5,6 +5,10 @@
   .header {
     font-size: 20px;
   }
+  .titleHeader {
+    padding-top: 1px;
+    height: 45px;
+  }
   .upsHeader {
     font-size: 30px;
   }
