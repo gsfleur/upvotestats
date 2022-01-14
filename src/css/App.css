@@ -82,3 +82,7 @@ video {
   max-height: 50vh;
   border-radius: 10px;
 }
+
+button {
+  cursor: pointer;
+}

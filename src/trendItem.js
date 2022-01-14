@@ -32,8 +32,8 @@ export default function TrendItem(props) {
       },
       "& .MuiNativeSelect-icon": {
         color: "gray",
-        fontSize: "medium",
-        marginTop: "3.2px",
+        fontSize: "large",
+        marginTop: "6px",
       },
     },
   });
@@ -344,9 +344,17 @@ export default function TrendItem(props) {
 
   // DOM of trend item
   return (
-    <div
+    <button
       className="centering"
       key={"trends-" + i}
+      style={{
+        background: "transparent",
+        border: "none",
+        textAlign: "left",
+        padding: "0px",
+        fontFamily: "inherit",
+        textDecoration: "none",
+      }}
       onClick={(e) => {
         if (
           e.target.className !== "postImgStandard" &&
@@ -790,7 +798,7 @@ export default function TrendItem(props) {
           </div>
         </InView>
       </div>
-    </div>
+    </button>
   );
 
   /**
