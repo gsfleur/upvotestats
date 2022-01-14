@@ -348,7 +348,7 @@ export default function TrendItem(props) {
       className="centering"
       key={"trends-" + i}
       style={{
-        background: "transparent",
+        background: "none",
         border: "none",
         textAlign: "left",
         padding: "0px",

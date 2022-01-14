@@ -86,3 +86,6 @@ video {
 button {
   cursor: pointer;
 }
+*:focus {
+  -webkit-tap-highlight-color: transparent;
+}
