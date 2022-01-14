@@ -208,12 +208,19 @@ export default function Trends() {
    * @returns Number with abbreviation
    */
   function numToString(num) {
+    const b = Math.abs(num) / 1.0e9;
+    const m = Math.abs(num) / 1.0e6;
+    const k = Math.abs(num) / 1.0e3;
+
+    const numbersInString = 4;
+    const fixed = (n) => Math.max(numbersInString - n.toFixed(1).length + 2, 0);
+
     return Math.abs(num) >= 1.0e9
-      ? (Math.abs(num) / 1.0e9).toFixed(1) + "B"
+      ? b.toFixed(fixed(b)) + "B"
       : Math.abs(num) >= 1.0e6
-      ? (Math.abs(num) / 1.0e6).toFixed(1) + "M"
+      ? m.toFixed(fixed(m)) + "M"
       : Math.abs(num) >= 1.0e3
-      ? (Math.abs(num) / 1.0e3).toFixed(1) + "K"
+      ? k.toFixed(fixed(k)) + "K"
       : Math.abs(num);
   }
 
