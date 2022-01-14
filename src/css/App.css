@@ -42,8 +42,7 @@
   color: gray;
 }
 
-.searchLink:hover,
-.searchLink:active {
+.searchLink:hover {
   text-decoration: underline;
 }
 
@@ -53,8 +52,7 @@
   color: silver;
 }
 
-.searchLink2:hover,
-.searchLink2:active {
+.searchLink2:hover {
   text-decoration: underline;
 }
 
@@ -86,6 +84,11 @@ video {
 button {
   cursor: pointer;
 }
+
+button:active {
+  background: none;
+}
+
 *:focus {
   -webkit-tap-highlight-color: transparent;
 }
