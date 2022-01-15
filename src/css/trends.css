@@ -193,7 +193,7 @@
   width: calc(100% / 4);
 }
 .timeButton:hover {
-  border-bottom: 3px solid rgb(22, 105, 187);
+  border-bottom: 3px solid dodgerblue;
 }
 .timeButtonLight {
   color: #191919;
