@@ -33,7 +33,7 @@ export default function TrendItem(props) {
       "& .MuiNativeSelect-icon": {
         color: "gray",
         fontSize: "large",
-        marginTop: "6px",
+        marginTop: "4.5px",
       },
     },
   });

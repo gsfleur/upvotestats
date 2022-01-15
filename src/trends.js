@@ -88,6 +88,11 @@ export default function Trends() {
 
   // Handle Time Change Event
   const handleTimeChange = (event) => {
+    const onlyForToday = state.sortBy === "hot" || state.sortBy === "new";
+    // if sort is hot/new and date is not today, default to upvotes
+    if (event.target.value !== "today" && onlyForToday)
+      state.sortBy = "upvotes";
+
     setState({
       ...state,
       loaded: false,
@@ -583,12 +588,16 @@ export default function Trends() {
                       id="selectSort"
                       width="100%"
                     >
-                      <option value={"hot"} style={{ color: "black" }}>
-                        Hot
-                      </option>
-                      <option value={"new"} style={{ color: "black" }}>
-                        New
-                      </option>
+                      {state.sortDate === "today" && (
+                        <option value={"hot"} style={{ color: "black" }}>
+                          Hot
+                        </option>
+                      )}
+                      {state.sortDate === "today" && (
+                        <option value={"new"} style={{ color: "black" }}>
+                          New
+                        </option>
+                      )}
                       <option value={"awards"} style={{ color: "black" }}>
                         Awards
                       </option>
