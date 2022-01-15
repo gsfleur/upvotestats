@@ -339,6 +339,7 @@ export default function TrendItem(props) {
         padding: "0px",
         fontFamily: "inherit",
         textDecoration: "none",
+        width: "100%",
       }}
       onClick={(e) => {
         if (
@@ -540,7 +541,7 @@ export default function TrendItem(props) {
                                 style={{ marginBottom: "10px" }}
                               >
                                 <ArrowCircleLeftIcon
-                                  className="nextButton"
+                                  className={props.getClass("nextButton")}
                                   onClick={() => {
                                     let currIndex = post.galleryItem;
                                     // getting next index for gallery item
@@ -573,7 +574,7 @@ export default function TrendItem(props) {
                                   {post.mediaMetadata.length}
                                 </div>
                                 <ArrowCircleRightIcon
-                                  className="nextButton"
+                                  className={props.getClass("nextButton")}
                                   onClick={() => {
                                     let currIndex = post.galleryItem;
                                     // getting next index for gallery item

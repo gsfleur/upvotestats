@@ -235,6 +235,9 @@
   font-size: 13px;
   color: silver;
 }
+.nextButtonLight {
+  color: gray;
+}
 .nextButton:hover {
   color: dodgerblue;
 }

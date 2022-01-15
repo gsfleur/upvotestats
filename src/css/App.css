@@ -133,6 +133,10 @@ video {
 button {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 button:active {
