@@ -163,7 +163,7 @@ export default function TrendItem(props) {
           style={{
             display: "inline-block",
             width: "100%",
-            marginTop: loadableImg ? "4px" : "2px",
+            marginTop: "4px",
           }}
         >
           <a

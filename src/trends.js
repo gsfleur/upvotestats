@@ -252,17 +252,6 @@ export default function Trends(props) {
         {state.sort !== category && (
           <button
             className={props.getClass("timeButton")}
-            style={{
-              color: props.theme === "light" ? "#191919" : "silver",
-            }}
-            onMouseOver={(e) => {
-              e.target.style.color =
-                props.theme === "light" ? "dodgerblue" : "white";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.color =
-                props.theme === "light" ? "#191919" : "silver";
-            }}
             onClick={() =>
               setState({
                 ...state,
