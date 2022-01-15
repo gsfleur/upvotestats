@@ -1,4 +1,4 @@
-.today {
+.trends {
   background-color: #0a0a0a;
   color: gainsboro;
   padding: 20px 0px 20px 0px;
@@ -12,6 +12,12 @@
   border-radius: 20px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+  border-top: none;
+}
+.trendsLight {
+  background-color: white;
+  color: #191919;
+  border: 1px solid silver;
   border-top: none;
 }
 
@@ -41,9 +47,25 @@
   overflow-wrap: break-word;
   transition: opacity 0.3s;
   opacity: 1;
+  transition: background-color 0.3s ease;
+}
+.postLinkLight {
+  color: #191919;
 }
 .postLink:hover {
   background-color: #29292916;
+}
+.postLinkLight:hover {
+  background-color: #00000004;
+}
+
+.postUpvotePercent {
+  float: left;
+  font-size: 13px;
+  color: gray;
+}
+.postUpvotePercentLight {
+  color: #191919;
 }
 
 .postImgStandard {
@@ -57,12 +79,29 @@
 .imgBody {
   display: inline-block;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 5px;
   border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+.imgBodyLight {
+  color: #191919;
 }
 .imgBody:hover {
   background-color: #29292939;
   border-radius: 20px;
+}
+.imgBodyLight:hover {
+  background-color: #00000008;
+}
+
+.imgBodyContainer {
+  overflow: auto;
+  border: 1px solid #292929;
+  border-radius: 20px;
+  padding: 10px 10px 10px 10px;
+}
+.imgBodyContainerLight {
+  border: 1px solid silver;
 }
 
 .blurOuter {
@@ -76,12 +115,69 @@
   -webkit-filter: blur(10px);
 }
 
-.postDate {
+.postTitle {
   color: gainsboro;
-  width: 100%;
   display: inline-block;
-  font-size: 13px;
+  font-size: 14px;
   width: calc(100% - 120px);
+}
+.postTitleLight {
+  color: #191919;
+}
+
+.postText {
+  font-size: 13px;
+  color: silver;
+  padding-top: 5px;
+}
+.postTextLight {
+  color: #191919;
+}
+
+.postRank {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: gray;
+  width: 100%;
+}
+.postRankLight {
+  color: #191919;
+}
+
+.postStats {
+  font-size: 13px;
+  color: gray;
+  margin-top: 3px;
+}
+.postStatsLight {
+  color: #191919;
+}
+
+.trendWith {
+  color: silver;
+  border-radius: 10px;
+  border: 1px solid #222222;
+  padding: 5px;
+  float: left;
+  margin-right: 5px;
+  margin-top: 10px;
+  background-image: "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.03) 99%";
+}
+.trendWithLight {
+  color: #191919;
+  border: 1px solid silver;
+}
+
+.trendStats {
+  font-size: 13px;
+  color: gray;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  max-width: 90%;
+}
+.trendStatsLight {
+  color: #191919;
 }
 
 .timeButton {
@@ -94,6 +190,9 @@
   color: white;
   border-radius: 0px;
   width: calc(100% / 4);
+}
+.timeButtonLight {
+  color: #191919;
 }
 
 .sortButton {
@@ -118,8 +217,14 @@
   border-radius: 10px;
   margin-right: 10px;
 }
+.sortButton2Light {
+  color: #191919;
+}
 .sortButton2:hover {
   color: white;
+}
+.sortButton2Light:hover {
+  color: dodgerblue;
 }
 
 .nextButton {
@@ -135,19 +240,26 @@
 
 .reloadButton {
   border: none;
-  background: none;
+  background: gainsboro;
   padding: 10px;
-  margin: 30px 0px 50px 0px;
+  margin: 30px 0px 100px 0px;
   text-decoration: none;
   font-size: 12px;
-  color: silver;
+  color: #191919;
   border-radius: 10px;
-  border: 1px solid dodgerblue;
+  border: 1px solid silver;
+  font-weight: bold;
   width: 200px;
+  transition: background-color 0.3s ease;
+}
+.reloadButtonLight {
+  color: #191919;
+  border: 1px solid silver;
 }
 .reloadButton:hover {
-  background-image: linear-gradient(transparent, rgb(255, 255, 255, 0.05));
+  background: whitesmoke;
 }
+
 .limitText4 {
   overflow: hidden;
   text-overflow: ellipsis;

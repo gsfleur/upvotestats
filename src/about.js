@@ -1,9 +1,9 @@
-export default function About() {
+export default function About(props) {
   window.document.title = "About - Upvote Stats";
 
   return (
     <div className="centering">
-      <div className="about">
+      <div className={props.getClass("about")}>
         <div className="centering">
           <div style={{ width: "90%" }}>
             <h3>General Information</h3>

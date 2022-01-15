@@ -14,3 +14,9 @@
   border-top-right-radius: 0px;
   border-top: none;
 }
+.aboutLight {
+  background-color: white;
+  color: #191919;
+  border: 1px solid silver;
+  border-top: none;
+}

@@ -29,6 +29,9 @@ export default function TrendItem(props) {
         height: "0px",
         borderStyle: "hidden",
         width: "5px",
+        "&:focus": {
+          backgroundColor: "transparent",
+        },
       },
       "& .MuiNativeSelect-icon": {
         color: "gray",
@@ -98,17 +101,7 @@ export default function TrendItem(props) {
   for (let t = 1; t < trends.length; t++) {
     trendingWith.push(
       <div
-        style={{
-          color: "silver",
-          borderRadius: "10px",
-          border: "1px solid #222222",
-          padding: "5px",
-          float: "left",
-          marginRight: "5px",
-          marginTop: "10px",
-          backgroundImage:
-            "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.03) 99%",
-        }}
+        className={props.getClass("trendWith")}
         key={"trendWith-" + i + "-" + t}
       >
         {trends[t]}
@@ -177,7 +170,7 @@ export default function TrendItem(props) {
             href={post.urlDest}
             target="_blank"
             rel="noreferrer"
-            className="searchLink"
+            className={props.getClass("searchLink")}
             style={{
               fontSize: "13px",
               color: "DodgerBlue",
@@ -211,10 +204,8 @@ export default function TrendItem(props) {
   // Post author information
   const author = (
     <div
-      className="postDate"
       style={{
         fontSize: "13px",
-        color: "silver",
         marginTop: "5px",
       }}
     >
@@ -223,7 +214,7 @@ export default function TrendItem(props) {
       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
       {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
       <a
-        className="searchLink2"
+        className={props.getClass("searchLink2")}
         href={"https://www.reddit.com/u/" + post.author}
         rel="noreferrer"
         target="_blank"
@@ -242,13 +233,7 @@ export default function TrendItem(props) {
             marginTop: "5px",
           }}
         >
-          <div
-            style={{
-              float: "left",
-              fontSize: "13px",
-              color: "gray",
-            }}
-          >
+          <div className={props.getClass("postUpvotePercent")}>
             {Math.floor(
               (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes)
             )}
@@ -258,7 +243,7 @@ export default function TrendItem(props) {
             href={post.url}
             target="_blank"
             rel="noreferrer"
-            className="searchLink"
+            className={props.getClass("searchLink")}
             id="threadLink"
             style={{ float: "right", fontSize: "13px" }}
           >
@@ -283,14 +268,14 @@ export default function TrendItem(props) {
   };
 
   // Markdown DOM for post text
-  const markdown = (text) => (
+  const markdown = (text, props2) => (
     <ReactMarkdown
       components={{
         a: ({ node, ...props }) => {
           if (props.children != null && props.children.length >= 0) {
             return (
               <a
-                className="searchLink"
+                className={props2.getClass("searchLink")}
                 target="_blank"
                 rel="noreferrer"
                 style={{ color: "dodgerblue" }}
@@ -370,7 +355,7 @@ export default function TrendItem(props) {
           setState({ ...state, collapsed: isCollapsed() ? false : true });
       }}
     >
-      <div className="postLink" id={"trends-" + i}>
+      <div className={props.getClass("postLink")} id={"trends-" + i}>
         <InView
           as="div"
           threshold={0.01}
@@ -384,22 +369,12 @@ export default function TrendItem(props) {
             }
           }}
         >
-          <div
-            className="newsText"
-            style={{ float: "left", overflow: "hidden", width: "100%" }}
-          >
+          <div style={{ float: "left", overflow: "hidden", width: "100%" }}>
             {/* Post rank, subreddit name, and options button */}
-            <div
-              style={{
-                fontSize: "13px",
-                marginBottom: "5px",
-                color: "gray",
-                width: "100%",
-              }}
-            >
+            <div className={props.getClass("postRank")}>
               {postListDOMLength + 1} &bull;{" "}
               <a
-                className="searchLink"
+                className={props.getClass("searchLink")}
                 href={"https://www.reddit.com/r/" + post.subreddit}
                 rel="noreferrer"
                 target="_blank"
@@ -437,31 +412,24 @@ export default function TrendItem(props) {
             {/* Post title, if no image */}
             {!loadableImg && (
               <div
-                style={{
-                  fontSize: "14px",
-                }}
+                className={props.getClass("postTitle")}
+                style={{ width: "100%" }}
               >
-                {markdown(postTitle)}
+                {markdown(postTitle, props)}
               </div>
             )}
 
             {/* Post text if available */}
             {post.text.length > 0 && (
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "silver",
-                  paddingTop: "5px",
-                }}
-              >
+              <div className={props.getClass("postText")}>
                 {!isCollapsed() && (
                   <div className="limitText4">
                     {post.spoiler
-                      ? markdown("Text hidden... [click to read more]")
-                      : markdown(postText)}
+                      ? markdown("Text hidden... [click to read more]", props)
+                      : markdown(postText, props)}
                   </div>
                 )}
-                {isCollapsed() && <div>{markdown(postText)}</div>}
+                {isCollapsed() && <div>{markdown(postText, props)}</div>}
                 {!loadableImg && (
                   <span>
                     {author}
@@ -483,28 +451,14 @@ export default function TrendItem(props) {
 
           {/* Post with image */}
           {loadableImg && (
-            <div
-              className="imgBody"
-              style={{
-                display: "inline-block",
-                width: "100%",
-                marginTop: "5px",
-              }}
-            >
+            <div className={props.getClass("imgBody")}>
               <div
                 style={{
                   position: "relative",
                   height: "100%",
                 }}
               >
-                <div
-                  style={{
-                    overflow: "auto",
-                    border: "1px solid #292929",
-                    borderRadius: "20px",
-                    padding: "10px 10px 10px 10px",
-                  }}
-                >
+                <div className={props.getClass("imgBodyContainer")}>
                   {/* Post author name, icon and creation date */}
                   <div
                     style={{
@@ -512,7 +466,6 @@ export default function TrendItem(props) {
                       display: "inline-block",
                       marginBottom: "5px",
                       fontSize: "13px",
-                      color: "silver",
                     }}
                   >
                     <a
@@ -544,7 +497,7 @@ export default function TrendItem(props) {
                       }}
                     >
                       <a
-                        className="searchLink2"
+                        className={props.getClass("searchLink2")}
                         href={"https://www.reddit.com/u/" + post.author}
                         rel="noreferrer"
                         target="_blank"
@@ -564,15 +517,10 @@ export default function TrendItem(props) {
                   {isCollapsed() && (
                     <span>
                       <div
-                        className="postDate"
-                        style={{
-                          fontSize: "14px",
-                          marginBottom: "10px",
-                          color: "gainsboro",
-                          width: "100%",
-                        }}
+                        className={props.getClass("postTitle")}
+                        style={{ width: "100%", marginBottom: "5px" }}
                       >
-                        {markdown(postTitle)}
+                        {markdown(postTitle, props)}
                         {outLinkDOM}
                         {threadLinkDOM}
                       </div>
@@ -731,16 +679,14 @@ export default function TrendItem(props) {
                         </div>
                       )}
                       <div
-                        className="postDate"
+                        className={props.getClass("postTitle")}
                         style={{
-                          fontSize: "14px",
-                          color: "gainsboro",
                           float: "left",
                           marginLeft: "10px",
                         }}
                       >
                         <span className="limitText3">
-                          {markdown(postTitle)}
+                          {markdown(postTitle, props)}
                         </span>
                         {outLinkDOM}
                       </div>
@@ -774,13 +720,7 @@ export default function TrendItem(props) {
           )}
 
           {/* Post statistics */}
-          <div
-            style={{
-              fontSize: "13px",
-              color: "gray",
-              marginTop: "3px",
-            }}
-          >
+          <div className={props.getClass("postStats")}>
             {post.awards > 0 && (
               <span>
                 {numToString(post.coins)} coins &bull;{" "}
@@ -791,7 +731,7 @@ export default function TrendItem(props) {
               href={post.url}
               target="_blank"
               rel="noreferrer"
-              className="searchLink"
+              className={props.getClass("searchLink")}
             >
               {numToString(post.comments)} comments
             </a>

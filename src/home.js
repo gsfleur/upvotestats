@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function Home() {
+export default function Home(props) {
   window.document.title = "Home - Upvote Stats";
 
   // Component State
@@ -49,8 +49,7 @@ export default function Home() {
           state.cardsDOM.push(
             <button
               key={"card-" + i}
-              className="homeCards"
-              style={{ border: "none" }}
+              className={props.getClass("homeCards")}
               onClick={() =>
                 (window.location.href = "/search?q=" + subData[i][0])
               }
@@ -81,7 +80,7 @@ export default function Home() {
   // Loading objects
   const loadingDOM = (
     <div
-      className="homeCards"
+      className={props.getClass("homeCards")}
       style={{
         border: "none",
         height: "50px",

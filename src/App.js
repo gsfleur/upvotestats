@@ -39,14 +39,40 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
+
+  // Getting theme
+  let theme = localStorage.getItem("theme");
+  if (theme == null) localStorage.setItem("theme", "light");
+  if (theme !== "light" && theme !== "dark") theme = "light";
+
+  // Setting light theme background
+  if (theme === "light") {
+    document.body.style.background = "white";
+    document.body.style.color = "black";
+  }
+
+  /**
+   * Gets class names for specific theme
+   * @param {*} n - class name
+   * @returns class names for theme
+   */
+  function getClass(n) {
+    if (theme === "light") {
+      return n + " " + n + "Light";
+    } else {
+      return n;
+    }
+  }
+
   return (
     <Router>
       <div>
         <AppBar
           position="static"
           style={{
-            background: "#0a0a0a",
             borderBottom: "1px solid #222222",
+            background: theme === "dark" ? "#0a0a0a" : "#191919",
+            boxShadow: "0px 0px 0px 0px",
           }}
         >
           <Toolbar>
@@ -61,13 +87,13 @@ export default function App() {
               </IconButton>
             </a>
             <Typography variant="h6" className={classes.title}>
-              <a href="/" className="menuButton">
+              <a href="/" className={getClass("menuButton")}>
                 Home
               </a>
-              <a href="/trends" className="menuButton">
+              <a href="/trends" className={getClass("menuButton")}>
                 Trends
               </a>
-              <a href="/about" className="menuButton">
+              <a href="/about" className={getClass("menuButton")}>
                 About
               </a>
             </Typography>
@@ -81,21 +107,21 @@ export default function App() {
             <Suspense fallback={<span></span>}>
               <Switch>
                 <Route path="/search">
-                  <Search />
+                  <Search theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/about">
-                  <About />
+                  <About theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/trends">
-                  <Trends />
+                  <Trends theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/">
-                  <Search />
-                  <Home />
+                  <Search theme={theme} getClass={getClass} />
+                  <Home theme={theme} getClass={getClass} />
                 </Route>
               </Switch>
               <Scroll />
-              <Footer />
+              <Footer theme={theme} getClass={getClass} />
             </Suspense>
           </div>
         </div>

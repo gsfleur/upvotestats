@@ -5,14 +5,23 @@
   margin-bottom: 20px;
   display: inline-block;
   text-align: center;
-  background-color: #0a0a0a;
+  background: #0a0a0a;
   border-radius: 10px;
   font-weight: bold;
   color: orangered;
   font-size: 20px;
+  border: none;
+  transition: background-color 0.3s ease;
 }
 .homeCards:hover {
-  background-color: #0f0f0f;
+  background: #0f0f0f;
+}
+.homeCardsLight {
+  background: white;
+  border: 1px solid silver;
+}
+.homeCardsLight:hover {
+  background: whitesmoke;
 }
 
 .cardsLoc {

@@ -12,7 +12,7 @@ import SortRoundedIcon from "@mui/icons-material/SortRounded";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
 
-export default function Trends() {
+export default function Trends(props) {
   window.document.title = "Reddit Trends - Upvote Stats";
 
   // Component State
@@ -113,10 +113,13 @@ export default function Trends() {
   const useStyles = makeStyles({
     root: {
       "& .MuiNativeSelect-select": {
-        color: "silver",
+        color: props.theme === "light" ? "#191919" : "silver",
         padding: "5px",
         fontSize: "13px",
         height: "25px",
+        "&:focus": {
+          backgroundColor: "transparent",
+        },
       },
       "& .MuiNativeSelect-icon": {
         color: "gray",
@@ -201,6 +204,7 @@ export default function Trends() {
             postListDOMLength={postListDOM.length}
             key={state.sort + +"-post-" + i}
             showMedia={state.media}
+            getClass={props.getClass}
           />
         );
       }
@@ -239,7 +243,7 @@ export default function Trends() {
       <span>
         {state.sort === category && (
           <button
-            className="timeButton"
+            className={props.getClass("timeButton")}
             style={{ borderBottom: "3px solid DodgerBlue" }}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -247,13 +251,17 @@ export default function Trends() {
         )}
         {state.sort !== category && (
           <button
-            className="timeButton"
-            style={{ color: "silver" }}
+            className={props.getClass("timeButton")}
+            style={{
+              color: props.theme === "light" ? "#191919" : "silver",
+            }}
             onMouseOver={(e) => {
-              e.target.style.color = "white";
+              e.target.style.color =
+                props.theme === "light" ? "dodgerblue" : "white";
             }}
             onMouseOut={(e) => {
-              e.target.style.color = "silver";
+              e.target.style.color =
+                props.theme === "light" ? "#191919" : "silver";
             }}
             onClick={() =>
               setState({
@@ -274,17 +282,20 @@ export default function Trends() {
   const loadingDOM = (
     <div>
       <div
-        className="loading"
+        className={props.getClass("loading")}
         style={{
           margin: "0px 0px 15px 0px",
           width: "230px",
           height: "20px",
-          border: "1.5px solid #292929",
+          border:
+            props.theme === "light"
+              ? "1.5px solid silver"
+              : "1.5px solid #292929",
           borderRadius: "20px",
         }}
       ></div>
       <div
-        className="loading"
+        className={props.getClass("loading")}
         style={{
           overflow: "auto",
           display: "inline-block",
@@ -294,7 +305,10 @@ export default function Trends() {
       >
         <div
           style={{
-            border: "1.5px solid #292929",
+            border:
+              props.theme === "light"
+                ? "1.5px solid silver"
+                : "1.5px solid #292929",
             borderRadius: "20px",
             height: window.innerWidth > 600 ? "150px" : "110px",
           }}
@@ -305,7 +319,7 @@ export default function Trends() {
 
   return (
     <div className="centering">
-      <div className="today">
+      <div className={props.getClass("trends")}>
         {!state.loaded && (
           <div>
             {/* Loading Keyframe Display */}
@@ -339,7 +353,10 @@ export default function Trends() {
               <div
                 style={{
                   width: "90%",
-                  borderBottom: "1px solid #222222",
+                  borderBottom:
+                    props.theme === "light"
+                      ? "0.5px solid silver"
+                      : "0.5px solid #222222",
                   marginBottom: "10px",
                 }}
               >
@@ -367,7 +384,7 @@ export default function Trends() {
                   }}
                 >
                   <button
-                    className="sortButton2"
+                    className={props.getClass("sortButton2")}
                     style={{ padding: "0px" }}
                     onClick={() =>
                       setState({
@@ -394,7 +411,7 @@ export default function Trends() {
                     </div>
                   </button>
                   <button
-                    className="sortButton2"
+                    className={props.getClass("sortButton2")}
                     style={{ padding: "0px" }}
                     onClick={() => {
                       setState({
@@ -430,7 +447,7 @@ export default function Trends() {
                     </div>
                   </button>
                   <button
-                    className="sortButton2"
+                    className={props.getClass("sortButton2")}
                     style={{ padding: "0px" }}
                     onClick={() => {
                       setState({
@@ -466,7 +483,7 @@ export default function Trends() {
                     </div>
                   </button>
                   <button
-                    className="sortButton2"
+                    className={props.getClass("sortButton2")}
                     style={{ padding: "0px" }}
                     onClick={() => {
                       setState({
@@ -502,7 +519,7 @@ export default function Trends() {
                     </div>
                   </button>
                   <button
-                    className="sortButton2"
+                    className={props.getClass("sortButton2")}
                     style={{ padding: "0px" }}
                     onClick={() => {
                       setState({
@@ -653,16 +670,7 @@ export default function Trends() {
             )}
             {/* Stats of data processed by backend */}
             <div className="centering">
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "gray",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  textAlign: "center",
-                  maxWidth: "90%",
-                }}
-              >
+              <div className={props.getClass("trendStats")}>
                 <div style={{ marginTop: "5px" }}>
                   Trends from {numToString(state.data.stats.posts)} posts and{" "}
                   {numToString(state.data.stats.comments)} comments
@@ -695,10 +703,7 @@ export default function Trends() {
         {state.loaded && state.error && (
           <div>
             <div className="centering">
-              <img src="errorImg.jpg" alt="error koala" width="250px" />
-            </div>
-            <div className="centering">
-              <span style={{ fontSize: "20px" }}>
+              <span style={{ fontSize: "20px", marginTop: "10vh" }}>
                 <b>Sorry, something went wrong</b>
               </span>
             </div>
@@ -716,7 +721,7 @@ export default function Trends() {
             <div className="centering">
               <button
                 onClick={() => (window.location.href = "trends")}
-                className="reloadButton"
+                className={props.props.getClass("reloadButton")}
               >
                 RELOAD
               </button>

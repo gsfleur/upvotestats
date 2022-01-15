@@ -1,5 +1,5 @@
 @media screen and (max-width: 600px) {
-  h1 {
+  .h1 {
     font-size: 30px;
   }
   .header {
@@ -26,7 +26,7 @@
   .timeButton {
     font-size: 14px;
   }
-  .today {
+  .trends {
     padding: 20px 0px 20px 0px;
   }
   .statsInfo {
@@ -48,7 +48,7 @@
     width: 25px;
     height: 25px;
   }
-  .postDate {
+  .postTitle {
     width: calc(100% - 90px);
   }
   .limitText3 {

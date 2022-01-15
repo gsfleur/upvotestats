@@ -11,7 +11,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 // Top Reddit Communities
 const communities = topReddits;
 
-export default function Search() {
+export default function Search(props) {
   // Getting id from URL search param
   const urlParams = new URLSearchParams(window.location.search);
   const q = urlParams.get("q");
@@ -278,7 +278,9 @@ export default function Search() {
   return (
     <div>
       <div className="centering">
-        {searching === false && <h1>{state.name}</h1>}
+        {searching === false && (
+          <h1 className={props.getClass("h1")}>{state.name}</h1>
+        )}
         {searching === true && (
           <a
             href={"https://www.reddit.com/" + query}
@@ -286,12 +288,12 @@ export default function Search() {
             target="_blank"
             style={{ textDecoration: "none" }}
           >
-            <h1>{state.name}</h1>
+            <h1 className={props.getClass("h1")}>{state.name}</h1>
           </a>
         )}
       </div>
       <div className="centering">
-        <h3>upvotestats.com</h3>
+        <h3 className={props.getClass("h3")}>upvotestats.com</h3>
       </div>
       <div className="centering">
         <div
@@ -299,7 +301,7 @@ export default function Search() {
             backgroundColor: "white",
             padding: "0px 5px 0px 5px",
             borderRadius: "10px",
-            marginBottom: "40px",
+            marginBottom: "20px",
             width: "60%",
             minWidth: "300px",
           }}
@@ -326,7 +328,7 @@ export default function Search() {
         </div>
       </div>
       {state.error === true && (
-        <div className="header" style={{ padding: "60px" }}>
+        <div className={props.getClass("header")} style={{ padding: "60px" }}>
           <div>
             An error occured when trying to analyze the subreddit {query} <br />
             <br /> Ad blockers may cause errors by preventing the program from
@@ -336,11 +338,11 @@ export default function Search() {
         </div>
       )}
       {state.loaded === false && searching && (
-        <div className="header" style={{ padding: "60px", color: "gainsboro" }}>
-          <Percentage percent={state.percent} />
+        <div className={props.getClass("header")} style={{ padding: "60px" }}>
+          <Percentage percent={state.percent} getClass={props.getClass} />
           <br />
           <br />
-          <div>
+          <div className={props.getClass("searchLoading")}>
             Loading all of the data can take up to 2-3 minutes to process as
             this program will analyze the top posts, comments, and replies of
             the subreddit in the last 30 days.
@@ -355,7 +357,7 @@ export default function Search() {
             state.after.length > 0 && (
               <div className="centering">
                 <button
-                  className="moreButton"
+                  className={props.getClass("moreButton")}
                   onClick={() =>
                     setState({ ...state, loaded: false, percent: { value: 0 } })
                   }
@@ -381,7 +383,11 @@ export default function Search() {
             <br />
             <br />
           </div>
-          <Results stats={state.stats} />
+          <Results
+            stats={state.stats}
+            theme={props.theme}
+            getClass={props.getClass}
+          />
           <div className="centering">
             <button
               className="resourceButton"
@@ -419,5 +425,9 @@ function Percentage(props) {
     return () => clearInterval(interval);
   });
 
-  return <span>{props.percent.value} % complete</span>;
+  return (
+    <span className={props.getClass("searchLoading")}>
+      {props.percent.value} % complete
+    </span>
+  );
 }

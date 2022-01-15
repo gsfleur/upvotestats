@@ -21,7 +21,7 @@ export default function Results(props) {
     },
     title: {
       text: "Coins awarded per day",
-      style: { color: "gainsboro" },
+      style: { color: props.theme === "light" ? "gray" : "gainsboro" },
     },
     subtitle: {
       text:
@@ -88,50 +88,50 @@ export default function Results(props) {
           <HighchartsReact highcharts={Highcharts} options={options} />
         </div>
       )}
-      <div className="header">
+      <div className={props.getClass("header")}>
         <div className="title">GENERAL STATS</div>
         <div className="upsHeader">{numToString(props.stats.upvotes)}</div>
-        <div className="itemContext">UPVOTES</div>
+        <div className={props.getClass("itemContext")}>UPVOTES</div>
         <div className="downsHeader">{numToString(props.stats.downvotes)}</div>
-        <div className="itemContext">DOWNVOTES</div>
+        <div className={props.getClass("itemContext")}>DOWNVOTES</div>
       </div>
       <div className="centering">
-        <div className="header twoColumn">
+        <div className={props.getClass("header") + " twoColumn"}>
           <div className="title">POST</div>
           <div className="size30 upsHeader">
             {numToString(props.stats.posts.upvotes)}
           </div>
-          <div className="itemContext">UPVOTES</div>
+          <div className={props.getClass("itemContext")}>UPVOTES</div>
           <div className="size30 downsHeader">
             {numToString(props.stats.posts.downvotes)}
           </div>
-          <div className="itemContext">DOWNVOTES</div>
+          <div className={props.getClass("itemContext")}>DOWNVOTES</div>
         </div>
-        <div className="header twoColumn">
+        <div className={props.getClass("header") + " twoColumn"}>
           <div className="title">COMMENT</div>
           <div className="size30 upsHeader">
             {numToString(props.stats.comments.upvotes)}
           </div>
-          <div className="itemContext">UPVOTES</div>
+          <div className={props.getClass("itemContext")}>UPVOTES</div>
           <div className="size30 commentAwardsHeader">
             {numToString(props.stats.comments.awards)}
           </div>
-          <div className="itemContext">AWARDS</div>
+          <div className={props.getClass("itemContext")}>AWARDS</div>
         </div>
       </div>
-      <div className="header">
+      <div className={props.getClass("header")}>
         <div className="title">COIN VALUE</div>
         <div className="profitHeader">
           $ {numToString(props.stats.earnings)}
         </div>
-        <div className="itemContext">ESTIMATED VALUE</div>
+        <div className={props.getClass("itemContext")}>ESTIMATED VALUE</div>
       </div>
-      <div className="header">
+      <div className={props.getClass("header")}>
         <div className="title">MONETARY STATS</div>
         <div className="coinsHeader">{numToString(props.stats.coins)}</div>
-        <div className="itemContext">COINS</div>
+        <div className={props.getClass("itemContext")}>COINS</div>
         <div className="awardsHeader">{numToString(props.stats.awards)}</div>
-        <div className="itemContext">AWARDS</div>
+        <div className={props.getClass("itemContext")}>AWARDS</div>
       </div>
     </div>
   );

@@ -25,6 +25,34 @@
   font-size: 12px;
   word-wrap: break-word;
   text-align: center;
+  color: gray;
+}
+.footerLight {
+  color: #191919;
+}
+
+.themeButton {
+  border: none;
+  background: gainsboro;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  font-size: 12px;
+  color: #191919;
+  border-radius: 10px;
+  border: 1px solid silver;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.themeButtonLight {
+  background: none;
+}
+.themeButton:hover {
+  background: white;
+}
+.themeButtonLight:hover {
+  background: whitesmoke;
 }
 
 .backToTopButton {
@@ -41,6 +69,10 @@
   text-decoration: none;
   color: gray;
 }
+.searchLinkLight:link,
+.searchLinkLight:visited {
+  color: #191919;
+}
 
 .searchLink:hover {
   text-decoration: underline;
@@ -50,6 +82,11 @@
 .searchLink2:visited {
   text-decoration: none;
   color: silver;
+}
+.searchLink2Light:link,
+.searchLink2Light:visited {
+  text-decoration: none;
+  color: #191919;
 }
 
 .searchLink2:hover {
@@ -62,6 +99,18 @@
       #0000 33%,
       rgba(255, 255, 255, 0.3) 50%,
       #0000 66%
+    )
+    transparent;
+  background-size: 300% 100%;
+  animation: shine 1s infinite;
+  border-radius: 20px;
+}
+.loadingLight {
+  background: linear-gradient(
+      90deg,
+      whitesmoke 33%,
+      rgba(255, 255, 255, 0.3) 50%,
+      whitesmoke 66%
     )
     transparent;
   background-size: 300% 100%;

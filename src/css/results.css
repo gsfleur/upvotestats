@@ -4,30 +4,35 @@
   text-align: center;
   font-weight: bold;
 }
+
 .downsHeader {
   color: royalblue;
   font-size: 50px;
   text-align: center;
   font-weight: bold;
 }
+
 .commentAwardsHeader {
   color: plum;
   font-size: 50px;
   text-align: center;
   font-weight: bold;
 }
+
 .coinsHeader {
   color: gold;
   font-size: 65px;
   text-align: center;
   font-weight: bold;
 }
+
 .awardsHeader {
   color: goldenrod;
   font-size: 50px;
   text-align: center;
   font-weight: bold;
 }
+
 .profitHeader {
   color: lightgreen;
   font-size: 65px;
@@ -47,6 +52,11 @@
   margin-right: 1%;
   font-size: 22px;
 }
+.headerLight {
+  background: white;
+  color: #191919;
+  border: 1px solid silver;
+}
 
 .twoColumn {
   width: 48%;
@@ -59,6 +69,9 @@
   color: lightgray;
   margin-bottom: 20px;
   font-size: 18px;
+}
+.itemContextLight {
+  color: gray;
 }
 
 .title {

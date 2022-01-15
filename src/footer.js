@@ -1,7 +1,22 @@
-export default function Footer() {
+export default function Footer(props) {
   return (
     <div className="centering">
-      <div className="footer">
+      <div className={props.getClass("footer")}>
+        <div className="centering">
+          <button
+            onClick={() => {
+              localStorage.setItem(
+                "theme",
+                props.theme === "light" ? "dark" : "light"
+              );
+              window.location.reload();
+            }}
+            className={props.getClass("themeButton")}
+          >
+            {props.theme === "light" && <span>DARK THEME</span>}
+            {props.theme === "dark" && <span>LIGHT THEME</span>}
+          </button>
+        </div>
         <a href="https://ko-fi.com/Q5Q0733FX" target="_blank" rel="noreferrer">
           <img
             height="36"
@@ -13,9 +28,9 @@ export default function Footer() {
         </a>
         <br />
         <br />
-        <div style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}>
+        <div style={{ textAlign: "center", fontWeight: "bold" }}>
           <a
-            className="searchLink"
+            className={props.getClass("searchLink")}
             href="https://github.com/gsfleur/upvotestats"
             target="_blank"
             rel="noreferrer"
@@ -24,7 +39,7 @@ export default function Footer() {
           </a>
         </div>
         <br />
-        <div style={{ color: "gray", textAlign: "center", fontWeight: "bold" }}>
+        <div style={{ textAlign: "center", fontWeight: "bold" }}>
           &copy; {new Date().getFullYear()} Upvote Stats
         </div>
       </div>
