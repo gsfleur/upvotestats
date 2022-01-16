@@ -108,9 +108,9 @@
 .loadingLight {
   background: linear-gradient(
       90deg,
-      whitesmoke 33%,
+      rgba(192, 192, 192, 0.3) 33%,
       rgba(255, 255, 255, 0.3) 50%,
-      whitesmoke 66%
+      rgba(192, 192, 192, 0.3) 66%
     )
     transparent;
   background-size: 300% 100%;
