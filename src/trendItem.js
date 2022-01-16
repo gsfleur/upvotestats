@@ -171,7 +171,7 @@ export default function TrendItem(props) {
             className={props.getClass("searchLink")}
             style={{
               fontSize: "13px",
-              color: "DodgerBlue",
+              color: "dodgerblue",
               position: "relative",
             }}
           >
@@ -229,6 +229,7 @@ export default function TrendItem(props) {
         <div
           style={{
             marginTop: "5px",
+            fontWeight: "500",
           }}
         >
           <div className={props.getClass("postUpvotePercent")}>
