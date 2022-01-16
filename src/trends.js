@@ -244,7 +244,10 @@ export default function Trends(props) {
         {state.sort === category && (
           <button
             className={props.getClass("timeButton")}
-            style={{ borderBottom: "3px solid DodgerBlue" }}
+            style={{
+              borderBottom: "3px solid dodgerblue",
+              color: "dodgerblue",
+            }}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
@@ -278,8 +281,8 @@ export default function Trends(props) {
           height: "20px",
           border:
             props.theme === "light"
-              ? "1.5px solid silver"
-              : "1.5px solid #292929",
+              ? "1.5px solid #00000008"
+              : "1.5px solid #222222",
           borderRadius: "20px",
         }}
       ></div>
@@ -296,8 +299,8 @@ export default function Trends(props) {
           style={{
             border:
               props.theme === "light"
-                ? "1.5px solid silver"
-                : "1.5px solid #292929",
+                ? "1.5px solid #00000008"
+                : "1.5px solid #222222",
             borderRadius: "20px",
             height: window.innerWidth > 600 ? "150px" : "110px",
           }}
@@ -645,7 +648,7 @@ export default function Trends(props) {
                 >
                   <div
                     style={{
-                      border: "1.5px solid #292929",
+                      border: "1.5px solid #222222",
                       borderRadius: "20px",
                     }}
                   >

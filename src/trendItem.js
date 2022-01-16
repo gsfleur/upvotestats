@@ -6,8 +6,6 @@ import { InView } from "react-intersection-observer";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 export default function TrendItem(props) {
   // Component State
@@ -343,14 +341,14 @@ export default function TrendItem(props) {
       }}
       onClick={(e) => {
         if (
-          e.target.className !== "postImgStandard" &&
-          e.target.className !== "postVideoStandard" &&
-          e.target.className !== "searchLink" &&
-          e.target.className !== "searchLink2" &&
-          e.target.className !== "iconImg" &&
+          !e.target.className.includes("postImgStandard") &&
+          !e.target.className.includes("postVideoStandard") &&
+          !e.target.className.includes("searchLink") &&
+          !e.target.className.includes("searchLink2") &&
+          !e.target.className.includes("iconImg") &&
+          !e.target.className.includes("nextButton") &&
           !e.target.id.includes("report") &&
           e.target.id !== "threadLink" &&
-          e.target.className.baseVal == null &&
           !props.collapsedAll
         )
           setState({ ...state, collapsed: isCollapsed() ? false : true });
@@ -538,9 +536,12 @@ export default function TrendItem(props) {
                             {post.isGallery && (
                               <div
                                 className="centering"
-                                style={{ marginBottom: "10px" }}
+                                style={{
+                                  marginBottom: "10px",
+                                  marginTop: "10px",
+                                }}
                               >
-                                <ArrowCircleLeftIcon
+                                <div
                                   className={props.getClass("nextButton")}
                                   onClick={() => {
                                     let currIndex = post.galleryItem;
@@ -556,24 +557,17 @@ export default function TrendItem(props) {
                                       });
                                     }
                                   }}
-                                />
+                                >
+                                  Prev
+                                </div>
                                 <div
-                                  style={{
-                                    marginLeft: "10px",
-                                    marginRight: "10px",
-                                    border: "1px solid gray",
-                                    borderRadius: "10px",
-                                    padding: "5px 5px 5px 5px",
-                                    fontSize: "11px",
-                                    width: "60px",
-                                    textAlign: "center",
-                                  }}
+                                  className={props.getClass("galleryNumber")}
                                 >
                                   {post.galleryItem + 1}
                                   &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
                                   {post.mediaMetadata.length}
                                 </div>
-                                <ArrowCircleRightIcon
+                                <div
                                   className={props.getClass("nextButton")}
                                   onClick={() => {
                                     let currIndex = post.galleryItem;
@@ -589,7 +583,9 @@ export default function TrendItem(props) {
                                       });
                                     }
                                   }}
-                                />
+                                >
+                                  Next
+                                </div>
                               </div>
                             )}
                             {/* Post image */}

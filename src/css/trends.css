@@ -45,15 +45,14 @@
   color: gainsboro;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s, background-color 0.2s ease;
   opacity: 1;
-  transition: background-color 0.3s ease;
+}
+.postLink:hover {
+  background-color: #22222216;
 }
 .postLinkLight {
   color: #191919;
-}
-.postLink:hover {
-  background-color: #29292916;
 }
 .postLinkLight:hover {
   background-color: #00000004;
@@ -81,13 +80,13 @@
   width: 100%;
   margin-top: 5px;
   border-radius: 20px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
 }
 .imgBodyLight {
   color: #191919;
 }
 .imgBody:hover {
-  background-color: #29292939;
+  background-color: #22222239;
   border-radius: 20px;
 }
 .imgBodyLight:hover {
@@ -96,7 +95,7 @@
 
 .imgBodyContainer {
   overflow: auto;
-  border: 1px solid #292929;
+  border: 1px solid #222222;
   border-radius: 20px;
   padding: 10px 10px 10px 10px;
 }
@@ -162,7 +161,6 @@
   float: left;
   margin-right: 5px;
   margin-top: 10px;
-  background-image: "linear-gradient(0deg,transparent 1%, rgb(255,255,255,0.03) 99%";
 }
 .trendWithLight {
   color: #191919;
@@ -188,12 +186,12 @@
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: silver;
   border-radius: 0px;
   width: calc(100% / 4);
 }
 .timeButton:hover {
-  border-bottom: 3px solid dodgerblue;
+  color: dodgerblue;
 }
 .timeButtonLight {
   color: #191919;
@@ -229,17 +227,40 @@
 }
 
 .nextButton {
-  border: none;
   background: transparent;
   text-decoration: none;
-  font-size: 13px;
   color: silver;
+  border: 1px solid #222222;
+  border-radius: 10px;
+  font-size: 11px;
+  width: 60px;
+  text-align: center;
+  font-weight: bold;
+  padding: 4px;
 }
 .nextButtonLight {
   color: gray;
+  border: 1px solid silver;
 }
 .nextButton:hover {
   color: dodgerblue;
+}
+
+.galleryNumber {
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #222222;
+  border-radius: 10px;
+  padding: 4px;
+  font-size: 11px;
+  width: 60px;
+  text-align: center;
+  font-weight: bold;
+  color: silver;
+}
+.galleryNumberLight {
+  color: gray;
+  border: 1px solid silver;
 }
 
 .reloadButton {
