@@ -713,7 +713,7 @@ export default function Trends(props) {
             <div className="centering">
               <button
                 onClick={() => (window.location.href = "trends")}
-                className={props.props.getClass("reloadButton")}
+                className={props.getClass("reloadButton")}
               >
                 RELOAD
               </button>

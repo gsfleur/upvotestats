@@ -280,6 +280,7 @@
 .reloadButtonLight {
   color: #191919;
   border: 1px solid silver;
+  background: none;
 }
 .reloadButton:hover {
   background: whitesmoke;
