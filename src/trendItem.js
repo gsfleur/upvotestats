@@ -162,6 +162,7 @@ export default function TrendItem(props) {
             display: "inline-block",
             width: "100%",
             marginTop: "4px",
+            fontWeight: "500",
           }}
         >
           <a
