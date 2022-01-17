@@ -82,10 +82,12 @@ export default function Home(props) {
     <div
       className={props.getClass("homeCards")}
       style={{
-        height: "50px",
+        height: "48px",
         width: "100%",
         color: "transparent",
         marginBottom: "16px",
+        border:
+          props.theme === "light" ? "1px solid silver" : "1px solid #222222",
       }}
     ></div>
   );
