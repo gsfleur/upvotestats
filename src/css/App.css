@@ -30,11 +30,12 @@
   color: #191919;
 }
 
-.footerButton {
+.footerLink {
   border: none;
   background: none;
-  min-width: 90px;
-  padding: 10px;
+  min-width: 80px;
+  padding: 5px;
+  display: inline-block;
   margin-bottom: 20px;
   text-decoration: none;
   font-size: 12px;
@@ -46,14 +47,14 @@
   margin-left: 5px;
   transition: background-color 0.3s ease;
 }
-.footerButtonLight {
+.footerLinkLight {
   background: none;
   border: 1px solid silver;
 }
-.footerButton:hover {
+.footerLink:hover {
   background: rgb(48, 48, 48);
 }
-.footerButtonLight:hover {
+.footerLinkLight:hover {
   background: whitesmoke;
 }
 

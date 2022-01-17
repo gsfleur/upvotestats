@@ -82,7 +82,6 @@ export default function Home(props) {
     <div
       className={props.getClass("homeCards")}
       style={{
-        border: "none",
         height: "50px",
         width: "100%",
         color: "transparent",
