@@ -33,6 +33,7 @@
 .footerButton {
   border: none;
   background: none;
+  min-width: 90px;
   padding: 10px;
   margin-bottom: 20px;
   text-decoration: none;

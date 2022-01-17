@@ -1,7 +1,7 @@
 export default function Footer(props) {
   return (
     <div className="centering">
-      <div className={props.getClass("footer")}>
+      <div className={props.getClass("footer")} style={{ marginTop: "10px" }}>
         <a href="https://ko-fi.com/Q5Q0733FX" target="_blank" rel="noreferrer">
           <button
             className={props.getClass("footerButton")}

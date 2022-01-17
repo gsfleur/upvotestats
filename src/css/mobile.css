@@ -23,6 +23,12 @@
   .size30 {
     font-size: 20px;
   }
+  .homeCards {
+    font-size: 16px;
+  }
+  .cardsLoc {
+    width: 80%;
+  }
   .timeButton {
     font-size: 14px;
   }
