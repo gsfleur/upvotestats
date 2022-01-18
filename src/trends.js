@@ -205,6 +205,7 @@ export default function Trends(props) {
             key={state.sort + +"-post-" + i}
             showMedia={state.media}
             getClass={props.getClass}
+            theme={props.theme}
           />
         );
       }

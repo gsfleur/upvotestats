@@ -502,6 +502,10 @@ export default function TrendItem(props) {
                         href={"https://www.reddit.com/u/" + post.author}
                         rel="noreferrer"
                         target="_blank"
+                        style={{
+                          color:
+                            props.theme === "light" ? "#191919" : "gainsboro",
+                        }}
                       >
                         {post.author}
                       </a>{" "}
