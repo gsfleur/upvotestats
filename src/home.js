@@ -79,18 +79,15 @@ export default function Home(props) {
 
   // Loading objects
   const loadingObj = (key) => (
-    <div
+    <button
       key={"homeLoading-" + key}
       className={props.getClass("homeCards")}
-      style={{
-        height: "48px",
-        width: "100%",
-        color: "transparent",
-        marginBottom: "16px",
-        border:
-          props.theme === "light" ? "1px solid silver" : "1px solid #222222",
-      }}
-    ></div>
+      style={{ color: "transparent" }}
+    >
+      Loading
+      <br />
+      <span style={{ fontSize: "14px" }}>Loading</span>
+    </button>
   );
 
   return (
