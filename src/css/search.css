@@ -37,7 +37,7 @@
   border-radius: 10px;
   font-size: 16px;
   padding: 10px;
-  margin: 0px 0px 0px 0px;
+  margin: 0px 0px 20px 0px;
 }
 .resourceButton:hover {
   color: rgb(12, 133, 233);

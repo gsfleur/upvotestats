@@ -271,8 +271,8 @@ export default function Trends(props) {
   }
 
   // Loading Objects
-  const loadingObj = (
-    <div>
+  const loadingObj = (key) => (
+    <div key={"trendLoading-" + key}>
       <div
         className={props.getClass("loading")}
         style={{
@@ -308,7 +308,6 @@ export default function Trends(props) {
       </div>
     </div>
   );
-  const loadingDOM = new Array(50).fill(loadingObj);
 
   return (
     <div className="centering">
@@ -325,7 +324,7 @@ export default function Trends(props) {
                   width: "90%",
                 }}
               >
-                {loadingDOM}
+                {[...Array(50).keys()].map((n) => (n = loadingObj(n)))}
               </div>
             </div>
           </div>

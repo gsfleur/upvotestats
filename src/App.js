@@ -4,6 +4,7 @@ import "./css/about.css";
 import "./css/search.css";
 import "./css/results.css";
 import "./css/trends.css";
+import "./css/footer.css";
 import "./css/mobile.css";
 import Fab from "@material-ui/core/Fab";
 import React, { Suspense, lazy } from "react";

@@ -1,0 +1,38 @@
+.footer {
+  margin-bottom: 100px;
+  font-size: 12px;
+  word-wrap: break-word;
+  text-align: center;
+  color: gray;
+}
+.footerLight {
+  color: #191919;
+}
+
+.footerLink {
+  border: none;
+  background: none;
+  min-width: 80px;
+  padding: 5px;
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  font-size: 12px;
+  color: #191919;
+  border-radius: 10px;
+  border: 1px solid #222222;
+  font-weight: bold;
+  margin-right: 5px;
+  margin-left: 5px;
+  transition: background-color 0.3s ease;
+}
+.footerLinkLight {
+  background: none;
+  border: 1px solid silver;
+}
+.footerLink:hover {
+  background: rgb(48, 48, 48);
+}
+.footerLinkLight:hover {
+  background: whitesmoke;
+}

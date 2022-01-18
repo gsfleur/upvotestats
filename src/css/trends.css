@@ -3,8 +3,6 @@
   color: gainsboro;
   padding: 20px 0px 20px 0px;
   margin-bottom: 20px;
-  margin-left: 1%;
-  margin-right: 1%;
   font-size: 16px;
   width: 100%;
   max-width: 650px;
@@ -33,7 +31,7 @@
   padding: 5px;
   margin-right: 10px;
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .postLink {
@@ -48,11 +46,11 @@
   transition: opacity 0.3s, background-color 0.2s ease;
   opacity: 1;
 }
-.postLink:hover {
-  background-color: #22222216;
-}
 .postLinkLight {
   color: #191919;
+}
+.postLink:hover {
+  background-color: #22222216;
 }
 .postLinkLight:hover {
   background-color: #00000004;
@@ -190,11 +188,11 @@
   border-radius: 0px;
   width: calc(100% / 4);
 }
-.timeButton:hover {
-  color: dodgerblue;
-}
 .timeButtonLight {
   color: #191919;
+}
+.timeButton:hover {
+  color: dodgerblue;
 }
 
 .sortButton {

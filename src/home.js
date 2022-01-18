@@ -20,10 +20,10 @@ export default function Home(props) {
         await axios
           .get(process.env.REACT_APP_BACKEND + "posts/all")
           .then((res) => {
-            let posts = res.data.posts;
+            const posts = res.data.posts;
             for (let i = 0; i < posts.length; i++) {
-              let sub = posts[i].subreddit;
-              let subscribers = posts[i].subscribers;
+              const sub = posts[i].subreddit;
+              const subscribers = posts[i].subscribers;
 
               // saving name and sub count
               if (communities[sub] == null) communities[sub] = subscribers;
@@ -48,7 +48,7 @@ export default function Home(props) {
         for (let i = 0; i < subData.length && state.cardsDOM.length < 5; i++) {
           state.cardsDOM.push(
             <button
-              key={"card-" + i}
+              key={"homeCard-" + i}
               className={props.getClass("homeCards")}
               onClick={() =>
                 (window.location.href = "/search?q=" + subData[i][0])
@@ -78,8 +78,9 @@ export default function Home(props) {
   });
 
   // Loading objects
-  const loadingDOM = (
+  const loadingObj = (key) => (
     <div
+      key={"homeLoading-" + key}
       className={props.getClass("homeCards")}
       style={{
         height: "48px",
@@ -94,18 +95,11 @@ export default function Home(props) {
 
   return (
     <div className="centering">
-      {state.loaded === false && (
-        <div className="cardsLoc">
-          {loadingDOM}
-          {loadingDOM}
-          {loadingDOM}
-          {loadingDOM}
-          {loadingDOM}
-        </div>
-      )}
-      {state.loaded === true && state.error === false && (
-        <div className="cardsLoc">{state.cardsDOM}</div>
-      )}
+      <div className="cardsLoc">
+        {state.loaded === true
+          ? state.cardsDOM
+          : [...Array(5).keys()].map((n) => (n = loadingObj(n)))}
+      </div>
     </div>
   );
 }
