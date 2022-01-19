@@ -338,7 +338,10 @@ export default function Search(props) {
         </div>
       )}
       {state.loaded === false && searching && (
-        <div className={props.getClass("header")} style={{ padding: "60px" }}>
+        <div
+          className={props.getClass("header")}
+          style={{ padding: "60px 5% 60px 5%" }}
+        >
           <Percentage percent={state.percent} getClass={props.getClass} />
           <br />
           <br />
