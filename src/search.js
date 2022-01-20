@@ -279,7 +279,7 @@ export default function Search(props) {
     <div>
       <div className="centering">
         {searching === false && (
-          <h1 className={props.getClass("h1")}>{state.name}</h1>
+          <div className={props.getClass("h0")}>Upvote Stats</div>
         )}
         {searching === true && (
           <a
@@ -288,12 +288,12 @@ export default function Search(props) {
             target="_blank"
             style={{ textDecoration: "none" }}
           >
-            <h1 className={props.getClass("h1")}>{state.name}</h1>
+            <div className={props.getClass("h1")}>{state.name}</div>
           </a>
         )}
       </div>
       <div className="centering">
-        <h3 className={props.getClass("h3")}>upvotestats.com</h3>
+        <div className={props.getClass("h3")}>upvotestats.com</div>
       </div>
       <div className="centering">
         <div
@@ -347,8 +347,8 @@ export default function Search(props) {
           <br />
           <div className={props.getClass("searchLoading")}>
             Loading all of the data can take up to 2-3 minutes to process as
-            this program will analyze the top posts, comments, and replies of
-            the subreddit in the last 30 days.
+            this program will analyze the top posts and comments in the past
+            month.
           </div>
           <br />
         </div>

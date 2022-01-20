@@ -1,7 +1,19 @@
+.h0 {
+  font-size: 80px;
+  font-weight: 500;
+  margin-top: 5vh;
+  margin-bottom: 10px;
+  color: white;
+}
+.h0Light {
+  color: #191919;
+}
+
 .h1 {
   font-size: 50px;
+  font-weight: 500;
   margin-top: 5vh;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   color: white;
 }
 .h1Light {
@@ -9,7 +21,10 @@
 }
 
 .h3 {
+  font-size: 20px;
+  font-weight: 500;
   color: white;
+  margin-bottom: 20px;
 }
 .h3Light {
   color: #191919;
@@ -42,6 +57,10 @@
 }
 .resourceButton:hover {
   color: rgb(12, 133, 233);
+}
+
+.searchLoading {
+  font-weight: 500;
 }
 
 .searchLoadingLight {

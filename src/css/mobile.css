@@ -1,9 +1,12 @@
 @media screen and (max-width: 600px) {
+  .h0 {
+    font-size: 45px;
+  }
   .h1 {
     font-size: 24px;
   }
   .h3 {
-    font-size: 14px;
+    font-size: 20px;
   }
   .searchLoading {
     font-size: 16px;
