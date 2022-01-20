@@ -10,13 +10,12 @@
   font-weight: bold;
   color: orangered;
   font-size: 20px;
-  border: none;
   transition: background-color 0.3s ease;
   overflow: hidden;
   border: 1px solid #222222;
 }
 .homeCards:hover {
-  background: #0f0f0f;
+  background: rgb(30, 30, 30);
 }
 .homeCardsLight {
   background: white;

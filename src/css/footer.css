@@ -31,7 +31,7 @@
   border: 1px solid silver;
 }
 .footerLink:hover {
-  background: rgb(48, 48, 48);
+  background: rgb(30, 30, 30);
 }
 .footerLinkLight:hover {
   background: whitesmoke;
