@@ -188,7 +188,7 @@ export default function TrendItem(props) {
 
   // Post author information
   const author = (
-    <div className="postAuthor">
+    <div className={props.getClass("postAuthor")}>
       {hours === 0 && <span>{minutes} min</span>}
       {hours < 24 && hours > 0 && <span>{hours}h</span>}
       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
@@ -306,9 +306,8 @@ export default function TrendItem(props) {
   // DOM of trend item
   return (
     <div
-      className="centering"
+      className="post"
       key={"trends-" + i}
-      style={{ cursor: "pointer" }}
       onClick={(e) => {
         if (
           !e.target.className.includes("postImgStandard") &&

@@ -108,6 +108,12 @@
   -webkit-filter: blur(10px);
 }
 
+.post {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .postRank {
   font-size: 13px;
   color: gray;
@@ -161,6 +167,10 @@
 .postAuthor {
   font-size: 13px;
   margin-bottom: 5px;
+  color: silver;
+}
+.postAuthorLight {
+  color: #191919;
 }
 
 .postThreadLink {
