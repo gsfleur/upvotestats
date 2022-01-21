@@ -21,7 +21,7 @@ export default function Trends(props) {
     error: false,
     sort: "all",
     sortBy: "hot",
-    sortDate: "today",
+    sortTime: "today",
     data: null,
     allData: null,
     newsData: null,
@@ -55,7 +55,7 @@ export default function Trends(props) {
                   "?sort=" +
                   state.sortBy +
                   "&time=" +
-                  state.sortDate
+                  state.sortTime
               )
               .then((res) => {
                 state[category + "Data"] = res.data;
@@ -96,7 +96,7 @@ export default function Trends(props) {
     setState({
       ...state,
       loaded: false,
-      sortDate: event.target.value,
+      sortTime: event.target.value,
     });
   };
 
@@ -553,14 +553,14 @@ export default function Trends(props) {
                     width: "90%",
                   }}
                 >
-                  <FormControl focused variant="standard" htmlFor="selectDate">
-                    <InputLabel variant="standard">Date</InputLabel>
+                  <FormControl focused variant="standard" htmlFor="selectTime">
+                    <InputLabel variant="standard">Time</InputLabel>
                     <NativeSelect
-                      defaultValue={state.sortDate}
+                      defaultValue={state.sortTime}
                       className={classes.root}
                       onChange={handleTimeChange}
                       IconComponent={ExpandMoreIcon}
-                      id="selectDate"
+                      id="selectTime"
                     >
                       <option value={"today"} style={{ color: "black" }}>
                         Today
@@ -589,12 +589,12 @@ export default function Trends(props) {
                       id="selectSort"
                       width="100%"
                     >
-                      {state.sortDate === "today" && (
+                      {state.sortTime === "today" && (
                         <option value={"hot"} style={{ color: "black" }}>
                           Hot
                         </option>
                       )}
-                      {state.sortDate === "today" && (
+                      {state.sortTime === "today" && (
                         <option value={"new"} style={{ color: "black" }}>
                           New
                         </option>
