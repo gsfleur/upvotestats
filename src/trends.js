@@ -122,7 +122,7 @@ export default function Trends(props) {
         },
       },
       "& .MuiNativeSelect-icon": {
-        color: "gray",
+        color: props.theme === "light" ? "#191919" : "silver",
       },
     },
   });
@@ -704,11 +704,13 @@ export default function Trends(props) {
             </div>
             <div className="centering">
               <button
-                onClick={() => (window.location.href = "trends")}
+                onClick={() => window.location.reload()}
                 className={props.getClass("reloadButton")}
               >
                 RELOAD
               </button>
+              <br />
+              <br />
             </div>
           </div>
         )}

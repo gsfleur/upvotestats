@@ -328,12 +328,22 @@ export default function Search(props) {
         </div>
       </div>
       {state.error === true && (
-        <div className={props.getClass("header")} style={{ padding: "60px" }}>
-          <div>
-            An error occured when trying to analyze the subreddit {query} <br />
-            <br /> Ad blockers may cause errors by preventing the program from
-            fulfilling requests, espcially comments made by a user on reddit,
-            that may contain words such as 'advertisement'.
+        <div
+          className={props.getClass("header")}
+          style={{ padding: "60px 5% 60px 5%" }}
+        >
+          <div className={props.getClass("searchLoading")}>
+            An error occured when analyzing
+            <br />
+            {query} <br />
+            <button
+              onClick={() => (window.location.href = "search?q=" + q)}
+              className={props.getClass("reloadButton")}
+            >
+              Try again
+            </button>
+            <br /> Ad blockers may cause errors by preventing requests from
+            fulfilling
           </div>
         </div>
       )}

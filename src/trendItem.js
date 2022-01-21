@@ -32,7 +32,7 @@ export default function TrendItem(props) {
         },
       },
       "& .MuiNativeSelect-icon": {
-        color: "gray",
+        color: props.theme === "light" ? "#191919" : "gray",
         fontSize: "large",
         marginTop: "4.5px",
       },
@@ -161,7 +161,7 @@ export default function TrendItem(props) {
           style={{
             display: "inline-block",
             width: "100%",
-            marginTop: "4px",
+            marginTop: "5px",
             fontWeight: "500",
           }}
         >
@@ -433,8 +433,8 @@ export default function TrendItem(props) {
                 {isCollapsed() && <div>{markdown(postText, props)}</div>}
                 {!loadableImg && (
                   <span>
-                    {author}
                     {outLinkDOM}
+                    {author}
                     {threadLinkDOM}
                   </span>
                 )}
@@ -443,8 +443,8 @@ export default function TrendItem(props) {
             {/* Post text if unavailable */}
             {post.text.length === 0 && !loadableImg && (
               <span>
-                {author}
                 {outLinkDOM}
+                {author}
                 {threadLinkDOM}
               </span>
             )}
