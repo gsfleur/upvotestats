@@ -99,8 +99,8 @@ export default function TrendItem(props) {
   for (let t = 1; t < trends.length; t++) {
     trendingWith.push(
       <div
-        className={props.getClass("trendWith")}
-        key={"trendWith-" + i + "-" + t}
+        className={props.getClass("postTrendWith")}
+        key={"postTrendWith-" + i + "-" + t}
       >
         {trends[t]}
       </div>
@@ -157,57 +157,38 @@ export default function TrendItem(props) {
   const outLinkDOM = (
     <span>
       {!post.redditMediaDomain && post.urlDest != null && (
-        <div
-          style={{
-            display: "inline-block",
-            width: "100%",
-            marginTop: "5px",
-            fontWeight: "500",
-          }}
+        <a
+          href={post.urlDest}
+          target="_blank"
+          rel="noreferrer"
+          className="postOutLink"
         >
-          <a
-            href={post.urlDest}
-            target="_blank"
-            rel="noreferrer"
-            className={props.getClass("searchLink")}
+          {destLink}
+          <img
+            id="threadLink"
+            src="outbound.png"
+            alt={"outbound icon"}
+            width="13px"
+            height="13px"
+            loading="lazy"
             style={{
-              fontSize: "13px",
-              color: "dodgerblue",
-              position: "relative",
+              position: "absolute",
+              bottom: "1.5px",
+              marginLeft: "3px",
             }}
-          >
-            {destLink}
-            <img
-              id="threadLink"
-              src="outbound.png"
-              alt={"outbound icon"}
-              width="13px"
-              height="13px"
-              loading="lazy"
-              style={{
-                position: "absolute",
-                bottom: "1.5px",
-                marginLeft: "3px",
-              }}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "missing.png";
-              }}
-            />
-          </a>
-        </div>
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "missing.png";
+            }}
+          />
+        </a>
       )}
     </span>
   );
 
   // Post author information
   const author = (
-    <div
-      style={{
-        fontSize: "13px",
-        marginTop: "5px",
-      }}
-    >
+    <div className="postAuthor">
       {hours === 0 && <span>{minutes} min</span>}
       {hours < 24 && hours > 0 && <span>{hours}h</span>}
       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
@@ -227,12 +208,7 @@ export default function TrendItem(props) {
   const threadLinkDOM = (
     <span>
       {isCollapsed() && (
-        <div
-          style={{
-            marginTop: "5px",
-            fontWeight: "500",
-          }}
-        >
+        <div className="postThreadLink">
           <div className={props.getClass("postUpvotePercent")}>
             {Math.floor(
               (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes)
@@ -329,18 +305,10 @@ export default function TrendItem(props) {
 
   // DOM of trend item
   return (
-    <button
+    <div
       className="centering"
       key={"trends-" + i}
-      style={{
-        background: "none",
-        border: "none",
-        textAlign: "left",
-        padding: "0px",
-        fontFamily: "inherit",
-        textDecoration: "none",
-        width: "100%",
-      }}
+      style={{ cursor: "pointer" }}
       onClick={(e) => {
         if (
           !e.target.className.includes("postImgStandard") &&
@@ -370,7 +338,13 @@ export default function TrendItem(props) {
             }
           }}
         >
-          <div style={{ float: "left", overflow: "hidden", width: "100%" }}>
+          <div
+            style={{
+              display: "block",
+              overflow: "hidden",
+              width: "100%",
+            }}
+          >
             {/* Post rank, subreddit name, and options button */}
             <div className={props.getClass("postRank")}>
               {postListDOMLength + 1} &bull;{" "}
@@ -406,7 +380,7 @@ export default function TrendItem(props) {
             </div>
 
             {/* Main Trend associated with post */}
-            <div style={{ fontSize: "14px", marginBottom: "5px" }}>
+            <div className="postTrend">
               <b>{post.trends.length > 0 ? post.trends[0] : post.subName}</b>
             </div>
 
@@ -431,17 +405,9 @@ export default function TrendItem(props) {
                   </div>
                 )}
                 {isCollapsed() && <div>{markdown(postText, props)}</div>}
-                {!loadableImg && (
-                  <span>
-                    {outLinkDOM}
-                    {author}
-                    {threadLinkDOM}
-                  </span>
-                )}
               </div>
             )}
-            {/* Post text if unavailable */}
-            {post.text.length === 0 && !loadableImg && (
+            {!loadableImg && (
               <span>
                 {outLinkDOM}
                 {author}
@@ -452,14 +418,14 @@ export default function TrendItem(props) {
 
           {/* Post with image */}
           {loadableImg && (
-            <div className={props.getClass("imgBody")}>
+            <div className={props.getClass("imgBodyContainer")}>
               <div
                 style={{
                   position: "relative",
                   height: "100%",
                 }}
               >
-                <div className={props.getClass("imgBodyContainer")}>
+                <div className={props.getClass("imgBody")}>
                   {/* Post author name, icon and creation date */}
                   <div
                     style={{
@@ -523,9 +489,11 @@ export default function TrendItem(props) {
                     <span>
                       <div
                         className={props.getClass("postTitle")}
-                        style={{ width: "100%", marginBottom: "5px" }}
+                        style={{ width: "100%" }}
                       >
                         {markdown(postTitle, props)}
+                      </div>
+                      <div style={{ width: "100%" }}>
                         {outLinkDOM}
                         {threadLinkDOM}
                       </div>
@@ -672,7 +640,7 @@ export default function TrendItem(props) {
                     </span>
                   )}
 
-                  {/* Collapsed post with thumbnail */}
+                  {/* Un-collapsed post with thumbnail */}
                   {!isCollapsed() && (
                     <span>
                       {!blurred && <span>{thumbnail}</span>}
@@ -691,6 +659,13 @@ export default function TrendItem(props) {
                         <span className="limitText3">
                           {markdown(postTitle, props)}
                         </span>
+                      </div>
+                      <div
+                        style={{
+                          float: "left",
+                          marginLeft: "10px",
+                        }}
+                      >
                         {outLinkDOM}
                       </div>
                     </span>
@@ -703,22 +678,13 @@ export default function TrendItem(props) {
           {/* Section for other trending phrases */}
           {trends.length > 1 && (
             <div
+              className="postTrendWithLoc"
               style={{
-                width: "100%",
-                display: "inline-block",
+                maxHeight: isCollapsed() ? "65px" : "30px",
+                paddingTop: loadableImg ? "10px" : "5px",
               }}
             >
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "gray",
-                  overflow: "hidden",
-                  height: "100%",
-                  maxHeight: isCollapsed() ? "80px" : "40px",
-                }}
-              >
-                {trendingWith}
-              </div>
+              {trendingWith}
             </div>
           )}
 
@@ -741,7 +707,7 @@ export default function TrendItem(props) {
           </div>
         </InView>
       </div>
-    </button>
+    </div>
   );
 
   /**

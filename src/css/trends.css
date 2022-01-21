@@ -73,32 +73,28 @@
   float: right;
 }
 
-.imgBody {
-  display: inline-block;
+.imgBodyContainer {
+  display: block;
   width: 100%;
-  margin-top: 5px;
-  border-radius: 20px;
-  transition: background-color 0.2s ease;
-}
-.imgBodyLight {
-  color: #191919;
-}
-.imgBody:hover {
-  background-color: #22222239;
-  border-radius: 20px;
-}
-.imgBodyLight:hover {
-  background-color: #00000008;
 }
 
-.imgBodyContainer {
+.imgBody {
   overflow: auto;
   border: 1px solid #222222;
   border-radius: 20px;
-  padding: 10px 10px 10px 10px;
+  margin-top: 5px;
+  padding: 10px;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
 }
-.imgBodyContainerLight {
+.imgBody:hover {
+  background-color: #22222239;
+}
+.imgBodyLight {
   border: 1px solid silver;
+}
+.imgBodyLight:hover {
+  background-color: #00000008;
 }
 
 .blurOuter {
@@ -112,12 +108,27 @@
   -webkit-filter: blur(10px);
 }
 
+.postRank {
+  font-size: 13px;
+  color: gray;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.postRankLight {
+  color: #191919;
+}
+
+.postTrend {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
 .postTitle {
   color: gainsboro;
-  display: inline-block;
   font-size: 13.5px;
   font-weight: 500;
   width: calc(100% - 120px);
+  margin-bottom: 5px;
 }
 .postTitleLight {
   color: #191919;
@@ -126,43 +137,70 @@
 .postText {
   font-size: 13px;
   color: silver;
-  padding-top: 5px;
+  margin-bottom: 5px;
 }
 .postTextLight {
   color: #191919;
 }
 
-.postRank {
+.postOutLink:link,
+.postOutLink:visited {
+  display: block;
+  text-decoration: none;
+  font-size: 13px;
+  color: dodgerblue;
+  position: relative;
+  width: fit-content;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.postOutLink:hover {
+  text-decoration: underline;
+}
+
+.postAuthor {
   font-size: 13px;
   margin-bottom: 5px;
-  color: gray;
-  width: 100%;
-}
-.postRankLight {
-  color: #191919;
 }
 
-.postStats {
-  font-size: 13px;
-  color: gray;
-  margin-top: 3px;
-}
-.postStatsLight {
-  color: #191919;
+.postThreadLink {
+  display: block;
+  font-weight: 500;
+  overflow: auto;
+  margin-bottom: 5px;
 }
 
-.trendWith {
+.postTrendWith {
   color: silver;
   border-radius: 10px;
   border: 1px solid #222222;
   padding: 5px;
   float: left;
+  margin-bottom: 5px;
   margin-right: 5px;
-  margin-top: 10px;
 }
-.trendWithLight {
+.postTrendWithLight {
   color: #191919;
   border: 1px solid silver;
+}
+
+.postTrendWithLoc {
+  width: 100%;
+  display: block;
+  font-size: 13px;
+  color: gray;
+  overflow: hidden;
+  height: 100%;
+  margin-bottom: 5px;
+}
+
+.postStats {
+  font-size: 13px;
+  color: gray;
+  margin-top: 0px;
+}
+.postStatsLight {
+  color: #191919;
 }
 
 .trendStats {
