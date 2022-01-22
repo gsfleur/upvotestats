@@ -61,14 +61,14 @@ export default function Stats() {
         i++
       ) {
         // Skip deleted posts
-        if (state.data.posts[i][1].text === "[deleted]") continue;
+        if (state.data.posts[i].text === "[deleted]") continue;
 
         // Skip potential duplicates
-        if (postLinks.includes(state.data.posts[i][1].url)) continue;
+        if (postLinks.includes(state.data.posts[i].url)) continue;
 
         // Date since post published
         const timeInDay = 24 * 60 * 60 * 1000;
-        const firstDate = new Date(state.data.posts[i][1].publishedAt);
+        const firstDate = new Date(state.data.posts[i].publishedAt);
         const secondDate = new Date();
         const diffDays = Math.round(
           Math.abs((firstDate - secondDate) / timeInDay)
@@ -86,21 +86,21 @@ export default function Stats() {
           i +
           1 +
           ". [" +
-          state.data.posts[i][1].title +
+          state.data.posts[i].title +
           "](" +
-          state.data.posts[i][1].url +
+          state.data.posts[i].url +
           ") ";
 
-        if (state.data.posts[i][1].title.includes("Zealand"))
-          state.data.posts[i][1].urlToImage =
+        if (state.data.posts[i].title.includes("Zealand"))
+          state.data.posts[i].urlToImage =
             "https://external-preview.redd.it/QJMwMxrfKghHazca4dpF-_LvjU8a0pFUsN9o6-CUVTI.jpg?auto=webp&s=7050b11bd29324bf4c01d5df4ce71bf9266a955a";
 
-        postLinks.push(state.data.posts[i][1].url);
+        postLinks.push(state.data.posts[i].url);
         // DOM of post in list
         postListDOM.push(
           <div className="centering" key={"trends-" + i}>
             <a
-              href={state.data.posts[i][1].url}
+              href={state.data.posts[i].url}
               className="postLink"
               target="_blank"
               rel="noreferrer"
@@ -118,7 +118,7 @@ export default function Stats() {
                   }}
                 >
                   <img
-                    src={state.data.posts[i][1].urlToImage}
+                    src={state.data.posts[i].source}
                     className="postImgStandard"
                     alt="Reddit Post Thumbnail"
                     style={{
@@ -145,18 +145,18 @@ export default function Stats() {
                     }}
                   >
                     <span style={{ color: "gainsboro" }}>
-                      {state.data.posts[i][1].subName} &bull;{" "}
-                      {numToString(state.data.posts[i][1].upvotes)}&uarr; &bull;{" "}
+                      {state.data.posts[i].subName} &bull;{" "}
+                      {numToString(state.data.posts[i].upvotes)}&uarr; &bull;{" "}
                       {diffDays}d
-                      {state.data.posts[i][1].nsfw === true && (
+                      {state.data.posts[i].nsfw === true && (
                         <span> &bull; NSFW</span>
                       )}
                     </span>
                     <br />
-                    <b>{state.data.posts[i][1].title.substring(0, 65)}</b>
-                    {state.data.posts[i][1].title.length > 65 && (
-                      <span>...</span>
-                    )}
+                    <span style={{ fontWeight: "500" }}>
+                      {state.data.posts[i].title.substring(0, 65)}
+                    </span>
+                    {state.data.posts[i].title.length > 65 && <span>...</span>}
                     <br />
                     <div
                       style={{
@@ -164,13 +164,13 @@ export default function Stats() {
                         width:
                           Math.ceil(
                             100 *
-                              (state.data.posts[i][1].comments /
-                                state.data.posts[0][1].comments)
+                              (state.data.posts[i].comments /
+                                state.data.posts[0].comments)
                           ) + "%",
                         display: "inline-block",
                         border: "1px solid black",
                         borderRadius: "10px",
-                        backgroundColor: "dodgerblue",
+                        backgroundColor: "teal",
                         marginTop: "5px",
                       }}
                     >
@@ -185,7 +185,7 @@ export default function Stats() {
                             "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
                         }}
                       >
-                        {numToString(state.data.posts[i][1].comments)} comments
+                        {numToString(state.data.posts[i].comments)} comments
                       </div>
                     </div>
                   </div>
@@ -289,14 +289,7 @@ export default function Stats() {
                   MOST DISCUSSED NEWS POSTS
                 </span>
               </div>
-              <div className="centering">
-                <span style={{ fontSize: "13px" }}>
-                  Out of the Top (most upvoted) ~1000 posts that made r/All this
-                  month
-                </span>
-                <br />
-                <br />
-              </div>
+              <br />
               {postListDOM}
             </div>
           )}
