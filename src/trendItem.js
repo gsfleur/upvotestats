@@ -430,7 +430,6 @@ export default function TrendItem(props) {
                     style={{
                       width: "100%",
                       display: "inline-block",
-                      marginBottom: "5px",
                       fontSize: "13px",
                     }}
                   >
