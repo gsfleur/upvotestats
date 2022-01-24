@@ -83,13 +83,14 @@ export default function TrendItem(props) {
 
   // Determine whether to show image
   const loadableImg =
-    post.urlToImage != null &&
-    post.urlToImage !== "" &&
-    post.urlToImage !== "default" &&
-    post.urlToImage !== "self" &&
-    (post.source != null || post.urlToImage.includes("https")) &&
-    post.urlDest != null &&
-    props.showMedia;
+    (post.urlToImage != null &&
+      post.urlToImage !== "" &&
+      post.urlToImage !== "default" &&
+      post.urlToImage !== "self" &&
+      (post.source != null || post.urlToImage.includes("https")) &&
+      post.urlDest != null &&
+      props.showMedia) ||
+    post.isGallery;
 
   // DOM for "trending with" section
   let trendingWith = [];
@@ -194,7 +195,7 @@ export default function TrendItem(props) {
       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
       {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
       <a
-        className={props.getClass("searchLink2")}
+        className={props.getClass("searchLink")}
         href={"https://www.reddit.com/u/" + post.author}
         rel="noreferrer"
         target="_blank"
@@ -208,8 +209,11 @@ export default function TrendItem(props) {
   const threadLinkDOM = (
     <span>
       {isCollapsed() && (
-        <div className="postThreadLink">
-          <div className={props.getClass("postUpvotePercent")}>
+        <div className="postThreadLinkContainer">
+          <div
+            className={props.getClass("postThreadLink")}
+            style={{ float: "left" }}
+          >
             {Math.floor(
               (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes)
             )}
@@ -219,9 +223,13 @@ export default function TrendItem(props) {
             href={post.url}
             target="_blank"
             rel="noreferrer"
-            className={props.getClass("searchLink")}
+            className={
+              props.getClass("postThreadLink") +
+              " " +
+              props.getClass("searchLink")
+            }
+            style={{ float: "right" }}
             id="threadLink"
-            style={{ float: "right", fontSize: "13px" }}
           >
             View thread
           </a>
@@ -348,7 +356,7 @@ export default function TrendItem(props) {
             <div className={props.getClass("postRank")}>
               {postListDOMLength + 1} &bull;{" "}
               <a
-                className={props.getClass("searchLink")}
+                className={props.getClass("searchLink2")}
                 href={"https://www.reddit.com/r/" + post.subreddit}
                 rel="noreferrer"
                 target="_blank"
@@ -698,7 +706,7 @@ export default function TrendItem(props) {
               href={post.url}
               target="_blank"
               rel="noreferrer"
-              className={props.getClass("searchLink")}
+              className={props.getClass("searchLink2")}
             >
               {numToString(post.comments)} comments
             </a>

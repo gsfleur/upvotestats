@@ -56,12 +56,12 @@
   background-color: #00000004;
 }
 
-.postUpvotePercent {
-  float: left;
+.postThreadLink {
   font-size: 13px;
-  color: gray;
+  color: gainsboro;
+  font-weight: 400;
 }
-.postUpvotePercentLight {
+.postThreadLinkLight {
   color: #191919;
 }
 
@@ -142,7 +142,7 @@
 
 .postText {
   font-size: 13px;
-  color: silver;
+  color: gainsboro;
   margin-bottom: 2.5px;
 }
 .postTextLight {
@@ -167,13 +167,13 @@
 .postAuthor {
   font-size: 13px;
   margin-bottom: 2.5px;
-  color: silver;
+  color: gainsboro;
 }
 .postAuthorLight {
   color: #191919;
 }
 
-.postThreadLink {
+.postThreadLinkContainer {
   display: block;
   font-weight: 500;
   overflow: auto;
@@ -181,7 +181,7 @@
 }
 
 .postTrendWith {
-  color: silver;
+  color: gainsboro;
   border-radius: 10px;
   border: 1px solid #222222;
   padding: 5px;
@@ -201,7 +201,7 @@
   color: gray;
   overflow: hidden;
   height: 100%;
-  margin-bottom: 2.5px;
+  margin-bottom: 4px;
 }
 
 .postStats {

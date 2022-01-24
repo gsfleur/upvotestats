@@ -32,7 +32,7 @@
 .searchLink:link,
 .searchLink:visited {
   text-decoration: none;
-  color: gray;
+  color: gainsboro;
 }
 .searchLinkLight:link,
 .searchLinkLight:visited {
@@ -46,7 +46,7 @@
 .searchLink2:link,
 .searchLink2:visited {
   text-decoration: none;
-  color: silver;
+  color: gray;
 }
 .searchLink2Light:link,
 .searchLink2Light:visited {
