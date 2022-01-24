@@ -219,11 +219,11 @@ export default function Trends(props) {
    */
   function numToString(num) {
     return Math.abs(num) >= 1.0e9
-      ? (Math.abs(num) / 1.0e9).toFixed(0) + "B"
+      ? (Math.abs(num) / 1.0e9).toFixed(1) + "B"
       : Math.abs(num) >= 1.0e6
-      ? (Math.abs(num) / 1.0e6).toFixed(0) + "M"
+      ? (Math.abs(num) / 1.0e6).toFixed(1) + "M"
       : Math.abs(num) >= 1.0e3
-      ? (Math.abs(num) / 1.0e3).toFixed(0) + "K"
+      ? (Math.abs(num) / 1.0e3).toFixed(1) + "K"
       : Math.abs(num);
   }
 
