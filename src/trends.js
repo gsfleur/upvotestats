@@ -249,6 +249,12 @@ export default function Trends(props) {
         {state.sort !== category && (
           <button
             className={props.getClass("timeButton")}
+            style={{
+              borderBottom:
+                props.theme === "light"
+                  ? "1px solid silver"
+                  : "1px solid #222222",
+            }}
             onClick={() =>
               setState({
                 ...state,
@@ -330,10 +336,6 @@ export default function Trends(props) {
               <div
                 style={{
                   width: "90%",
-                  boxShadow:
-                    props.theme === "light"
-                      ? "0px 1px silver"
-                      : "0px 1px #222222",
                   marginBottom: "10px",
                 }}
               >
