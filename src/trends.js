@@ -329,12 +329,11 @@ export default function Trends(props) {
             <div className="centering">
               <div
                 style={{
-                  display: "block",
                   width: "90%",
-                  borderBottom:
+                  boxShadow:
                     props.theme === "light"
-                      ? "1px solid silver"
-                      : "1px solid #222222",
+                      ? "0px 1px silver"
+                      : "0px 1px #222222",
                   marginBottom: "10px",
                 }}
               >
