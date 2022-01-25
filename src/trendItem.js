@@ -217,7 +217,7 @@ export default function TrendItem(props) {
             {Math.floor(
               (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes)
             )}
-            % Upvoted
+            % upvoted
           </div>
           <a
             href={post.url}
