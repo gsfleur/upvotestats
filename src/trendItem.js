@@ -19,14 +19,17 @@ export default function TrendItem(props) {
     root: {
       "& .MuiNativeSelect-root": {
         border: "none",
+        "&:focus": {
+          backgroundColor: "transparent",
+        },
       },
       "& .MuiNativeSelect-select": {
         color: "transparent",
-        padding: "5px",
         fontSize: "13px",
-        height: "15px",
+        height: "20px",
         borderStyle: "hidden",
-        width: "0px",
+        width: "16px",
+        padding: "0px",
         "&:focus": {
           backgroundColor: "transparent",
         },
@@ -34,7 +37,6 @@ export default function TrendItem(props) {
       "& .MuiNativeSelect-icon": {
         color: props.theme === "light" ? "#191919" : "gray",
         fontSize: "large",
-        marginTop: "-3px",
       },
     },
   });
