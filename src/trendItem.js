@@ -2,7 +2,6 @@ import { useState } from "react";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import ReactHlsPlayer from "react-hls-player";
-import InputLabel from "@mui/material/InputLabel";
 import { InView } from "react-intersection-observer";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
