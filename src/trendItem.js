@@ -21,12 +21,12 @@ export default function TrendItem(props) {
         border: "none",
       },
       "& .MuiNativeSelect-select": {
-        color: "silver",
+        color: "transparent",
         padding: "5px",
         fontSize: "13px",
-        height: "0px",
+        height: "15px",
         borderStyle: "hidden",
-        width: "5px",
+        width: "0px",
         "&:focus": {
           backgroundColor: "transparent",
         },
@@ -34,7 +34,7 @@ export default function TrendItem(props) {
       "& .MuiNativeSelect-icon": {
         color: props.theme === "light" ? "#191919" : "gray",
         fontSize: "large",
-        marginTop: "4.5px",
+        marginTop: "-3px",
       },
     },
   });
