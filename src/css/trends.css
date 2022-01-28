@@ -104,8 +104,8 @@
   border-radius: 10px;
 }
 .blur {
-  filter: blur(10px);
   -webkit-filter: blur(10px);
+  filter: blur(10px);
 }
 
 .post {

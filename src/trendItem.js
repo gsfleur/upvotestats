@@ -2,6 +2,7 @@ import { useState } from "react";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import ReactHlsPlayer from "react-hls-player";
+import InputLabel from "@mui/material/InputLabel";
 import { InView } from "react-intersection-observer";
 import { makeStyles } from "@material-ui/core/styles";
 import NativeSelect from "@mui/material/NativeSelect";
@@ -168,7 +169,7 @@ export default function TrendItem(props) {
         >
           {destLink}
           <img
-            id="threadLink"
+            id={"outLink" + i}
             src="outbound.png"
             alt={"outbound icon"}
             width="13px"
@@ -231,7 +232,7 @@ export default function TrendItem(props) {
               props.getClass("searchLink")
             }
             style={{ float: "right" }}
-            id="threadLink"
+            id={"threadLink" + i}
           >
             View thread
           </a>
@@ -322,12 +323,14 @@ export default function TrendItem(props) {
         if (
           !e.target.className.includes("postImgStandard") &&
           !e.target.className.includes("postVideoStandard") &&
+          !e.target.className.includes("postOutLink") &&
           !e.target.className.includes("searchLink") &&
           !e.target.className.includes("searchLink2") &&
           !e.target.className.includes("iconImg") &&
           !e.target.className.includes("nextButton") &&
           !e.target.id.includes("report") &&
-          e.target.id !== "threadLink" &&
+          !e.target.id.includes("threadLink") &&
+          !e.target.id.includes("outLink") &&
           !props.collapsedAll
         )
           setState({ ...state, collapsed: isCollapsed() ? false : true });
@@ -367,6 +370,9 @@ export default function TrendItem(props) {
               </a>{" "}
               &bull; {numToString(post.upvotes)} &uarr;
               <div style={{ float: "right", display: "inline-block" }}>
+                <label for={"report-" + postListDOMLength} hidden>
+                  Settings:
+                </label>
                 <NativeSelect
                   disableUnderline
                   className={classes.root}
