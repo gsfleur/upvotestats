@@ -283,14 +283,14 @@
   max-width: 120px;
   height: 20px;
   text-align: center;
-  padding: 9px 4px 4px 4px;
+  padding: 10px 4px 4px 4px;
 }
 .nextButtonLight {
-  color: gray;
+  color: #191919;
   border: 1px solid silver;
 }
 .nextButton:hover {
-  color: dodgerblue;
+  border: 1px solid dodgerblue;
 }
 
 .galleryNumber {
@@ -298,14 +298,14 @@
   margin-right: 10px;
   border: 1px solid #222222;
   border-radius: 10px;
-  padding: 9px 4px 4px 4px;
+  padding: 10px 4px 4px 4px;
   font-size: 11px;
   width: 60px;
   text-align: center;
   color: silver;
 }
 .galleryNumberLight {
-  color: gray;
+  color: #191919;
   border: 1px solid silver;
 }
 
