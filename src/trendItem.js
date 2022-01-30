@@ -85,14 +85,14 @@ export default function TrendItem(props) {
 
   // Determine whether to show image
   const loadableImg =
-    (post.urlToImage != null &&
+    ((post.urlToImage != null &&
       post.urlToImage !== "" &&
       post.urlToImage !== "default" &&
       post.urlToImage !== "self" &&
       (post.source != null || post.urlToImage.includes("https")) &&
-      post.urlDest != null &&
-      props.showMedia) ||
-    post.isGallery;
+      post.urlDest != null) ||
+      post.isGallery) &&
+    props.showMedia;
 
   // DOM for "trending with" section
   let trendingWith = [];
