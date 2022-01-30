@@ -144,6 +144,7 @@ export default function Trends(props) {
         if (posts[i].author === "[deleted]") continue;
         if (posts[i].isCrossPost) continue;
         if (posts[i].subreddit.startsWith("u_")) continue;
+        if (posts[i].comments < 3) continue;
         if (posts[i].trends.length < 3) continue;
         if (postLinks.includes(posts[i].url)) continue;
 
