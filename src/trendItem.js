@@ -57,8 +57,8 @@ export default function TrendItem(props) {
   const firstDate = new Date(post.publishedAt);
   const secondDate = new Date();
   const diffDays = Math.round(Math.abs((firstDate - secondDate) / timeInDay));
-  const hours = Math.floor(Math.abs(firstDate - secondDate) / (60 * 60 * 1000));
-  const minutes = Math.floor(Math.abs(firstDate - secondDate) / (60 * 1000));
+  const hours = Math.round(Math.abs(firstDate - secondDate) / (60 * 60 * 1000));
+  const minutes = Math.round(Math.abs(firstDate - secondDate) / (60 * 1000));
 
   // Adding blur to posts with images that are NSFW/Spoiler
   let blurred = false;
@@ -195,7 +195,7 @@ export default function TrendItem(props) {
       {hours === 0 && <span>{minutes} min</span>}
       {hours < 24 && hours > 0 && <span>{hours}h</span>}
       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
-      {diffDays >= 7 && <span>{Math.floor(diffDays / 7)}w</span>} ago by{" "}
+      {diffDays >= 7 && <span>{Math.round(diffDays / 7)}w</span>} ago by{" "}
       <a
         className={props.getClass("searchLink")}
         href={"https://www.reddit.com/u/" + post.author}
@@ -216,7 +216,7 @@ export default function TrendItem(props) {
             className={props.getClass("postThreadLink")}
             style={{ float: "left" }}
           >
-            {Math.floor(
+            {Math.round(
               (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes)
             )}
             % upvoted
@@ -492,7 +492,7 @@ export default function TrendItem(props) {
                       {hours < 24 && hours > 0 && <span>{hours}h</span>}
                       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
                       {diffDays >= 7 && (
-                        <span>{Math.floor(diffDays / 7)}w</span>
+                        <span>{Math.round(diffDays / 7)}w</span>
                       )}
                     </div>
                   </div>
