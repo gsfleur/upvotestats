@@ -284,6 +284,7 @@
   height: 20px;
   text-align: center;
   padding: 10px 4px 4px 4px;
+  user-select: none;
 }
 .nextButtonLight {
   color: #191919;
