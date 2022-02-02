@@ -20,6 +20,9 @@
   margin-right: 15px;
   font-size: 16px;
 }
+.menuButton:hover {
+  color: gainsboro;
+}
 
 .backToTopButton {
   right: 0;
