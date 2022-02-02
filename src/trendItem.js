@@ -702,13 +702,11 @@ export default function TrendItem(props) {
         },
         "& .MuiNativeSelect-icon": {
           color: reportState.hover
-            ? "white"
+            ? "dodgerblue"
             : props.theme === "light"
             ? "#191919"
             : "gray",
           fontSize: "large",
-          background: reportState.hover ? "dodgerblue" : "transparent",
-          borderRadius: "50%",
         },
       },
     });
