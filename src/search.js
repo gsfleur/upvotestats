@@ -6,6 +6,7 @@ import { saveAs } from "file-saver";
 import { topReddits } from "./topReddits";
 import { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 // Top Reddit Communities
@@ -275,6 +276,18 @@ export default function Search(props) {
     }
   }
 
+  // Dropdown menu styling
+  const useStyles = makeStyles({
+    root: {
+      "& .PrivateNotchedOutline-root-6": {
+        border: "1px solid rgb(0,0,0,0.1)",
+      },
+    },
+  });
+
+  // Material UI Styling
+  const classes = useStyles();
+
   return (
     <div>
       <div className="centering">
@@ -319,7 +332,8 @@ export default function Search(props) {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Search upvote data for any subreddit"
+                className={classes.root}
+                label="Search statistics for any subreddit"
                 margin="normal"
                 variant="outlined"
               />
