@@ -55,7 +55,7 @@
 .headerLight {
   background: white;
   color: #191919;
-  border: 1px solid silver;
+  border: 1px solid rgb(0, 0, 0, 0.1);
 }
 
 .twoColumn {

@@ -15,7 +15,7 @@
 .trendsLight {
   background-color: white;
   color: #191919;
-  border: 1px solid silver;
+  border: 1px solid rgb(0, 0, 0, 0.1);
   border-top: none;
 }
 
@@ -91,7 +91,7 @@
   background-color: #22222239;
 }
 .imgBodyLight {
-  border: 1px solid silver;
+  border: 1px solid rgb(0, 0, 0, 0.1);
 }
 .imgBodyLight:hover {
   background-color: #00000008;
@@ -191,7 +191,7 @@
 }
 .postTrendWithLight {
   color: #191919;
-  border: 1px solid silver;
+  border: 1px solid rgb(0, 0, 0, 0.1);
 }
 
 .postTrendWithLoc {

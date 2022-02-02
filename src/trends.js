@@ -334,7 +334,7 @@ export default function Trends(props) {
                   marginBottom: "10px",
                   boxShadow:
                     props.theme === "light"
-                      ? "inset 0 -1px 0 silver"
+                      ? "inset 0 -1px 0 rgb(0,0,0,0.1)"
                       : "inset 0 -1px 0 #222222",
                 }}
               >

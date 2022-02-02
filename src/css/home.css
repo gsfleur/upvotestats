@@ -19,7 +19,7 @@
 }
 .homeCardsLight {
   background: white;
-  border: 1px solid silver;
+  border: 1px solid rgb(0, 0, 0, 0.1);
 }
 .homeCardsLight:hover {
   background: whitesmoke;
