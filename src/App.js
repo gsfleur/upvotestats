@@ -27,10 +27,13 @@ const Search = lazy(() => import("./search"));
 // Material UI Styling
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    "& .MuiToolbar-regular": {
+      height: "48px",
+      minHeight: "48px",
+    },
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
     color: "white",
   },
   title: {
@@ -70,6 +73,7 @@ export default function App() {
       <div>
         <AppBar
           position="static"
+          className={classes.root}
           style={{
             borderBottom: "1px solid #222222",
             background: theme === "dark" ? "#0a0a0a" : "#191919",
