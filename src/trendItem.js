@@ -14,36 +14,6 @@ export default function TrendItem(props) {
     viewed: false,
   });
 
-  // Dropdown menu styling
-  const useStyles = makeStyles({
-    root: {
-      "& .MuiNativeSelect-root": {
-        border: "none",
-        "&:focus": {
-          backgroundColor: "transparent",
-        },
-      },
-      "& .MuiNativeSelect-select": {
-        color: "transparent",
-        fontSize: "13px",
-        height: "20px",
-        borderStyle: "hidden",
-        width: "16px",
-        padding: "0px",
-        "&:focus": {
-          backgroundColor: "transparent",
-        },
-      },
-      "& .MuiNativeSelect-icon": {
-        color: props.theme === "light" ? "#191919" : "gray",
-        fontSize: "large",
-      },
-    },
-  });
-
-  // Material UI Styling
-  const classes = useStyles();
-
   // read only variables from props
   const i = props.index;
   const post = props.post;
@@ -367,30 +337,8 @@ export default function TrendItem(props) {
               >
                 {post.subName}
               </a>{" "}
-              &bull; {numToString(post.upvotes)} &uarr;
-              <div style={{ float: "right", display: "inline-block" }}>
-                <label for={"report-" + postListDOMLength} hidden>
-                  Settings:
-                </label>
-                <NativeSelect
-                  disableUnderline
-                  className={classes.root}
-                  id={"report-" + postListDOMLength}
-                  onChange={props.handleReport}
-                  IconComponent={MoreHorizIcon}
-                  defaultValue="default"
-                >
-                  <option value="default" hidden disabled>
-                    Not interested?
-                  </option>
-                  <option value={"interest"} style={{ color: "black" }}>
-                    Hide this post
-                  </option>
-                  <option value={"report"} style={{ color: "black" }}>
-                    Report this post
-                  </option>
-                </NativeSelect>
-              </div>
+              &bull; {numToString(post.upvotes)} &uarr;{" "}
+              <Report theme={props.theme} handleReport={props.handleReport} />
             </div>
 
             {/* Main Trend associated with post */}
@@ -723,6 +671,79 @@ export default function TrendItem(props) {
       </div>
     </div>
   );
+
+  /**
+   * Report mui icon DOM for posts
+   * @param {*} props props to pass (theme and handleReport)
+   * @returns dom for report icon
+   */
+  function Report(props) {
+    const [reportState, setReportState] = useState({ hover: false });
+
+    // Dropdown menu styling
+    const useStyles = makeStyles({
+      root: {
+        "& .MuiNativeSelect-root": {
+          border: "none",
+          "&:focus": {
+            backgroundColor: "transparent",
+          },
+        },
+        "& .MuiNativeSelect-select": {
+          color: "transparent",
+          fontSize: "13px",
+          height: "20px",
+          borderStyle: "hidden",
+          width: "16px",
+          padding: "0px",
+          "&:focus": {
+            backgroundColor: "transparent",
+          },
+        },
+        "& .MuiNativeSelect-icon": {
+          color: reportState.hover
+            ? "white"
+            : props.theme === "light"
+            ? "#191919"
+            : "gray",
+          fontSize: "large",
+          background: reportState.hover ? "dodgerblue" : "transparent",
+          borderRadius: "50%",
+        },
+      },
+    });
+
+    // Material UI Styling
+    const classes = useStyles();
+
+    return (
+      <div style={{ float: "right", display: "inline-block" }}>
+        <label htmlFor={"report-" + postListDOMLength} hidden>
+          Settings:
+        </label>
+        <NativeSelect
+          disableUnderline
+          className={classes.root}
+          id={"report-" + postListDOMLength}
+          onChange={props.handleReport}
+          IconComponent={MoreHorizIcon}
+          defaultValue="default"
+          onMouseEnter={() => setReportState({ hover: true })}
+          onMouseLeave={() => setReportState({ hover: false })}
+        >
+          <option value="default" hidden disabled>
+            Not interested?
+          </option>
+          <option value={"interest"} style={{ color: "black" }}>
+            Hide this post
+          </option>
+          <option value={"report"} style={{ color: "black" }}>
+            Report this post
+          </option>
+        </NativeSelect>
+      </div>
+    );
+  }
 
   /**
    * Determine whether post is collapsed
