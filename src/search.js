@@ -279,7 +279,7 @@ export default function Search(props) {
   // Dropdown menu styling
   const useStyles = makeStyles({
     root: {
-      "& .PrivateNotchedOutline-root-6": {
+      "& .MuiOutlinedInput-notchedOutline": {
         border: "1px solid rgb(0,0,0,0.1)",
       },
     },
