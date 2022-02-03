@@ -100,6 +100,10 @@ export default function TrendItem(props) {
     ? post.urlToImage
     : post.source;
 
+  // Missing Image
+  const missingImg =
+    props.theme === "light" ? "missingLight.png" : "missing.png";
+
   // Image thumbnail
   const thumbnail = (
     <img
@@ -112,7 +116,7 @@ export default function TrendItem(props) {
       }}
       onError={(e) => {
         e.target.onerror = null;
-        e.target.src = "missing.png";
+        e.target.src = missingImg;
       }}
     />
   );
@@ -151,7 +155,7 @@ export default function TrendItem(props) {
             }}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "missing.png";
+              e.target.src = missingImg;
             }}
           />
         </a>
@@ -413,7 +417,7 @@ export default function TrendItem(props) {
                         alt={post.author + " icon"}
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = "missing.png";
+                          e.target.src = missingImg;
                         }}
                       />
                     </a>
@@ -539,7 +543,7 @@ export default function TrendItem(props) {
                                 }}
                                 onError={(e) => {
                                   e.target.onerror = null;
-                                  e.target.src = "missing.png";
+                                  e.target.src = missingImg;
                                 }}
                               />
                             </div>

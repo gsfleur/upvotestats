@@ -634,7 +634,10 @@ export default function Trends(props) {
                 >
                   <div
                     style={{
-                      border: "1.5px solid #222222",
+                      border:
+                        props.theme === "light"
+                          ? "1px solid rgb(0,0,0,0.1)"
+                          : "1px solid #222222",
                       borderRadius: "20px",
                     }}
                   >

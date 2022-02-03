@@ -23,7 +23,7 @@ export default function Footer(props) {
   }
 
   // Current and opposite theme
-  const theme = props.theme === "light" ? "DARK THEME" : "LIGHT THEME";
+  const theme = props.theme === "light" ? "DARK MODE" : "LIGHT MODE";
   const nextTheme = props.theme === "light" ? "dark" : "light";
 
   // Links in the footer
