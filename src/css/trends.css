@@ -43,7 +43,7 @@
   color: gainsboro;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  transition: opacity 0.2s, background-color 0.2s ease;
+  transition: opacity 0.5s, background-color 0.2s ease;
   opacity: 1;
 }
 .postLinkLight {
