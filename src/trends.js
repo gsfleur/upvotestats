@@ -41,9 +41,6 @@ export default function Trends(props) {
         // Names of all categories
         const categories = ["all", "news", "funny", "sports"];
 
-        // Date when starting request
-        const beforeDate = new Date();
-
         // Loading all category data from backend
         await Promise.all(
           categories.map(async (category) => {
@@ -64,19 +61,13 @@ export default function Trends(props) {
           })
         );
 
-        // Date after request is finished
-        const afterDate = new Date();
-
         // Update state
         if (componentMounted) {
-          // Delay so load keyshine can complete one full pass (looks smoother/cleaner)
-          setTimeout(() => {
-            setState({
-              ...state,
-              loaded: true,
-              data: state[state.sort + "Data"],
-            });
-          }, Math.min(500, Math.max(0, 500 - (afterDate - beforeDate))));
+          setState({
+            ...state,
+            loaded: true,
+            data: state[state.sort + "Data"],
+          });
         }
       })();
     }
@@ -138,7 +129,7 @@ export default function Trends(props) {
     const posts = state.data.posts;
     // Creating DOM for posts
     if (posts != null) {
-      for (let i = 0; i < posts.length && postListDOM.length < 30; i++) {
+      for (let i = 0; i < posts.length; i++) {
         // Skip deleted, cross, or duped posts
         if (posts[i].text === "[deleted]") continue;
         if (posts[i].author === "[deleted]") continue;

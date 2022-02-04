@@ -287,6 +287,24 @@ export default function TrendItem(props) {
     streamableLink = "https://streamable.com/e/" + parts[parts.length - 1];
   }
 
+  // Load empty div if post is not within viewport
+  if (!state.viewed) {
+    return (
+      <div>
+        <InView
+          as="div"
+          threshold={0.01}
+          onChange={(inView) => {
+            // Load post once in viewing range
+            if (inView && !state.viewed) setState({ ...state, viewed: true });
+          }}
+        >
+          <div style={{ height: "200px" }}></div>
+        </InView>
+      </div>
+    );
+  }
+
   // DOM of trend item
   return (
     <div
@@ -310,368 +328,350 @@ export default function TrendItem(props) {
       }}
     >
       <div className={props.getClass("postLink")} id={"trends-" + i}>
-        <InView
-          as="div"
-          threshold={0.01}
-          onChange={(inView, entry) => {
-            let elm = document.getElementById("trends-" + i);
-            if (inView) {
-              elm.style.opacity = "1";
-              state.viewed = true;
-            } else if (!state.viewed) {
-              elm.style.opacity = "0";
-            }
+        <div
+          style={{
+            display: "block",
+            overflow: "hidden",
+            width: "100%",
           }}
         >
-          <div
-            style={{
-              display: "block",
-              overflow: "hidden",
-              width: "100%",
-            }}
-          >
-            {/* Post rank, subreddit name, and options button */}
-            <div className={props.getClass("postRank")}>
-              {postListDOMLength + 1} &bull;{" "}
-              <a
-                className={props.getClass("searchLink2")}
-                href={"https://www.reddit.com/r/" + post.subreddit}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {post.subName}
-              </a>{" "}
-              &bull; {numToString(post.upvotes)} &uarr;{" "}
-              <Report theme={props.theme} handleReport={props.handleReport} />
-            </div>
-
-            {/* Main Trend associated with post */}
-            <div className="postTrend">
-              <b>{post.trends.length > 0 ? post.trends[0] : post.subName}</b>
-            </div>
-
-            {/* Post title, if no image */}
-            {!loadableImg && (
-              <div
-                className={props.getClass("postTitle")}
-                style={{ width: "100%" }}
-              >
-                {markdown(postTitle, props)}
-              </div>
-            )}
-
-            {/* Post text if available */}
-            {post.text.length > 0 && (
-              <div className={props.getClass("postText")}>
-                {!isCollapsed() && (
-                  <div className="limitText4">
-                    {post.spoiler
-                      ? markdown("Text hidden... [click to read more]", props)
-                      : markdown(postText, props)}
-                  </div>
-                )}
-                {isCollapsed() && <div>{markdown(postText, props)}</div>}
-              </div>
-            )}
-            {!loadableImg && (
-              <span>
-                {outLinkDOM}
-                {author}
-                {threadLinkDOM}
-              </span>
-            )}
+          {/* Post rank, subreddit name, and options button */}
+          <div className={props.getClass("postRank")}>
+            {postListDOMLength + 1} &bull;{" "}
+            <a
+              className={props.getClass("searchLink2")}
+              href={"https://www.reddit.com/r/" + post.subreddit}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {post.subName}
+            </a>{" "}
+            &bull; {numToString(post.upvotes)} &uarr;{" "}
+            <Report theme={props.theme} handleReport={props.handleReport} />
           </div>
 
-          {/* Post with image */}
-          {loadableImg && (
-            <div className={props.getClass("imgBodyContainer")}>
-              <div
-                style={{
-                  position: "relative",
-                  height: "100%",
-                }}
-              >
-                <div className={props.getClass("imgBody")}>
-                  {/* Post author name, icon and creation date */}
+          {/* Main Trend associated with post */}
+          <div className="postTrend">
+            <b>{post.trends.length > 0 ? post.trends[0] : post.subName}</b>
+          </div>
+
+          {/* Post title, if no image */}
+          {!loadableImg && (
+            <div
+              className={props.getClass("postTitle")}
+              style={{ width: "100%" }}
+            >
+              {markdown(postTitle, props)}
+            </div>
+          )}
+
+          {/* Post text if available */}
+          {post.text.length > 0 && (
+            <div className={props.getClass("postText")}>
+              {!isCollapsed() && (
+                <div className="limitText4">
+                  {post.spoiler
+                    ? markdown("Text hidden... [click to read more]", props)
+                    : markdown(postText, props)}
+                </div>
+              )}
+              {isCollapsed() && <div>{markdown(postText, props)}</div>}
+            </div>
+          )}
+          {!loadableImg && (
+            <span>
+              {outLinkDOM}
+              {author}
+              {threadLinkDOM}
+            </span>
+          )}
+        </div>
+
+        {/* Post with image */}
+        {loadableImg && (
+          <div className={props.getClass("imgBodyContainer")}>
+            <div
+              style={{
+                position: "relative",
+                height: "100%",
+              }}
+            >
+              <div className={props.getClass("imgBody")}>
+                {/* Post author name, icon and creation date */}
+                <div
+                  style={{
+                    width: "100%",
+                    display: "inline-block",
+                    fontSize: "13px",
+                    marginBottom: !isCollapsed() ? "5px" : "0px",
+                  }}
+                >
+                  <a
+                    href={"https://www.reddit.com/u/" + post.author}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <img
+                      className="iconImg"
+                      src={
+                        post.icon !== ""
+                          ? post.icon
+                          : "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
+                      }
+                      loading="lazy"
+                      alt={post.author + " icon"}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = missingImg;
+                      }}
+                    />
+                  </a>
                   <div
                     style={{
-                      width: "100%",
-                      display: "inline-block",
-                      fontSize: "13px",
-                      marginBottom: !isCollapsed() ? "5px" : "0px",
+                      float: "left",
+                      marginTop: "5.5px",
+                      marginBottom: "5.5px",
+                      marginLeft: "5px",
                     }}
                   >
                     <a
+                      className={props.getClass("searchLink2")}
                       href={"https://www.reddit.com/u/" + post.author}
                       rel="noreferrer"
                       target="_blank"
-                    >
-                      <img
-                        className="iconImg"
-                        src={
-                          post.icon !== ""
-                            ? post.icon
-                            : "https://www.redditstatic.com/avatars/defaults/v2/avatar_default_2.png"
-                        }
-                        loading="lazy"
-                        alt={post.author + " icon"}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = missingImg;
-                        }}
-                      />
-                    </a>
-                    <div
                       style={{
-                        float: "left",
-                        marginTop: "5.5px",
-                        marginBottom: "5.5px",
-                        marginLeft: "5px",
+                        color:
+                          props.theme === "light" ? "#191919" : "gainsboro",
                       }}
                     >
-                      <a
-                        className={props.getClass("searchLink2")}
-                        href={"https://www.reddit.com/u/" + post.author}
-                        rel="noreferrer"
-                        target="_blank"
-                        style={{
-                          color:
-                            props.theme === "light" ? "#191919" : "gainsboro",
-                        }}
-                      >
-                        {post.author}
-                      </a>{" "}
-                      &bull; {hours === 0 && <span>{minutes} min</span>}
-                      {hours < 24 && hours > 0 && <span>{hours}h</span>}
-                      {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
-                      {diffDays >= 7 && (
-                        <span>{Math.round(diffDays / 7)}w</span>
-                      )}
-                    </div>
+                      {post.author}
+                    </a>{" "}
+                    &bull; {hours === 0 && <span>{minutes} min</span>}
+                    {hours < 24 && hours > 0 && <span>{hours}h</span>}
+                    {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
+                    {diffDays >= 7 && <span>{Math.round(diffDays / 7)}w</span>}
                   </div>
+                </div>
 
-                  {/* Collapsed post with image */}
-                  {isCollapsed() && (
-                    <span>
-                      <div
-                        className={props.getClass("postTitle")}
-                        style={{ width: "100%" }}
-                      >
-                        {markdown(postTitle, props)}
-                      </div>
-                      <div style={{ width: "100%" }}>
-                        {outLinkDOM}
-                        {threadLinkDOM}
-                      </div>
-                      <div
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                        }}
-                      >
-                        {/* Post is not a video */}
-                        {!post.isVideo && !streamable && (
-                          <span>
-                            {/* Post is a gallery with multiple images */}
-                            {post.isGallery && (
+                {/* Collapsed post with image */}
+                {isCollapsed() && (
+                  <span>
+                    <div
+                      className={props.getClass("postTitle")}
+                      style={{ width: "100%" }}
+                    >
+                      {markdown(postTitle, props)}
+                    </div>
+                    <div style={{ width: "100%" }}>
+                      {outLinkDOM}
+                      {threadLinkDOM}
+                    </div>
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      {/* Post is not a video */}
+                      {!post.isVideo && !streamable && (
+                        <span>
+                          {/* Post is a gallery with multiple images */}
+                          {post.isGallery && (
+                            <div
+                              className="centering"
+                              style={{
+                                marginBottom: "10px",
+                                marginTop: "10px",
+                              }}
+                            >
                               <div
-                                className="centering"
-                                style={{
-                                  marginBottom: "10px",
-                                  marginTop: "10px",
+                                className={props.getClass("nextButton")}
+                                onClick={() => {
+                                  let currIndex = post.galleryItem;
+                                  // getting next index for gallery item
+                                  post.galleryItem = Math.max(
+                                    0,
+                                    post.galleryItem - 1
+                                  );
+                                  // if index changed, update
+                                  if (currIndex !== post.galleryItem) {
+                                    setState({
+                                      ...state,
+                                    });
+                                  }
                                 }}
                               >
-                                <div
-                                  className={props.getClass("nextButton")}
-                                  onClick={() => {
-                                    let currIndex = post.galleryItem;
-                                    // getting next index for gallery item
-                                    post.galleryItem = Math.max(
-                                      0,
-                                      post.galleryItem - 1
-                                    );
-                                    // if index changed, update
-                                    if (currIndex !== post.galleryItem) {
-                                      setState({
-                                        ...state,
-                                      });
-                                    }
-                                  }}
-                                >
-                                  Prev
-                                </div>
-                                <div
-                                  className={props.getClass("galleryNumber")}
-                                >
-                                  {post.galleryItem + 1}
-                                  &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
-                                  {post.mediaMetadata.length}
-                                </div>
-                                <div
-                                  className={props.getClass("nextButton")}
-                                  onClick={() => {
-                                    let currIndex = post.galleryItem;
-                                    // getting next index for gallery item
-                                    post.galleryItem = Math.min(
-                                      post.mediaMetadata.length - 1,
-                                      post.galleryItem + 1
-                                    );
-                                    // if index changed, update
-                                    if (currIndex !== post.galleryItem) {
-                                      setState({
-                                        ...state,
-                                      });
-                                    }
-                                  }}
-                                >
-                                  Next
-                                </div>
+                                Prev
                               </div>
-                            )}
-                            {/* Post image */}
-                            <div className="centering">
-                              <img
-                                src={imgSource}
-                                className="postImgStandard"
-                                alt="Reddit Post Thumbnail"
-                                loading="lazy"
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  maxHeight: "50vh",
-                                  objectFit: "contain",
+                              <div className={props.getClass("galleryNumber")}>
+                                {post.galleryItem + 1}
+                                &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
+                                {post.mediaMetadata.length}
+                              </div>
+                              <div
+                                className={props.getClass("nextButton")}
+                                onClick={() => {
+                                  let currIndex = post.galleryItem;
+                                  // getting next index for gallery item
+                                  post.galleryItem = Math.min(
+                                    post.mediaMetadata.length - 1,
+                                    post.galleryItem + 1
+                                  );
+                                  // if index changed, update
+                                  if (currIndex !== post.galleryItem) {
+                                    setState({
+                                      ...state,
+                                    });
+                                  }
                                 }}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = missingImg;
-                                }}
-                              />
+                              >
+                                Next
+                              </div>
                             </div>
-                          </span>
-                        )}
-                        {/* Post video */}
-                        {post.isVideo && (
-                          <InView
-                            as="div"
-                            threshold={0.3}
-                            onChange={(inView, entry) => {
-                              let video = document.getElementById("video" + i);
-                              if (inView) video.play();
-                              else video.pause();
-                            }}
-                          >
-                            <div className="centering">
-                              <ReactHlsPlayer
-                                src={post.media}
-                                muted={true}
-                                controls={true}
-                                loop={true}
-                                width="100%"
-                                id={"video" + i}
-                                className="postVideoStandard"
-                                height="100%"
-                                poster={post.source}
-                                webkit-playsinline="true"
-                                playsInline={true}
-                              />
-                            </div>
-                          </InView>
-                        )}
-                        {/* Post is a streamable.com video */}
-                        {streamable && (
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "0px",
-                              position: "relative",
-                              paddingBottom: "56.250%",
-                            }}
-                          >
-                            <iframe
-                              src={streamableLink}
-                              frameBorder="0"
-                              width="100%"
-                              height="100%"
-                              allowFullScreen
-                              title={post.title + "-streamable-" + i}
+                          )}
+                          {/* Post image */}
+                          <div className="centering">
+                            <img
+                              src={imgSource}
+                              className="postImgStandard"
+                              alt="Reddit Post Thumbnail"
+                              loading="lazy"
                               style={{
                                 width: "100%",
                                 height: "100%",
-                                position: "absolute",
+                                maxHeight: "50vh",
+                                objectFit: "contain",
                               }}
-                            ></iframe>
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = missingImg;
+                              }}
+                            />
                           </div>
-                        )}
-                      </div>
-                    </span>
-                  )}
-
-                  {/* Un-collapsed post with thumbnail */}
-                  {!isCollapsed() && (
-                    <span>
-                      {!blurred && <span>{thumbnail}</span>}
-                      {blurred && (
-                        <div className="blurOuter">
-                          <div className="blur">{thumbnail}</div>
+                        </span>
+                      )}
+                      {/* Post video */}
+                      {post.isVideo && (
+                        <InView
+                          as="div"
+                          threshold={0.3}
+                          onChange={(inView, entry) => {
+                            let video = document.getElementById("video" + i);
+                            if (inView) video.play();
+                            else video.pause();
+                          }}
+                        >
+                          <div className="centering">
+                            <ReactHlsPlayer
+                              src={post.media}
+                              muted={true}
+                              controls={true}
+                              loop={true}
+                              width="100%"
+                              id={"video" + i}
+                              className="postVideoStandard"
+                              height="100%"
+                              poster={post.source}
+                              webkit-playsinline="true"
+                              playsInline={true}
+                            />
+                          </div>
+                        </InView>
+                      )}
+                      {/* Post is a streamable.com video */}
+                      {streamable && (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "0px",
+                            position: "relative",
+                            paddingBottom: "56.250%",
+                          }}
+                        >
+                          <iframe
+                            src={streamableLink}
+                            frameBorder="0"
+                            width="100%"
+                            height="100%"
+                            allowFullScreen
+                            title={post.title + "-streamable-" + i}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              position: "absolute",
+                            }}
+                          ></iframe>
                         </div>
                       )}
-                      <div
-                        className={props.getClass("postTitle")}
-                        style={{
-                          float: "left",
-                          marginLeft: "10px",
-                        }}
-                      >
-                        <span className="limitText3">
-                          {markdown(postTitle, props)}
-                        </span>
+                    </div>
+                  </span>
+                )}
+
+                {/* Un-collapsed post with thumbnail */}
+                {!isCollapsed() && (
+                  <span>
+                    {!blurred && <span>{thumbnail}</span>}
+                    {blurred && (
+                      <div className="blurOuter">
+                        <div className="blur">{thumbnail}</div>
                       </div>
-                      <div
-                        style={{
-                          float: "left",
-                          marginLeft: "10px",
-                        }}
-                      >
-                        {outLinkDOM}
-                      </div>
-                    </span>
-                  )}
-                </div>
+                    )}
+                    <div
+                      className={props.getClass("postTitle")}
+                      style={{
+                        float: "left",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      <span className="limitText3">
+                        {markdown(postTitle, props)}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        float: "left",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      {outLinkDOM}
+                    </div>
+                  </span>
+                )}
               </div>
             </div>
-          )}
-
-          {/* Section for other trending phrases */}
-          {trends.length > 1 && (
-            <div
-              className="postTrendWithLoc"
-              style={{
-                maxHeight: isCollapsed() ? "65px" : "30px",
-                paddingTop: loadableImg ? "10px" : "5px",
-              }}
-            >
-              {trendingWith}
-            </div>
-          )}
-
-          {/* Post statistics */}
-          <div className={props.getClass("postStats")}>
-            {post.awards > 0 && (
-              <span>
-                {numToString(post.coins)} coins &bull;{" "}
-                {numToString(post.awards)} awards &bull;{" "}
-              </span>
-            )}
-            <a
-              href={post.url}
-              target="_blank"
-              rel="noreferrer"
-              className={props.getClass("searchLink2")}
-            >
-              {numToString(post.comments)} comments
-            </a>
           </div>
-        </InView>
+        )}
+
+        {/* Section for other trending phrases */}
+        {trends.length > 1 && (
+          <div
+            className="postTrendWithLoc"
+            style={{
+              maxHeight: isCollapsed() ? "65px" : "30px",
+              paddingTop: loadableImg ? "10px" : "5px",
+            }}
+          >
+            {trendingWith}
+          </div>
+        )}
+
+        {/* Post statistics */}
+        <div className={props.getClass("postStats")}>
+          {post.awards > 0 && (
+            <span>
+              {numToString(post.coins)} coins &bull; {numToString(post.awards)}{" "}
+              awards &bull;{" "}
+            </span>
+          )}
+          <a
+            href={post.url}
+            target="_blank"
+            rel="noreferrer"
+            className={props.getClass("searchLink2")}
+          >
+            {numToString(post.comments)} comments
+          </a>
+        </div>
       </div>
     </div>
   );
