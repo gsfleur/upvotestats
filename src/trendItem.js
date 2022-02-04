@@ -295,7 +295,7 @@ export default function TrendItem(props) {
       <div>
         <InView
           as="div"
-          threshold={0.01}
+          threshold={0}
           onChange={(inView) => {
             // Load post once in viewing range
             if (inView && !state.viewed) setState({ ...state, viewed: true });
@@ -311,7 +311,7 @@ export default function TrendItem(props) {
   return (
     <InView
       as="div"
-      threshold={0.01}
+      threshold={0}
       onChange={(inView) => {
         if (inView && state.viewed) {
           state.views++;
