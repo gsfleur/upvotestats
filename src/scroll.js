@@ -26,9 +26,9 @@ export default function Scroll() {
           (window.innerHeight + window.pageYOffset) /
           window.document.body.scrollHeight;
         if (
-          scrolledPercent >= 0.6 &&
+          scrolledPercent >= 0.2 &&
           window.document.body.scrollHeight > 2000 &&
-          window.innerWidth >= 800
+          window.innerWidth > 600
         ) {
           document.getElementById("backToTop").style.display = "inline";
         } else {
