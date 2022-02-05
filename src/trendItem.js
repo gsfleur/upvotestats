@@ -718,7 +718,6 @@ export default function TrendItem(props) {
         "& .MuiNativeSelect-select": {
           color: "transparent",
           fontSize: "13px",
-          height: "20px",
           borderStyle: "hidden",
           width: "16px",
           padding: "0px",

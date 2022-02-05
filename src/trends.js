@@ -341,7 +341,9 @@ export default function Trends(props) {
                 style={{
                   color: "gainsboro",
                   width: "90%",
-                  overflowX: "auto",
+                  overflowX: "scroll",
+                  overflowY: "hidden",
+                  height: "24px",
                 }}
               >
                 <div
