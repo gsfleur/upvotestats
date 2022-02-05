@@ -365,7 +365,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "5%",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       Sort
@@ -373,6 +376,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginRight: "3px",
                       }}
                     >
@@ -392,7 +399,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "5%",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       Expand
@@ -400,6 +410,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginLeft: "-5px",
                       }}
                     >
@@ -428,7 +442,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "5%",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       Nsfw
@@ -436,6 +453,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginRight: "4px",
                       }}
                     >
@@ -464,7 +485,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "5%",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       Spoiler
@@ -472,6 +496,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginRight: "4px",
                       }}
                     >
@@ -500,7 +528,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "4px",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       Media
@@ -508,6 +539,10 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
+                        height: "24px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                         marginRight: "4px",
                       }}
                     >

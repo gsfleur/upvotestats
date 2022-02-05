@@ -421,7 +421,7 @@ export default function TrendItem(props) {
                       width: "100%",
                       display: "inline-block",
                       fontSize: "13px",
-                      marginBottom: !isCollapsed() ? "5px" : "0px",
+                      marginBottom: "5px",
                     }}
                   >
                     <a
