@@ -341,7 +341,7 @@ export default function Trends(props) {
                 style={{
                   color: "gainsboro",
                   width: "90%",
-                  overflow: "auto",
+                  overflowX: "auto",
                 }}
               >
                 <div
@@ -365,7 +365,7 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "4px",
+                        marginTop: "5%",
                       }}
                     >
                       Sort
@@ -392,7 +392,7 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "4px",
+                        marginTop: "5%",
                       }}
                     >
                       Expand
@@ -428,7 +428,7 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "4px",
+                        marginTop: "5%",
                       }}
                     >
                       Nsfw
@@ -464,7 +464,7 @@ export default function Trends(props) {
                     <div
                       style={{
                         float: "right",
-                        marginTop: "4px",
+                        marginTop: "5%",
                       }}
                     >
                       Spoiler
