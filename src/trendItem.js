@@ -16,6 +16,24 @@ export default function TrendItem(props) {
     opacity: 0,
   });
 
+  // Return empty div if post is not within viewport
+  if (!state.viewed) {
+    return (
+      <div>
+        <InView
+          as="div"
+          threshold={0}
+          onChange={(inView) => {
+            // Load post once in viewing range
+            if (inView && !state.viewed) setState({ ...state, viewed: true });
+          }}
+        >
+          <div style={{ height: "200px" }}></div>
+        </InView>
+      </div>
+    );
+  }
+
   // read only variables from props
   const i = props.index;
   const post = props.post;
@@ -287,24 +305,6 @@ export default function TrendItem(props) {
   if (streamable) {
     const parts = post.urlDest.split("/");
     streamableLink = "https://streamable.com/e/" + parts[parts.length - 1];
-  }
-
-  // Load empty div if post is not within viewport
-  if (!state.viewed) {
-    return (
-      <div>
-        <InView
-          as="div"
-          threshold={0}
-          onChange={(inView) => {
-            // Load post once in viewing range
-            if (inView && !state.viewed) setState({ ...state, viewed: true });
-          }}
-        >
-          <div style={{ height: "200px" }}></div>
-        </InView>
-      </div>
-    );
   }
 
   // DOM of trend item
@@ -669,6 +669,7 @@ export default function TrendItem(props) {
             <div
               className="postTrendWithLoc"
               style={{
+                marginTop: loadableImg ? "0px" : "-2px",
                 maxHeight: isCollapsed() ? "64px" : "32px",
               }}
             >

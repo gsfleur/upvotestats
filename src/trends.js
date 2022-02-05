@@ -343,7 +343,7 @@ export default function Trends(props) {
                   width: "90%",
                   overflowX: "scroll",
                   overflowY: "hidden",
-                  marginBottom: "5px",
+                  height: "30px",
                 }}
               >
                 <div
@@ -570,8 +570,6 @@ export default function Trends(props) {
                   style={{
                     fontSize: "13px",
                     color: "gray",
-                    marginTop: "10px",
-                    marginBottom: "10px",
                     width: "90%",
                   }}
                 >
