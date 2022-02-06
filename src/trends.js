@@ -19,8 +19,8 @@ export default function Trends(props) {
   const [state, setState] = useState({
     loaded: false,
     error: false,
-    sort: "all",
     sortBy: "hot",
+    sortTab: "all",
     sortTime: "today",
     data: null,
     allData: null,
@@ -36,14 +36,55 @@ export default function Trends(props) {
 
   useEffect(() => {
     let componentMounted = true;
+
+    // Names of all menu options
+    const timeOptions = ["today", "week", "month"];
+    const tabOptions = ["all", "news", "funny", "sports"];
+    const sortOptions = [
+      "hot",
+      "new",
+      "upvotes",
+      "downvotes",
+      "coins",
+      "awards",
+      "comments",
+      "downratio",
+      "upvoteratio",
+    ];
+
+    // Page search parameters
+    if ("URLSearchParams" in window) {
+      let searchParams = new URLSearchParams(window.location.search);
+
+      // Set search values to state values when first loading data
+      if (state.data == null) {
+        const tab = searchParams.get("tab");
+        const sort = searchParams.get("sort");
+        const time = searchParams.get("time");
+
+        if (tabOptions.includes(tab) && state.sortTab !== tab)
+          state.sortTab = tab;
+        if (sortOptions.includes(sort) && state.sortBy !== sort)
+          state.sortBy = sort;
+        if (timeOptions.includes(time) && state.sortTime !== time)
+          state.sortTime = time;
+      }
+
+      // Set new search param values
+      searchParams.set("tab", state.sortTab);
+      searchParams.set("sort", state.sortBy);
+      searchParams.set("time", state.sortTime);
+
+      // Update path
+      const path = window.location.pathname + "?" + searchParams.toString();
+      window.history.pushState(null, "", path);
+    }
+
     if (state.loaded === false) {
       (async () => {
-        // Names of all categories
-        const categories = ["all", "news", "funny", "sports"];
-
         // Loading all category data from backend
         await Promise.all(
-          categories.map(async (category) => {
+          tabOptions.map(async (category) => {
             await axios
               .get(
                 process.env.REACT_APP_BACKEND +
@@ -66,7 +107,7 @@ export default function Trends(props) {
           setState({
             ...state,
             loaded: true,
-            data: state[state.sort + "Data"],
+            data: state[state.sortTab + "Data"],
           });
         }
       })();
@@ -194,7 +235,7 @@ export default function Trends(props) {
             collapsedAll={state.collapsedAll}
             handleReport={handleReport}
             postListDOMLength={postListDOM.length}
-            key={state.sort + +"-post-" + i}
+            key={state.sortTab + "-post-" + i}
             showMedia={state.media}
             getClass={props.getClass}
             theme={props.theme}
@@ -227,7 +268,7 @@ export default function Trends(props) {
   function menuCategory(category) {
     return (
       <span>
-        {state.sort === category && (
+        {state.sortTab === category && (
           <button
             className={props.getClass("timeButton")}
             style={{
@@ -238,13 +279,13 @@ export default function Trends(props) {
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
         )}
-        {state.sort !== category && (
+        {state.sortTab !== category && (
           <button
             className={props.getClass("timeButton")}
             onClick={() =>
               setState({
                 ...state,
-                sort: category,
+                sortTab: category,
                 data: state[category + "Data"],
               })
             }
