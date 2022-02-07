@@ -308,8 +308,8 @@ export default function Trends(props) {
           height: "20px",
           border:
             props.theme === "light"
-              ? "1.5px solid #00000008"
-              : "1.5px solid #222222",
+              ? "1px solid rgb(0, 0, 0, 0.1)"
+              : "1px solid #222222",
           borderRadius: "20px",
         }}
       ></div>
@@ -326,8 +326,8 @@ export default function Trends(props) {
           style={{
             border:
               props.theme === "light"
-                ? "1.5px solid #00000008"
-                : "1.5px solid #222222",
+                ? "1px solid rgb(0, 0, 0, 0.1)"
+                : "1px solid #222222",
             borderRadius: "20px",
             height: window.innerWidth > 600 ? "150px" : "110px",
           }}
