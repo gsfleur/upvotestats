@@ -447,8 +447,8 @@ export default function TrendItem(props) {
                     <div
                       style={{
                         float: "left",
-                        marginTop: "5.5px",
-                        marginBottom: "5.5px",
+                        marginTop: "6.5px",
+                        marginBottom: "6.5px",
                         marginLeft: "5px",
                       }}
                     >
