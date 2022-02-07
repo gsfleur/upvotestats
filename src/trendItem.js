@@ -168,11 +168,7 @@ export default function TrendItem(props) {
             width="13px"
             height="13px"
             loading="lazy"
-            style={{
-              position: "absolute",
-              bottom: "1.5px",
-              marginLeft: "3px",
-            }}
+            style={{ marginLeft: "2px" }}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = missingImg;
@@ -419,9 +415,10 @@ export default function TrendItem(props) {
                   <div
                     style={{
                       width: "100%",
-                      display: "inline-block",
+                      display: "flex",
+                      alignItems: "center",
                       fontSize: "13px",
-                      marginBottom: "5px",
+                      marginBottom: isCollapsed() ? "5px" : "10px",
                     }}
                   >
                     <a
@@ -447,8 +444,6 @@ export default function TrendItem(props) {
                     <div
                       style={{
                         float: "left",
-                        marginTop: "6.5px",
-                        marginBottom: "6.5px",
                         marginLeft: "5px",
                       }}
                     >

@@ -152,7 +152,8 @@
 
 .postOutLink:link,
 .postOutLink:visited {
-  display: block;
+  display: flex;
+  align-items: center;
   text-decoration: none;
   font-size: 13px;
   color: dodgerblue;
