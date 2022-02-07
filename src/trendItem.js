@@ -418,7 +418,7 @@ export default function TrendItem(props) {
                       display: "flex",
                       alignItems: "center",
                       fontSize: "13px",
-                      marginBottom: isCollapsed() ? "5px" : "10px",
+                      marginBottom: "10px",
                     }}
                   >
                     <a
