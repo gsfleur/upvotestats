@@ -1,6 +1,7 @@
 import axios from "axios";
 import TrendItem from "./trendItem";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,6 +15,9 @@ import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlin
 
 export default function Trends(props) {
   window.document.title = "Reddit Trends - Upvote Stats";
+
+  // React Router History
+  let history = useHistory();
 
   // Component State
   const [state, setState] = useState({
@@ -56,6 +60,9 @@ export default function Trends(props) {
     if ("URLSearchParams" in window) {
       let searchParams = new URLSearchParams(window.location.search);
 
+      // old page path
+      const oldPath = window.location.pathname + "?" + searchParams.toString();
+
       // Set search values to state values when first loading data
       if (state.data == null) {
         const tab = searchParams.get("tab");
@@ -75,12 +82,19 @@ export default function Trends(props) {
       searchParams.set("sort", state.sortBy);
       searchParams.set("time", state.sortTime);
 
-      // Update path
-      const path = window.location.pathname + "?" + searchParams.toString();
-      window.history.pushState(null, "", path);
+      // current page path
+      const newPath = window.location.pathname + "?" + searchParams.toString();
+
+      // Update path if changed
+      if (oldPath !== newPath) window.history.pushState(null, "", newPath);
     }
 
     if (state.loaded === false) {
+      // Forward and Back button event
+      history.listen((location) => {
+        // update path
+        window.location.href = location.pathname + location.search;
+      });
       (async () => {
         // Loading all category data from backend
         await Promise.all(

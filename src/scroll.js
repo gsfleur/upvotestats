@@ -14,9 +14,6 @@ export default function Scroll() {
     if (state.loaded === false) {
       // Forward and Back button
       history.listen((location) => {
-        document
-          .getElementById("content")
-          .scrollTo({ top: 0, behavior: "smooth" });
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
