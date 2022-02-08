@@ -75,6 +75,12 @@ export default function Trends(props) {
           state.sortBy = sort;
         if (timeOptions.includes(time) && state.sortTime !== time)
           state.sortTime = time;
+
+        // Forward and Back button event
+        history.listen((location) => {
+          // update path
+          window.location.href = location.pathname + location.search;
+        });
       }
 
       // Set new search param values
@@ -90,11 +96,6 @@ export default function Trends(props) {
     }
 
     if (state.loaded === false) {
-      // Forward and Back button event
-      history.listen((location) => {
-        // update path
-        window.location.href = location.pathname + location.search;
-      });
       (async () => {
         // Loading all category data from backend
         await Promise.all(
