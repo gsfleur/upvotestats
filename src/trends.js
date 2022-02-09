@@ -185,7 +185,7 @@ export default function Trends(props) {
     const posts = state.data.posts;
     // Creating DOM for posts
     if (posts != null) {
-      for (let i = 0; i < posts.length; i++) {
+      for (let i = 0; i < posts.length && postListDOM.length < 100; i++) {
         // Skip deleted, cross, or duped posts
         if (posts[i].text === "[deleted]") continue;
         if (posts[i].author === "[deleted]") continue;
