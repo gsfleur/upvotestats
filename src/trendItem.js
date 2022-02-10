@@ -25,7 +25,7 @@ export default function TrendItem(props) {
     return (
       <div
         id={"trend-load-" + postListDOMLength}
-        style={{ display: i > 10 ? "none" : "block" }}
+        style={{ display: postListDOMLength > 10 ? "none" : "block" }}
       >
         <InView
           as="div"
