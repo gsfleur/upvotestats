@@ -366,7 +366,7 @@ export default function Trends(props) {
                   width: "90%",
                 }}
               >
-                {[...Array(50).keys()].map((n) => (n = loadingObj(n)))}
+                {[...Array(10).keys()].map((n) => (n = loadingObj(n)))}
               </div>
             </div>
           </div>

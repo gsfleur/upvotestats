@@ -13,31 +13,44 @@ export default function TrendItem(props) {
     collapsed: false,
     viewed: false,
     views: 0,
-    opacity: 0,
   });
-
-  // Return empty div if post is not within viewport
-  if (!state.viewed) {
-    return (
-      <div>
-        <InView
-          as="div"
-          threshold={0}
-          onChange={(inView) => {
-            // Load post once in viewing range
-            if (inView && !state.viewed) setState({ ...state, viewed: true });
-          }}
-        >
-          <div style={{ height: "200px" }}></div>
-        </InView>
-      </div>
-    );
-  }
 
   // read only variables from props
   const i = props.index;
   const post = props.post;
   const postListDOMLength = props.postListDOMLength;
+
+  // Return empty div if post is not within viewport
+  if (!state.viewed) {
+    return (
+      <div
+        id={"trend-load-" + postListDOMLength}
+        style={{ display: i > 10 ? "none" : "block" }}
+      >
+        <InView
+          as="div"
+          threshold={0}
+          style={{ height: "200px" }}
+          onChange={(inView) => {
+            if (inView && !state.viewed) {
+              // Prepare next 10 divs to load once in view
+              if (postListDOMLength % 10 === 0) {
+                for (let p = 1; p < 11; p++) {
+                  const elm = document.getElementById(
+                    "trend-load-" + (postListDOMLength + p)
+                  );
+                  if (elm != null) elm.style.display = "block";
+                }
+              }
+
+              // Load post once in viewing range
+              setState({ ...state, viewed: true });
+            }
+          }}
+        />
+      </div>
+    );
+  }
 
   // reset to false
   if (props.collapsedAll) state.collapsed = false;
@@ -310,10 +323,10 @@ export default function TrendItem(props) {
       threshold={0}
       onChange={(inView) => {
         if (inView && state.viewed) {
+          // Opacity transition if post is viewed
+          const elm = document.getElementById("trends-" + i);
+          if (elm.style.opacity !== "1") elm.style.opacity = "1";
           state.views++;
-          // Opacity transition if post is viewed for first time
-          if (state.views === 1)
-            document.getElementById("trends-" + i).style.opacity = "1";
         }
       }}
     >
