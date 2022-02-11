@@ -4,10 +4,11 @@ export default function Footer(props) {
    * @param {*} link - href to link to
    * @param {*} color - color of text
    * @param {*} text - text context
+   * @param {*} title - text context
    * @param {*} click - on click function
    * @returns dom with a footer link
    */
-  function footerLink(link, text, color, click) {
+  function footerLink(link, text, title, color, click) {
     return (
       <a
         href={link}
@@ -16,6 +17,7 @@ export default function Footer(props) {
         className={props.getClass("footerLink")}
         style={{ color: color }}
         onClick={click}
+        title={title}
       >
         {text}
       </a>
@@ -34,14 +36,32 @@ export default function Footer(props) {
 
   return (
     <div className={props.getClass("footer")}>
-      {footerLink(donate, "DONATE", "dodgerblue", () => {})}
-      {footerLink(window.location.pathname, theme, "mediumslateblue", () => {
-        localStorage.setItem("theme", nextTheme);
-        window.location.reload();
-      })}
-      {footerLink(feedback, "FEEDBACK", "green", () => {})}
-      {footerLink(source, "SOURCE", "goldenrod", () => {})}
-      {footerLink(reddit, "REDDIT", "indianred", () => {})}
+      {footerLink(
+        donate,
+        "DONATE",
+        "Help fund the website",
+        "dodgerblue",
+        () => {}
+      )}
+      {footerLink(
+        window.location.pathname,
+        theme,
+        "Change the theme",
+        "mediumslateblue",
+        () => {
+          localStorage.setItem("theme", nextTheme);
+          window.location.reload();
+        }
+      )}
+      {footerLink(
+        feedback,
+        "FEEDBACK",
+        "Give feedback on the website",
+        "green",
+        () => {}
+      )}
+      {footerLink(source, "SOURCE", "Source code", "goldenrod", () => {})}
+      {footerLink(reddit, "REDDIT", "Visit Reddit", "indianred", () => {})}
       <div style={{ textAlign: "center", fontWeight: "bold" }}>
         &copy; {new Date().getFullYear()} Upvote Stats
       </div>

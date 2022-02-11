@@ -172,6 +172,7 @@ export default function TrendItem(props) {
           target="_blank"
           rel="noreferrer"
           className="postOutLink"
+          title="View website"
         >
           {destLink}
           <img
@@ -204,6 +205,7 @@ export default function TrendItem(props) {
         href={"https://www.reddit.com/u/" + post.author}
         rel="noreferrer"
         target="_blank"
+        title="View profile"
       >
         {post.author}
       </a>
@@ -235,6 +237,7 @@ export default function TrendItem(props) {
             }
             style={{ float: "right" }}
             id={"threadLink" + i}
+            title="View on reddit"
           >
             View thread
           </a>
@@ -269,6 +272,7 @@ export default function TrendItem(props) {
                 rel="noreferrer"
                 style={{ color: "dodgerblue" }}
                 href={props.href}
+                title="View website"
               >
                 {props.children[0]}
               </a>
@@ -370,6 +374,7 @@ export default function TrendItem(props) {
                 href={"https://www.reddit.com/r/" + post.subreddit}
                 rel="noreferrer"
                 target="_blank"
+                title="View subreddit"
               >
                 {post.subName}
               </a>{" "}
@@ -438,6 +443,7 @@ export default function TrendItem(props) {
                       href={"https://www.reddit.com/u/" + post.author}
                       rel="noreferrer"
                       target="_blank"
+                      title="View profile"
                     >
                       <img
                         className="iconImg"
@@ -465,6 +471,7 @@ export default function TrendItem(props) {
                         href={"https://www.reddit.com/u/" + post.author}
                         rel="noreferrer"
                         target="_blank"
+                        title="View profile"
                         style={{
                           color:
                             props.theme === "light" ? "#191919" : "gainsboro",
@@ -697,6 +704,7 @@ export default function TrendItem(props) {
               href={post.url}
               target="_blank"
               rel="noreferrer"
+              title="View comments"
               className={props.getClass("searchLink2")}
             >
               {numToString(post.comments)} comments
