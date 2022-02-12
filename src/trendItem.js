@@ -24,22 +24,23 @@ export default function TrendItem(props) {
   if (!state.viewed) {
     return (
       <div
-        id={"trend-load-" + postListDOMLength}
-        style={{ display: postListDOMLength > 10 ? "none" : "block" }}
+        id={
+          postListDOMLength > 10
+            ? "trend-hidden-" + postListDOMLength
+            : "trend-upcoming-" + postListDOMLength
+        }
       >
         <InView
           as="div"
           threshold={0}
-          style={{ height: "200px" }}
           onChange={(inView) => {
             if (inView && !state.viewed) {
               // Prepare next 10 divs to load once in view
-              if (postListDOMLength % 10 === 0) {
+              if (postListDOMLength % 10 === 0 && postListDOMLength >= 10) {
                 for (let p = 1; p < 11; p++) {
-                  const elm = document.getElementById(
-                    "trend-load-" + (postListDOMLength + p)
-                  );
-                  if (elm != null) elm.style.display = "block";
+                  const id = "trend-hidden-" + (postListDOMLength + p);
+                  const elm = document.getElementById(id);
+                  if (elm != null) elm.id = id.replace("hidden", "upcoming");
                 }
               }
 
@@ -329,7 +330,7 @@ export default function TrendItem(props) {
         if (inView && state.viewed) {
           // Opacity transition if post is viewed
           const elm = document.getElementById("trends-" + i);
-          if (elm.style.opacity !== "1") elm.style.opacity = "1";
+          if (elm != null && elm.style.opacity !== "1") elm.style.opacity = "1";
           state.views++;
         }
       }}

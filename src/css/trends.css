@@ -317,6 +317,14 @@
   -webkit-line-clamp: 4;
   line-clamp: 4;
   -webkit-box-orient: vertical;
+  padding-bottom: 0.05rem;
+}
+
+[id^="trend-upcoming"] {
+  height: 200px;
+}
+[id^="trend-hidden"] {
+  display: none;
 }
 
 div::-webkit-scrollbar {
