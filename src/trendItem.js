@@ -213,6 +213,11 @@ export default function TrendItem(props) {
     </div>
   );
 
+  // Post upvote ratio
+  const upvoteRatio = Math.round(
+    (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes + 1)
+  );
+
   // Post thread link DOM
   const threadLinkDOM = (
     <span>
@@ -222,10 +227,8 @@ export default function TrendItem(props) {
             className={props.getClass("postThreadLink")}
             style={{ float: "left" }}
           >
-            {Math.round(
-              (100 * post.upvotes) / (Math.abs(post.downvotes) + post.upvotes)
-            )}
-            % upvoted
+            {upvoteRatio >= 50 && <span>{upvoteRatio}%</span>}
+            {upvoteRatio < 50 && <span>Less than 50%</span>} upvoted
           </div>
           <a
             href={post.url}
