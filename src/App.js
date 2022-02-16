@@ -46,7 +46,16 @@ export default function App() {
 
   // Getting theme
   let theme = localStorage.getItem("theme");
-  if (theme == null) localStorage.setItem("theme", "light");
+  if (theme == null) {
+    // Initially set to dark if prefers
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      localStorage.setItem("theme", "dark");
+      window.location.reload();
+    } else {
+      // otherwise set to light
+      localStorage.setItem("theme", "light");
+    }
+  }
   if (theme !== "light" && theme !== "dark") theme = "light";
 
   // Setting light theme background
