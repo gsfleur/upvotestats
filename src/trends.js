@@ -17,7 +17,7 @@ export default function Trends(props) {
   window.document.title = "Reddit Trends - Upvote Stats";
 
   // React Router History
-  let history = useHistory();
+  const history = useHistory();
 
   // Component State
   const [state, setState] = useState({
@@ -58,7 +58,7 @@ export default function Trends(props) {
 
     // Page search parameters
     if ("URLSearchParams" in window) {
-      let searchParams = new URLSearchParams(window.location.search);
+      const searchParams = new URLSearchParams(window.location.search);
 
       // old page path
       const oldPath = window.location.pathname + "?" + searchParams.toString();

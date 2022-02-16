@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Scroll() {
   // React Router History
-  let history = useHistory();
+  const history = useHistory();
 
   // Component state
   const [state, setState] = useState({ loaded: false });
@@ -13,18 +13,18 @@ export default function Scroll() {
 
     if (state.loaded === false) {
       // Forward and Back button
-      history.listen((location) => {
+      history.listen(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
 
       // Hide and Display back to top button
       window.onscroll = function (ev) {
-        let scrolledPercent =
+        const scrolledPercent =
           (window.innerHeight + window.pageYOffset) /
           window.document.body.scrollHeight;
         if (
           scrolledPercent >= 0.2 &&
-          window.document.body.scrollHeight > 2000 &&
+          window.document.body.scrollHeight > 4000 &&
           window.innerWidth > 600
         ) {
           document.getElementById("backToTop").style.display = "inline";
@@ -44,5 +44,5 @@ export default function Scroll() {
     };
   }, [state, history]);
 
-  return <span></span>;
+  return null;
 }

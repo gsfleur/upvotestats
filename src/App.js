@@ -61,11 +61,7 @@ export default function App() {
    * @returns class names for theme
    */
   function getClass(n) {
-    if (theme === "light") {
-      return n + " " + n + "Light";
-    } else {
-      return n;
-    }
+    return theme === "light" ? n + " " + n + "Light" : n;
   }
 
   return (

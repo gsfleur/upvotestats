@@ -36,13 +36,7 @@ export default function Footer(props) {
 
   return (
     <div className={props.getClass("footer")}>
-      {footerLink(
-        donate,
-        "DONATE",
-        "Help fund the website",
-        "dodgerblue",
-        () => {}
-      )}
+      {footerLink(donate, "DONATE", "Help fund the website", "dodgerblue")}
       {footerLink(
         window.location.pathname,
         theme,
@@ -53,17 +47,11 @@ export default function Footer(props) {
           window.location.reload();
         }
       )}
-      {footerLink(
-        feedback,
-        "FEEDBACK",
-        "Give feedback on the website",
-        "green",
-        () => {}
-      )}
-      {footerLink(source, "SOURCE", "Source code", "goldenrod", () => {})}
-      {footerLink(reddit, "REDDIT", "Visit Reddit", "indianred", () => {})}
+      {footerLink(feedback, "FEEDBACK", "Give your feedback", "green")}
+      {footerLink(source, "SOURCE", "Source code", "goldenrod")}
+      {footerLink(reddit, "REDDIT", "Visit Reddit", "indianred")}
       <div style={{ textAlign: "center", fontWeight: "bold" }}>
-        &copy; {new Date().getFullYear()} Upvote Stats
+        &copy; 2021-{new Date().getFullYear()} Upvote Stats
       </div>
     </div>
   );
