@@ -118,20 +118,23 @@ export default function App() {
               <Switch>
                 <Route path="/search">
                   <Search theme={theme} getClass={getClass} />
+                  <Footer theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/about">
                   <About theme={theme} getClass={getClass} />
+                  <Footer theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/trends">
                   <Trends theme={theme} getClass={getClass} />
+                  <Footer theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/">
                   <Search theme={theme} getClass={getClass} />
+                  <Footer theme={theme} getClass={getClass} />
                   <Home theme={theme} getClass={getClass} />
                 </Route>
               </Switch>
               <Scroll theme={theme} />
-              <Footer theme={theme} getClass={getClass} />
             </Suspense>
           </div>
         </div>

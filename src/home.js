@@ -45,7 +45,7 @@ export default function Home(props) {
           .map((a) => a.value);
 
         // Creating cards for communities
-        for (let i = 0; i < subData.length && state.cardsDOM.length < 3; i++) {
+        for (let i = 0; i < subData.length && state.cardsDOM.length < 10; i++) {
           state.cardsDOM.push(
             <button
               key={"homeCard-" + i}
@@ -95,7 +95,7 @@ export default function Home(props) {
       <div className="cardsLoc">
         {state.loaded === true
           ? state.cardsDOM
-          : [...Array(3).keys()].map((n) => (n = loadingObj(n)))}
+          : [...Array(10).keys()].map((n) => (n = loadingObj(n)))}
       </div>
     </div>
   );
