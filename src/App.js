@@ -130,7 +130,7 @@ export default function App() {
                   <Home theme={theme} getClass={getClass} />
                 </Route>
               </Switch>
-              <Scroll />
+              <Scroll theme={theme} />
               <Footer theme={theme} getClass={getClass} />
             </Suspense>
           </div>
@@ -140,7 +140,7 @@ export default function App() {
             color="default"
             size="small"
             aria-label="scroll back to top"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => window.scrollTo({ top: 0 })}
           >
             <KeyboardArrowUpIcon />
           </Fab>

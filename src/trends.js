@@ -119,6 +119,8 @@ export default function Trends(props) {
 
         // Update state
         if (componentMounted) {
+          // Scroll to top
+          window.scrollTo({ top: 0 });
           setState({
             ...state,
             loaded: true,
@@ -297,13 +299,15 @@ export default function Trends(props) {
         {state.sortTab !== category && (
           <button
             className={props.getClass("timeButton")}
-            onClick={() =>
+            onClick={() => {
+              // Scroll to top
+              window.scrollTo({ top: 0 });
               setState({
                 ...state,
                 sortTab: category,
                 data: state[category + "Data"],
-              })
-            }
+              });
+            }}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </button>
@@ -373,334 +377,353 @@ export default function Trends(props) {
         )}
         {state.loaded && !state.error && (
           <div>
-            {/* Menu Category Items */}
-            <div className="centering">
-              <div
-                style={{
-                  width: "90%",
-                  marginBottom: "10px",
-                  boxShadow:
-                    props.theme === "light"
-                      ? "inset 0 -1px 0 rgb(0,0,0,0.1)"
-                      : "inset 0 -1px 0 #222222",
-                }}
-              >
-                {menuCategory("all")}
-                {menuCategory("news")}
-                {menuCategory("funny")}
-                {menuCategory("sports")}
+            <div className="centering" id="trendLoc">
+              <div className={props.getClass("trendMenu")} id="trendMenu">
+                {/* Menu Category Items */}
+                <div className="centering">
+                  <div
+                    style={{
+                      width: "90%",
+                      marginBottom: "10px",
+                      boxShadow:
+                        props.theme === "light"
+                          ? "inset 0 -1px 0 rgb(0,0,0,0.1)"
+                          : "inset 0 -1px 0 #222222",
+                    }}
+                  >
+                    {menuCategory("all")}
+                    {menuCategory("news")}
+                    {menuCategory("funny")}
+                    {menuCategory("sports")}
+                  </div>
+                </div>
+                {/* Sort and Expand Buttons */}
+                <div className="centering">
+                  <div
+                    style={{
+                      color: "gainsboro",
+                      width: "90%",
+                      overflowX: "scroll",
+                      overflowY: "hidden",
+                      height: "30px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        width: "800%",
+                        maxWidth: "400px",
+                      }}
+                    >
+                      <button
+                        className={props.getClass("sortButton2")}
+                        style={{ padding: "0px" }}
+                        onClick={() =>
+                          setState({
+                            ...state,
+                            showOptions: state.showOptions ? false : true,
+                          })
+                        }
+                      >
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          Sort
+                        </div>
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginRight: "3px",
+                          }}
+                        >
+                          <SortRoundedIcon fontSize="medium" />
+                        </div>
+                      </button>
+                      <button
+                        className={props.getClass("sortButton2")}
+                        style={{ padding: "0px" }}
+                        onClick={() => {
+                          setState({
+                            ...state,
+                            collapsedAll: state.collapsedAll ? false : true,
+                          });
+                        }}
+                      >
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          Expand
+                        </div>
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginLeft: "-5px",
+                          }}
+                        >
+                          {state.collapsedAll && (
+                            <div>
+                              <UnfoldLessIcon fontSize="medium" />
+                            </div>
+                          )}
+                          {!state.collapsedAll && (
+                            <div>
+                              <UnfoldMoreIcon fontSize="medium" />
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                      <button
+                        className={props.getClass("sortButton2")}
+                        style={{ padding: "0px" }}
+                        onClick={() => {
+                          setState({
+                            ...state,
+                            loaded: false,
+                            nsfw: state.nsfw ? false : true,
+                          });
+                        }}
+                      >
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          Nsfw
+                        </div>
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginRight: "4px",
+                          }}
+                        >
+                          {state.nsfw && (
+                            <div>
+                              <CheckBoxOutlinedIcon fontSize="medium" />
+                            </div>
+                          )}
+                          {!state.nsfw && (
+                            <div>
+                              <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                      <button
+                        className={props.getClass("sortButton2")}
+                        style={{ padding: "0px" }}
+                        onClick={() => {
+                          setState({
+                            ...state,
+                            loaded: false,
+                            spoiler: state.spoiler ? false : true,
+                          });
+                        }}
+                      >
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          Spoiler
+                        </div>
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginRight: "4px",
+                          }}
+                        >
+                          {state.spoiler && (
+                            <div>
+                              <CheckBoxOutlinedIcon fontSize="medium" />
+                            </div>
+                          )}
+                          {!state.spoiler && (
+                            <div>
+                              <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                      <button
+                        className={props.getClass("sortButton2")}
+                        style={{ padding: "0px" }}
+                        onClick={() => {
+                          setState({
+                            ...state,
+                            media: state.media ? false : true,
+                          });
+                        }}
+                      >
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          Media
+                        </div>
+                        <div
+                          style={{
+                            float: "right",
+                            height: "24px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginRight: "4px",
+                          }}
+                        >
+                          {state.media && (
+                            <div>
+                              <CheckBoxOutlinedIcon fontSize="medium" />
+                            </div>
+                          )}
+                          {!state.media && (
+                            <div>
+                              <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                {/* Sorting Menu Options */}
+                {state.showOptions && (
+                  <div className="centering">
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "gray",
+                        width: "90%",
+                      }}
+                    >
+                      <FormControl
+                        focused
+                        variant="standard"
+                        htmlFor="selectTime"
+                      >
+                        <InputLabel variant="standard">Time</InputLabel>
+                        <NativeSelect
+                          defaultValue={state.sortTime}
+                          className={classes.root}
+                          onChange={handleTimeChange}
+                          IconComponent={ExpandMoreIcon}
+                          id="selectTime"
+                        >
+                          <option value={"today"} style={{ color: "black" }}>
+                            Today
+                          </option>
+                          <option value={"week"} style={{ color: "black" }}>
+                            Week
+                          </option>
+                          <option value={"month"} style={{ color: "black" }}>
+                            Month
+                          </option>
+                        </NativeSelect>
+                      </FormControl>
+                      <FormControl
+                        focused
+                        variant="standard"
+                        style={{ marginLeft: "20px" }}
+                      >
+                        <InputLabel variant="standard" htmlFor="selectSort">
+                          Sort
+                        </InputLabel>
+                        <NativeSelect
+                          defaultValue={state.sortBy}
+                          className={classes.root}
+                          onChange={handleSortChange}
+                          IconComponent={ExpandMoreIcon}
+                          id="selectSort"
+                          width="100%"
+                        >
+                          {state.sortTime === "today" && (
+                            <option value={"hot"} style={{ color: "black" }}>
+                              Hot
+                            </option>
+                          )}
+                          {state.sortTime === "today" && (
+                            <option value={"new"} style={{ color: "black" }}>
+                              New
+                            </option>
+                          )}
+                          <option value={"awards"} style={{ color: "black" }}>
+                            Awards
+                          </option>
+                          <option value={"coins"} style={{ color: "black" }}>
+                            Coins
+                          </option>
+                          <option value={"comments"} style={{ color: "black" }}>
+                            Comments
+                          </option>
+                          <option value={"upvotes"} style={{ color: "black" }}>
+                            Upvotes
+                          </option>
+                          <option
+                            value={"downvotes"}
+                            style={{ color: "black" }}
+                          >
+                            Downvotes
+                          </option>
+                          <option
+                            value={"upvoteratio"}
+                            style={{ color: "black" }}
+                          >
+                            Upvote Ratio
+                          </option>
+                          <option
+                            value={"downratio"}
+                            style={{ color: "black" }}
+                          >
+                            Downvote Ratio
+                          </option>
+                        </NativeSelect>
+                      </FormControl>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-            {/* Sort and Expand Buttons */}
-            <div className="centering">
-              <div
-                style={{
-                  color: "gainsboro",
-                  width: "90%",
-                  overflowX: "scroll",
-                  overflowY: "hidden",
-                  height: "30px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    width: "800%",
-                    maxWidth: "400px",
-                  }}
-                >
-                  <button
-                    className={props.getClass("sortButton2")}
-                    style={{ padding: "0px" }}
-                    onClick={() =>
-                      setState({
-                        ...state,
-                        showOptions: state.showOptions ? false : true,
-                      })
-                    }
-                  >
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      Sort
-                    </div>
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "3px",
-                      }}
-                    >
-                      <SortRoundedIcon fontSize="medium" />
-                    </div>
-                  </button>
-                  <button
-                    className={props.getClass("sortButton2")}
-                    style={{ padding: "0px" }}
-                    onClick={() => {
-                      setState({
-                        ...state,
-                        collapsedAll: state.collapsedAll ? false : true,
-                      });
-                    }}
-                  >
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      Expand
-                    </div>
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginLeft: "-5px",
-                      }}
-                    >
-                      {state.collapsedAll && (
-                        <div>
-                          <UnfoldLessIcon fontSize="medium" />
-                        </div>
-                      )}
-                      {!state.collapsedAll && (
-                        <div>
-                          <UnfoldMoreIcon fontSize="medium" />
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                  <button
-                    className={props.getClass("sortButton2")}
-                    style={{ padding: "0px" }}
-                    onClick={() => {
-                      setState({
-                        ...state,
-                        nsfw: state.nsfw ? false : true,
-                      });
-                    }}
-                  >
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      Nsfw
-                    </div>
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "4px",
-                      }}
-                    >
-                      {state.nsfw && (
-                        <div>
-                          <CheckBoxOutlinedIcon fontSize="medium" />
-                        </div>
-                      )}
-                      {!state.nsfw && (
-                        <div>
-                          <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                  <button
-                    className={props.getClass("sortButton2")}
-                    style={{ padding: "0px" }}
-                    onClick={() => {
-                      setState({
-                        ...state,
-                        spoiler: state.spoiler ? false : true,
-                      });
-                    }}
-                  >
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      Spoiler
-                    </div>
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "4px",
-                      }}
-                    >
-                      {state.spoiler && (
-                        <div>
-                          <CheckBoxOutlinedIcon fontSize="medium" />
-                        </div>
-                      )}
-                      {!state.spoiler && (
-                        <div>
-                          <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                  <button
-                    className={props.getClass("sortButton2")}
-                    style={{ padding: "0px" }}
-                    onClick={() => {
-                      setState({
-                        ...state,
-                        media: state.media ? false : true,
-                      });
-                    }}
-                  >
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      Media
-                    </div>
-                    <div
-                      style={{
-                        float: "right",
-                        height: "24px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "4px",
-                      }}
-                    >
-                      {state.media && (
-                        <div>
-                          <CheckBoxOutlinedIcon fontSize="medium" />
-                        </div>
-                      )}
-                      {!state.media && (
-                        <div>
-                          <CheckBoxOutlineBlankOutlinedIcon fontSize="medium" />
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                </div>
-              </div>
-            </div>
-            {/* Sorting Menu Options */}
-            {state.showOptions && (
-              <div className="centering">
-                <div
-                  style={{
-                    fontSize: "13px",
-                    color: "gray",
-                    width: "90%",
-                  }}
-                >
-                  <FormControl focused variant="standard" htmlFor="selectTime">
-                    <InputLabel variant="standard">Time</InputLabel>
-                    <NativeSelect
-                      defaultValue={state.sortTime}
-                      className={classes.root}
-                      onChange={handleTimeChange}
-                      IconComponent={ExpandMoreIcon}
-                      id="selectTime"
-                    >
-                      <option value={"today"} style={{ color: "black" }}>
-                        Today
-                      </option>
-                      <option value={"week"} style={{ color: "black" }}>
-                        Week
-                      </option>
-                      <option value={"month"} style={{ color: "black" }}>
-                        Month
-                      </option>
-                    </NativeSelect>
-                  </FormControl>
-                  <FormControl
-                    focused
-                    variant="standard"
-                    style={{ marginLeft: "20px" }}
-                  >
-                    <InputLabel variant="standard" htmlFor="selectSort">
-                      Sort
-                    </InputLabel>
-                    <NativeSelect
-                      defaultValue={state.sortBy}
-                      className={classes.root}
-                      onChange={handleSortChange}
-                      IconComponent={ExpandMoreIcon}
-                      id="selectSort"
-                      width="100%"
-                    >
-                      {state.sortTime === "today" && (
-                        <option value={"hot"} style={{ color: "black" }}>
-                          Hot
-                        </option>
-                      )}
-                      {state.sortTime === "today" && (
-                        <option value={"new"} style={{ color: "black" }}>
-                          New
-                        </option>
-                      )}
-                      <option value={"awards"} style={{ color: "black" }}>
-                        Awards
-                      </option>
-                      <option value={"coins"} style={{ color: "black" }}>
-                        Coins
-                      </option>
-                      <option value={"comments"} style={{ color: "black" }}>
-                        Comments
-                      </option>
-                      <option value={"upvotes"} style={{ color: "black" }}>
-                        Upvotes
-                      </option>
-                      <option value={"downvotes"} style={{ color: "black" }}>
-                        Downvotes
-                      </option>
-                      <option value={"upvoteratio"} style={{ color: "black" }}>
-                        Upvote Ratio
-                      </option>
-                      <option value={"downratio"} style={{ color: "black" }}>
-                        Downvote Ratio
-                      </option>
-                    </NativeSelect>
-                  </FormControl>
-                </div>
-              </div>
-            )}
             {/* List of Trend Items */}
             {postListDOM}
             {/* No posts were found */}

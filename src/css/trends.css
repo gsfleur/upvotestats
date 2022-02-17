@@ -19,6 +19,18 @@
   border-top: none;
 }
 
+.trendMenu {
+  position: static;
+  z-index: 999999;
+  background: #0a0a0a;
+  top: 0px;
+  width: 100%;
+  max-width: 650px;
+}
+.trendMenuLight {
+  background: white;
+}
+
 .iconImg {
   float: left;
   width: 30px;
