@@ -96,6 +96,20 @@ export default function Trends(props) {
     }
 
     if (state.loaded === false) {
+      const nsfw = localStorage.getItem("nsfw");
+      const spoiler = localStorage.getItem("spoiler");
+      const media = localStorage.getItem("media");
+
+      // initializing menu option values
+      if (nsfw == null) localStorage.setItem("nsfw", "true");
+      if (spoiler == null) localStorage.setItem("spoiler", "true");
+      if (media == null) localStorage.setItem("media", "true");
+
+      // updating to locally saved values
+      state.nsfw = localStorage.getItem("nsfw") === "true";
+      state.spoiler = localStorage.getItem("spoiler") === "true";
+      state.media = localStorage.getItem("media") === "true";
+
       (async () => {
         // Loading all category data from backend
         await Promise.all(
@@ -497,6 +511,8 @@ export default function Trends(props) {
                         className={props.getClass("sortButton2")}
                         style={{ padding: "0px" }}
                         onClick={() => {
+                          if (state.nsfw) localStorage.setItem("nsfw", "false");
+                          else localStorage.setItem("nsfw", "true");
                           setState({
                             ...state,
                             nsfw: state.nsfw ? false : true,
@@ -540,6 +556,9 @@ export default function Trends(props) {
                         className={props.getClass("sortButton2")}
                         style={{ padding: "0px" }}
                         onClick={() => {
+                          if (state.spoiler)
+                            localStorage.setItem("spoiler", "false");
+                          else localStorage.setItem("spoiler", "true");
                           setState({
                             ...state,
                             spoiler: state.spoiler ? false : true,
@@ -583,6 +602,9 @@ export default function Trends(props) {
                         className={props.getClass("sortButton2")}
                         style={{ padding: "0px" }}
                         onClick={() => {
+                          if (state.media)
+                            localStorage.setItem("media", "false");
+                          else localStorage.setItem("media", "true");
                           setState({
                             ...state,
                             media: state.media ? false : true,
