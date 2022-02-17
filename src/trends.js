@@ -499,7 +499,6 @@ export default function Trends(props) {
                         onClick={() => {
                           setState({
                             ...state,
-                            loaded: false,
                             nsfw: state.nsfw ? false : true,
                           });
                         }}
@@ -543,7 +542,6 @@ export default function Trends(props) {
                         onClick={() => {
                           setState({
                             ...state,
-                            loaded: false,
                             spoiler: state.spoiler ? false : true,
                           });
                         }}
