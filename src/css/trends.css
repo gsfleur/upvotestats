@@ -23,8 +23,7 @@
   position: static;
   z-index: 999999;
   background: #0a0a0a;
-  top: -5px;
-  padding-top: 5px;
+  top: 0px;
   width: 100%;
   max-width: 650px;
   opacity: 0.97;
@@ -331,13 +330,6 @@
   -webkit-line-clamp: 4;
   line-clamp: 4;
   -webkit-box-orient: vertical;
-}
-
-[id^="trend-upcoming"] {
-  height: 200px;
-}
-[id^="trend-hidden"] {
-  display: none;
 }
 
 div::-webkit-scrollbar {

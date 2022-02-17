@@ -23,27 +23,13 @@ export default function TrendItem(props) {
   // Return empty div if post is not within viewport
   if (!state.viewed) {
     return (
-      <div
-        id={
-          postListDOMLength > 10
-            ? "trend-hidden-" + postListDOMLength
-            : "trend-upcoming-" + postListDOMLength
-        }
-      >
+      <div>
         <InView
           as="div"
+          style={{ height: "283px" }}
           threshold={0}
           onChange={(inView) => {
             if (inView && !state.viewed) {
-              // Prepare next 10 divs to load once in view
-              if (postListDOMLength % 10 === 0 && postListDOMLength >= 10) {
-                for (let p = 1; p < 11; p++) {
-                  const id = "trend-hidden-" + (postListDOMLength + p);
-                  const elm = document.getElementById(id);
-                  if (elm != null) elm.id = id.replace("hidden", "upcoming");
-                }
-              }
-
               // Load post once in viewing range
               setState({ ...state, viewed: true });
             }

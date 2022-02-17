@@ -635,6 +635,7 @@ export default function Trends(props) {
                         fontSize: "13px",
                         color: "gray",
                         width: "90%",
+                        marginBottom: "5px",
                       }}
                     >
                       <FormControl
