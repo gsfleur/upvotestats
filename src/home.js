@@ -17,16 +17,21 @@ export default function Home(props) {
       (async () => {
         // Getting subreddit name and subscribers
         let communities = {};
+        let subNames = {};
         await axios
           .get(process.env.REACT_APP_BACKEND + "posts/all")
           .then((res) => {
             const posts = res.data.posts;
             for (let i = 0; i < posts.length; i++) {
               const sub = posts[i].subreddit;
+              const subName = posts[i].subName;
               const subscribers = posts[i].subscribers;
 
               // saving name and sub count
-              if (communities[sub] == null) communities[sub] = subscribers;
+              if (communities[sub] == null) {
+                communities[sub] = subscribers;
+                subNames[sub] = subName;
+              }
             }
           })
           .catch((err) => {
@@ -47,19 +52,18 @@ export default function Home(props) {
         // Creating cards for communities
         for (let i = 0; i < subData.length && state.cardsDOM.length < 10; i++) {
           state.cardsDOM.push(
-            <button
+            <a
               key={"homeCard-" + i}
               className={props.getClass("homeCards")}
-              onClick={() =>
-                (window.location.href = "/search?q=" + subData[i][0])
-              }
+              href={"/search?q=" + subData[i][0]}
+              title="Search subreddit statistics"
             >
-              r/{subData[i][0]}
+              {subNames[subData[i][0]]}
               <br />
               <span style={{ color: "gray", fontSize: "14px" }}>
                 {numToString(subData[i][1])} subscribers
               </span>
-            </button>
+            </a>
           );
         }
 

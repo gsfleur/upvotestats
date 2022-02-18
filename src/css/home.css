@@ -1,8 +1,7 @@
 .homeCards {
   width: 100%;
-  height: 70px;
   padding: 10px 0px 10px 0px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: inline-block;
   text-align: center;
   background: #0a0a0a;
@@ -13,6 +12,7 @@
   transition: background-color 0.3s ease;
   overflow: hidden;
   border: 1px solid #222222;
+  text-decoration: none;
 }
 .homeCards:hover {
   background: rgb(30, 30, 30);
