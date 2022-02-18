@@ -39,18 +39,16 @@ export default function Scroll(props) {
         // Fix trend menu to top of screen
         if (trendMenu != null) {
           if (window.pageYOffset > 154) {
-            if (trendMenu.style.position !== "fixed") {
-              trendMenu.style.position = "fixed";
-              trendLoc.style.marginBottom = "84px";
+            if (trendLoc.style.position !== "sticky") {
+              trendLoc.style.position = "sticky";
               trendMenu.style.borderBottom =
                 props.theme === "light"
                   ? "1px solid rgb(0, 0, 0, 0.1)"
                   : "1px solid #222222";
             }
           } else {
-            if (trendMenu.style.position !== "static") {
-              trendMenu.style.position = "static";
-              trendLoc.style.marginBottom = "0px";
+            if (trendLoc.style.position !== "static") {
+              trendLoc.style.position = "static";
               trendMenu.style.borderBottom = "none";
             }
           }

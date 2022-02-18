@@ -19,17 +19,20 @@
   border-top: none;
 }
 
+#trendLoc {
+  top: -0.5px;
+  z-index: 99999;
+  backdrop-filter: blur(12px);
+  backface-visibility: hidden;
+}
+
 .trendMenu {
-  position: static;
-  z-index: 999999;
-  background: #0a0a0a;
-  top: 0px;
   width: 100%;
   max-width: 650px;
-  opacity: 0.97;
+  background: rgb(10, 10, 10, 0.65);
 }
 .trendMenuLight {
-  background: white;
+  background: rgb(255, 255, 255, 0.65);
 }
 
 .iconImg {
