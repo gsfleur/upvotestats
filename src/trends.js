@@ -92,7 +92,10 @@ export default function Trends(props) {
       const newPath = window.location.pathname + "?" + searchParams.toString();
 
       // Update path if changed
-      if (oldPath !== newPath) window.history.pushState(null, "", newPath);
+      if (oldPath !== newPath) {
+        window.scrollTo({ top: 0 });
+        window.history.pushState(null, "", newPath);
+      }
     }
 
     if (state.loaded === false) {
@@ -314,8 +317,6 @@ export default function Trends(props) {
           <button
             className={props.getClass("timeButton")}
             onClick={() => {
-              // Scroll to top
-              window.scrollTo({ top: 0 });
               setState({
                 ...state,
                 sortTab: category,
