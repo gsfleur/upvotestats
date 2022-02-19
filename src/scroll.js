@@ -41,6 +41,7 @@ export default function Scroll(props) {
           if (window.pageYOffset > 154) {
             if (trendLoc.style.position !== "sticky") {
               trendLoc.style.position = "sticky";
+              trendLoc.style.top = "-0.5px";
               trendMenu.style.borderBottom =
                 props.theme === "light"
                   ? "1px solid rgb(0, 0, 0, 0.1)"
@@ -49,6 +50,7 @@ export default function Scroll(props) {
           } else {
             if (trendLoc.style.position !== "static") {
               trendLoc.style.position = "static";
+              trendLoc.style.top = "-100px";
               trendMenu.style.borderBottom = "none";
             }
           }
