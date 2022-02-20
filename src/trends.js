@@ -335,7 +335,7 @@ export default function Trends(props) {
   const loadingObj = (key) => (
     <div key={"trendLoading-" + key}>
       <div
-        className={props.getClass("loading")}
+        className="loading"
         style={{
           margin: "0px 0px 15px 0px",
           width: "230px",
@@ -348,7 +348,7 @@ export default function Trends(props) {
         }}
       ></div>
       <div
-        className={props.getClass("loading")}
+        className="loading"
         style={{
           overflow: "auto",
           display: "inline-block",
