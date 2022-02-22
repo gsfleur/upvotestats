@@ -279,7 +279,6 @@ export default function TrendItem(props) {
             {...props}
             style={{
               color: "indianred",
-              padding: "0px 2px 0px 2px",
               fontSize: "12px",
               fontWeight: "bold",
               marginLeft: props.src + "px",
