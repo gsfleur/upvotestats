@@ -41,8 +41,19 @@
   .timeButton {
     font-size: 14px;
   }
+  .search {
+    margin: 0px 10px 0px 10px;
+  }
+  .about {
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+  }
   .trends {
-    padding: 20px 0px 20px 0px;
+    padding: 10px 0px 10px 0px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
   }
   .statsInfo {
     padding: 0px;

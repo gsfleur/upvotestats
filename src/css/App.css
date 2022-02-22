@@ -7,7 +7,6 @@
   flex: 0 1 900px;
   background-color: inherit;
   border-radius: 10px;
-  margin: 0px 10px 10px 10px;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
@@ -110,7 +109,7 @@
 
 video {
   width: 100%;
-  max-height: calc(100vh - 350px);
+  max-height: calc(100vh - 360px);
   border-radius: 10px;
 }
 

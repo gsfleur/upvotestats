@@ -289,7 +289,7 @@ export default function Search(props) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className="search">
       <div className="centering">
         {searching === false && (
           <div className={props.getClass("h0")}>Upvote Stats</div>

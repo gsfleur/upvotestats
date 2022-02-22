@@ -279,10 +279,9 @@ export default function TrendItem(props) {
             {...props}
             style={{
               color: "indianred",
-              border: "1px solid indianred",
               padding: "0px 2px 0px 2px",
-              borderRadius: "3px",
-              fontSize: "10px",
+              fontSize: "12px",
+              fontWeight: "bold",
               marginLeft: props.src + "px",
               marginRight: "2.5px",
             }}
@@ -566,7 +565,7 @@ export default function TrendItem(props) {
                                 style={{
                                   width: "100%",
                                   height: "100%",
-                                  maxHeight: "calc(100vh - 350px)",
+                                  maxHeight: "calc(100vh - 360px)",
                                   objectFit: "contain",
                                 }}
                                 onError={(e) => {
