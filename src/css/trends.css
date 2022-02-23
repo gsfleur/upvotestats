@@ -30,10 +30,6 @@
 .trendMenu {
   width: 100%;
   max-width: 650px;
-  background: rgb(10, 10, 10, 0.65);
-}
-.trendMenuLight {
-  background: rgb(255, 255, 255, 0.65);
 }
 
 .iconImg {

@@ -370,6 +370,15 @@ export default function Trends(props) {
     </div>
   );
 
+  // Determine if blur filter is supported
+  const trendMenuOpacity = CSS.supports("(backdrop-filter: blur(12px))")
+    ? "0.65"
+    : "0.99";
+  const trendMenuBackground =
+    props.theme === "light"
+      ? "rgb(255, 255, 255, " + trendMenuOpacity + ")"
+      : "rgb(10, 10, 10, " + trendMenuOpacity + ")";
+
   return (
     <div className="centering">
       <div className={props.getClass("trends")}>
@@ -393,7 +402,11 @@ export default function Trends(props) {
         {state.loaded && !state.error && (
           <div>
             <div className="centering" id="trendLoc">
-              <div className={props.getClass("trendMenu")} id="trendMenu">
+              <div
+                className="trendMenu"
+                id="trendMenu"
+                style={{ background: trendMenuBackground }}
+              >
                 {/* Menu Category Items */}
                 <div className="centering">
                   <div
@@ -420,6 +433,8 @@ export default function Trends(props) {
                       width: "90%",
                       overflowX: "scroll",
                       overflowY: "hidden",
+                      scrollbarWidth: "none",
+                      msOverflowStyle: "none",
                       height: "30px",
                     }}
                   >
