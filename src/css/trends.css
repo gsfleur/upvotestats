@@ -146,7 +146,6 @@
 .postTitle {
   color: gainsboro;
   font-size: 13.5px;
-  font-weight: 500;
   width: calc(100% - 120px);
   margin-bottom: 5px;
 }
@@ -172,7 +171,6 @@
   color: dodgerblue;
   position: relative;
   width: fit-content;
-  font-weight: 500;
   margin-bottom: 5px;
 }
 .postOutLink:hover {
@@ -190,7 +188,6 @@
 
 .postThreadLinkContainer {
   display: block;
-  font-weight: 500;
   margin-bottom: 5px;
   height: 14.95px;
 }
