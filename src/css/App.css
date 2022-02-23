@@ -121,3 +121,7 @@ button {
 button:active {
   background: none;
 }
+
+button:focus {
+  outline: 0 none !important;
+}
