@@ -373,7 +373,7 @@ export default function TrendItem(props) {
             {/* Main Trend associated with post */}
             <div className="postTrend">
               <span className="limitText1">
-                <b>{post.trends.length > 0 ? post.trends[0] : post.subName}</b>
+                {post.trends.length > 0 ? post.trends[0] : post.subName}
               </span>
             </div>
 
@@ -674,7 +674,7 @@ export default function TrendItem(props) {
             <div
               className="postTrendWithLoc"
               style={{
-                marginTop: loadableImg ? "0px" : "-2px",
+                marginTop: loadableImg ? "0px" : "-1px",
                 maxHeight: isCollapsed() ? "64px" : "32px",
               }}
             >
