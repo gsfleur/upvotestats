@@ -95,7 +95,7 @@ export default function TrendItem(props) {
         className={props.getClass("postTrendWith")}
         key={"postTrendWith-" + i + "-" + t}
       >
-        {trends[t]}
+        <span className="limitText1">{trends[t]}</span>
       </div>
     );
   }
@@ -372,7 +372,9 @@ export default function TrendItem(props) {
 
             {/* Main Trend associated with post */}
             <div className="postTrend">
-              <b>{post.trends.length > 0 ? post.trends[0] : post.subName}</b>
+              <span className="limitText1">
+                <b>{post.trends.length > 0 ? post.trends[0] : post.subName}</b>
+              </span>
             </div>
 
             {/* Post title, if no image */}

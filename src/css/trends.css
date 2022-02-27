@@ -333,6 +333,14 @@
   border: 1px solid rgb(0, 0, 0, 0.1);
 }
 
+.limitText1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
 .limitText4 {
   overflow: hidden;
   text-overflow: ellipsis;
