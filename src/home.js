@@ -50,7 +50,7 @@ export default function Home(props) {
           .map((a) => a.value);
 
         // Creating cards for communities
-        for (let i = 0; i < subData.length && state.cardsDOM.length < 10; i++) {
+        for (let i = 0; i < subData.length && state.cardsDOM.length < 5; i++) {
           state.cardsDOM.push(
             <a
               key={"homeCard-" + i}
@@ -81,26 +81,9 @@ export default function Home(props) {
     };
   });
 
-  // Loading objects
-  const loadingObj = (key) => (
-    <button
-      key={"homeLoading-" + key}
-      className={props.getClass("homeCards")}
-      style={{ color: "transparent" }}
-    >
-      Loading
-      <br />
-      <span style={{ fontSize: "14px" }}>Loading</span>
-    </button>
-  );
-
   return (
     <div className="centering">
-      <div className="cardsLoc">
-        {state.loaded === true
-          ? state.cardsDOM
-          : [...Array(10).keys()].map((n) => (n = loadingObj(n)))}
-      </div>
+      <div className="cardsLoc">{state.loaded === true && state.cardsDOM}</div>
     </div>
   );
 }
