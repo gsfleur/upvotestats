@@ -76,14 +76,6 @@
   .postTitle {
     width: calc(100% - 90px);
   }
-  .limitText3 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
 }
 
 @media screen and (max-width: 340px) {

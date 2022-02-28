@@ -102,6 +102,7 @@
 .imgBodyContainer {
   display: block;
   width: 100%;
+  margin-top: 3px;
   margin-bottom: 5px;
 }
 
@@ -146,6 +147,7 @@
   color: gray;
   width: 100%;
   margin-bottom: 5px;
+  line-height: normal;
 }
 .postRankLight {
   color: #191919;
@@ -161,6 +163,7 @@
   font-size: 13.5px;
   width: calc(100% - 120px);
   margin-bottom: 5px;
+  line-height: normal;
 }
 .postTitleLight {
   color: #191919;
@@ -170,6 +173,7 @@
   font-size: 13px;
   color: gainsboro;
   margin-bottom: 5px;
+  line-height: normal;
 }
 .postTextLight {
   color: #191919;
@@ -185,6 +189,7 @@
   position: relative;
   width: fit-content;
   margin-bottom: 5px;
+  line-height: normal;
 }
 .postOutLink:hover {
   text-decoration: underline;
@@ -194,6 +199,7 @@
   font-size: 13px;
   margin-bottom: 5px;
   color: gainsboro;
+  line-height: normal;
 }
 .postAuthorLight {
   color: #191919;
@@ -231,6 +237,7 @@
 .postStats {
   font-size: 13px;
   color: gray;
+  line-height: normal;
 }
 .postStatsLight {
   color: #191919;
@@ -338,16 +345,24 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
-  line-clamp: 1;
   -webkit-box-orient: vertical;
+  line-height: normal;
+}
+.limitText3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: normal;
 }
 .limitText4 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 4;
-  line-clamp: 4;
   -webkit-box-orient: vertical;
+  line-height: normal;
 }
 
 div::-webkit-scrollbar {

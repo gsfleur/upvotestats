@@ -674,8 +674,7 @@ export default function TrendItem(props) {
             <div
               className="postTrendWithLoc"
               style={{
-                marginTop: loadableImg ? "0px" : "-2px",
-                maxHeight: isCollapsed() ? "64px" : "32px",
+                maxHeight: isCollapsed() ? "69px" : "35px",
               }}
             >
               {trendingWith}
