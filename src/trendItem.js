@@ -30,6 +30,14 @@ export default function TrendItem(props) {
           threshold={0}
           onChange={(inView) => {
             if (inView && !state.viewed) {
+              // Tracking number of trends viewed
+              if (window.gtag) {
+                window.gtag("event", "trend_view", {
+                  event_category: post.id,
+                  event_label: post.id,
+                });
+              }
+
               // Load post once in viewing range
               setState({ ...state, viewed: true });
             }
@@ -338,8 +346,18 @@ export default function TrendItem(props) {
             !e.target.id.includes("threadLink") &&
             !e.target.id.includes("outLink") &&
             !props.collapsedAll
-          )
+          ) {
+            if (!isCollapsed()) {
+              // Tracking number of trend post clicks
+              if (window.gtag) {
+                window.gtag("event", "trend_click", {
+                  event_category: post.id,
+                  event_label: post.id,
+                });
+              }
+            }
             setState({ ...state, collapsed: isCollapsed() ? false : true });
+          }
         }}
       >
         <div

@@ -91,6 +91,24 @@ export default function Trends(props) {
       // current page path
       const newPath = window.location.pathname + "?" + searchParams.toString();
 
+      if (window.gtag) {
+        // Tracking trend tab category
+        window.gtag("event", "trend_tab", {
+          event_category: state.sortTab,
+          event_label: state.sortTab,
+        });
+        // Tracking trend sort type
+        window.gtag("event", "trend_sort", {
+          event_category: state.sortBy,
+          event_label: state.sortBy,
+        });
+        // Tracking trend sort time
+        window.gtag("event", "trend_time", {
+          event_category: state.sortTime,
+          event_label: state.sortTime,
+        });
+      }
+
       // Update path if changed
       if (oldPath !== newPath) {
         window.scrollTo({ top: 0 });
