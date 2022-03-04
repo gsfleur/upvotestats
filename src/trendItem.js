@@ -98,12 +98,13 @@ export default function TrendItem(props) {
 
   // Load dom for all sub level trends
   for (let t = 1; t < trends.length; t++) {
+    const trendS = t === trends.length - 1 ? trends[t] : trends[t] + ",";
     trendingWith.push(
       <div
         className={props.getClass("postTrendWith")}
         key={"postTrendWith-" + i + "-" + t}
       >
-        <span className="limitText1">{trends[t]}</span>
+        <span className="limitText1">{trendS}</span>
       </div>
     );
   }
@@ -690,12 +691,12 @@ export default function TrendItem(props) {
           {/* Section for other trending phrases */}
           {trends.length > 1 && (
             <div
-              className="postTrendWithLoc"
+              className={props.getClass("postTrendWithLoc")}
               style={{
-                maxHeight: isCollapsed() ? "70px" : "35px",
+                maxHeight: isCollapsed() ? "100%" : "17.6px",
               }}
             >
-              {trendingWith}
+              Trending with: {trendingWith}
             </div>
           )}
 

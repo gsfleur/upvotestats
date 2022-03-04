@@ -102,7 +102,6 @@
 .imgBodyContainer {
   display: block;
   width: 100%;
-  margin-top: 3px;
   margin-bottom: 5px;
 }
 
@@ -203,30 +202,28 @@
 .postThreadLinkContainer {
   display: block;
   margin-bottom: 5px;
-  height: 14.95px;
+  height: 17.6px;
 }
 
 .postTrendWith {
-  color: gainsboro;
-  border-radius: 10px;
-  border: 1px solid #222222;
-  padding: 5px;
-  float: left;
-  margin-top: 5px;
-  margin-right: 5px;
+  color: silver;
 }
 .postTrendWithLight {
   color: #191919;
-  border: 1px solid rgb(0, 0, 0, 0.1);
 }
 
 .postTrendWithLoc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 5px;
   width: 100%;
-  display: block;
   font-size: 13px;
   color: gray;
   overflow: hidden;
-  margin-bottom: 7px;
+  margin-bottom: 5px;
+}
+.postTrendWithLocLight {
+  color: #191919;
 }
 
 .postStats {
