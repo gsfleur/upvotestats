@@ -102,7 +102,7 @@
 .imgBodyContainer {
   display: block;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .imgBody {
@@ -146,6 +146,7 @@
   color: gray;
   width: 100%;
   margin-bottom: 5px;
+  font-weight: 500;
 }
 .postRankLight {
   color: #191919;
@@ -207,6 +208,7 @@
 
 .postTrendWith {
   color: silver;
+  font-weight: normal;
 }
 .postTrendWithLight {
   color: #191919;
@@ -221,6 +223,7 @@
   color: gray;
   overflow: hidden;
   margin-bottom: 5px;
+  font-weight: 500;
 }
 .postTrendWithLocLight {
   color: #191919;
@@ -229,6 +232,7 @@
 .postStats {
   font-size: 13px;
   color: gray;
+  font-weight: 500;
 }
 .postStatsLight {
   color: #191919;
