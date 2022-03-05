@@ -215,9 +215,6 @@
 }
 
 .postTrendWithLoc {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px 5px;
   width: 100%;
   font-size: 13px;
   color: gray;

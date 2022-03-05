@@ -92,22 +92,8 @@ export default function TrendItem(props) {
       post.isGallery) &&
     props.showMedia;
 
-  // DOM for "trending with" section
-  let trendingWith = [];
+  // trends of posts
   const trends = post.trends;
-
-  // Load dom for all sub level trends
-  for (let t = 1; t < trends.length; t++) {
-    const trendS = t === trends.length - 1 ? trends[t] : trends[t] + ",";
-    trendingWith.push(
-      <div
-        className={props.getClass("postTrendWith")}
-        key={"postTrendWith-" + i + "-" + t}
-      >
-        <span className="limitText1">{trendS}</span>
-      </div>
-    );
-  }
 
   // Arary of words in title and text
   let postTitle = post.title;
@@ -690,13 +676,15 @@ export default function TrendItem(props) {
 
           {/* Section for other trending phrases */}
           {trends.length > 1 && (
-            <div
-              className={props.getClass("postTrendWithLoc")}
-              style={{
-                maxHeight: isCollapsed() ? "100%" : "17.6px",
-              }}
-            >
-              Trending with: {trendingWith}
+            <div className={props.getClass("postTrendWithLoc")}>
+              <span className={isCollapsed() ? "" : "limitText1"}>
+                Trending with:{" "}
+                <span className={props.getClass("postTrendWith")}>
+                  {trends
+                    .slice(1, isCollapsed() ? trends.length : 3)
+                    .join(", ")}
+                </span>
+              </span>
             </div>
           )}
 
