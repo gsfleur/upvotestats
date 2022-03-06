@@ -45,6 +45,15 @@
   }
 }
 
+.trendSortMenu {
+  font-size: 13px;
+  color: gray;
+  width: 90%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  display: none;
+}
+
 .iconImg {
   float: left;
   width: 30px;

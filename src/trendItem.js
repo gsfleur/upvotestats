@@ -58,16 +58,6 @@ export default function TrendItem(props) {
   const hours = Math.round(Math.abs(firstDate - secondDate) / (60 * 60 * 1000));
   const minutes = Math.round(Math.abs(firstDate - secondDate) / (60 * 1000));
 
-  // Adding blur to posts with images that are NSFW/Spoiler
-  let blurred = false;
-  if (post.urlDest != null) {
-    if (post.nsfw || post.spoiler) {
-      // changing thumbnail to img source
-      blurred = true;
-      post.urlToImage = post.source;
-    }
-  }
-
   // Setting thumbnail to source if thumbnail not available
   if (post.source != null) {
     if (post.urlToImage === "image" || post.urlToImage === "default")
@@ -78,6 +68,16 @@ export default function TrendItem(props) {
   if (post.isGallery && !post.isVideo) {
     if (post.mediaMetadata.length > 0) {
       post.source = post.mediaMetadata[post.galleryItem];
+    }
+  }
+
+  // Adding blur to posts with images that are NSFW/Spoiler
+  let blurred = false;
+  if (post.urlDest != null) {
+    if (post.nsfw || post.spoiler) {
+      // changing thumbnail to img source
+      blurred = true;
+      post.urlToImage = post.source;
     }
   }
 
@@ -100,13 +100,8 @@ export default function TrendItem(props) {
   let postText = fixMarkdown(post.text);
 
   // Adding content warning tags in text, later to be converted in markdown
-  if (loadableImg) {
-    if (post.nsfw) postTitle = "![NSFW](0) " + postTitle;
-    if (post.spoiler) postTitle = "![SPOILER](0) " + postTitle;
-  } else {
-    if (post.nsfw) postTitle += " ![NSFW](2.5)";
-    if (post.spoiler) postTitle += " ![SPOILER](2.5)";
-  }
+  if (post.spoiler) postTitle = "![SPOILER](0) " + postTitle;
+  if (post.nsfw) postTitle = "![NSFW](0) " + postTitle;
 
   // Image Source
   const imgSource = post.redditMediaDomain

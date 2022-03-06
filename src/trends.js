@@ -31,7 +31,6 @@ export default function Trends(props) {
     newsData: null,
     funnyData: null,
     sportsData: null,
-    showOptions: false,
     collapsedAll: false,
     nsfw: true,
     spoiler: true,
@@ -454,12 +453,15 @@ export default function Trends(props) {
                       <button
                         className={props.getClass("sortButton2")}
                         style={{ padding: "0px" }}
-                        onClick={() =>
-                          setState({
-                            ...state,
-                            showOptions: state.showOptions ? false : true,
-                          })
-                        }
+                        onClick={() => {
+                          // Toggle Display of Menu
+                          const elm = document.getElementById("trendSortMenu");
+                          if (elm) {
+                            if (elm.style.display === "block")
+                              elm.style.display = "none";
+                            else elm.style.display = "block";
+                          }
+                        }}
                       >
                         <div
                           style={{
@@ -669,102 +671,86 @@ export default function Trends(props) {
                   </div>
                 </div>
                 {/* Sorting Menu Options */}
-                {state.showOptions && (
-                  <div className="centering">
-                    <div
-                      style={{
-                        fontSize: "13px",
-                        color: "gray",
-                        width: "90%",
-                        marginBottom: "5px",
-                        marginTop: "5px",
-                      }}
+                <div className="centering">
+                  <div className="trendSortMenu" id="trendSortMenu">
+                    <FormControl
+                      focused
+                      variant="standard"
+                      htmlFor="selectTime"
                     >
-                      <FormControl
-                        focused
-                        variant="standard"
-                        htmlFor="selectTime"
+                      <InputLabel variant="standard">Time</InputLabel>
+                      <NativeSelect
+                        defaultValue={state.sortTime}
+                        className={classes.root}
+                        onChange={handleTimeChange}
+                        IconComponent={ExpandMoreIcon}
+                        id="selectTime"
                       >
-                        <InputLabel variant="standard">Time</InputLabel>
-                        <NativeSelect
-                          defaultValue={state.sortTime}
-                          className={classes.root}
-                          onChange={handleTimeChange}
-                          IconComponent={ExpandMoreIcon}
-                          id="selectTime"
-                        >
-                          <option value={"today"} style={{ color: "black" }}>
-                            Today
-                          </option>
-                          <option value={"week"} style={{ color: "black" }}>
-                            Week
-                          </option>
-                          <option value={"month"} style={{ color: "black" }}>
-                            Month
-                          </option>
-                        </NativeSelect>
-                      </FormControl>
-                      <FormControl
-                        focused
-                        variant="standard"
-                        style={{ marginLeft: "20px" }}
+                        <option value={"today"} style={{ color: "black" }}>
+                          Today
+                        </option>
+                        <option value={"week"} style={{ color: "black" }}>
+                          Week
+                        </option>
+                        <option value={"month"} style={{ color: "black" }}>
+                          Month
+                        </option>
+                      </NativeSelect>
+                    </FormControl>
+                    <FormControl
+                      focused
+                      variant="standard"
+                      style={{ marginLeft: "20px" }}
+                    >
+                      <InputLabel variant="standard" htmlFor="selectSort">
+                        Sort
+                      </InputLabel>
+                      <NativeSelect
+                        defaultValue={state.sortBy}
+                        className={classes.root}
+                        onChange={handleSortChange}
+                        IconComponent={ExpandMoreIcon}
+                        id="selectSort"
+                        width="100%"
                       >
-                        <InputLabel variant="standard" htmlFor="selectSort">
-                          Sort
-                        </InputLabel>
-                        <NativeSelect
-                          defaultValue={state.sortBy}
-                          className={classes.root}
-                          onChange={handleSortChange}
-                          IconComponent={ExpandMoreIcon}
-                          id="selectSort"
-                          width="100%"
+                        {state.sortTime === "today" && (
+                          <option value={"hot"} style={{ color: "black" }}>
+                            Hot
+                          </option>
+                        )}
+                        {state.sortTime === "today" && (
+                          <option value={"new"} style={{ color: "black" }}>
+                            New
+                          </option>
+                        )}
+                        <option value={"awards"} style={{ color: "black" }}>
+                          Awards
+                        </option>
+                        <option value={"coins"} style={{ color: "black" }}>
+                          Coins
+                        </option>
+                        <option value={"comments"} style={{ color: "black" }}>
+                          Comments
+                        </option>
+                        <option value={"upvotes"} style={{ color: "black" }}>
+                          Upvotes
+                        </option>
+                        <option value={"downvotes"} style={{ color: "black" }}>
+                          Downvotes
+                        </option>
+                        <option
+                          value={"upvoteratio"}
+                          style={{ color: "black" }}
                         >
-                          {state.sortTime === "today" && (
-                            <option value={"hot"} style={{ color: "black" }}>
-                              Hot
-                            </option>
-                          )}
-                          {state.sortTime === "today" && (
-                            <option value={"new"} style={{ color: "black" }}>
-                              New
-                            </option>
-                          )}
-                          <option value={"awards"} style={{ color: "black" }}>
-                            Awards
-                          </option>
-                          <option value={"coins"} style={{ color: "black" }}>
-                            Coins
-                          </option>
-                          <option value={"comments"} style={{ color: "black" }}>
-                            Comments
-                          </option>
-                          <option value={"upvotes"} style={{ color: "black" }}>
-                            Upvotes
-                          </option>
-                          <option
-                            value={"downvotes"}
-                            style={{ color: "black" }}
-                          >
-                            Downvotes
-                          </option>
-                          <option
-                            value={"upvoteratio"}
-                            style={{ color: "black" }}
-                          >
-                            Upvote Ratio
-                          </option>
-                          <option
-                            value={"downratio"}
-                            style={{ color: "black" }}
-                          >
-                            Downvote Ratio
-                          </option>
-                        </NativeSelect>
-                      </FormControl>
-                    </div>
+                          Upvote Ratio
+                        </option>
+                        <option value={"downratio"} style={{ color: "black" }}>
+                          Downvote Ratio
+                        </option>
+                      </NativeSelect>
+                    </FormControl>
                   </div>
-                )}
+                </div>
               </div>
             </div>
             {/* List of Trend Items */}
