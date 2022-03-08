@@ -100,8 +100,13 @@ export default function TrendItem(props) {
   let postText = fixMarkdown(post.text);
 
   // Adding content warning tags in text, later to be converted in markdown
-  if (post.spoiler) postTitle = "![SPOILER](0) " + postTitle;
-  if (post.nsfw) postTitle = "![NSFW](0) " + postTitle;
+  if (loadableImg) {
+    if (post.nsfw) postTitle = "![NSFW](0) " + postTitle;
+    if (post.spoiler) postTitle = "![SPOILER](0) " + postTitle;
+  } else {
+    if (post.nsfw) postTitle += " ![NSFW](2.5)";
+    if (post.spoiler) postTitle += " ![SPOILER](2.5)";
+  }
 
   // Image Source
   const imgSource = post.redditMediaDomain
