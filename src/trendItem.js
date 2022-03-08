@@ -131,6 +131,28 @@ export default function TrendItem(props) {
     />
   );
 
+  // Getting the width of the trends page
+  const trendWithWidth = document.getElementById("trends").offsetWidth;
+  // Getting the width of the trending with text
+  const trendWithTextWidth = getTextWidth(
+    "Trending with: " +
+      trends.slice(1, isCollapsed() ? trends.length : 3).join(", "),
+    getCanvasFontSize(document.getElementById("trends"))
+  );
+  // Getting the percentage of length taken
+  const trendWithLength = trendWithTextWidth / trendWithWidth;
+
+  // Whether post is streamable video link
+  const streamable =
+    post.urlDest != null && post.urlDest.includes("streamable.com");
+
+  // Getting streamable embed link
+  let streamableLink = "";
+  if (streamable) {
+    const parts = post.urlDest.split("/");
+    streamableLink = "https://streamable.com/e/" + parts[parts.length - 1];
+  }
+
   // Link Destination converted to string
   let destLink = post.urlDest;
   if (destLink != null) {
@@ -286,17 +308,6 @@ export default function TrendItem(props) {
       remarkPlugins={[remarkGfm]}
     />
   );
-
-  // Whether post is streamable video link
-  const streamable =
-    post.urlDest != null && post.urlDest.includes("streamable.com");
-
-  // Getting streamable embed link
-  let streamableLink = "";
-  if (streamable) {
-    const parts = post.urlDest.split("/");
-    streamableLink = "https://streamable.com/e/" + parts[parts.length - 1];
-  }
 
   // DOM of trend item
   return (
@@ -676,7 +687,14 @@ export default function TrendItem(props) {
                 Trending with:{" "}
                 <span className={props.getClass("postTrendWith")}>
                   {trends
-                    .slice(1, isCollapsed() ? trends.length : 3)
+                    .slice(
+                      1,
+                      isCollapsed()
+                        ? trends.length
+                        : trendWithLength >= 1
+                        ? 2
+                        : 3
+                    )
                     .join(", ")}
                 </span>
               </span>
@@ -821,4 +839,33 @@ export default function TrendItem(props) {
     }
     return text;
   }
+}
+
+/**
+ * Uses canvas.measureText to compute and return the width of the given text of given font in pixels.
+ *
+ * @param {String} text The text to be rendered.
+ * @param {String} font The css font descriptor that text is to be rendered with (e.g. "bold 14px verdana").
+ */
+function getTextWidth(text, font) {
+  // re-use canvas object for better performance
+  const canvas =
+    getTextWidth.canvas ||
+    (getTextWidth.canvas = document.createElement("canvas"));
+  const context = canvas.getContext("2d");
+  context.font = font;
+  const metrics = context.measureText(text);
+  return metrics.width;
+}
+
+function getCssStyle(element, prop) {
+  return window.getComputedStyle(element, null).getPropertyValue(prop);
+}
+
+function getCanvasFontSize(el = document.body) {
+  const fontWeight = getCssStyle(el, "font-weight") || "normal";
+  const fontSize = getCssStyle(el, "font-size") || "16px";
+  const fontFamily = getCssStyle(el, "font-family") || "Times New Roman";
+
+  return `${fontWeight} ${fontSize} ${fontFamily}`;
 }

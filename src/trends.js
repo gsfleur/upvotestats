@@ -389,7 +389,7 @@ export default function Trends(props) {
 
   return (
     <div className="centering">
-      <div className={props.getClass("trends")}>
+      <div className={props.getClass("trends")} id="trends">
         {!state.loaded && (
           <div>
             {/* Loading Keyframe Display */}
