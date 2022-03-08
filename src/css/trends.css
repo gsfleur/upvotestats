@@ -216,7 +216,7 @@
 }
 
 .postTrendWith {
-  color: silver;
+  color: gainsboro;
   font-weight: normal;
 }
 .postTrendWithLight {
@@ -226,7 +226,7 @@
 .postTrendWithLoc {
   width: 100%;
   font-size: 13px;
-  color: gainsboro;
+  color: gray;
   overflow: hidden;
   margin-bottom: 5px;
   font-weight: 500;
