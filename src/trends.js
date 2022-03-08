@@ -354,22 +354,10 @@ export default function Trends(props) {
       <div
         className="loading"
         style={{
-          margin: "0px 0px 15px 0px",
-          width: "230px",
-          height: "20px",
-          border:
-            props.theme === "light"
-              ? "1px solid rgb(0, 0, 0, 0.1)"
-              : "1px solid #222222",
-          borderRadius: "20px",
-        }}
-      ></div>
-      <div
-        className="loading"
-        style={{
           overflow: "auto",
           display: "inline-block",
           width: "100%",
+          marginTop: "10px",
           marginBottom: "10px",
         }}
       >
