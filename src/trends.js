@@ -238,8 +238,7 @@ export default function Trends(props) {
 
         // Key of hidden posts requested user (new key every month)
         const d = new Date();
-        const removeKey =
-          "upvotestats-hidden-" + d.getMonth() + "-" + d.getFullYear();
+        const removeKey = "upvotestats-hidden-" + d.getFullYear();
 
         // Initializing stored key value pair
         if (localStorage.getItem(removeKey) === null)
@@ -259,8 +258,7 @@ export default function Trends(props) {
         const handleReport = (event) => {
           const d = new Date();
           const id = event.target.id.split("-")[1];
-          const key =
-            "upvotestats-hidden-" + d.getMonth() + "-" + d.getFullYear();
+          const key = "upvotestats-hidden-" + d.getFullYear();
 
           // Initializing stored key value pair
           if (localStorage.getItem(key) === null) localStorage.setItem(key, "");
@@ -286,7 +284,7 @@ export default function Trends(props) {
             collapsedAll={state.collapsedAll}
             handleReport={handleReport}
             postListDOMLength={postListDOM.length}
-            key={state.sortTab + "-post-" + i}
+            key={state.sortTab + "-post-" + i + "-" + new Date().getTime()}
             showMedia={state.media}
             getClass={props.getClass}
             theme={props.theme}
