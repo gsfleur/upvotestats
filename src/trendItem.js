@@ -209,7 +209,7 @@ export default function TrendItem(props) {
         href={"https://www.reddit.com/u/" + post.author}
         rel="noreferrer"
         target="_blank"
-        title="View profile"
+        title={"Visit u/" + post.author + "'s profile"}
       >
         {post.author}
       </a>
@@ -378,7 +378,7 @@ export default function TrendItem(props) {
                 href={"https://www.reddit.com/r/" + post.subreddit}
                 rel="noreferrer"
                 target="_blank"
-                title="View subreddit"
+                title={"Visit r/" + post.subreddit}
               >
                 {post.subName}
               </a>{" "}
@@ -449,7 +449,7 @@ export default function TrendItem(props) {
                       href={"https://www.reddit.com/u/" + post.author}
                       rel="noreferrer"
                       target="_blank"
-                      title="View profile"
+                      title={"Visit u/" + post.author + "'s profile"}
                     >
                       <img
                         className="iconImg"
@@ -477,7 +477,7 @@ export default function TrendItem(props) {
                         href={"https://www.reddit.com/u/" + post.author}
                         rel="noreferrer"
                         target="_blank"
-                        title="View profile"
+                        title={"Visit u/" + post.author + "'s profile"}
                         style={{
                           color:
                             props.theme === "light" ? "#191919" : "gainsboro",
@@ -718,7 +718,7 @@ export default function TrendItem(props) {
               href={post.url}
               target="_blank"
               rel="noreferrer"
-              title="View comments"
+              title="Read comments"
               className={props.getClass("searchLink2")}
             >
               {numToString(post.comments)} comments

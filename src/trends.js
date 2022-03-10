@@ -269,6 +269,14 @@ export default function Trends(props) {
             localStorage.getItem(key) + " " + postLinks[id]
           );
 
+          // Tracking reported posts
+          if (window.gtag) {
+            window.gtag("event", "trend_report", {
+              event_category: posts[i].id,
+              event_label: posts[i].id,
+            });
+          }
+
           setState({
             ...state,
             loaded: false,
