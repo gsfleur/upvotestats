@@ -58,17 +58,17 @@ export default function TrendItem(props) {
   const hours = Math.round(Math.abs(firstDate - secondDate) / (60 * 60 * 1000));
   const minutes = Math.round(Math.abs(firstDate - secondDate) / (60 * 1000));
 
-  // Setting thumbnail to source if thumbnail not available
-  if (post.source != null) {
-    if (post.urlToImage === "image" || post.urlToImage === "default")
-      post.urlToImage = post.source;
-  }
-
   // Setting source to specific image in reddit gallery
   if (post.isGallery && !post.isVideo) {
     if (post.mediaMetadata.length > 0) {
       post.source = post.mediaMetadata[post.galleryItem];
     }
+  }
+
+  // Setting thumbnail to source if thumbnail not available
+  if (post.source != null) {
+    if (post.urlToImage === "image" || post.urlToImage === "default")
+      post.urlToImage = post.source;
   }
 
   // Adding blur to posts with images that are NSFW/Spoiler
