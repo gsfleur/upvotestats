@@ -31,6 +31,7 @@
   width: 100%;
   max-width: 650px;
   background: rgb(10, 10, 10);
+  border-bottom: 1px solid transparent;
 }
 .trendMenuLight {
   background: rgb(255, 255, 255);
