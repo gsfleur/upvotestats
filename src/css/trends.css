@@ -20,8 +20,8 @@
 }
 
 #trendLoc {
-  top: -100px;
-  transition: top 0.2s ease;
+  position: sticky;
+  top: -0.5px;
   z-index: 99999;
   backdrop-filter: blur(12px);
   backface-visibility: hidden;

@@ -22,37 +22,39 @@ export default function Scroll(props) {
         const scrolledPercent =
           (window.innerHeight + window.pageYOffset) /
           window.document.body.scrollHeight;
-        if (
-          scrolledPercent >= 0.2 &&
-          window.document.body.scrollHeight > 4000 &&
-          window.innerWidth > 600
-        ) {
-          document.getElementById("backToTop").style.display = "inline";
-        } else {
-          document.getElementById("backToTop").style.display = "none";
+
+        // backToTop button DOM
+        const backToTop = document.getElementById("backToTop");
+
+        if (backToTop) {
+          if (
+            scrolledPercent >= 0.2 &&
+            window.document.body.scrollHeight > 4000 &&
+            window.innerWidth > 600
+          ) {
+            if (backToTop.style.display !== "inline")
+              backToTop.style.display = "inline";
+          } else {
+            if (backToTop.style.display !== "none")
+              backToTop.style.display = "none";
+          }
         }
 
         // trend menu DOM
         const trendMenu = document.getElementById("trendMenu");
-        const trendLoc = document.getElementById("trendLoc");
 
-        // Fix trend menu to top of screen
+        // Setting trend menu bottom border
         if (trendMenu != null) {
-          if (window.pageYOffset > 154) {
-            if (trendLoc.style.position !== "sticky") {
-              trendLoc.style.position = "sticky";
-              trendLoc.style.top = "-0.5px";
+          if (window.pageYOffset > 69) {
+            if (trendMenu.style.borderBottom === "none") {
               trendMenu.style.borderBottom =
                 props.theme === "light"
                   ? "1px solid rgb(0, 0, 0, 0.1)"
                   : "1px solid #222222";
             }
           } else {
-            if (trendLoc.style.position !== "static") {
-              trendLoc.style.position = "static";
-              trendLoc.style.top = "-100px";
+            if (trendMenu.style.borderBottom !== "none")
               trendMenu.style.borderBottom = "none";
-            }
           }
         }
       };
