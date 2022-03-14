@@ -354,6 +354,12 @@ export default function TrendItem(props) {
                 });
               }
             }
+
+            // scroll back to top of trend
+            document
+              .getElementById("anchor-" + i)
+              .scrollIntoView({ behavior: "smooth" });
+
             setState({ ...state, collapsed: isCollapsed() ? false : true });
           }
         }}
@@ -363,6 +369,12 @@ export default function TrendItem(props) {
           id={"trends-" + i}
           style={{ opacity: state.views < 1 ? 0 : 1 }}
         >
+          <div style={{ position: "relative" }}>
+            <div
+              id={"anchor-" + i}
+              style={{ position: "absolute", top: "-95px" }}
+            ></div>
+          </div>
           <div
             style={{
               display: "block",
