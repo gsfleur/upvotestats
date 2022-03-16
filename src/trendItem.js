@@ -355,10 +355,27 @@ export default function TrendItem(props) {
               }
             }
 
-            // scroll back to top of trend
-            document
-              .getElementById("anchor-" + i)
-              .scrollIntoView({ behavior: "smooth" });
+            // Percetange of space occupied in the window by a trend
+            const elm = document.getElementById("trends-" + i);
+            const ratio = elm.offsetHeight / window.innerHeight;
+
+            // Distance from top of trend to the bottom of window
+            const pixelsFromBottom = Math.abs(
+              elm.offsetTop - window.innerHeight - window.scrollY
+            );
+
+            // scroll back to top of trend if content of post
+            // is longer than height of users viewer port and
+            // the trend occupies more than 50% of the users window
+            if (
+              isCollapsed() &&
+              ratio >= 1 &&
+              pixelsFromBottom > window.innerHeight / 2
+            ) {
+              document
+                .getElementById("anchor-" + i)
+                .scrollIntoView({ behavior: "smooth" });
+            }
 
             setState({ ...state, collapsed: isCollapsed() ? false : true });
           }

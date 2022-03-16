@@ -20,7 +20,7 @@ export default function Scroll(props) {
       // Hide and Display back to top button
       window.onscroll = function (ev) {
         const scrolledPercent =
-          (window.innerHeight + window.pageYOffset) /
+          (window.innerHeight + window.scrollY) /
           window.document.body.scrollHeight;
 
         // backToTop button DOM
