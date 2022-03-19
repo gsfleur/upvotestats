@@ -357,21 +357,18 @@ export default function TrendItem(props) {
 
             // Percetange of space occupied in the window by a trend
             const elm = document.getElementById("trends-" + i);
-            const ratio = elm.offsetHeight / window.innerHeight;
 
             // Distance from top of trend to the bottom of window
             const pixelsFromBottom = Math.abs(
               elm.offsetTop - window.innerHeight - window.scrollY
             );
 
-            // scroll back to top of trend if content of post
-            // is longer than height of users viewer port and
-            // the trend occupies more than 50% of the users window
-            if (
-              isCollapsed() &&
-              ratio >= 1 &&
-              pixelsFromBottom > window.innerHeight / 2
-            ) {
+            // Distance from top of trend to the top of window
+            const pixelsFromTop = pixelsFromBottom - window.innerHeight;
+
+            // scroll back to top of trend when uncollapsing
+            // if top of trend is out of view due to scrolling down
+            if (isCollapsed() && pixelsFromTop >= -70) {
               document
                 .getElementById("anchor-" + i)
                 .scrollIntoView({ behavior: "smooth" });
