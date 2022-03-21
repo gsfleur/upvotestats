@@ -245,6 +245,15 @@ export default function TrendItem(props) {
             style={{ float: "right" }}
             id={"threadLink" + i}
             title="View on reddit"
+            onClick={() => {
+              // Tracking trend link click
+              if (window.gtag) {
+                window.gtag("event", "trend_link", {
+                  event_category: post.id,
+                  event_label: post.id,
+                });
+              }
+            }}
           >
             View thread
           </a>
@@ -368,11 +377,8 @@ export default function TrendItem(props) {
 
             // scroll back to top of trend when uncollapsing
             // if top of trend is out of view due to scrolling down
-            if (isCollapsed() && pixelsFromTop >= -70) {
-              document
-                .getElementById("anchor-" + i)
-                .scrollIntoView({ behavior: "smooth" });
-            }
+            if (isCollapsed() && pixelsFromTop >= -70)
+              document.getElementById("anchor-" + i).scrollIntoView();
 
             setState({ ...state, collapsed: isCollapsed() ? false : true });
           }
@@ -746,6 +752,15 @@ export default function TrendItem(props) {
               rel="noreferrer"
               title="Read comments"
               className={props.getClass("searchLink2")}
+              onClick={() => {
+                // Tracking trend link click
+                if (window.gtag) {
+                  window.gtag("event", "trend_link", {
+                    event_category: post.id,
+                    event_label: post.id,
+                  });
+                }
+              }}
             >
               {numToString(post.comments)} comments
             </a>
