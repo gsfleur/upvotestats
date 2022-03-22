@@ -1,17 +1,23 @@
 import axios from "axios";
+import React from "react";
 import TrendItem from "./trendItem";
+import { styled } from "@mui/system";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import { makeStyles } from "@material-ui/core/styles";
-import NativeSelect from "@mui/material/NativeSelect";
+import PopperUnstyled from "@mui/base/PopperUnstyled";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
+import SelectUnstyled, {
+  selectUnstyledClasses,
+} from "@mui/base/SelectUnstyled";
+import OptionUnstyled, {
+  optionUnstyledClasses,
+} from "@mui/base/OptionUnstyled";
 
 export default function Trends(props) {
   window.document.title = "Reddit Trends - Upvote Stats";
@@ -169,49 +175,151 @@ export default function Trends(props) {
     };
   });
 
+  // Dropdown menu styling
+  const blue = {
+    100: "#DAECFF",
+    200: "#99CCF3",
+    400: "#3399FF",
+    500: "#007FFF",
+    600: "#0072E5",
+    900: "#003A75",
+  };
+
+  const grey = {
+    100: "#E7EBF0",
+    200: "#E0E3E7",
+    300: "rgb(0, 0, 0, 0.1)",
+    400: "dodgerblue",
+    500: "#A0AAB4",
+    600: "#6F7E8C",
+    700: "dodgerblue",
+    800: "#222222",
+    900: "#191919",
+  };
+
+  const StyledButton = styled("button")(
+    ({ theme }) => `
+    font-size: 14px;
+    box-sizing: border-box;
+    background: transparent;
+    border: 1px solid ${props.theme === "dark" ? grey[800] : grey[300]};
+    border-radius: 10px;
+    padding: 5px;
+    width: 105%;
+    text-align: left;
+    color: ${props.theme === "dark" ? "silver" : grey[900]};
+
+    &:hover {
+      background: none;
+      border-color: ${props.theme === "dark" ? grey[700] : grey[400]};
+    }
+
+    &.${selectUnstyledClasses.focusVisible} {
+      outline: 3px solid ${props.theme === "dark" ? blue[600] : blue[100]};
+    }
+
+    &.${selectUnstyledClasses.expanded} {
+      &::after {
+        content: '▴';
+      }
+    }
+
+    &::after {
+      content: '▾';
+      float: right;
+    }
+    `
+  );
+
+  const StyledListbox = styled("ul")(
+    ({ theme }) => `
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 5px;
+    margin: 10px 0px 10px 0px;
+    width: 150px;
+    background: ${props.theme === "dark" ? grey[900] : "#fff"};
+    border: 1px solid ${props.theme === "dark" ? grey[800] : grey[300]};
+    border-radius: 10px;
+    color: ${props.theme === "dark" ? "silver" : grey[900]};
+    overflow: auto;
+    outline: 0px;
+    `
+  );
+
+  const StyledOption = styled(OptionUnstyled)(
+    ({ theme }) => `
+    list-style: none;
+    padding: 5px;
+    border-radius: 0.45em;
+    cursor: default;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &.${optionUnstyledClasses.selected} {
+      background-color: ${props.theme === "dark" ? blue[900] : blue[100]};
+      color: ${props.theme === "dark" ? blue[100] : blue[900]};
+    }
+
+    &.${optionUnstyledClasses.highlighted} {
+      background-color: ${props.theme === "dark" ? grey[800] : grey[100]};
+      color: ${props.theme === "dark" ? "silver" : grey[900]};
+    }
+
+    &.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected} {
+      background-color: ${props.theme === "dark" ? blue[900] : blue[100]};
+      color: ${props.theme === "dark" ? blue[100] : blue[900]};
+    }
+
+    &.${optionUnstyledClasses.disabled} {
+      color: ${props.theme === "dark" ? grey[700] : grey[400]};
+    }
+
+    &:hover:not(.${optionUnstyledClasses.disabled}) {
+      background-color: ${props.theme === "dark" ? grey[800] : grey[100]};
+      color: ${props.theme === "dark" ? "silver" : grey[900]};
+    }
+    `
+  );
+
+  const StyledPopper = styled(PopperUnstyled)`
+    z-index: 1;
+  `;
+
+  const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
+    const components = {
+      Root: StyledButton,
+      Listbox: StyledListbox,
+      Popper: StyledPopper,
+      ...props.components,
+    };
+
+    return <SelectUnstyled {...props} ref={ref} components={components} />;
+  });
+
   // Handle Time Change Event
-  const handleTimeChange = (event) => {
+  const handleTimeChange = (time) => {
     const onlyForToday = state.sortBy === "hot" || state.sortBy === "new";
     // if sort is hot/new and date is not today, default to upvotes
-    if (event.target.value !== "today" && onlyForToday)
-      state.sortBy = "upvotes";
+    if (time !== "today" && onlyForToday) state.sortBy = "upvotes";
 
     setState({
       ...state,
       loaded: false,
-      sortTime: event.target.value,
+      sortTime: time,
     });
   };
 
   // Handle Sort Change Event
-  const handleSortChange = (event) => {
+  const handleSortChange = (sort) => {
     setState({
       ...state,
       loaded: false,
-      sortBy: event.target.value,
+      sortBy: sort,
     });
   };
-
-  // Dropdown menu styling
-  const useStyles = makeStyles({
-    root: {
-      "& .MuiNativeSelect-select": {
-        color: props.theme === "light" ? "#191919" : "silver",
-        padding: "5px",
-        fontSize: "13px",
-        height: "25px",
-        "&:focus": {
-          backgroundColor: "transparent",
-        },
-      },
-      "& .MuiNativeSelect-icon": {
-        color: props.theme === "light" ? "#191919" : "silver",
-      },
-    },
-  });
-
-  // Material UI Styling
-  const classes = useStyles();
 
   let postListDOM = []; // DOM for posts
   let postLinks = []; // urls of all posts
@@ -672,76 +780,48 @@ export default function Trends(props) {
                       variant="standard"
                       htmlFor="selectTime"
                     >
-                      <InputLabel variant="standard">Time</InputLabel>
-                      <NativeSelect
+                      <CustomSelect
                         defaultValue={state.sortTime}
-                        className={classes.root}
                         onChange={handleTimeChange}
-                        IconComponent={ExpandMoreIcon}
                         id="selectTime"
                       >
-                        <option value={"today"} style={{ color: "black" }}>
-                          Today
-                        </option>
-                        <option value={"week"} style={{ color: "black" }}>
-                          Week
-                        </option>
-                        <option value={"month"} style={{ color: "black" }}>
-                          Month
-                        </option>
-                      </NativeSelect>
+                        <StyledOption value={"today"}>Today</StyledOption>
+                        <StyledOption value={"week"}>Week</StyledOption>
+                        <StyledOption value={"month"}>Month</StyledOption>
+                      </CustomSelect>
                     </FormControl>
                     <FormControl
                       focused
                       variant="standard"
-                      style={{ marginLeft: "20px" }}
+                      style={{ marginLeft: "10px" }}
                     >
-                      <InputLabel variant="standard" htmlFor="selectSort">
-                        Sort
-                      </InputLabel>
-                      <NativeSelect
+                      <CustomSelect
                         defaultValue={state.sortBy}
-                        className={classes.root}
                         onChange={handleSortChange}
                         IconComponent={ExpandMoreIcon}
                         id="selectSort"
                         width="100%"
                       >
                         {state.sortTime === "today" && (
-                          <option value={"hot"} style={{ color: "black" }}>
-                            Hot
-                          </option>
+                          <StyledOption value={"hot"}>Hot</StyledOption>
                         )}
                         {state.sortTime === "today" && (
-                          <option value={"new"} style={{ color: "black" }}>
-                            New
-                          </option>
+                          <StyledOption value={"new"}>New</StyledOption>
                         )}
-                        <option value={"awards"} style={{ color: "black" }}>
-                          Awards
-                        </option>
-                        <option value={"coins"} style={{ color: "black" }}>
-                          Coins
-                        </option>
-                        <option value={"comments"} style={{ color: "black" }}>
-                          Comments
-                        </option>
-                        <option value={"upvotes"} style={{ color: "black" }}>
-                          Upvotes
-                        </option>
-                        <option value={"downvotes"} style={{ color: "black" }}>
+                        <StyledOption value={"awards"}>Awards</StyledOption>
+                        <StyledOption value={"coins"}>Coins</StyledOption>
+                        <StyledOption value={"comments"}>Comments</StyledOption>
+                        <StyledOption value={"upvotes"}>Upvotes</StyledOption>
+                        <StyledOption value={"downvotes"}>
                           Downvotes
-                        </option>
-                        <option
-                          value={"upvoteratio"}
-                          style={{ color: "black" }}
-                        >
+                        </StyledOption>
+                        <StyledOption value={"upvoteratio"}>
                           Upvote Ratio
-                        </option>
-                        <option value={"downratio"} style={{ color: "black" }}>
+                        </StyledOption>
+                        <StyledOption value={"downratio"}>
                           Downvote Ratio
-                        </option>
-                      </NativeSelect>
+                        </StyledOption>
+                      </CustomSelect>
                     </FormControl>
                   </div>
                 </div>
