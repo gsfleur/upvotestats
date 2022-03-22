@@ -203,7 +203,7 @@ export default function Trends(props) {
     box-sizing: border-box;
     background: transparent;
     border: none;
-    border-radius: 10px;
+    border-radius: 0px;
     padding: 0px;
     width: 105%;
     text-align: left;
