@@ -721,7 +721,7 @@ export default function TrendItem(props) {
           {trends.length > 1 && (
             <div className={props.getClass("postTrendWithLoc")}>
               <span className={isCollapsed() ? "" : "limitText1"}>
-                Trending with{" "}
+                Trending with:{" "}
                 <span className={props.getClass("postTrendWith")}>
                   {trends
                     .slice(
