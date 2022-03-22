@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
 import PopperUnstyled from "@mui/base/PopperUnstyled";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
@@ -382,7 +381,7 @@ export default function Trends(props) {
           if (window.gtag) {
             window.gtag("event", "trend_report", {
               event_category: posts[i].id,
-              event_label: posts[i].id,
+              event_label: posts[i].title,
             });
           }
 
@@ -799,7 +798,6 @@ export default function Trends(props) {
                       <CustomSelect
                         defaultValue={state.sortBy}
                         onChange={handleSortChange}
-                        IconComponent={ExpandMoreIcon}
                         id="selectSort"
                         width="100%"
                       >

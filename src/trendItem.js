@@ -34,7 +34,7 @@ export default function TrendItem(props) {
               if (window.gtag) {
                 window.gtag("event", "trend_view", {
                   event_category: post.id,
-                  event_label: post.id,
+                  event_label: post.title,
                 });
               }
 
@@ -250,7 +250,7 @@ export default function TrendItem(props) {
               if (window.gtag) {
                 window.gtag("event", "trend_link", {
                   event_category: post.id,
-                  event_label: post.id,
+                  event_label: post.title,
                 });
               }
             }}
@@ -359,7 +359,7 @@ export default function TrendItem(props) {
               if (window.gtag) {
                 window.gtag("event", "trend_click", {
                   event_category: post.id,
-                  event_label: post.id,
+                  event_label: post.title,
                 });
               }
             }
@@ -757,7 +757,7 @@ export default function TrendItem(props) {
                 if (window.gtag) {
                   window.gtag("event", "trend_link", {
                     event_category: post.id,
-                    event_label: post.id,
+                    event_label: post.title,
                   });
                 }
               }}
