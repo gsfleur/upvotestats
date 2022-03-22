@@ -199,19 +199,20 @@ export default function Trends(props) {
 
   const StyledButton = styled("button")(
     ({ theme }) => `
-    font-size: 14px;
+    font-size: 13px;
     box-sizing: border-box;
     background: transparent;
-    border: 1px solid ${props.theme === "dark" ? grey[800] : grey[300]};
+    border: none;
     border-radius: 10px;
-    padding: 5px 10px 5px 10px;
+    padding: 0px;
     width: 105%;
     text-align: left;
+    font-weight: bold;
     color: ${props.theme === "dark" ? "silver" : grey[900]};
 
     &:hover {
       background: none;
-      border-color: ${props.theme === "dark" ? grey[700] : grey[400]};
+      color: dodgerblue;
     }
 
     &.${selectUnstyledClasses.focusVisible} {
@@ -233,7 +234,7 @@ export default function Trends(props) {
 
   const StyledListbox = styled("ul")(
     ({ theme }) => `
-    font-size: 14px;
+    font-size: 13px;
     box-sizing: border-box;
     padding: 5px;
     margin: 10px 0px 10px 0px;
