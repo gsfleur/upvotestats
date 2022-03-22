@@ -204,7 +204,7 @@ export default function Trends(props) {
     background: transparent;
     border: 1px solid ${props.theme === "dark" ? grey[800] : grey[300]};
     border-radius: 10px;
-    padding: 5px;
+    padding: 5px 10px 5px 10px;
     width: 105%;
     text-align: left;
     color: ${props.theme === "dark" ? "silver" : grey[900]};
