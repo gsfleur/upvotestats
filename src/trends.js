@@ -1,22 +1,16 @@
 import axios from "axios";
 import React from "react";
+import Dropdown from "./dropdown";
 import TrendItem from "./trendItem";
-import { styled } from "@mui/system";
+import DropOption from "./dropoption";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import FormControl from "@mui/material/FormControl";
-import PopperUnstyled from "@mui/base/PopperUnstyled";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 import UnfoldLessIcon from "@mui/icons-material/UnfoldLess";
 import SortRoundedIcon from "@mui/icons-material/SortRounded";
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
-import SelectUnstyled, {
-  selectUnstyledClasses,
-} from "@mui/base/SelectUnstyled";
-import OptionUnstyled, {
-  optionUnstyledClasses,
-} from "@mui/base/OptionUnstyled";
 
 export default function Trends(props) {
   window.document.title = "Reddit Trends - Upvote Stats";
@@ -172,131 +166,6 @@ export default function Trends(props) {
     return () => {
       componentMounted = false;
     };
-  });
-
-  // Dropdown menu styling
-  const blue = {
-    100: "#DAECFF",
-    200: "#99CCF3",
-    400: "#3399FF",
-    500: "#007FFF",
-    600: "#0072E5",
-    900: "#003A75",
-  };
-
-  const grey = {
-    100: "#E7EBF0",
-    200: "#E0E3E7",
-    300: "rgb(0, 0, 0, 0.1)",
-    400: "dodgerblue",
-    500: "#A0AAB4",
-    600: "#6F7E8C",
-    700: "dodgerblue",
-    800: "#222222",
-    900: "#191919",
-  };
-
-  const StyledButton = styled("button")(
-    ({ theme }) => `
-    font-size: 13px;
-    box-sizing: border-box;
-    background: transparent;
-    border: none;
-    border-radius: 0px;
-    padding: 0px;
-    width: 105%;
-    text-align: left;
-    font-weight: bold;
-    color: ${props.theme === "dark" ? "silver" : grey[900]};
-
-    &:hover {
-      background: none;
-      color: dodgerblue;
-    }
-
-    &.${selectUnstyledClasses.focusVisible} {
-      outline: 3px solid ${props.theme === "dark" ? blue[600] : blue[100]};
-    }
-
-    &.${selectUnstyledClasses.expanded} {
-      &::after {
-        content: '▴';
-      }
-    }
-
-    &::after {
-      content: '▾';
-      float: right;
-    }
-    `
-  );
-
-  const StyledListbox = styled("ul")(
-    ({ theme }) => `
-    font-size: 13px;
-    box-sizing: border-box;
-    padding: 5px;
-    margin: 10px 0px 10px 0px;
-    width: 150px;
-    background: ${props.theme === "dark" ? grey[900] : "#fff"};
-    border: 1px solid ${props.theme === "dark" ? grey[800] : grey[300]};
-    border-radius: 10px;
-    color: ${props.theme === "dark" ? "silver" : grey[900]};
-    overflow: auto;
-    outline: 0px;
-    `
-  );
-
-  const StyledOption = styled(OptionUnstyled)(
-    ({ theme }) => `
-    list-style: none;
-    padding: 5px;
-    border-radius: 0.45em;
-    cursor: default;
-
-    &:last-of-type {
-      border-bottom: none;
-    }
-
-    &.${optionUnstyledClasses.selected} {
-      background-color: ${props.theme === "dark" ? blue[900] : blue[100]};
-      color: ${props.theme === "dark" ? blue[100] : blue[900]};
-    }
-
-    &.${optionUnstyledClasses.highlighted} {
-      background-color: ${props.theme === "dark" ? grey[800] : grey[100]};
-      color: ${props.theme === "dark" ? "silver" : grey[900]};
-    }
-
-    &.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected} {
-      background-color: ${props.theme === "dark" ? blue[900] : blue[100]};
-      color: ${props.theme === "dark" ? blue[100] : blue[900]};
-    }
-
-    &.${optionUnstyledClasses.disabled} {
-      color: ${props.theme === "dark" ? grey[700] : grey[400]};
-    }
-
-    &:hover:not(.${optionUnstyledClasses.disabled}) {
-      background-color: ${props.theme === "dark" ? grey[800] : grey[100]};
-      color: ${props.theme === "dark" ? "silver" : grey[900]};
-    }
-    `
-  );
-
-  const StyledPopper = styled(PopperUnstyled)`
-    z-index: 1;
-  `;
-
-  const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
-    const components = {
-      Root: StyledButton,
-      Listbox: StyledListbox,
-      Popper: StyledPopper,
-      ...props.components,
-    };
-
-    return <SelectUnstyled {...props} ref={ref} components={components} />;
   });
 
   // Handle Time Change Event
@@ -775,52 +644,63 @@ export default function Trends(props) {
                 {/* Sorting Menu Options */}
                 <div className="centering">
                   <div className="trendSortMenu" id="trendSortMenu">
-                    <FormControl
-                      focused
-                      variant="standard"
-                      htmlFor="selectTime"
-                    >
-                      <CustomSelect
+                    <FormControl>
+                      <Dropdown
                         defaultValue={state.sortTime}
                         onChange={handleTimeChange}
                         id="selectTime"
+                        theme={props.theme}
                       >
-                        <StyledOption value={"today"}>Today</StyledOption>
-                        <StyledOption value={"week"}>Week</StyledOption>
-                        <StyledOption value={"month"}>Month</StyledOption>
-                      </CustomSelect>
+                        <DropOption value={"today"} theme={props.theme}>
+                          Today
+                        </DropOption>
+                        <DropOption value={"week"} theme={props.theme}>
+                          Week
+                        </DropOption>
+                        <DropOption value={"month"} theme={props.theme}>
+                          Month
+                        </DropOption>
+                      </Dropdown>
                     </FormControl>
-                    <FormControl
-                      focused
-                      variant="standard"
-                      style={{ marginLeft: "10px" }}
-                    >
-                      <CustomSelect
+                    <FormControl style={{ marginLeft: "10px" }}>
+                      <Dropdown
                         defaultValue={state.sortBy}
                         onChange={handleSortChange}
                         id="selectSort"
-                        width="100%"
+                        theme={props.theme}
                       >
                         {state.sortTime === "today" && (
-                          <StyledOption value={"hot"}>Hot</StyledOption>
+                          <DropOption value={"hot"} theme={props.theme}>
+                            Hot
+                          </DropOption>
                         )}
                         {state.sortTime === "today" && (
-                          <StyledOption value={"new"}>New</StyledOption>
+                          <DropOption value={"new"} theme={props.theme}>
+                            New
+                          </DropOption>
                         )}
-                        <StyledOption value={"awards"}>Awards</StyledOption>
-                        <StyledOption value={"coins"}>Coins</StyledOption>
-                        <StyledOption value={"comments"}>Comments</StyledOption>
-                        <StyledOption value={"upvotes"}>Upvotes</StyledOption>
-                        <StyledOption value={"downvotes"}>
+                        <DropOption value={"awards"} theme={props.theme}>
+                          Awards
+                        </DropOption>
+                        <DropOption value={"coins"} theme={props.theme}>
+                          Coins
+                        </DropOption>
+                        <DropOption value={"comments"} theme={props.theme}>
+                          Comments
+                        </DropOption>
+                        <DropOption value={"upvotes"} theme={props.theme}>
+                          Upvotes
+                        </DropOption>
+                        <DropOption value={"downvotes"} theme={props.theme}>
                           Downvotes
-                        </StyledOption>
-                        <StyledOption value={"upvoteratio"}>
+                        </DropOption>
+                        <DropOption value={"upvoteratio"} theme={props.theme}>
                           Upvote Ratio
-                        </StyledOption>
-                        <StyledOption value={"downratio"}>
+                        </DropOption>
+                        <DropOption value={"downratio"} theme={props.theme}>
                           Downvote Ratio
-                        </StyledOption>
-                      </CustomSelect>
+                        </DropOption>
+                      </Dropdown>
                     </FormControl>
                   </div>
                 </div>

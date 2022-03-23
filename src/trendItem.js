@@ -1,11 +1,10 @@
 import { useState } from "react";
+import Dropdown from "./dropdown";
 import remarkGfm from "remark-gfm";
+import DropOption from "./dropoption";
 import ReactMarkdown from "react-markdown";
 import ReactHlsPlayer from "react-hls-player";
 import { InView } from "react-intersection-observer";
-import { makeStyles } from "@material-ui/core/styles";
-import NativeSelect from "@mui/material/NativeSelect";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 export default function TrendItem(props) {
   // Component State
@@ -349,9 +348,11 @@ export default function TrendItem(props) {
             !e.target.className.includes("searchLink2") &&
             !e.target.className.includes("iconImg") &&
             !e.target.className.includes("nextButton") &&
+            !e.target.className.includes("Mui") &&
             !e.target.id.includes("report") &&
             !e.target.id.includes("threadLink") &&
             !e.target.id.includes("outLink") &&
+            !e.target.id.includes("mui") &&
             !props.collapsedAll
           ) {
             if (!isCollapsed()) {
@@ -776,67 +777,23 @@ export default function TrendItem(props) {
    * @returns dom for report icon
    */
   function Report(props) {
-    const [reportState, setReportState] = useState({ hover: false });
-
-    // Dropdown menu styling
-    const useStyles = makeStyles({
-      root: {
-        "& .MuiNativeSelect-root": {
-          border: "none",
-          "&:focus": {
-            backgroundColor: "transparent",
-          },
-        },
-        "& .MuiNativeSelect-select": {
-          color: "transparent",
-          fontSize: "13px",
-          borderStyle: "hidden",
-          width: "16px",
-          padding: "0px",
-          "&:focus": {
-            backgroundColor: "transparent",
-          },
-        },
-        "& .MuiNativeSelect-icon": {
-          color: reportState.hover
-            ? "dodgerblue"
-            : props.theme === "light"
-            ? "#191919"
-            : "gray",
-          fontSize: "large",
-        },
-      },
-    });
-
-    // Material UI Styling
-    const classes = useStyles();
-
     return (
-      <div style={{ float: "right", display: "inline-block" }}>
-        <label htmlFor={"report-" + postListDOMLength} hidden>
-          Settings:
-        </label>
-        <NativeSelect
-          disableUnderline
-          className={classes.root}
-          id={"report-" + postListDOMLength}
-          onChange={props.handleReport}
-          IconComponent={MoreHorizIcon}
-          defaultValue="default"
-          onMouseEnter={() => setReportState({ hover: true })}
-          onMouseLeave={() => setReportState({ hover: false })}
-        >
-          <option value="default" hidden disabled>
-            Not interested?
-          </option>
-          <option value={"interest"} style={{ color: "black" }}>
-            Hide this post
-          </option>
-          <option value={"report"} style={{ color: "black" }}>
-            Report this post
-          </option>
-        </NativeSelect>
-      </div>
+      <Dropdown
+        id={"report-" + postListDOMLength}
+        type="report"
+        theme={props.theme}
+        onChange={() => {
+          props.handleReport({ target: { id: "report-" + postListDOMLength } });
+        }}
+        style={{ width: "30px", float: "right" }}
+      >
+        <DropOption value={"hide"} theme={props.theme}>
+          Hide this post
+        </DropOption>
+        <DropOption value={"report"} theme={props.theme}>
+          Report this post
+        </DropOption>
+      </Dropdown>
     );
   }
 
