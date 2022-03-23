@@ -404,7 +404,7 @@ export default function TrendItem(props) {
             ></div>
             <div
               id={"anchor2-" + i}
-              style={{ position: "absolute", top: "-122.6px" }}
+              style={{ position: "absolute", top: "-129px" }}
             ></div>
           </div>
           <div
