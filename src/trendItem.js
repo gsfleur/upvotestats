@@ -376,10 +376,17 @@ export default function TrendItem(props) {
             // Distance from top of trend to the top of window
             const pixelsFromTop = pixelsFromBottom - window.innerHeight;
 
+            // Position to scroll back to
+            let anchor = "anchor";
+            const sortMenu = document.getElementById("trendSortMenu");
+            if (sortMenu) {
+              if (sortMenu.style.display === "block") anchor = "anchor2";
+            }
+
             // scroll back to top of trend when uncollapsing
             // if top of trend is out of view due to scrolling down
             if (isCollapsed() && pixelsFromTop >= -70)
-              document.getElementById("anchor-" + i).scrollIntoView();
+              document.getElementById(anchor + "-" + i).scrollIntoView();
 
             setState({ ...state, collapsed: isCollapsed() ? false : true });
           }
@@ -394,6 +401,10 @@ export default function TrendItem(props) {
             <div
               id={"anchor-" + i}
               style={{ position: "absolute", top: "-95px" }}
+            ></div>
+            <div
+              id={"anchor2-" + i}
+              style={{ position: "absolute", top: "-122.6px" }}
             ></div>
           </div>
           <div
