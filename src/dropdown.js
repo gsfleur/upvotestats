@@ -37,6 +37,7 @@ export default function Dropdown(props) {
     border-radius: 0px;
     padding: 0px;
     width: 100%;
+    height: 24px;
     text-align: left;
     font-weight: bold;
     color: ${
