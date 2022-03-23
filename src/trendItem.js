@@ -793,10 +793,10 @@ export default function TrendItem(props) {
         }}
       >
         <DropOption value={"hide"} theme={props.theme}>
-          Hide this post
+          &#128683; Hide this post
         </DropOption>
         <DropOption value={"report"} theme={props.theme}>
-          Report this post
+          &#128681; Report this post
         </DropOption>
       </Dropdown>
     );

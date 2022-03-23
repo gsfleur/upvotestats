@@ -652,13 +652,13 @@ export default function Trends(props) {
                         theme={props.theme}
                       >
                         <DropOption value={"today"} theme={props.theme}>
-                          Today
+                          &#128197; Today
                         </DropOption>
                         <DropOption value={"week"} theme={props.theme}>
-                          Week
+                          &#128197; Week
                         </DropOption>
                         <DropOption value={"month"} theme={props.theme}>
-                          Month
+                          &#128197; Month
                         </DropOption>
                       </Dropdown>
                     </FormControl>
@@ -671,34 +671,34 @@ export default function Trends(props) {
                       >
                         {state.sortTime === "today" && (
                           <DropOption value={"hot"} theme={props.theme}>
-                            Hot
+                            &#128293;Hot
                           </DropOption>
                         )}
                         {state.sortTime === "today" && (
                           <DropOption value={"new"} theme={props.theme}>
-                            New
+                            &#128337; New
                           </DropOption>
                         )}
                         <DropOption value={"awards"} theme={props.theme}>
-                          Awards
+                          &#127942; Awards
                         </DropOption>
                         <DropOption value={"coins"} theme={props.theme}>
-                          Coins
+                          &#129689; Coins
                         </DropOption>
                         <DropOption value={"comments"} theme={props.theme}>
-                          Comments
+                          &#128172; Comments
                         </DropOption>
                         <DropOption value={"upvotes"} theme={props.theme}>
-                          Upvotes
+                          &#128316; Upvotes
                         </DropOption>
                         <DropOption value={"downvotes"} theme={props.theme}>
-                          Downvotes
+                          &#128317; Downvotes
                         </DropOption>
                         <DropOption value={"upvoteratio"} theme={props.theme}>
-                          Upvote Ratio
+                          &#128200; Upvote Ratio
                         </DropOption>
                         <DropOption value={"downratio"} theme={props.theme}>
-                          Downvote Ratio
+                          &#128201; Downvote Ratio
                         </DropOption>
                       </Dropdown>
                     </FormControl>
