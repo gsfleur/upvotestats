@@ -785,7 +785,12 @@ export default function TrendItem(props) {
         onChange={() => {
           props.handleReport({ target: { id: "report-" + postListDOMLength } });
         }}
-        style={{ width: "30px", float: "right" }}
+        style={{
+          width: "30px",
+          float: "right",
+          fontSize: "13px",
+          height: "20px",
+        }}
       >
         <DropOption value={"hide"} theme={props.theme}>
           Hide this post
