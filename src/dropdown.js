@@ -103,5 +103,5 @@ export default function Dropdown(props) {
     return <SelectUnstyled {...props} ref={ref} components={components} />;
   });
 
-  return <CustomSelect {...props} title="Dropdown menu button" />;
+  return <CustomSelect {...props} title={props.title} />;
 }

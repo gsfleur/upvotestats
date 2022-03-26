@@ -423,6 +423,7 @@ export default function Trends(props) {
                     >
                       <button
                         className={props.getClass("sortButton2")}
+                        title="Sorting options"
                         style={{ padding: "0px" }}
                         onClick={() => {
                           // Toggle Display of Menu
@@ -460,6 +461,11 @@ export default function Trends(props) {
                       </button>
                       <button
                         className={props.getClass("sortButton2")}
+                        title={
+                          !state.collapsedAll
+                            ? "Open all posts"
+                            : "Minimize all posts"
+                        }
                         style={{ padding: "0px" }}
                         onClick={() => {
                           setState({
@@ -503,6 +509,11 @@ export default function Trends(props) {
                       </button>
                       <button
                         className={props.getClass("sortButton2")}
+                        title={
+                          state.nsfw
+                            ? "Hide all NSFW posts"
+                            : "Show all NSFW posts"
+                        }
                         style={{ padding: "0px" }}
                         onClick={() => {
                           if (state.nsfw) localStorage.setItem("nsfw", "false");
@@ -549,6 +560,11 @@ export default function Trends(props) {
                       <button
                         className={props.getClass("sortButton2")}
                         style={{ padding: "0px" }}
+                        title={
+                          state.spoiler
+                            ? "Hide all posts with spoilers"
+                            : "Show all posts with spoilers"
+                        }
                         onClick={() => {
                           if (state.spoiler)
                             localStorage.setItem("spoiler", "false");
@@ -594,6 +610,11 @@ export default function Trends(props) {
                       </button>
                       <button
                         className={props.getClass("sortButton2")}
+                        title={
+                          state.media
+                            ? "Hide all images and videos"
+                            : "Show all images and videos"
+                        }
                         style={{ padding: "0px" }}
                         onClick={() => {
                           if (state.media)
@@ -649,6 +670,7 @@ export default function Trends(props) {
                         defaultValue={state.sortTime}
                         onChange={handleTimeChange}
                         id="selectTime"
+                        title="Sort by time"
                         theme={props.theme}
                       >
                         <DropOption value={"today"} theme={props.theme}>
@@ -667,6 +689,7 @@ export default function Trends(props) {
                         defaultValue={state.sortBy}
                         onChange={handleSortChange}
                         id="selectSort"
+                        title="Sort by type"
                         theme={props.theme}
                       >
                         {state.sortTime === "today" && (

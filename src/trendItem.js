@@ -792,6 +792,7 @@ export default function TrendItem(props) {
       <Dropdown
         id={"report-" + postListDOMLength}
         type="report"
+        title="Settings"
         theme={props.theme}
         onChange={() => {
           props.handleReport({ target: { id: "report-" + postListDOMLength } });
