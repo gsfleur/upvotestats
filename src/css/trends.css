@@ -277,6 +277,12 @@
 .timeButtonLight:hover {
   color: slategrey;
 }
+.timeButton:active {
+  color: white;
+}
+.timeButtonLight:active {
+  color: #191919;
+}
 
 .sortButton {
   border: none;
