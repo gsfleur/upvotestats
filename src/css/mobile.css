@@ -18,6 +18,9 @@
   .menuButton {
     margin-right: 0px;
   }
+  .MuiToolbar-regular {
+    height: 58px;
+  }
   .h0 {
     font-size: 45px;
   }

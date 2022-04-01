@@ -30,7 +30,6 @@ const Search = lazy(() => import("./search"));
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiToolbar-regular": {
-      height: "48px",
       minHeight: "48px",
     },
   },
