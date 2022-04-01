@@ -307,7 +307,7 @@ export default function Trends(props) {
             className={props.getClass("timeButton")}
             style={{
               borderBottom: "3px solid orangered",
-              color: "orangered",
+              color: props.theme === "dark" ? "white" : "#191919",
             }}
           >
             {category.charAt(0).toUpperCase() + category.slice(1)}

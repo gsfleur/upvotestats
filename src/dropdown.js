@@ -20,10 +20,10 @@ export default function Dropdown(props) {
     100: "#E7EBF0",
     200: "#E0E3E7",
     300: "rgb(0, 0, 0, 0.1)",
-    400: "orangered",
+    400: props.theme === "dark" ? "white" : "slategrey",
     500: "#A0AAB4",
     600: "#6F7E8C",
-    700: "orangered",
+    700: props.theme === "dark" ? "white" : "slategrey",
     800: "#222222",
     900: "#191919",
   };
@@ -50,7 +50,7 @@ export default function Dropdown(props) {
 
     &:hover {
       background: none;
-      color: orangered;
+      color: ${props.theme === "dark" ? "white" : "slategrey"};
     }
 
     &.${selectUnstyledClasses.focusVisible} {

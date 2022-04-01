@@ -272,7 +272,10 @@
   color: #191919;
 }
 .timeButton:hover {
-  color: orangered;
+  color: white;
+}
+.timeButtonLight:hover {
+  color: slategrey;
 }
 
 .sortButton {
@@ -301,7 +304,10 @@
   color: #191919;
 }
 .sortButton2:hover {
-  color: orangered;
+  color: white;
+}
+.sortButton2Light:hover {
+  color: slategrey;
 }
 
 .nextButton {
