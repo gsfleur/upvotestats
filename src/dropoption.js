@@ -18,10 +18,10 @@ export default function DropOption(props) {
     100: "#E7EBF0",
     200: "#E0E3E7",
     300: "rgb(0, 0, 0, 0.1)",
-    400: "dodgerblue",
+    400: "orangered",
     500: "#A0AAB4",
     600: "#6F7E8C",
-    700: "dodgerblue",
+    700: "orangered",
     800: "#222222",
     900: "#191919",
   };

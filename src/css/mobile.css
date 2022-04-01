@@ -1,4 +1,23 @@
 @media screen and (max-width: 600px) {
+  #mainmenu,
+  #mainmenuLight {
+    position: fixed;
+    bottom: 0;
+    background: #0a0a0a;
+    border-top: 1px solid #222222;
+    border-bottom: none;
+  }
+  #mainmenuLight {
+    background: white;
+    color: #191919;
+    border-top: 1px solid rgb(0, 0, 0, 0.1);
+  }
+  .mainmenuButtons {
+    justify-content: space-evenly;
+  }
+  .menuButton {
+    margin-right: 0px;
+  }
   .h0 {
     font-size: 45px;
   }

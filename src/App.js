@@ -9,10 +9,12 @@ import "./css/mobile.css";
 import Fab from "@material-ui/core/Fab";
 import React, { Suspense, lazy } from "react";
 import AppBar from "@material-ui/core/AppBar";
+import InfoIcon from "@mui/icons-material/Info";
+import HomeIcon from "@mui/icons-material/Home";
 import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -73,39 +75,59 @@ export default function App() {
     return theme === "light" ? n + " " + n + "Light" : n;
   }
 
+  // window path name
+  const pathname = window.location.pathname;
+
   return (
     <Router>
       <div>
         <AppBar
           position="static"
+          id={theme === "light" ? "mainmenuLight" : "mainmenu"}
           className={classes.root}
-          style={{
-            borderBottom: "1px solid #222222",
-            background: theme === "dark" ? "#0a0a0a" : "#191919",
-            boxShadow: "0px 0px 0px 0px",
-          }}
         >
           <Toolbar>
-            <a href="/">
-              <IconButton
-                edge="start"
-                className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
-              >
-                <img src="favicon.ico" alt="logo" height="30px" width="30px" />
-              </IconButton>
-            </a>
             <Typography variant="h6" className={classes.title}>
-              <a href="/" className={getClass("menuButton")}>
-                Home
-              </a>
-              <a href="/trends" className={getClass("menuButton")}>
-                Trends
-              </a>
-              <a href="/about" className={getClass("menuButton")}>
-                About
-              </a>
+              <div className="mainmenuButtons">
+                <a
+                  href="/"
+                  className={getClass("menuButton")}
+                  title="Home Page"
+                  style={{
+                    color:
+                      !pathname.startsWith("/trends") &&
+                      !pathname.startsWith("/about")
+                        ? "orangered"
+                        : "inherit",
+                  }}
+                >
+                  <HomeIcon fontSize="medium" />
+                </a>
+                <a
+                  href="/trends"
+                  className={getClass("menuButton")}
+                  title="Trends Page"
+                  style={{
+                    color: pathname.startsWith("/trends")
+                      ? "orangered"
+                      : "inherit",
+                  }}
+                >
+                  <WhatshotIcon fontSize="medium" />
+                </a>
+                <a
+                  href="/about"
+                  className={getClass("menuButton")}
+                  title="About Page"
+                  style={{
+                    color: pathname.startsWith("/about")
+                      ? "orangered"
+                      : "inherit",
+                  }}
+                >
+                  <InfoIcon fontSize="medium" />
+                </a>
+              </div>
             </Typography>
           </Toolbar>
         </AppBar>

@@ -272,7 +272,7 @@
   color: #191919;
 }
 .timeButton:hover {
-  color: dodgerblue;
+  color: orangered;
 }
 
 .sortButton {
@@ -301,7 +301,7 @@
   color: #191919;
 }
 .sortButton2:hover {
-  color: dodgerblue;
+  color: orangered;
 }
 
 .nextButton {
@@ -323,7 +323,7 @@
   border: 1px solid rgb(0, 0, 0, 0.1);
 }
 .nextButton:hover {
-  border: 1px solid dodgerblue;
+  border: 1px solid orangered;
 }
 
 .galleryNumber {
