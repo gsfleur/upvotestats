@@ -6,6 +6,7 @@
     background: #0a0a0a;
     border-top: 1px solid #222222;
     border-bottom: none;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
   }
   #mainmenuLight {
     background: white;
@@ -14,12 +15,10 @@
   }
   .mainmenuButtons {
     justify-content: space-evenly;
+    align-items: center;
   }
   .menuButton {
     margin-right: 0px;
-  }
-  .MuiToolbar-regular {
-    height: 58px;
   }
   .h0 {
     font-size: 45px;
