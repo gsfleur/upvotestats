@@ -75,8 +75,12 @@ export default function App() {
     return theme === "light" ? n + " " + n + "Light" : n;
   }
 
-  // window path name
+  // Window path name
   const pathname = window.location.pathname;
+
+  // Main menu button colors
+  const menuBtnOn = theme === "light" ? "black" : "white";
+  const menuBtnOff = theme === "light" ? "slategray" : "gray";
 
   return (
     <Router>
@@ -97,8 +101,8 @@ export default function App() {
                     color:
                       !pathname.startsWith("/trends") &&
                       !pathname.startsWith("/about")
-                        ? "orangered"
-                        : "inherit",
+                        ? menuBtnOn
+                        : menuBtnOff,
                   }}
                 >
                   <HomeIcon fontSize="medium" />
@@ -109,8 +113,8 @@ export default function App() {
                   title="Trends Page"
                   style={{
                     color: pathname.startsWith("/trends")
-                      ? "orangered"
-                      : "inherit",
+                      ? menuBtnOn
+                      : menuBtnOff,
                   }}
                 >
                   <WhatshotIcon fontSize="medium" />
@@ -121,8 +125,8 @@ export default function App() {
                   title="About Page"
                   style={{
                     color: pathname.startsWith("/about")
-                      ? "orangered"
-                      : "inherit",
+                      ? menuBtnOn
+                      : menuBtnOff,
                   }}
                 >
                   <InfoIcon fontSize="medium" />
