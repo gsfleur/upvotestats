@@ -1,4 +1,4 @@
-.homeCards {
+.searchCards {
   width: 100%;
   padding: 10px 0px 10px 0px;
   margin-bottom: 10px;
@@ -14,19 +14,20 @@
   border: 1px solid #222222;
   text-decoration: none;
 }
-.homeCards:hover {
+.searchCards:hover {
   background: rgb(30, 30, 30);
 }
-.homeCardsLight {
+.searchCardsLight {
   background: white;
   border: 1px solid rgb(0, 0, 0, 0.1);
 }
-.homeCardsLight:hover {
+.searchCardsLight:hover {
   background: whitesmoke;
 }
 
 .cardsLoc {
   width: 100%;
   max-width: 500px;
-  margin-top: -75px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

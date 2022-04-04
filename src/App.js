@@ -1,10 +1,10 @@
 import "./css/App.css";
-import "./css/home.css";
 import "./css/about.css";
 import "./css/search.css";
 import "./css/results.css";
 import "./css/trends.css";
 import "./css/footer.css";
+import "./css/searchOptions.css";
 import "./css/mobile.css";
 import Fab from "@material-ui/core/Fab";
 import React, { Suspense, lazy } from "react";
@@ -15,6 +15,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import NightsStayIcon from "@mui/icons-material/NightsStay";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -25,6 +28,7 @@ const Footer = lazy(() => import("./footer"));
 const Trends = lazy(() => import("./trends"));
 const Scroll = lazy(() => import("./scroll"));
 const Search = lazy(() => import("./search"));
+const SearchOptions = lazy(() => import("./searchOptions"));
 
 // Material UI Styling
 const useStyles = makeStyles((theme) => ({
@@ -98,6 +102,7 @@ export default function App() {
                   title="Home Page"
                   style={{
                     color:
+                      !pathname.startsWith("/search") &&
                       !pathname.startsWith("/trends") &&
                       !pathname.startsWith("/about")
                         ? menuBtnOn
@@ -105,6 +110,18 @@ export default function App() {
                   }}
                 >
                   <HomeIcon fontSize="medium" />
+                </a>
+                <a
+                  href="/search"
+                  className={getClass("menuButton")}
+                  title="Search Page"
+                  style={{
+                    color: pathname.startsWith("/search")
+                      ? menuBtnOn
+                      : menuBtnOff,
+                  }}
+                >
+                  <TravelExploreIcon fontSize="medium" />
                 </a>
                 <a
                   href="/trends"
@@ -130,6 +147,39 @@ export default function App() {
                 >
                   <InfoIcon fontSize="medium" />
                 </a>
+
+                {theme === "light" && (
+                  <a
+                    href={window.location.pathname}
+                    className={getClass("menuButton")}
+                    title="Enable Dark Mode"
+                    style={{
+                      color: menuBtnOff,
+                    }}
+                    onClick={() => {
+                      localStorage.setItem("theme", "dark");
+                      window.location.reload();
+                    }}
+                  >
+                    <NightsStayIcon fontSize="medium" />
+                  </a>
+                )}
+                {theme === "dark" && (
+                  <a
+                    href={window.location.pathname}
+                    className={getClass("menuButton")}
+                    title="Enable Light Mode"
+                    style={{
+                      color: menuBtnOff,
+                    }}
+                    onClick={() => {
+                      localStorage.setItem("theme", "light");
+                      window.location.reload();
+                    }}
+                  >
+                    <LightModeIcon fontSize="medium" />
+                  </a>
+                )}
               </div>
             </Typography>
           </Toolbar>
@@ -143,6 +193,7 @@ export default function App() {
               <Switch>
                 <Route path="/search">
                   <Search theme={theme} getClass={getClass} />
+                  <SearchOptions theme={theme} getClass={getClass} />
                   <Footer theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/about">
@@ -156,7 +207,7 @@ export default function App() {
                 <Route path="/">
                   <Search theme={theme} getClass={getClass} />
                   <Footer theme={theme} getClass={getClass} />
-                  <Home theme={theme} getClass={getClass} />
+                  <Home />
                 </Route>
               </Switch>
               <Scroll theme={theme} />

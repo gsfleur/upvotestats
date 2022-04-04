@@ -281,6 +281,7 @@ export default function Search(props) {
     root: {
       "& .MuiOutlinedInput-notchedOutline": {
         border: "1px solid rgb(0,0,0,0.1)",
+        borderRadius: "100px",
       },
     },
   });
@@ -313,7 +314,7 @@ export default function Search(props) {
           style={{
             backgroundColor: "white",
             padding: "0px 5px 0px 5px",
-            borderRadius: "10px",
+            borderRadius: "100px",
             marginBottom: "20px",
             width: "60%",
             minWidth: "300px",
