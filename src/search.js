@@ -5,9 +5,11 @@ import Results from "./results";
 import { saveAs } from "file-saver";
 import { topReddits } from "./topReddits";
 import { useState, useEffect } from "react";
+import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import InputAdornment from "@mui/material/InputAdornment";
 
 // Top Reddit Communities
 const communities = topReddits;
@@ -312,12 +314,9 @@ export default function Search(props) {
       <div className="centering">
         <div
           style={{
-            backgroundColor: "white",
-            padding: "0px 5px 0px 5px",
-            borderRadius: "100px",
             marginBottom: "20px",
-            width: "60%",
-            minWidth: "300px",
+            width: "100%",
+            maxWidth: "600px",
           }}
         >
           <Autocomplete
@@ -327,16 +326,22 @@ export default function Search(props) {
             onInputChange={(e, v) => setState({ ...state, value: v })}
             onChange={(e, v, r) => onChange(e, v, r)}
             onKeyDown={(e) => onKeyDown(e)}
-            style={{
-              marginTop: "-8px",
-            }}
             renderInput={(params) => (
               <TextField
                 {...params}
                 className={classes.root}
-                label="Search statistics for any subreddit"
-                margin="normal"
+                placeholder="Search statistics for any subreddit"
+                margin="dense"
                 variant="outlined"
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon style={{ marginLeft: "5px" }} />
+                    </InputAdornment>
+                  ),
+                }}
+                style={{ background: "white", borderRadius: "100px" }}
               />
             )}
           />

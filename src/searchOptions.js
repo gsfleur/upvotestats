@@ -51,7 +51,9 @@ export default function SearchOptions(props) {
         for (const [key] of freq) subData.push([key, communities[key]]);
 
         state.cardsDOM.push(
-          <div className={props.getClass("h3")}>Trending subreddits</div>
+          <div className={props.getClass("h3")} key={"searchCard-trends"}>
+            Trending subreddits
+          </div>
         );
 
         // Creating cards for communities
@@ -93,7 +95,7 @@ export default function SearchOptions(props) {
   // Loading objects
   const loadingObj = (key) => (
     <a
-      key={"searchCard-" + key}
+      key={"searchLoadCard-" + key}
       className={props.getClass("searchCards")}
       href={window.location.pathname}
       title="Search subreddit statistics"
@@ -114,7 +116,11 @@ export default function SearchOptions(props) {
   );
 
   loadingDOM.unshift(
-    <div className={props.getClass("h3")} style={{ color: "transparent" }}>
+    <div
+      className={props.getClass("h3")}
+      key={"searchLoadCard"}
+      style={{ color: "transparent" }}
+    >
       Loading
     </div>
   );
