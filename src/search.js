@@ -72,7 +72,6 @@ export default function Search(props) {
           })
           .catch((err) => {
             console.log(err);
-            state.error = true;
           });
 
         // Looping through top posts data
@@ -89,7 +88,6 @@ export default function Search(props) {
             })
             .catch((err) => {
               console.log(err);
-              state.error = true;
             });
         }
 
@@ -112,6 +110,7 @@ export default function Search(props) {
           setState({
             ...state,
             loaded: true,
+            error: state.stats.posts.count === 0,
           });
         }
       })();
@@ -362,8 +361,6 @@ export default function Search(props) {
             >
               Try again
             </button>
-            <br /> Ad blockers may cause errors by preventing requests from
-            fulfilling
           </div>
         </div>
       )}
