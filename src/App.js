@@ -194,7 +194,7 @@ export default function App() {
                 <Route path="/search">
                   <Search theme={theme} getClass={getClass} />
                   <SearchOptions
-                    numOptions={10}
+                    numOptions={20}
                     theme={theme}
                     getClass={getClass}
                   />
