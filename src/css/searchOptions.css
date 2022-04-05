@@ -2,24 +2,22 @@
   width: 100%;
   padding: 10px 0px 10px 0px;
   margin-bottom: 10px;
-  display: inline-block;
-  text-align: center;
-  background: #0a0a0a;
-  border-radius: 10px;
-  font-weight: bold;
-  color: orangered;
-  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  color: white;
   transition: background-color 0.3s ease;
   overflow: hidden;
-  border: 1px solid #222222;
+  border-bottom: 1px solid #222222;
   text-decoration: none;
 }
 .searchCards:hover {
   background: rgb(30, 30, 30);
 }
 .searchCardsLight {
-  background: white;
-  border: 1px solid rgb(0, 0, 0, 0.1);
+  color: #191919;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.1);
 }
 .searchCardsLight:hover {
   background: whitesmoke;

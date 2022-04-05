@@ -193,7 +193,11 @@ export default function App() {
               <Switch>
                 <Route path="/search">
                   <Search theme={theme} getClass={getClass} />
-                  <SearchOptions theme={theme} getClass={getClass} />
+                  <SearchOptions
+                    numOptions={10}
+                    theme={theme}
+                    getClass={getClass}
+                  />
                   <Footer theme={theme} getClass={getClass} />
                 </Route>
                 <Route path="/about">
@@ -206,6 +210,11 @@ export default function App() {
                 </Route>
                 <Route path="/">
                   <Search theme={theme} getClass={getClass} />
+                  <SearchOptions
+                    numOptions={5}
+                    theme={theme}
+                    getClass={getClass}
+                  />
                   <Footer theme={theme} getClass={getClass} />
                   <Home />
                 </Route>

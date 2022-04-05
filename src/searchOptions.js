@@ -1,4 +1,5 @@
 import axios from "axios";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { useState, useEffect } from "react";
 
 export default function SearchOptions(props) {
@@ -16,6 +17,7 @@ export default function SearchOptions(props) {
         // Getting subreddit name and subscribers
         let communities = {};
         let subNames = {};
+        let freq = {};
         await axios
           .get(process.env.REACT_APP_BACKEND + "posts/all")
           .then((res) => {
@@ -24,6 +26,10 @@ export default function SearchOptions(props) {
               const sub = posts[i].subreddit;
               const subName = posts[i].subName;
               const subscribers = posts[i].subscribers;
+
+              // subreddit frequency
+              if (freq[sub] == null) freq[sub] = 1;
+              else freq[sub] = freq[sub] + 1;
 
               // saving name and sub count
               if (communities[sub] == null) {
@@ -37,18 +43,23 @@ export default function SearchOptions(props) {
             console.log(err);
           });
 
-        let subData = []; // adding data to array
-        for (const [key, value] of Object.entries(communities))
-          subData.push([key, value]);
+        // Sorting subreddit frequency
+        freq = Object.keys(freq).map((key) => [key, freq[key]]);
+        freq = freq.sort((a, b) => b[1] - a[1]);
 
-        // Randomizing profile cards with Schwartzian transformation
-        subData = subData
-          .map((a) => ({ sort: Math.random(), value: a }))
-          .sort((a, b) => a.sort - b.sort)
-          .map((a) => a.value);
+        let subData = []; // adding data to array
+        for (const [key] of freq) subData.push([key, communities[key]]);
+
+        state.cardsDOM.push(
+          <div className={props.getClass("h3")}>Trending subreddits</div>
+        );
 
         // Creating cards for communities
-        for (let i = 0; i < subData.length && state.cardsDOM.length < 5; i++) {
+        for (
+          let i = 0;
+          i < subData.length && state.cardsDOM.length < props.numOptions + 1;
+          i++
+        ) {
           state.cardsDOM.push(
             <a
               key={"searchCard-" + i}
@@ -56,10 +67,10 @@ export default function SearchOptions(props) {
               href={"/search?q=" + subData[i][0]}
               title="Search subreddit statistics"
             >
-              {subNames[subData[i][0]]}
-              <br />
-              <span style={{ color: "gray", fontSize: "14px" }}>
-                {numToString(subData[i][1])} subscribers
+              <TrendingUpIcon style={{ marginRight: "10px" }} />
+              <span className="limitText1">{subNames[subData[i][0]]}</span>
+              <span className="limitText1" style={{ color: "gray" }}>
+                {numToString(subData[i][1])}
               </span>
             </a>
           );
@@ -99,7 +110,7 @@ export default function SearchOptions(props) {
       <div className="cardsLoc">
         {state.loaded === true
           ? state.cardsDOM
-          : [...Array(5).keys()].map((n) => (n = loadingObj(n)))}
+          : [...Array(props.numOptions).keys()].map((n) => (n = loadingObj(n)))}
       </div>
     </div>
   );
