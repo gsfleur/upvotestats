@@ -97,20 +97,32 @@ export default function SearchOptions(props) {
       className={props.getClass("searchCards")}
       href={window.location.pathname}
       title="Search subreddit statistics"
-      style={{ color: "transparent" }}
     >
-      loading
-      <br />
-      <span style={{ color: "transparent", fontSize: "14px" }}>loading</span>
+      <TrendingUpIcon style={{ color: "transparent" }} />
+      <span className="limitText1" style={{ color: "transparent" }}>
+        Loading
+      </span>
+      <span className="limitText1" style={{ color: "transparent" }}>
+        Loading
+      </span>
     </a>
+  );
+
+  // Adding multiple objects to DOM
+  const loadingDOM = [...Array(props.numOptions).keys()].map(
+    (n) => (n = loadingObj(n))
+  );
+
+  loadingDOM.unshift(
+    <div className={props.getClass("h3")} style={{ color: "transparent" }}>
+      Loading
+    </div>
   );
 
   return (
     <div className="centering">
       <div className="cardsLoc">
-        {state.loaded === true
-          ? state.cardsDOM
-          : [...Array(props.numOptions).keys()].map((n) => (n = loadingObj(n)))}
+        {state.loaded ? state.cardsDOM : loadingDOM}
       </div>
     </div>
   );
