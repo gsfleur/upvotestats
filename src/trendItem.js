@@ -130,7 +130,12 @@ export default function TrendItem(props) {
       }}
       onError={(e) => {
         e.target.onerror = null;
-        e.target.src = missingImg;
+        if (post.urlToImage === post.source) {
+          e.target.src = missingImg;
+        } else {
+          post.urlToImage = post.source;
+          e.target.src = post.urlToImage;
+        }
       }}
     />
   );
@@ -410,7 +415,7 @@ export default function TrendItem(props) {
           >
             {/* Post rank, subreddit name, and options button */}
             <div className={props.getClass("postRank")}>
-              {postListDOMLength + 1} &bull;{" "}
+              {postListDOMLength + 1} &#x2219;{" "}
               <a
                 className={props.getClass("searchLink2")}
                 href={"https://www.reddit.com/r/" + post.subreddit}
@@ -420,7 +425,7 @@ export default function TrendItem(props) {
               >
                 {post.subName}
               </a>{" "}
-              &bull; {numToString(post.upvotes)} &uarr;{" "}
+              &#x2219; {numToString(post.upvotes)} &uarr;{" "}
               <Report theme={props.theme} handleReport={props.handleReport} />
             </div>
 
@@ -507,7 +512,7 @@ export default function TrendItem(props) {
                     <div
                       style={{
                         float: "left",
-                        marginLeft: "5px",
+                        marginLeft: "8px",
                       }}
                     >
                       <a
@@ -523,7 +528,7 @@ export default function TrendItem(props) {
                       >
                         {post.author}
                       </a>{" "}
-                      &bull; {hours === 0 && <span>{minutes} min</span>}
+                      &#x2219; {hours === 0 && <span>{minutes} min</span>}
                       {hours < 24 && hours > 0 && <span>{hours}h</span>}
                       {hours >= 24 && diffDays < 7 && <span>{diffDays}d</span>}
                       {diffDays >= 7 && (
@@ -748,8 +753,8 @@ export default function TrendItem(props) {
           <div className={props.getClass("postStats")}>
             {post.coins > 0 && post.awards > 0 && (
               <span>
-                {numToString(post.coins)} coins &bull;{" "}
-                {numToString(post.awards)} awards &bull;{" "}
+                {numToString(post.coins)} coins &#x2219;{" "}
+                {numToString(post.awards)} awards &#x2219;{" "}
               </span>
             )}
             <a
