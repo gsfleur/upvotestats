@@ -746,7 +746,7 @@ export default function TrendItem(props) {
 
           {/* Post statistics */}
           <div className={props.getClass("postStats")}>
-            {post.awards > 0 && (
+            {post.coins > 0 && post.awards > 0 && (
               <span>
                 {numToString(post.coins)} coins &bull;{" "}
                 {numToString(post.awards)} awards &bull;{" "}
