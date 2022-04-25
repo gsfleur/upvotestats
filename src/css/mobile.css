@@ -90,10 +90,6 @@
   .blurOuter {
     width: 70px;
   }
-  .iconImg {
-    width: 24px;
-    height: 24px;
-  }
   .postTitle {
     width: calc(100% - 90px);
   }

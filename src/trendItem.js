@@ -785,7 +785,6 @@ export default function TrendItem(props) {
     return (
       <Dropdown
         id={"report-" + postListDOMLength}
-        type="report"
         title="Settings"
         theme={props.theme}
         onChange={() => {
@@ -794,7 +793,7 @@ export default function TrendItem(props) {
         style={{
           width: "30px",
           float: "right",
-          fontSize: "13px",
+          fontSize: "11px",
           height: "20px",
         }}
       >

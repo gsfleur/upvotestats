@@ -42,7 +42,7 @@ export default function Dropdown(props) {
     font-weight: bold;
     color: ${
       props.theme === "dark"
-        ? props.type === "report"
+        ? props.title === "Settings"
           ? "gray"
           : "silver"
         : grey[900]
@@ -59,13 +59,13 @@ export default function Dropdown(props) {
 
     &.${selectUnstyledClasses.expanded} {
       &::after {
-        content: '${props.type === "report" ? "\\2022\\2022\\2022" : "▴"}';
+        content: '${props.title === "Settings" ? "\\2022\\2022\\2022" : "▴"}';
         margin-left: 5px;
       }
     }
 
     &::after {
-      content: '${props.type === "report" ? "\\2022\\2022\\2022" : "▾"}';
+      content: '${props.title === "Settings" ? "\\2022\\2022\\2022" : "▾"}';
       float: right;
       margin-left: 5px;
     }
