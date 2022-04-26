@@ -1,10 +1,7 @@
 .searchCards {
   width: 100%;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 5px 10px 5px;
   margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: transparent;
   color: white;
   transition: background-color 0.3s ease;
@@ -14,6 +11,7 @@
 }
 .searchCards:hover {
   background: rgb(30, 30, 30);
+  border-radius: 5px;
 }
 .searchCardsLight {
   color: #191919;
@@ -21,6 +19,23 @@
 }
 .searchCardsLight:hover {
   background: whitesmoke;
+}
+
+.searchCardLink {
+  padding: 10px 0px 10px 0px;
+  background: transparent;
+  color: white;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+  border: none;
+  text-decoration: none;
+  font-size: 13px;
+}
+.searchCardLink:hover {
+  text-decoration: underline;
+}
+.searchCardLinkLight {
+  color: #191919;
 }
 
 .cardsLoc {

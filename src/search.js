@@ -373,9 +373,11 @@ export default function Search(props) {
           <br />
           <br />
           <div className={props.getClass("searchLoading")}>
-            Loading all of the data can take up to 2-3 minutes to process as
-            this program will analyze the top posts and comments in the past
-            month.
+            Loading upvote statistics for this subreddit
+            <br />
+            <br />
+            This process can take up to 2 minutes as this program will analyze
+            the top posts and comments in the past month
           </div>
           <br />
         </div>
@@ -451,7 +453,7 @@ function Percentage(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       setState({ ...state });
-    }, 1000);
+    }, 100);
     return () => clearInterval(interval);
   });
 

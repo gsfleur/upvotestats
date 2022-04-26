@@ -17,6 +17,8 @@ export default function SearchOptions(props) {
         // Getting subreddit name and subscribers
         let communities = {};
         let subNames = {};
+        let subTitle = {};
+        let subLink = {};
         let freq = {};
         await axios
           .get(process.env.REACT_APP_BACKEND + "posts/all")
@@ -35,6 +37,8 @@ export default function SearchOptions(props) {
               if (communities[sub] == null) {
                 communities[sub] = subscribers;
                 subNames[sub] = subName;
+                subTitle[sub] = posts[i].title;
+                subLink[sub] = posts[i].url;
               }
             }
           })
@@ -63,18 +67,53 @@ export default function SearchOptions(props) {
           i++
         ) {
           state.cardsDOM.push(
-            <a
+            <div
               key={"searchCard-" + i}
               className={props.getClass("searchCards")}
-              href={"/search?q=" + subData[i][0]}
-              title="Search subreddit statistics"
             >
-              <TrendingUpIcon style={{ marginRight: "10px" }} />
-              <span className="limitText1">{subNames[subData[i][0]]}</span>
-              <span className="limitText1" style={{ color: "gray" }}>
-                {numToString(subData[i][1])}
-              </span>
-            </a>
+              <div
+                style={{
+                  float: "left",
+                  width: "100%",
+                }}
+              >
+                <TrendingUpIcon
+                  style={{ marginRight: "10px", float: "left" }}
+                />
+                <span className="limitText1" style={{ float: "left" }}>
+                  {subNames[subData[i][0]]}
+                </span>
+                <span className="limitText1" style={{ float: "right" }}>
+                  {numToString(subData[i][1])}
+                </span>
+              </div>
+              <div
+                style={{
+                  marginLeft: "34px",
+                  float: "left",
+                }}
+              >
+                <span style={{ color: "gray" }}>{subTitle[subData[i][0]]}</span>
+                <br />
+                <a
+                  className={props.getClass("searchCardLink")}
+                  href={"/search?q=" + subData[i][0]}
+                  title="Search subreddit statistics"
+                >
+                  Search Stats
+                </a>
+                <span style={{ fontSize: "13px" }}> &#x2022; </span>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  className={props.getClass("searchCardLink")}
+                  href={subLink[subData[i][0]]}
+                  title="View post on reddit"
+                >
+                  View Post
+                </a>
+              </div>
+            </div>
           );
         }
 
@@ -99,6 +138,7 @@ export default function SearchOptions(props) {
       className={props.getClass("searchCards")}
       href={window.location.pathname}
       title="Search subreddit statistics"
+      style={{ border: "none" }}
     >
       <TrendingUpIcon style={{ color: "transparent" }} />
       <span className="limitText1" style={{ color: "transparent" }}>
